@@ -1,0 +1,632 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Generating 3D Cluster Fields &#8212; cluster_generator  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=362ab14a" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=ccbe24c1"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'fields';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Initial Conditions Generation" href="initial_conditions.html" />
+    <link rel="prev" title="Particles" href="particles.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  <div class="navbar-header-items__start">
+    
+      <div class="navbar-item">
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">cluster_generator  documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="introduction.html">
+                        Introduction
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="radial_profiles.html">
+                        Radial Profiles
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="models.html">
+                        Cluster Models
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="particles.html">
+                        Particles
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="#">
+                        Generating 3D Cluster Fields
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="initial_conditions.html">
+                        Initial Conditions Generation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="codes.html">
+                        Setting Up Idealized Cluster Problems in Various Codes
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="examples.html">
+                        Examples
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="api.html">
+                        API
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+        </div>
+      
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+    </div>
+  
+
+  
+    <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+    </label>
+  
+</div>
+
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="introduction.html">
+                        Introduction
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="radial_profiles.html">
+                        Radial Profiles
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="models.html">
+                        Cluster Models
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="particles.html">
+                        Particles
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="#">
+                        Generating 3D Cluster Fields
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="initial_conditions.html">
+                        Initial Conditions Generation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="codes.html">
+                        Setting Up Idealized Cluster Problems in Various Codes
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="examples.html">
+                        Examples
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="api.html">
+                        API
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+  </ul>
+</nav></div>
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumbs">
+  <ul class="bd-breadcrumbs" role="navigation" aria-label="Breadcrumb">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">Generating 3D Cluster Fields</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section id="generating-3d-cluster-fields">
+<span id="fields"></span><h1>Generating 3D Cluster Fields<a class="headerlink" href="#generating-3d-cluster-fields" title="Permalink to this heading">#</a></h1>
+<p>Most of the functionality of <code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code> assumes spherical symmetry
+for each cluster, and thus most applications can work with 1D models which can
+be mapped onto either grid cells, particles, or used of their own accord.
+However, for initializing the complex magnetic and velocity fields which exist
+in clusters for use in (magneto)hydrodynamical simulations, a full 3D
+implementation is required.</p>
+<section id="mathematical-overview">
+<h2>Mathematical Overview<a class="headerlink" href="#mathematical-overview" title="Permalink to this heading">#</a></h2>
+<p>Magnetic and velocity fields in clusters are assumed to be complex and
+turbulent. If one wants to include these fields in a simulation of a single
+cluster or a merger of clusters, these will have to be computed in a
+three-dimensional fashion, which is done on a uniform grid. Then, the field
+values will need to be interpolated onto the hydro cells or particles,
+depending on the nature of the code in question.</p>
+<p>A generic turbulent 3D field <span class="math notranslate nohighlight">\({\bf V}({\bf r})\)</span> can be generated by</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\tilde{V_x}({\bf k}) = V_1(k)[N(u_1) + iN(u_2)] \\
+\tilde{V_y}({\bf k}) = V_2(k)[N(u_3) + iN(u_4)] \\
+\tilde{V_z}({\bf k}) = V_3(k)[N(u_5) + iN(u_6)]\end{split}\]</div>
+<p>Magnetic fields require more special handling, due to the constraint
+that <span class="math notranslate nohighlight">\(\nabla \cdot {\bf B} = 0\)</span>. The field that is generated using
+the above procedure in general has at least some divergence. In
+<span class="math notranslate nohighlight">\({\bf k}\)</span>-space, the zero-divergence condition corresponds to
+<span class="math notranslate nohighlight">\({\bf k} \cdot {\bf \tilde{B}} = 0\)</span>, so the divergence of the field can be
+removed by subtracting off the component of <span class="math notranslate nohighlight">\(\tilde{\bf B}\)</span> parallel
+to <span class="math notranslate nohighlight">\({\bf k}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\tilde{\bf B} := \tilde{\bf B} - \hat{\bf k}(\hat{\bf k} \cdot {\bf \tilde{B}})\]</div>
+<p>This results in zero divergence (to machine precision) on the uniform grid. If the
+resulting magnetic field is linearly interpolated at a later stage onto grid cells
+or particles, in general this linear interpolation will not be divergence-free, but
+will have a small divergence. If your MHD code implements divergence cleaning, this
+may not be a substantial concern. However, for codes using constrained transport to
+evolve the magnetic field on an AMR grid (e.g. FLASH, GAMER, Athena++), it is
+necessary to preserve the divergence-free condition on a generic grid structure.
+The best way to do this is to derive the magnetic vector potential <span class="math notranslate nohighlight">\({\bf A}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}{\bf B} = \nabla \times {\bf A} \\
+\tilde{\bf B} = {\bf k} \times \tilde{\bf A}\end{split}\]</div>
+<p>Given <span class="math notranslate nohighlight">\(\tilde{\bf B}\)</span>, <span class="math notranslate nohighlight">\(\tilde{\bf A}\)</span> can be solved for in
+<span class="math notranslate nohighlight">\({\bf k}\)</span>-space and can then be transformed to <span class="math notranslate nohighlight">\({\bf A}\)</span>.</p>
+</section>
+<section id="initializing-a-magnetic-field">
+<h2>Initializing a Magnetic Field<a class="headerlink" href="#initializing-a-magnetic-field" title="Permalink to this heading">#</a></h2>
+<section id="random-magnetic-fields-and-vector-potentials">
+<h3>Random Magnetic Fields and Vector Potentials<a class="headerlink" href="#random-magnetic-fields-and-vector-potentials" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="radial-random-magnetic-fields-and-vector-potentials">
+<h3>Radial Random Magnetic Fields and Vector Potentials<a class="headerlink" href="#radial-random-magnetic-fields-and-vector-potentials" title="Permalink to this heading">#</a></h3>
+</section>
+</section>
+<section id="initializing-a-velocity-field">
+<h2>Initializing a Velocity Field<a class="headerlink" href="#initializing-a-velocity-field" title="Permalink to this heading">#</a></h2>
+<section id="random-velocity-fields">
+<h3>Random Velocity Fields<a class="headerlink" href="#random-velocity-fields" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="radial-random-velocity-fields">
+<h3>Radial Random Velocity Fields<a class="headerlink" href="#radial-random-velocity-fields" title="Permalink to this heading">#</a></h3>
+</section>
+</section>
+<section id="mapping-a-field-to-particles">
+<span id="map-field-to-particles"></span><h2>Mapping a Field to Particles<a class="headerlink" href="#mapping-a-field-to-particles" title="Permalink to this heading">#</a></h2>
+<p>A <code class="xref py py-class docutils literal notranslate"><span class="pre">ClusterField</span></code> object can have its field
+mapped to a set of particles at given positions using the
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">map_field_to_particles()</span></code> method.
+This takes as input a <code class="xref py py-class docutils literal notranslate"><span class="pre">ClusterParticles</span></code>
+object, and optional arguments for the particle type and the units to set the
+new particle field to:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># parts is a ClusterParticles object</span>
+<span class="n">ptype</span> <span class="o">=</span> <span class="s2">&quot;gas&quot;</span> <span class="c1"># the default</span>
+<span class="n">units</span> <span class="o">=</span> <span class="s2">&quot;km/s&quot;</span> <span class="c1"># the default value is the already assigned units for</span>
+               <span class="c1"># the field</span>
+<span class="n">vfield</span><span class="o">.</span><span class="n">map_field_to_particles</span><span class="p">(</span><span class="n">parts</span><span class="p">,</span> <span class="n">ptype</span><span class="o">=</span><span class="n">ptype</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="n">units</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="writing-a-field-out-to-disk">
+<h2>Writing a Field Out to Disk<a class="headerlink" href="#writing-a-field-out-to-disk" title="Permalink to this heading">#</a></h2>
+<p>A <code class="xref py py-class docutils literal notranslate"><span class="pre">ClusterField</span></code> object can be written
+to disk using the <code class="xref py py-meth docutils literal notranslate"><span class="pre">write_to_h5()</span></code>
+method.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">bfields</span><span class="o">.</span><span class="n">write_to_h5</span><span class="p">(</span><span class="s2">&quot;bfield.h5&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="particles.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Particles</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="initial_conditions.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Initial Conditions Generation</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mathematical-overview">Mathematical Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initializing-a-magnetic-field">Initializing a Magnetic Field</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#random-magnetic-fields-and-vector-potentials">Random Magnetic Fields and Vector Potentials</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#radial-random-magnetic-fields-and-vector-potentials">Radial Random Magnetic Fields and Vector Potentials</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initializing-a-velocity-field">Initializing a Velocity Field</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#random-velocity-fields">Random Velocity Fields</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#radial-random-velocity-fields">Radial Random Velocity Fields</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mapping-a-field-to-particles">Mapping a Field to Particles</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#writing-a-field-out-to-disk">Writing a Field Out to Disk</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div class="tocsection sourcelink">
+    <a href="_sources/fields.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+  <p class="copyright">
+    
+      © Copyright 2020, John ZuHone.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.1.2.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.13.3.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
