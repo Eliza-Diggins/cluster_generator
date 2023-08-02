@@ -501,19 +501,6 @@ within some <code class="docutils literal notranslate"><span class="pre">radius<
 </ul>
 </dd>
 </dl>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">rho_0</span> <span class="o">=</span> <span class="mf">1.0</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="mf">600.0</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a_c</span> <span class="o">=</span> <span class="mf">60.0</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="mf">0.17</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">alpha</span> <span class="o">=</span> <span class="o">-</span><span class="mf">2.0</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">beta</span> <span class="o">=</span> <span class="o">-</span><span class="mf">3.0</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">gas_density</span> <span class="o">=</span> <span class="n">am06_density_profile</span><span class="p">(</span><span class="n">rho_0</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">a_c</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">M200</span> <span class="o">=</span> <span class="mf">1.0e14</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">r200</span> <span class="o">=</span> <span class="mf">900.0</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">gas_density</span> <span class="o">=</span> <span class="n">rescale_profile_by_mass</span><span class="p">(</span><span class="n">gas_density</span><span class="p">,</span> <span class="n">M200</span><span class="p">,</span> <span class="n">r200</span><span class="p">)</span>
-</pre></div>
-</div>
 </dd></dl>
 
 </section>

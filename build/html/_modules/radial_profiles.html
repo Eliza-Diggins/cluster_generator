@@ -1313,18 +1313,6 @@ document.write(`
 <span class="sd">    radius : float</span>
 <span class="sd">        The input radius that the input ``mass`` corresponds to in kpc.</span>
 
-<span class="sd">    Examples</span>
-<span class="sd">    --------</span>
-<span class="sd">    &gt;&gt;&gt; rho_0 = 1.0</span>
-<span class="sd">    &gt;&gt;&gt; a = 600.0</span>
-<span class="sd">    &gt;&gt;&gt; a_c = 60.0</span>
-<span class="sd">    &gt;&gt;&gt; c = 0.17</span>
-<span class="sd">    &gt;&gt;&gt; alpha = -2.0</span>
-<span class="sd">    &gt;&gt;&gt; beta = -3.0</span>
-<span class="sd">    &gt;&gt;&gt; gas_density = am06_density_profile(rho_0, a, a_c, c, alpha, beta)</span>
-<span class="sd">    &gt;&gt;&gt; M200 = 1.0e14</span>
-<span class="sd">    &gt;&gt;&gt; r200 = 900.0</span>
-<span class="sd">    &gt;&gt;&gt; gas_density = rescale_profile_by_mass(gas_density, M200, r200)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">quad</span>
     <span class="n">mass_int</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="n">profile</span><span class="p">(</span><span class="n">r</span><span class="p">)</span><span class="o">*</span><span class="n">r</span><span class="o">*</span><span class="n">r</span>
