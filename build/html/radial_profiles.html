@@ -419,14 +419,16 @@ document.write(`
                   
   <section id="radial-profiles">
 <span id="id1"></span><h1>Radial Profiles<a class="headerlink" href="#radial-profiles" title="Permalink to this heading">#</a></h1>
-<p>To set up a cluster model in spherical hydrostatic and/or virial equilibrium,
+<hr style="height:10px;background-color:black"><p>To set up a cluster model in spherical hydrostatic and/or virial equilibrium,
 one needs models for various quantities as a function of radius.
-<code class="xref py py-class docutils literal notranslate"><span class="pre">RadialProfile</span></code> objects</p>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">RadialProfile</span></code> objects provide a wrapper for the cluster profile of interest.
+There are <code class="docutils literal notranslate"><span class="pre">RadialProfile</span></code> objects for temperature, mass, density, and entropy profiles, all of which can be combined
+and used to generate a wide class of available galaxy clusters.</p>
 <p>The profiles available in <code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code> will now be described, with
 the mathematical formulae given as well as an example instantiation.</p>
-<section id="general-profiles">
+<hr style="height:10px;background-color:black"><section id="general-profiles">
 <h2>General Profiles<a class="headerlink" href="#general-profiles" title="Permalink to this heading">#</a></h2>
-<p>These profiles are for general use.</p>
+<p>These profiles fall under a general class of useful profiles and can be used to model any physical quantity of interest.</p>
 <section id="constant-profile">
 <h3>Constant Profile<a class="headerlink" href="#constant-profile" title="Permalink to this heading">#</a></h3>
 <p>The <code class="xref py py-func docutils literal notranslate"><span class="pre">constant_profile()</span></code> creates a
@@ -456,7 +458,7 @@ scale radius with units of kpc, and <span class="math notranslate nohighlight">\
 <span class="n">p</span> <span class="o">=</span> <span class="n">cg</span><span class="o">.</span><span class="n">power_law_profile</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">r_s</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)</span>
 </pre></div>
 </div>
-</section>
+<hr style="height:3px;background-color:black"></section>
 </section>
 <section id="density-and-mass-profiles">
 <h2>Density and Mass Profiles<a class="headerlink" href="#density-and-mass-profiles" title="Permalink to this heading">#</a></h2>
@@ -464,8 +466,7 @@ scale radius with units of kpc, and <span class="math notranslate nohighlight">\
 often used to model gas, DM, or total density/mass distributions.</p>
 <section id="nfw-profile">
 <h3>NFW Profile<a class="headerlink" href="#nfw-profile" title="Permalink to this heading">#</a></h3>
-<p>The Navarro-Frenk-White (NFW) profile from Navarro, J.F., Frenk, C.S.,
-&amp; White, S.D.M. 1996, ApJ, 462, 563 is often used to model DM halos and
+<p>The Navarro-Frenk-White (NFW) profile <a class="footnote-reference brackets" href="#id9" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> is often used to model DM halos and
 total density/mass profiles.</p>
 <p>Density:</p>
 <div class="math notranslate nohighlight">
@@ -475,6 +476,11 @@ total density/mass profiles.</p>
 \[M_{\rm NFW}(&lt;r) = 4\pi{\rho_s}{r_s^2}\left[\ln\left(1+\frac{r}{r_s}\right)-\frac{r}{r+r_s}\right]\]</div>
 <p>where <span class="math notranslate nohighlight">\(\rho_s\)</span> is a scale density in units of <span class="math notranslate nohighlight">\({\rm M_\odot~kpc^{-3}}\)</span>,
 and <span class="math notranslate nohighlight">\(r_s\)</span> is a scale radius in units of kpc.</p>
+<div class="admonition-mathematical-note admonition">
+<p class="admonition-title">Mathematical Note</p>
+<p>The function <span class="math notranslate nohighlight">\(M_{\mathrm{NFW}}(&lt;r)\)</span> is manifestly divergent as <span class="math notranslate nohighlight">\(r\to \infty\)</span>. As such, it is typically
+necessary to truncate the NFW profile at some maximal radius. See TNFW profile for more information.</p>
+</div>
 <p>An NFW density profile function can be generated using
 <code class="xref py py-func docutils literal notranslate"><span class="pre">nfw_density_profile()</span></code>, and the NFW mass
 profile function can be generated using
@@ -489,11 +495,17 @@ profile function can be generated using
 <p>If you want to determine the scale density using a given concentration parameter,
 you can use the <code class="xref py py-func docutils literal notranslate"><span class="pre">nfw_scale_density()</span></code>
 function to determine it:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cluster_generator</span> <span class="k">as</span> <span class="nn">cg</span>
+<span class="n">conc</span> <span class="o">=</span> <span class="mf">4.0</span> <span class="c1"># - Example value for the concentration parameter.</span>
+<span class="n">z</span> <span class="o">=</span> <span class="mf">0.8</span>
+<span class="n">delta</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="n">rho_s</span> <span class="o">=</span> <span class="n">cg</span><span class="o">.</span><span class="n">radial_profiles</span><span class="o">.</span><span class="n">nfw_scale_density</span><span class="p">(</span><span class="n">conc</span><span class="p">,</span><span class="n">z</span><span class="o">=</span><span class="n">z</span><span class="p">,</span><span class="n">delta</span><span class="o">=</span><span class="n">delta</span><span class="p">)</span>
+</pre></div>
+</div>
 </section>
 <section id="super-nfw-profile">
 <h3>“super-NFW” Profile<a class="headerlink" href="#super-nfw-profile" title="Permalink to this heading">#</a></h3>
-<p>The “super-NFW” profile from Lilley, E. J., Wyn Evans, N., &amp; Sanders, J.L. 2018,
-MNRAS is similar to the NFW profile, except that it falls off faster at large
+<p>The “super-NFW” profile <a class="footnote-reference brackets" href="#id10" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> is similar to the NFW profile, except that it falls off faster at large
 radius and thus its mass profile is finite at infinity.</p>
 <p>Density:</p>
 <div class="math notranslate nohighlight">
@@ -517,11 +529,17 @@ mass profile function can be generated using
 </section>
 <section id="truncated-nfw-profile">
 <h3>Truncated NFW Profile<a class="headerlink" href="#truncated-nfw-profile" title="Permalink to this heading">#</a></h3>
+<p>The Truncated NFW Profile (TNFW) is designed to fall off <span class="math notranslate nohighlight">\(\sim r^{-2}\)</span> at radii beyond the truncation radius <span class="math notranslate nohighlight">\(r_t\)</span>.
+This causes the total mass of the profile to become finite. Typically, <span class="math notranslate nohighlight">\(r_t\)</span> is set at some radius beyond the virial radius of
+the cluster to minimize the impact that introducing the truncation has on the physics within the system of interest.</p>
 <div class="math notranslate nohighlight">
 \[\rho_{\rm tNFW}(r) = \frac{\rho_s}{r/r_s\left(1+r/r_s\right)^2}\frac{1}{1+\left(r/r_t\right)^2}\]</div>
 </section>
 <section id="hernquist-profile">
 <h3>Hernquist Profile<a class="headerlink" href="#hernquist-profile" title="Permalink to this heading">#</a></h3>
+<p>The Hernquist Profile <a class="footnote-reference brackets" href="#id11" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a> is a standard profile choice when modeling stellar bulges and shperical galaxies. It is regularly
+used in the context of galaxy clusters to model the brightest central galaxy (BCG). The profile contains a logarithmic power-law slope
+determined by the parameter <span class="math notranslate nohighlight">\(\alpha\)</span>.</p>
 <div class="math notranslate nohighlight">
 \[\rho_H(r) = \frac{M}{2\pi{a^3}}\frac{1}{r/a\left(1+r/a\right)^3}\]</div>
 <div class="math notranslate nohighlight">
@@ -529,6 +547,8 @@ mass profile function can be generated using
 </section>
 <section id="einasto-profile">
 <h3>Einasto Profile<a class="headerlink" href="#einasto-profile" title="Permalink to this heading">#</a></h3>
+<p>The Einasto Profile <a class="footnote-reference brackets" href="#id12" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a> is another typical profile used for modeling spherical galaxies, bulges, and BCGs. The profile contains a logarithmic power-law slope
+determined by the parameter <span class="math notranslate nohighlight">\(\alpha\)</span>.</p>
 <div class="math notranslate nohighlight">
 \[\rho_E(r) = {\rho_0}\exp\left[-\left(\frac{r}{h}\right)^\alpha\right]\]</div>
 <p>where</p>
@@ -541,11 +561,18 @@ mass profile function can be generated using
 </section>
 <section id="vikhlinin-et-al-2006-density-profile">
 <h3>Vikhlinin et al. 2006 Density Profile<a class="headerlink" href="#vikhlinin-et-al-2006-density-profile" title="Permalink to this heading">#</a></h3>
+<p>The Vikhlinin Density Profile <a class="footnote-reference brackets" href="#id13" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a> is a modified version of the standard <span class="math notranslate nohighlight">\(\beta\)</span>-model <a class="footnote-reference brackets" href="#id14" id="id7" role="doc-noteref"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></a>, which aims to
+replicate observed properties of clusters in the X-ray band. Modifications were made to create a cuspy core instead of a
+flat core, parameterized by the <span class="math notranslate nohighlight">\(\alpha\)</span> value. The second factor in the first term is added to increase the power-law slope at
+large radii. Finally, the second term represents another <span class="math notranslate nohighlight">\(\beta\)</span> model which increases the freedom of the model
+near cluster cores.</p>
 <div class="math notranslate nohighlight">
 \[\rho_{\rm V06}(r) = \rho_0\frac{(r/r_c)^{-\alpha/2}}{[1+(r/r_c)^2]^{3\beta/2-\alpha/4}}\frac{1}{[1+(r/r_s)^\gamma]^{\epsilon/2\gamma}}\]</div>
 </section>
 <section id="ascasibar-markevitch-2006-density-profile">
 <h3>Ascasibar &amp; Markevitch 2006 Density Profile<a class="headerlink" href="#ascasibar-markevitch-2006-density-profile" title="Permalink to this heading">#</a></h3>
+<p>The AM06 Density Profile <a class="footnote-reference brackets" href="#id15" id="id8" role="doc-noteref"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></a> may be derived as the hydrostatic equilibrium solution for a cluster having a temperature profile given
+by the AM06 temperature profile.</p>
 <div class="math notranslate nohighlight">
 \[\rho_{\rm AM06}(r) = \rho_0\left(1+\frac{r}{a_c}\right)\left(1+\frac{r}{ca_c}\right)^\alpha\left(1+\frac{r}{a}\right)^\beta\]</div>
 <p>where</p>
@@ -553,7 +580,7 @@ mass profile function can be generated using
 \[\alpha = -1-n\frac{c-1}{c-a/a_c}\]</div>
 <div class="math notranslate nohighlight">
 \[\beta = 1-n\frac{1-a/a_c}{c-a/a_c}\]</div>
-</section>
+<hr style="height:3px;background-color:black"></section>
 </section>
 <section id="temperature-profiles">
 <h2>Temperature Profiles<a class="headerlink" href="#temperature-profiles" title="Permalink to this heading">#</a></h2>
@@ -571,7 +598,7 @@ mass profile function can be generated using
 <h3>Ascasibar &amp; Markevitch 2006 Temperature Profile<a class="headerlink" href="#ascasibar-markevitch-2006-temperature-profile" title="Permalink to this heading">#</a></h3>
 <div class="math notranslate nohighlight">
 \[T_{\rm AM06}(r) = \frac{T_0}{1+r/a}\frac{c+r/a_c}{1+r/a_c}\]</div>
-</section>
+<hr style="height:3px;background-color:black"></section>
 </section>
 <section id="entropy-profiles">
 <h2>Entropy Profiles<a class="headerlink" href="#entropy-profiles" title="Permalink to this heading">#</a></h2>
@@ -579,8 +606,43 @@ mass profile function can be generated using
 <h3>Baseline Entropy Profile<a class="headerlink" href="#baseline-entropy-profile" title="Permalink to this heading">#</a></h3>
 <div class="math notranslate nohighlight">
 \[K(r) = K_0 + K_{200}\left(\frac{r}{r_{200}}\right)^\alpha\]</div>
+<hr style="height:10px;background-color:black"></section>
 </section>
 </section>
+<section id="references">
+<h1>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h1>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id9" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">1</a><span class="fn-bracket">]</span></span>
+<p>Navarro, J.F., Frenk, C.S.,&amp; White, S.D.M. 1996, ApJ, 462, 563</p>
+</aside>
+<aside class="footnote brackets" id="id10" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">2</a><span class="fn-bracket">]</span></span>
+<p>Lilley, E. J., Wyn Evans, N., &amp; Sanders, J.L. 2018, MNRAS</p>
+</aside>
+<aside class="footnote brackets" id="id11" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">3</a><span class="fn-bracket">]</span></span>
+<p>Astrophysical Journal v.356, p.359</p>
+</aside>
+<aside class="footnote brackets" id="id12" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">4</a><span class="fn-bracket">]</span></span>
+<ol class="upperalpha simple" start="10">
+<li><p>Einasto (1965), Kinematics and dynamics of stellar systems, Trudy Inst. Astrofiz. Alma-Ata 5, 87</p></li>
+</ol>
+</aside>
+<aside class="footnote brackets" id="id13" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id6">5</a><span class="fn-bracket">]</span></span>
+<p>Vikhlinin, A., Kravtsov, A., Forman, W., Jones, C., Markevitch, M., Murray, S. S., &amp; Van Speybroeck, L. (2006). Chandra sample of nearby relaxed galaxy clusters: Mass, gas fraction, and mass-temperature relation. The Astrophysical Journal, 640(2), 691.</p>
+</aside>
+<aside class="footnote brackets" id="id14" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id7">6</a><span class="fn-bracket">]</span></span>
+<p>Cavaliere, A.&amp;Fusco-Femiano, R.1978, A&amp;A, 70, 677</p>
+</aside>
+<aside class="footnote brackets" id="id15" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id8">7</a><span class="fn-bracket">]</span></span>
+<p>Ascasibar, Y., &amp; Markevitch, M. (2006). The origin of cold fronts in the cores of relaxed galaxy clusters. The Astrophysical Journal, 650(1), 102.</p>
+</aside>
+</aside>
 </section>
 
 
@@ -630,6 +692,7 @@ mass profile function can be generated using
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Radial Profiles</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#general-profiles">General Profiles</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#constant-profile">Constant Profile</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#power-law-profile">Power-Law Profile</a></li>
@@ -655,6 +718,10 @@ mass profile function can be generated using
 </ul>
 </li>
 </ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+
   </nav></div>
 
   <div class="sidebar-secondary-item">
