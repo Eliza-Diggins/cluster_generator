@@ -43,6 +43,8 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'install';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Introduction" href="introduction.html" />
+    <link rel="prev" title="cluster_generator" href="index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -124,6 +126,13 @@
   </p>
   <ul class="bd-navbar-elements navbar-nav">
     
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="#">
+                        Installing cluster_generator
+                      </a>
+                    </li>
+                
+
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="introduction.html">
                         Introduction
@@ -151,19 +160,19 @@
                       </a>
                     </li>
                 
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="fields.html">
-                        Generating 3D Cluster Fields
-                      </a>
-                    </li>
-                
             <div class="nav-item dropdown">
                 <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     More
                 </button>
                 <div class="dropdown-menu">
                     
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="fields.html">
+                        Generating 3D Cluster Fields
+                      </a>
+                    </li>
+                
+
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="initial_conditions.html">
                         Initial Conditions Generation
@@ -271,6 +280,13 @@ document.write(`
   </p>
   <ul class="bd-navbar-elements navbar-nav">
     
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="#">
+                        Installing cluster_generator
+                      </a>
+                    </li>
+                
+
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="introduction.html">
                         Introduction
@@ -298,19 +314,19 @@ document.write(`
                       </a>
                     </li>
                 
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="fields.html">
-                        Generating 3D Cluster Fields
-                      </a>
-                    </li>
-                
             <div class="nav-item dropdown">
                 <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     More
                 </button>
                 <div class="dropdown-menu">
                     
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="fields.html">
+                        Generating 3D Cluster Fields
+                      </a>
+                    </li>
+                
+
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="initial_conditions.html">
                         Initial Conditions Generation
@@ -416,23 +432,49 @@ document.write(`
                   
   <section id="installing-cluster-generator">
 <h1>Installing <code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code><a class="headerlink" href="#installing-cluster-generator" title="Permalink to this heading">#</a></h1>
+<p>In this guide are instructions on the installation of the <code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code> library. If you encounter any issues during
+the installation process, please visit the <strong>ISSUES</strong> page of the github and report the issue. We will attempt to provide
+support as quickly as possible.</p>
+<hr style="height:10px;background-color:black"><section id="getting-the-package">
+<h2>Getting the Package<a class="headerlink" href="#getting-the-package" title="Permalink to this heading">#</a></h2>
+<section id="from-pypi">
+<h3>From PyPI<a class="headerlink" href="#from-pypi" title="Permalink to this heading">#</a></h3>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>This package is not yet published on PyPI</p>
+</div>
+</section>
+<section id="from-source">
+<h3>From Source<a class="headerlink" href="#from-source" title="Permalink to this heading">#</a></h3>
+<p>To gather the necessary code from source, simple navigate to a directory in which you’d like to store the local copy
+of the package and execute</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/jzuhone/cluster_generator
+</pre></div>
+</div>
+<p>If you want a specific branch of the project, use the <code class="docutils literal notranslate"><span class="pre">-b</span></code> flag in the command and provide the name of the branch.</p>
+<p>Once the git clone has finished, there should be a directory <code class="docutils literal notranslate"><span class="pre">./cluster_generator</span></code> in your current working directory.</p>
+<hr style="height:3px;background-color:black"></section>
+</section>
 <section id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this heading">#</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code> is compatible with Python 3.8+, and requires the following
 Python packages:</p>
 <ul class="simple">
-<li><p><a class="reference external" href="http://unyt.readthedocs.org">unyt</a></p></li>
-<li><p><a class="reference external" href="http://www.numpy.org">numpy</a></p></li>
-<li><p><a class="reference external" href="http://www.scipy.org">scipy</a></p></li>
-<li><p><a class="reference external" href="http://www.h5py.org">h5py</a></p></li>
-<li><p><a class="reference external" href="https://tqdm.github.io">tqdm</a></p></li>
-<li><p><a class="reference external" href="https://yaml.readthedocs.io">ruamel.yaml</a></p></li>
+<li><p><a class="reference external" href="http://unyt.readthedocs.org">unyt</a> [Units and quantity manipulations]</p></li>
+<li><p><a class="reference external" href="http://www.numpy.org">numpy</a> [Numerical operations]</p></li>
+<li><p><a class="reference external" href="http://www.scipy.org">scipy</a> [Interpolation and curve fitting]</p></li>
+<li><p><a class="reference external" href="http://www.h5py.org">h5py</a> [h5 file interaction]</p></li>
+<li><p><a class="reference external" href="https://tqdm.github.io">tqdm</a> [Progress bars]</p></li>
+<li><p><a class="reference external" href="https://yaml.readthedocs.io">ruamel.yaml</a> [yaml support]</p></li>
 </ul>
 <p>These will be installed automatically if you use <code class="docutils literal notranslate"><span class="pre">pip</span></code> or <code class="docutils literal notranslate"><span class="pre">conda</span></code> as detailed below.</p>
+<div class="admonition-recommended admonition">
+<p class="admonition-title">Recommended</p>
 <p>Though not required, it may be useful to install <a class="reference external" href="https://yt-project.org">yt</a>
 for creation of in-memory datasets from <code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code> and/or analysis of
 simulations which are created using initial conditions from
 <code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code>.</p>
+</div>
 </section>
 <section id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">#</a></h2>
@@ -470,6 +512,24 @@ in your Python distribution:</p>
   
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">cluster_generator</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="introduction.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Introduction</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div></div>
   
 </div>
@@ -488,6 +548,11 @@ in your Python distribution:</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-the-package">Getting the Package</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#from-pypi">From PyPI</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#from-source">From Source</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dependencies">Dependencies</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a></li>
 </ul>
