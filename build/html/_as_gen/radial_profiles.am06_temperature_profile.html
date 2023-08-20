@@ -28,7 +28,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=362ab14a" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fd506691" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -386,7 +386,18 @@ document.write(`
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="radial_profiles.html">radial_profiles</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l1 has-children"><a class="reference internal" href="utils.html">utils</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="utils.ensure_list.html">utils.ensure_list</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.ensure_ytarray.html">utils.ensure_ytarray</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.ensure_ytquantity.html">utils.ensure_ytquantity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.generate_particle_radii.html">utils.generate_particle_radii</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.integrate.html">utils.integrate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.integrate_mass.html">utils.integrate_mass</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.integrate_toinf.html">utils.integrate_toinf</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.parse_prng.html">utils.parse_prng</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="radial_profiles.html">radial_profiles</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="radial_profiles.am06_density_profile.html">radial_profiles.am06_density_profile</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">radial_profiles.am06_temperature_profile</a></li>
 <li class="toctree-l2"><a class="reference internal" href="radial_profiles.baseline_entropy_profile.html">radial_profiles.baseline_entropy_profile</a></li>
@@ -418,7 +429,7 @@ document.write(`
 <li class="toctree-l2"><a class="reference internal" href="radial_profiles.vikhlinin_density_profile.html">radial_profiles.vikhlinin_density_profile</a></li>
 <li class="toctree-l2"><a class="reference internal" href="radial_profiles.vikhlinin_temperature_profile.html">radial_profiles.vikhlinin_temperature_profile</a></li>
 <li class="toctree-l2"><a class="reference internal" href="radial_profiles.walker_entropy_profile.html">radial_profiles.walker_entropy_profile</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="radial_profiles.RadialProfile.html">radial_profiles.RadialProfile</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="radial_profiles.RadialProfile.html">radial_profiles.RadialProfile</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="radial_profiles.RadialProfile.__init__.html">radial_profiles.RadialProfile.__init__</a></li>
 <li class="toctree-l3"><a class="reference internal" href="radial_profiles.RadialProfile.add_core.html">radial_profiles.RadialProfile.add_core</a></li>
 <li class="toctree-l3"><a class="reference internal" href="radial_profiles.RadialProfile.cutoff.html">radial_profiles.RadialProfile.cutoff</a></li>
@@ -428,15 +439,51 @@ document.write(`
 </li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="utils.html">utils</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="utils.ensure_list.html">utils.ensure_list</a></li>
-<li class="toctree-l2"><a class="reference internal" href="utils.ensure_ytarray.html">utils.ensure_ytarray</a></li>
-<li class="toctree-l2"><a class="reference internal" href="utils.ensure_ytquantity.html">utils.ensure_ytquantity</a></li>
-<li class="toctree-l2"><a class="reference internal" href="utils.generate_particle_radii.html">utils.generate_particle_radii</a></li>
-<li class="toctree-l2"><a class="reference internal" href="utils.integrate.html">utils.integrate</a></li>
-<li class="toctree-l2"><a class="reference internal" href="utils.integrate_mass.html">utils.integrate_mass</a></li>
-<li class="toctree-l2"><a class="reference internal" href="utils.integrate_toinf.html">utils.integrate_toinf</a></li>
-<li class="toctree-l2"><a class="reference internal" href="utils.parse_prng.html">utils.parse_prng</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="particles.html">particles</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="particles.combine_three_clusters.html">particles.combine_three_clusters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="particles.combine_two_clusters.html">particles.combine_two_clusters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="particles.resample_one_cluster.html">particles.resample_one_cluster</a></li>
+<li class="toctree-l2"><a class="reference internal" href="particles.resample_three_clusters.html">particles.resample_three_clusters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="particles.resample_two_clusters.html">particles.resample_two_clusters</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="particles.ClusterParticles.html">particles.ClusterParticles</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="particles.ClusterParticles.__init__.html">particles.ClusterParticles.__init__</a></li>
+<li class="toctree-l3"><a class="reference internal" href="particles.ClusterParticles.add_black_hole.html">particles.ClusterParticles.add_black_hole</a></li>
+<li class="toctree-l3"><a class="reference internal" href="particles.ClusterParticles.add_offsets.html">particles.ClusterParticles.add_offsets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="particles.ClusterParticles.drop_ptypes.html">particles.ClusterParticles.drop_ptypes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="particles.ClusterParticles.from_file.html">particles.ClusterParticles.from_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="particles.ClusterParticles.from_gadget_file.html">particles.ClusterParticles.from_gadget_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="particles.ClusterParticles.from_h5_file.html">particles.ClusterParticles.from_h5_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="particles.ClusterParticles.keys.html">particles.ClusterParticles.keys</a></li>
+<li class="toctree-l3"><a class="reference internal" href="particles.ClusterParticles.make_radial_cut.html">particles.ClusterParticles.make_radial_cut</a></li>
+<li class="toctree-l3"><a class="reference internal" href="particles.ClusterParticles.set_field.html">particles.ClusterParticles.set_field</a></li>
+<li class="toctree-l3"><a class="reference internal" href="particles.ClusterParticles.to_yt_dataset.html">particles.ClusterParticles.to_yt_dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="particles.ClusterParticles.write_particles.html">particles.ClusterParticles.write_particles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="particles.ClusterParticles.write_particles_to_h5.html">particles.ClusterParticles.write_particles_to_h5</a></li>
+<li class="toctree-l3"><a class="reference internal" href="particles.ClusterParticles.write_to_gadget_file.html">particles.ClusterParticles.write_to_gadget_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="particles.ClusterParticles.num_passive_scalars.html">particles.ClusterParticles.num_passive_scalars</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="relations.html">relations</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="relations.convert_ne_to_density.html">relations.convert_ne_to_density</a></li>
+<li class="toctree-l2"><a class="reference internal" href="relations.f_gas.html">relations.f_gas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="relations.m_bcg.html">relations.m_bcg</a></li>
+<li class="toctree-l2"><a class="reference internal" href="relations.m_sat.html">relations.m_sat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="relations.r_bcg.html">relations.r_bcg</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="gravity.html">gravity</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="gravity.Potential.html">gravity.Potential</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="gravity.Potential.__init__.html">gravity.Potential.__init__</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gravity.Potential.from_fields.html">gravity.Potential.from_fields</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gravity.Potential.from_h5_file.html">gravity.Potential.from_h5_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gravity.Potential.plot.html">gravity.Potential.plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gravity.Potential.potential.html">gravity.Potential.potential</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gravity.Potential.write_potential_to_h5.html">gravity.Potential.write_potential_to_h5</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gravity.Potential.pot.html">gravity.Potential.pot</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
