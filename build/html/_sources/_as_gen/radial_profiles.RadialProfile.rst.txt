@@ -18,7 +18,9 @@ radial_profiles.RadialProfile
       ~RadialProfile.add_core
       ~RadialProfile.cutoff
       ~RadialProfile.from_array
+      ~RadialProfile.from_binary
       ~RadialProfile.plot
+      ~RadialProfile.to_binary
    
    
 

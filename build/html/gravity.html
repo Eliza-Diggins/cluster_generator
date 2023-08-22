@@ -40,6 +40,7 @@
     <script src="_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="_static/copybutton.js?v=f281be69"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'gravity';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -430,6 +431,95 @@ document.write(`
                   
   <section id="gravity-theories">
 <span id="gravity"></span><h1>Gravity Theories<a class="headerlink" href="#gravity-theories" title="Permalink to this heading">#</a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code> library allows users to build galaxy cluster models and initial conditions not only in Newtonian
+gravity, but also in a couple of additional gravitational theories. On this page, summaries of all of the gravity theories included are provided.</p>
+<hr style="height:10px;background-color:black"><section id="mondian-gravity">
+<h2>MONDian Gravity<a class="headerlink" href="#mondian-gravity" title="Permalink to this heading">#</a></h2>
+<p>MOND (MOdified Newtonian Dynamics) is a set of gravitational theories which postulate a divergence from Newtonian gravity in
+regions of low acceleration. First proposed by Milgrom <a class="footnote-reference brackets" href="#id4" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>, MOND theories are universally held to 3 core-postulates:</p>
+<ol class="arabic simple">
+<li><p>At accelerations below some characteristic <span class="math notranslate nohighlight">\(a_0\)</span>, MOND gravity diverges from the Newtonian theory.</p></li>
+<li><p>In that asymptotic case,</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[\frac{a}{a_0}\textbf{a} = \textbf{g}_N\]</div>
+<ol class="arabic simple" start="3">
+<li><p>The transition between the Newtonian regime and the deep-MOND regime occurs over a range of acclerations around <span class="math notranslate nohighlight">\(a_0\)</span>.</p></li>
+</ol>
+<p>There are a variety of approaches by which to implement these postulates into a comprehensive classical field theory, several of which have been
+implemented in <code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code>.</p>
+<section id="aqual">
+<h3>AQUAL<a class="headerlink" href="#aqual" title="Permalink to this heading">#</a></h3>
+<p>The AQUAL <a class="footnote-reference brackets" href="#id6" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a> (Aquadtratic Lagrangian) theory (<code class="docutils literal notranslate"><span class="pre">gravity</span> <span class="pre">=</span> <span class="pre">'AQUAL'</span></code>) is typically considered the quintessential MOND theory, and has a Lagrangian of the form</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{L} = \frac{1}{2}\rho v^2 -\rho \Phi - \frac{a_0^2}{8\pi G} \mathcal{F}\left(\frac{|\nabla \Phi|^2}{a_0^2}\right),\]</div>
+<p>which, upon variation over the field, yields a modified poisson equation</p>
+<div class="math notranslate nohighlight">
+\[4\pi G \rho = \nabla \cdot \left[\mu\left(\frac{|\nabla \Phi|}{a_0}\right)\nabla\Phi\right].\]</div>
+<p>Here <span class="math notranslate nohighlight">\(\mu(x) = d\mathcal{F}(z)/dz\)</span>, where <cite>z = x^2</cite>. To fulfill the postulates of the MOND paradigm, we require that
+<span class="math notranslate nohighlight">\(\mu(x) \to 1\)</span> as <span class="math notranslate nohighlight">\(x \to infty\)</span>, and <span class="math notranslate nohighlight">\(\mu(x) \to x\)</span> as <span class="math notranslate nohighlight">\(x\to 0\)</span>.</p>
+</section>
+<section id="qumond">
+<h3>QUMOND<a class="headerlink" href="#qumond" title="Permalink to this heading">#</a></h3>
+<p>Unlike the AQUAL theory, QUMOND is a quasi-linear implementation of MOND <a class="footnote-reference brackets" href="#id5" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>. The Lagrangian takes the form</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{L} = \frac{1}{2}\rho v^2 - \rho \Phi - \frac{1}{8 \pi G}\left\{2\nabla \Phi \cdot \nabla \Psi -  a_0^2 \mathcal{Q}\left[\frac{|\nabla \Psi|^2}{a_0^2}\right]\right\}.\]</div>
+<p>Variation over <span class="math notranslate nohighlight">\(\Phi\)</span> yields the classical poisson equation:</p>
+<div class="math notranslate nohighlight">
+\[4\pi G \rho_{\mathrm{dyn}} = \nabla^2\Psi.\]</div>
+<p>As such, we identify the field <span class="math notranslate nohighlight">\(\Psi\)</span> as the <strong>Newtonian potential</strong>. Variation over <span class="math notranslate nohighlight">\(\Psi\)</span> yields a second Poisson equation of the form</p>
+<div class="math notranslate nohighlight">
+\[4\pi G \hat{\rho} = \nabla^2\Phi = \nabla \cdot \left[\nu\left(\frac{|\nabla \Psi|}{a_0}\right)\nabla \Psi\right],\]</div>
+<p>where <span class="math notranslate nohighlight">\(\nu\)</span> is related to the function <span class="math notranslate nohighlight">\(\mathcal{Q}\)</span> in much the same way that <span class="math notranslate nohighlight">\(\mu\)</span> is related to <span class="math notranslate nohighlight">\(\mathcal{F}\)</span> in the AQUAL theory.</p>
+<p>In order to meet the necessary criteria for MOND’s core postulates, <span class="math notranslate nohighlight">\(\nu(x) \to 1, x\to \infty\)</span> and <span class="math notranslate nohighlight">\(\nu(x) \to x^{-1/2}, x\to 0\)</span>.</p>
+<div class="admonition-mathematical-note admonition">
+<p class="admonition-title">Mathematical Note</p>
+<p>In general, there is no reason why QUMOND and AQUAL would result in the same dynamics. To see this, consider that AQUAL’s equations of motion reduce as</p>
+<div class="math notranslate nohighlight">
+\[\nabla \cdot \left\{\mu\left(\frac{a}{a_0}\right)\textbf{a} - \textbf{a}_N \right\} = 0, \implies \textbf{a} = \frac{1}{\mu(a/a_0)}\left[\textbf{a}_N + \nabla \times \textbf{H}_A\right],\]</div>
+<p>where <span class="math notranslate nohighlight">\(\textbf{H}_A\)</span> is some vector field.</p>
+<p>Similarly, in QUMOND,</p>
+<div class="math notranslate nohighlight">
+\[\nabla \cdot \left\{\nu\left(\frac{a_N}{a_0}\right)\textbf{a}_N - \textbf{a}\right\} = 0, \implies \textbf{a} = \nu\left(\frac{a_N}{a_0}\right)\textbf{a}_N + \nabla \times \textbf{H}_Q.\]</div>
+<p>In general, the <strong>curl-fields may be arbitrary</strong> and need not be the same; however, in spherical symmetry, no vector field can have a curl. Thus</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\textbf{a}\mu\left(\frac{a}{a_0}\right) = \textbf{a}_N\;\;\text{AQUAL},\\ \nu\left(\frac{a_N}{a_0}\right)\textbf{a}_N = \textbf{a}\;\;\text{QUMOND}.\end{split}\]</div>
+<p>What then is the relationship between <span class="math notranslate nohighlight">\(\mu\)</span> and <span class="math notranslate nohighlight">\(\nu\)</span> for which the observed dynamics are the same? Let <span class="math notranslate nohighlight">\(x = a_N/a_0\)</span> and <span class="math notranslate nohighlight">\(y=a/a_0\)</span>. Then</p>
+<div class="math notranslate nohighlight">
+\[\mu(x) = \nu(y)^{-1}.\]</div>
+<p>Given that <span class="math notranslate nohighlight">\(y = x\mu(x)\)</span>, we recognize that</p>
+<div class="math notranslate nohighlight">
+\[\boxed{\mu(x)=\nu(x\mu(x))^{-1} \implies \mu(x)\nu(x\mu(x)) = 1.}\]</div>
+</div>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<p>The most commonly used interpolation functions are generally <span class="math notranslate nohighlight">\(\mu(x) = x/(1+x^\alpha)^{1/\alpha}\)</span>. The corresponding <span class="math notranslate nohighlight">\(\nu\)</span> can then be derived. In this case, we have to solve the equation</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mu(y\nu(y)) = \frac{1}{\nu(y)}.\\\frac{y\nu(y)}{\left(1+(y\nu(y))^\alpha\right)^{1/\alpha}} = \frac{1}{\nu(y)}.\\
+\nu(y) = \left[\frac{1}{2}\left(1+\sqrt{1+\frac{4}{y^\alpha}}\right)\right]^{1/\alpha}.\end{split}\]</div>
+<p>Throughout this reference, we call functions of this form <strong>Milgromian Inverses</strong>, and denote then as</p>
+<div class="math notranslate nohighlight">
+\[\mu(x) = \nu^\textbf{M}(x)\]</div>
+</div>
+</section>
+</section>
+</section>
+<section id="references">
+<h1>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h1>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id4" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Milgrom, M. 1983ApJ…270..365M</p>
+</aside>
+<aside class="footnote brackets" id="id5" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">2</a><span class="fn-bracket">]</span></span>
+<p>Milgrom, M. 2010MNRAS.403..886M</p>
+</aside>
+<aside class="footnote brackets" id="id6" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">3</a><span class="fn-bracket">]</span></span>
+<p>Bekenstein, J. Milgrom, M. 1984ApJ…286….7B</p>
+</aside>
+</aside>
 </section>
 
 
@@ -454,6 +544,25 @@ document.write(`
             
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Gravity Theories</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mondian-gravity">MONDian Gravity</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aqual">AQUAL</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qumond">QUMOND</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+
+  </nav></div>
 
   <div class="sidebar-secondary-item">
   <div class="tocsection sourcelink">

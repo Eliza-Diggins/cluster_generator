@@ -19,7 +19,10 @@
       integrate
       integrate_mass
       integrate_toinf
+      log_string
+      moving_average
       parse_prng
+      truncate_spline
    
    
 

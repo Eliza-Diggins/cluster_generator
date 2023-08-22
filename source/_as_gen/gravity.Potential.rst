@@ -32,5 +32,9 @@ gravity.Potential
       :recursive:
    
       ~Potential.pot
+      ~Potential.fields
+      ~Potential.gravity
+      ~Potential.num_elements
+      ~Potential.attrs
    
    

@@ -394,7 +394,10 @@ document.write(`
 <li class="toctree-l2"><a class="reference internal" href="_as_gen/utils.integrate.html">utils.integrate</a></li>
 <li class="toctree-l2"><a class="reference internal" href="_as_gen/utils.integrate_mass.html">utils.integrate_mass</a></li>
 <li class="toctree-l2"><a class="reference internal" href="_as_gen/utils.integrate_toinf.html">utils.integrate_toinf</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_as_gen/utils.log_string.html">utils.log_string</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_as_gen/utils.moving_average.html">utils.moving_average</a></li>
 <li class="toctree-l2"><a class="reference internal" href="_as_gen/utils.parse_prng.html">utils.parse_prng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_as_gen/utils.truncate_spline.html">utils.truncate_spline</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="_as_gen/radial_profiles.html">radial_profiles</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
@@ -434,7 +437,9 @@ document.write(`
 <li class="toctree-l3"><a class="reference internal" href="_as_gen/radial_profiles.RadialProfile.add_core.html">radial_profiles.RadialProfile.add_core</a></li>
 <li class="toctree-l3"><a class="reference internal" href="_as_gen/radial_profiles.RadialProfile.cutoff.html">radial_profiles.RadialProfile.cutoff</a></li>
 <li class="toctree-l3"><a class="reference internal" href="_as_gen/radial_profiles.RadialProfile.from_array.html">radial_profiles.RadialProfile.from_array</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/radial_profiles.RadialProfile.from_binary.html">radial_profiles.RadialProfile.from_binary</a></li>
 <li class="toctree-l3"><a class="reference internal" href="_as_gen/radial_profiles.RadialProfile.plot.html">radial_profiles.RadialProfile.plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/radial_profiles.RadialProfile.to_binary.html">radial_profiles.RadialProfile.to_binary</a></li>
 </ul>
 </li>
 </ul>
@@ -482,6 +487,10 @@ document.write(`
 <li class="toctree-l3"><a class="reference internal" href="_as_gen/gravity.Potential.potential.html">gravity.Potential.potential</a></li>
 <li class="toctree-l3"><a class="reference internal" href="_as_gen/gravity.Potential.write_potential_to_h5.html">gravity.Potential.write_potential_to_h5</a></li>
 <li class="toctree-l3"><a class="reference internal" href="_as_gen/gravity.Potential.pot.html">gravity.Potential.pot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/gravity.Potential.fields.html">gravity.Potential.fields</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/gravity.Potential.gravity.html">gravity.Potential.gravity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/gravity.Potential.num_elements.html">gravity.Potential.num_elements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/gravity.Potential.attrs.html">gravity.Potential.attrs</a></li>
 </ul>
 </li>
 </ul>
@@ -550,7 +559,8 @@ document.write(`
 <tr class="row-even"><td><p><a class="reference internal" href="_as_gen/radial_profiles.html#module-radial_profiles" title="radial_profiles"><code class="xref py py-obj docutils literal notranslate"><span class="pre">radial_profiles</span></code></a></p></td>
 <td><p>Radial Profiles
 
-Radial profiles for use in cluster generation.</p></td>
+Radial profiles, as instantiated through the radial_profiles.RadialProfile class are wrappers for standard lambda functions
+which are used to provide additional structure for radial profiles of temperature, density, cumulative mass, and entropy in galaxy clusters.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="_as_gen/particles.html#module-particles" title="particles"><code class="xref py py-obj docutils literal notranslate"><span class="pre">particles</span></code></a></p></td>
 <td><p>Module for management of particle initial conditions.</p></td>
@@ -561,7 +571,11 @@ Radial profiles for use in cluster generation.</p></td>
 The functions in this module provide empirical relations between profile variables in a variety of cases.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="_as_gen/gravity.html#module-gravity" title="gravity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gravity</span></code></a></p></td>
-<td><p>Tools for working with gravitational potentials and alternative gravity theories.</p></td>
+<td><p>Gravity
+
+The gravity module contains the gravity.Potential class, which essentially acts as a wrapper for
+solving the Poisson equation in each of the available gravitational theories. Potential objects contain fields and
+can be written to / read from binary files.</p></td>
 </tr>
 </tbody>
 </table>

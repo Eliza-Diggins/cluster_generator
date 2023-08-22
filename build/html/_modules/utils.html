@@ -439,11 +439,12 @@ document.write(`
 <span class="kn">from</span> <span class="nn">unyt</span> <span class="kn">import</span> <span class="n">unyt_array</span><span class="p">,</span> <span class="n">unyt_quantity</span><span class="p">,</span> <span class="n">kpc</span>
 <span class="kn">from</span> <span class="nn">unyt</span> <span class="kn">import</span> <span class="n">physical_constants</span> <span class="k">as</span> <span class="n">pc</span>
 <span class="kn">from</span> <span class="nn">numpy.random</span> <span class="kn">import</span> <span class="n">RandomState</span>
-
-
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
 <span class="c1"># -------------------------------------------------------------------------------------------------------------------- #</span>
 <span class="c1"># Constructing the Logger ============================================================================================ #</span>
 <span class="c1"># -------------------------------------------------------------------------------------------------------------------- #</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
 <span class="n">cgLogger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;cluster_generator&quot;</span><span class="p">)</span>
 
 <span class="n">ufstring</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%(name)-3s</span><span class="s2"> : [</span><span class="si">%(levelname)-9s</span><span class="s2">] </span><span class="si">%(asctime)s</span><span class="s2"> </span><span class="si">%(message)s</span><span class="s2">&quot;</span>
@@ -460,6 +461,8 @@ document.write(`
 
 <span class="n">mylog</span> <span class="o">=</span> <span class="n">cgLogger</span>
 
+<div class="viewcode-block" id="log_string"><a class="viewcode-back" href="../_as_gen/utils.log_string.html#utils.log_string">[docs]</a><span class="k">def</span> <span class="nf">log_string</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">ufstring</span><span class="o">%</span><span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;cluster_generator&quot;</span><span class="p">,</span><span class="s2">&quot;asctime&quot;</span><span class="p">:</span><span class="n">time</span><span class="o">.</span><span class="n">asctime</span><span class="p">(),</span><span class="s2">&quot;message&quot;</span><span class="p">:</span><span class="n">message</span><span class="p">,</span><span class="s2">&quot;levelname&quot;</span><span class="p">:</span><span class="s2">&quot;INFO&quot;</span><span class="p">}</span></div>
 <span class="c1"># -------------------------------------------------------------------------------------------------------------------- #</span>
 <span class="c1"># Units and Constants ================================================================================================ #</span>
 <span class="c1"># -------------------------------------------------------------------------------------------------------------------- #</span>
@@ -478,6 +481,8 @@ document.write(`
 <span class="n">mu</span> <span class="o">=</span> <span class="mf">1.0</span><span class="o">/</span><span class="p">(</span><span class="mf">2.0</span><span class="o">*</span><span class="n">X_H</span> <span class="o">+</span> <span class="mf">0.75</span><span class="o">*</span><span class="p">(</span><span class="mf">1.0</span><span class="o">-</span><span class="n">X_H</span><span class="p">))</span>
 <span class="n">mue</span> <span class="o">=</span> <span class="mf">1.0</span><span class="o">/</span><span class="p">(</span><span class="n">X_H</span><span class="o">+</span><span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="mf">1.0</span><span class="o">-</span><span class="n">X_H</span><span class="p">))</span>
 
+<span class="c1"># -- Utility functions -- #</span>
+<span class="n">_truncator_function</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">x</span><span class="p">:</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="p">(</span><span class="n">x</span><span class="o">/</span><span class="n">r</span><span class="p">)</span><span class="o">**</span><span class="n">a</span><span class="p">)</span>
 <span class="c1">#  Settings</span>
 <span class="c1"># ----------------------------------------------------------------------------------------------------------------- #</span>
 <span class="c1">#TODO: This could read from a bin file</span>
@@ -518,6 +523,47 @@ document.write(`
 <div class="viewcode-block" id="ensure_list"><a class="viewcode-back" href="../_as_gen/utils.ensure_list.html#utils.ensure_list">[docs]</a><span class="k">def</span> <span class="nf">ensure_list</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">always_iterable</span><span class="p">(</span><span class="n">x</span><span class="p">))</span></div>
 
+<div class="viewcode-block" id="truncate_spline"><a class="viewcode-back" href="../_as_gen/utils.truncate_spline.html#utils.truncate_spline">[docs]</a><span class="k">def</span> <span class="nf">truncate_spline</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">r_t</span><span class="p">,</span><span class="n">a</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Takes the function ``f`` and returns a truncated equivalent of it, which becomes</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">    f&#39;(x) = f(r_t) \left(\frac{x}{r_t}\right)**(r_t*df/dx(r_t)/f(r_t))</span>
+
+<span class="sd">    This preserves the slope and continuity of the function be yields a monotonic power law at large :math:`r`.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    f: InterpolatedUnivariateSpline</span>
+<span class="sd">        The function to truncate</span>
+<span class="sd">    r_t: float</span>
+<span class="sd">        The scale radius</span>
+<span class="sd">    a: float</span>
+<span class="sd">        Truncation rate. Higher values cause transition more quickly about :math:`r_t`.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    callable</span>
+<span class="sd">        The new function.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; from cluster_generator.radial_profiles import hernquist_density_profile</span>
+<span class="sd">    &gt;&gt;&gt; from scipy.interpolate import InterpolatedUnivariateSpline</span>
+<span class="sd">    &gt;&gt;&gt; import matplotlib.pyplot as plt</span>
+<span class="sd">    &gt;&gt;&gt; x = np.geomspace(0.1,1000,1000)</span>
+<span class="sd">    &gt;&gt;&gt; rho = hernquist_density_profile(1e6,1000)(x)</span>
+<span class="sd">    &gt;&gt;&gt; rho_spline = InterpolatedUnivariateSpline(x,rho)</span>
+<span class="sd">    &gt;&gt;&gt; xl = np.geomspace(0.1,1e7,1000)</span>
+<span class="sd">    &gt;&gt;&gt; _rho_trunc = truncate_spline(rho_spline,1000,7)</span>
+<span class="sd">    &gt;&gt;&gt; plt.figure()</span>
+<span class="sd">    &gt;&gt;&gt; plt.loglog(x,rho,&quot;k-&quot;,lw=3)</span>
+<span class="sd">    &gt;&gt;&gt; plt.loglog(xl,rho_spline(xl),&quot;k:&quot;)</span>
+<span class="sd">    &gt;&gt;&gt; plt.loglog(xl,_rho_trunc(xl),&quot;r-.&quot;)</span>
+<span class="sd">    &gt;&gt;&gt; plt.show()</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_gamma</span> <span class="o">=</span> <span class="n">r_t</span><span class="o">*</span><span class="n">f</span><span class="p">(</span><span class="n">r_t</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="n">f</span><span class="p">(</span><span class="n">r_t</span><span class="p">)</span> <span class="c1"># This is the slope.</span>
+    <span class="k">return</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">g</span><span class="o">=</span><span class="n">_gamma</span><span class="p">,</span><span class="n">a</span><span class="o">=</span><span class="n">a</span><span class="p">,</span><span class="n">r</span><span class="o">=</span><span class="n">r_t</span><span class="p">:</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">*</span><span class="n">_truncator_function</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">_truncator_function</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">x</span><span class="p">))</span><span class="o">*</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">r</span><span class="p">)</span><span class="o">*</span><span class="n">_truncator_function</span><span class="p">(</span><span class="o">-</span><span class="n">g</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">x</span><span class="p">))</span></div>
 <span class="c1"># -------------------------------------------------------------------------------------------------------------------- #</span>
 <span class="c1"># Math Utilities ===================================================================================================== #</span>
 <span class="c1"># -------------------------------------------------------------------------------------------------------------------- #</span>
@@ -615,7 +661,8 @@ document.write(`
     <span class="n">ret</span><span class="p">[:]</span> <span class="o">+=</span> <span class="n">quad</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span> <span class="n">rmax</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">100</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">ret</span></div>
 
-
+<div class="viewcode-block" id="moving_average"><a class="viewcode-back" href="../_as_gen/utils.moving_average.html#utils.moving_average">[docs]</a><span class="k">def</span> <span class="nf">moving_average</span><span class="p">(</span><span class="n">array</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">convolve</span><span class="p">(</span><span class="n">array</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">),</span><span class="s2">&quot;same&quot;</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span></div>
 <div class="viewcode-block" id="generate_particle_radii"><a class="viewcode-back" href="../_as_gen/utils.generate_particle_radii.html#utils.generate_particle_radii">[docs]</a><span class="k">def</span> <span class="nf">generate_particle_radii</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">num_particles</span><span class="p">,</span> <span class="n">r_max</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">prng</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generates an array of sampled radii for ``num_particles`` particles subject to the mass distribution defined by ``r`` and ``m``.</span>

@@ -395,7 +395,10 @@ document.write(`
 <li class="toctree-l2"><a class="reference internal" href="utils.integrate.html">utils.integrate</a></li>
 <li class="toctree-l2"><a class="reference internal" href="utils.integrate_mass.html">utils.integrate_mass</a></li>
 <li class="toctree-l2"><a class="reference internal" href="utils.integrate_toinf.html">utils.integrate_toinf</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.log_string.html">utils.log_string</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.moving_average.html">utils.moving_average</a></li>
 <li class="toctree-l2"><a class="reference internal" href="utils.parse_prng.html">utils.parse_prng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.truncate_spline.html">utils.truncate_spline</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="radial_profiles.html">radial_profiles</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
@@ -435,7 +438,9 @@ document.write(`
 <li class="toctree-l3"><a class="reference internal" href="radial_profiles.RadialProfile.add_core.html">radial_profiles.RadialProfile.add_core</a></li>
 <li class="toctree-l3"><a class="reference internal" href="radial_profiles.RadialProfile.cutoff.html">radial_profiles.RadialProfile.cutoff</a></li>
 <li class="toctree-l3"><a class="reference internal" href="radial_profiles.RadialProfile.from_array.html">radial_profiles.RadialProfile.from_array</a></li>
+<li class="toctree-l3"><a class="reference internal" href="radial_profiles.RadialProfile.from_binary.html">radial_profiles.RadialProfile.from_binary</a></li>
 <li class="toctree-l3"><a class="reference internal" href="radial_profiles.RadialProfile.plot.html">radial_profiles.RadialProfile.plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="radial_profiles.RadialProfile.to_binary.html">radial_profiles.RadialProfile.to_binary</a></li>
 </ul>
 </li>
 </ul>
@@ -483,6 +488,10 @@ document.write(`
 <li class="toctree-l3"><a class="reference internal" href="gravity.Potential.potential.html">gravity.Potential.potential</a></li>
 <li class="toctree-l3"><a class="reference internal" href="gravity.Potential.write_potential_to_h5.html">gravity.Potential.write_potential_to_h5</a></li>
 <li class="toctree-l3"><a class="reference internal" href="gravity.Potential.pot.html">gravity.Potential.pot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gravity.Potential.fields.html">gravity.Potential.fields</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gravity.Potential.gravity.html">gravity.Potential.gravity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gravity.Potential.num_elements.html">gravity.Potential.num_elements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gravity.Potential.attrs.html">gravity.Potential.attrs</a></li>
 </ul>
 </li>
 </ul>
@@ -551,39 +560,36 @@ document.write(`
 <h1>gravity.Potential<a class="headerlink" href="#gravity-potential" title="Permalink to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="gravity.Potential">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gravity.</span></span><span class="sig-name descname"><span class="pre">Potential</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fields</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gravity</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gravity.html#Potential"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gravity.Potential" title="Permalink to this definition">#</a></dt>
-<dd><p>The <code class="docutils literal notranslate"><span class="pre">Potential</span></code> class is a wrapper for a set of modified 1-D poisson solvers which obtain the correct potential
-of the initialized system for use in determining other criteria of the system.</p>
-<div class="admonition-feature admonition">
-<p class="admonition-title">Feature</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">Potential</span></code> class can facilitate the use of MOND gravities through two implementations, <code class="docutils literal notranslate"><span class="pre">AQUAL</span></code> and <code class="docutils literal notranslate"><span class="pre">QUMOND</span></code>.</p>
-</div>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gravity.</span></span><span class="sig-name descname"><span class="pre">Potential</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fields</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gravity</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gravity.html#Potential"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gravity.Potential" title="Permalink to this definition">#</a></dt>
+<dd><p>The <a class="reference internal" href="#gravity.Potential" title="gravity.Potential"><code class="xref py py-class docutils literal notranslate"><span class="pre">gravity.Potential</span></code></a> class underlies all of the galaxy cluster models used in the <code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code> library. This underlying
+structure is used to contain / manage <code class="docutils literal notranslate"><span class="pre">fields</span></code> (data profiles) and compute potentials from them using a variety of gravities.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>fields</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>) – The fields specified to the <code class="docutils literal notranslate"><span class="pre">Potential</span></code> object. Depending on the methodology used to determine the
-potential, certain fields must be specified.</p></li>
-<li><p><strong>gravity</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The type of gravity that is in use. Options are <code class="docutils literal notranslate"><span class="pre">AQUAL</span></code>, <code class="docutils literal notranslate"><span class="pre">QUMOND</span></code>, or <code class="docutils literal notranslate"><span class="pre">Newtonian</span></code>.</p></li>
-<li><p><strong>attrs</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>) – <p>Attributes to pass to the <code class="docutils literal notranslate"><span class="pre">Potential</span></code>. These may contain a variety of pieces of information contained in the
-table below:</p>
+<li><p><strong>fields</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code> of <code class="docutils literal notranslate"><span class="pre">{str:</span> <span class="pre">unyt_array}</span></code>) – The fields parameter should include <code class="docutils literal notranslate"><span class="pre">unyt_array</span></code> objects for each of the fields the user wants to implement. Any field name is valid; however,
+standard names should be used for fields that are necessary for generation / manipulation of the data.</p></li>
+<li><p><strong>gravity</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The gravity theory to use. The list of available gravitational theories can be found at <a class="reference internal" href="../gravity.html#gravity"><span class="std std-ref">Gravity Theories</span></a>.</p></li>
+<li><p><strong>**kwargs</strong> – <p>Additional parameters may be passed to the <a class="reference internal" href="#gravity.Potential" title="gravity.Potential"><code class="xref py py-class docutils literal notranslate"><span class="pre">gravity.Potential</span></code></a> instance through the use of <code class="docutils literal notranslate"><span class="pre">**kwargs</span></code>. Generally these are not necessary, or are
+automatically generated as necessary behind the scenes; however, some special kwargs do exist of which the user should be aware:</p>
 <table class="table">
 <thead>
-<tr class="row-odd"><th class="head"><p>Attribute Name</p></th>
+<tr class="row-odd"><th class="head"><p>kwarg name</p></th>
+<th class="head"><p>kwarg</p></th>
 <th class="head"><p>Description</p></th>
-<th class="head"><p>Types</p></th>
-<th class="head"><p>Default</p></th>
+<th class="head"><p>Has Default?</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">interp_function</span></code></p></td>
-<td><p>The MOND specific interpolation function</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">callable</span></code></p></td>
-<td><p><span class="math notranslate nohighlight">\(\frac{x}{x+1}\)</span></p></td>
+<tr class="row-even"><td><p>Interpolation Function</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">interp_function</span></code></p></td>
+<td><p>The MONDian interpolation function</p></td>
+<td><p>AQUAL: <span class="math notranslate nohighlight">\(\mu(x)=x/(1+x^\alpha)^{1/\alpha}\)</span>
+QUMOND: <span class="math notranslate nohighlight">\(\nu(x)=\left[\frac{1}{2}\left(1+\sqrt{1+\frac{4}{x^\alpha}}\right)\right]^{1/\alpha}\)</span></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">a_0</span></code></p></td>
-<td><p>The MOND acceleration constant.</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">unyt</span> <span class="pre">float</span></code></p></td>
-<td><p><span class="math notranslate nohighlight">\(1.2\times 10^{-10} \mathrm{\frac{m}{s^2}}\)</span></p></td>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(a_0\)</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">a_0</span></code></p></td>
+<td><p>The MONDian <span class="math notranslate nohighlight">\(a_0\)</span> constant</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">True</span></code>: <span class="math notranslate nohighlight">\(a_0 = 1.2 \times 10^{-10} \mathrm{m\;s^{-2}}\)</span></p></td>
 </tr>
 </tbody>
 </table>
@@ -591,51 +597,14 @@ table below:</p>
 </ul>
 </dd>
 </dl>
-<p class="rubric">Notes</p>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">cluster_generator.tests.utils</span> <span class="kn">import</span> <span class="n">generate_mdr_potential</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="gp">&gt;&gt;&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="n">generate_mdr_potential</span><span class="p">()</span> <span class="c1">#: Generating the profile from an SNFW profile</span>
-<span class="gp">&gt;&gt;&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1">#- Generating the potential class objects from fields -#</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">pot_AQUAL</span> <span class="o">=</span> <span class="n">Potential</span><span class="o">.</span><span class="n">from_fields</span><span class="p">({</span><span class="s2">&quot;total_mass&quot;</span><span class="p">:</span> <span class="n">m</span><span class="p">,</span> <span class="s2">&quot;total_density&quot;</span><span class="p">:</span> <span class="n">d</span><span class="p">,</span> <span class="s2">&quot;radius&quot;</span><span class="p">:</span> <span class="n">r</span><span class="p">},</span> <span class="n">gravity</span><span class="o">=</span><span class="s2">&quot;AQUAL&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">pot_NEWTONIAN</span> <span class="o">=</span> <span class="n">Potential</span><span class="o">.</span><span class="n">from_fields</span><span class="p">({</span><span class="s2">&quot;total_mass&quot;</span><span class="p">:</span> <span class="n">m</span><span class="p">,</span> <span class="s2">&quot;total_density&quot;</span><span class="p">:</span> <span class="n">d</span><span class="p">,</span> <span class="s2">&quot;radius&quot;</span><span class="p">:</span> <span class="n">r</span><span class="p">},</span> <span class="n">gravity</span><span class="o">=</span><span class="s2">&quot;Newtonian&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">pot_QUMOND</span> <span class="o">=</span> <span class="n">Potential</span><span class="o">.</span><span class="n">from_fields</span><span class="p">({</span><span class="s2">&quot;total_mass&quot;</span><span class="p">:</span> <span class="n">m</span><span class="p">,</span> <span class="s2">&quot;total_density&quot;</span><span class="p">:</span> <span class="n">d</span><span class="p">,</span> <span class="s2">&quot;radius&quot;</span><span class="p">:</span> <span class="n">r</span><span class="p">},</span> <span class="n">gravity</span><span class="o">=</span><span class="s2">&quot;QUMOND&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1">#- Plotting</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">figure</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span> <span class="o">=</span> <span class="n">figure</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">121</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">ax2</span> <span class="o">=</span> <span class="n">figure</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">122</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">_</span><span class="p">,</span><span class="n">_</span> <span class="o">=</span> <span class="n">pot_AQUAL</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">fig</span><span class="o">=</span><span class="n">figure</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;AQUAL&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">_</span><span class="p">,</span><span class="n">_</span> <span class="o">=</span> <span class="n">pot_NEWTONIAN</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">fig</span><span class="o">=</span><span class="n">figure</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Newtonian&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">_</span><span class="p">,</span><span class="n">_</span> <span class="o">=</span> <span class="n">pot_QUMOND</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">fig</span><span class="o">=</span><span class="n">figure</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;QUMOND&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">_</span> <span class="o">=</span> <span class="n">ax2</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">pot_QUMOND</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">pot_QUMOND</span><span class="p">[</span><span class="s2">&quot;gravitational_potential&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">,</span><span class="n">pot_QUMOND</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">),</span><span class="s2">&quot;r&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">_</span> <span class="o">=</span> <span class="n">ax2</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">pot_AQUAL</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">pot_AQUAL</span><span class="p">[</span><span class="s2">&quot;gravitational_potential&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">,</span><span class="n">pot_AQUAL</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">),</span><span class="s2">&quot;b&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">_</span> <span class="o">=</span> <span class="n">ax2</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">pot_NEWTONIAN</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">pot_NEWTONIAN</span><span class="p">[</span><span class="s2">&quot;gravitational_potential&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">,</span><span class="n">pot_NEWTONIAN</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">),</span><span class="s2">&quot;k&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">_</span> <span class="o">=</span> <span class="n">ax2</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">_default_a_0</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;kpc/Myr**2&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">d</span><span class="p">,</span><span class="n">xmin</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">amin</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">d</span><span class="p">),</span><span class="n">xmax</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">d</span><span class="p">),</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;c&quot;</span><span class="p">,</span><span class="n">ls</span><span class="o">=</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">_</span> <span class="o">=</span> <span class="n">ax2</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">pot_NEWTONIAN</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">,(</span><span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">pot_NEWTONIAN</span><span class="p">[</span><span class="s2">&quot;gravitational_potential&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">,</span><span class="n">pot_NEWTONIAN</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="n">_default_a_0</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;kpc/Myr**2&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">d</span><span class="p">,</span><span class="s2">&quot;r:&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">_</span> <span class="o">=</span> <span class="n">ax2</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">pot_NEWTONIAN</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">,(</span><span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">pot_NEWTONIAN</span><span class="p">[</span><span class="s2">&quot;gravitational_potential&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">,</span><span class="n">pot_NEWTONIAN</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">)</span><span class="o">*</span><span class="n">_default_a_0</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;kpc/Myr**2&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">d</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span><span class="s2">&quot;b:&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">_</span> <span class="o">=</span> <span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Radius [kpc]&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">_</span> <span class="o">=</span> <span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\left|a\right|,\;\;\left[\mathrm{\frac</span><span class="si">{kpc}</span><span class="s2">{Myr^2}}\right]$&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\left|\Phi\right|,\;\;\left[\mathrm{\frac{kpc^2}{Myr^2}}\right]$&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">_</span> <span class="o">=</span> <span class="n">ax2</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.17</span><span class="p">,</span><span class="mf">6e-2</span><span class="p">,</span><span class="sa">r</span><span class="s2">&quot;$\frac{a_{\mathrm</span><span class="si">{newt}</span><span class="s2">^2}}</span><span class="si">{a_0}</span><span class="s2">$&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">_</span> <span class="o">=</span> <span class="n">ax2</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.17</span><span class="p">,</span><span class="mf">1.4e-2</span><span class="p">,</span><span class="sa">r</span><span class="s2">&quot;$a_{\mathrm</span><span class="si">{newt}</span><span class="s2">}$&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">_</span> <span class="o">=</span> <span class="n">ax2</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.17</span><span class="p">,</span><span class="mf">4e-3</span><span class="p">,</span><span class="sa">r</span><span class="s2">&quot;$\sqrt{a_0a_{\mathrm</span><span class="si">{newt}</span><span class="s2">}}$&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;gravitational_potential&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">_</span> <span class="o">=</span> <span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Acceleration&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">wspace</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
-</pre></div>
-</div>
-<img alt="../_images/image1.png" src="../_images/image1.png" />
 <p class="rubric">Methods</p>
 <table class="autosummary longtable table autosummary">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="gravity.Potential.__init__.html#gravity.Potential.__init__" title="gravity.Potential.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(fields, gravity, attrs)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="gravity.Potential.__init__.html#gravity.Potential.__init__" title="gravity.Potential.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(fields, gravity, **kwargs)</p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="gravity.Potential.from_fields.html#gravity.Potential.from_fields" title="gravity.Potential.from_fields"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_fields</span></code></a>(fields[, gravity])</p></td>
-<td><p>Initializes a <code class="docutils literal notranslate"><span class="pre">Potential</span></code> object from raw input fields <code class="docutils literal notranslate"><span class="pre">fields</span></code>.</p></td>
+<td><p>Initializes a <a class="reference internal" href="#gravity.Potential" title="gravity.Potential"><code class="xref py py-class docutils literal notranslate"><span class="pre">gravity.Potential</span></code></a> object from its constituent fields.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="gravity.Potential.from_h5_file.html#gravity.Potential.from_h5_file" title="gravity.Potential.from_h5_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_h5_file</span></code></a>(filename)</p></td>
 <td><p>Generates the <code class="docutils literal notranslate"><span class="pre">Potential</span></code> object from an <code class="docutils literal notranslate"><span class="pre">HDF5</span></code> file.</p></td>
@@ -643,11 +612,11 @@ table below:</p>
 <tr class="row-even"><td><p><a class="reference internal" href="gravity.Potential.plot.html#gravity.Potential.plot" title="gravity.Potential.plot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot</span></code></a>([rmin, rmax, fig, ax])</p></td>
 <td><p>Plot a field vs radius from this model using Matplotlib.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="gravity.Potential.potential.html#gravity.Potential.potential" title="gravity.Potential.potential"><code class="xref py py-obj docutils literal notranslate"><span class="pre">potential</span></code></a>()</p></td>
-<td><p>Computes the potential from available fields.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="gravity.Potential.potential.html#gravity.Potential.potential" title="gravity.Potential.potential"><code class="xref py py-obj docutils literal notranslate"><span class="pre">potential</span></code></a>([method])</p></td>
+<td><p>Computes the potential of the <code class="docutils literal notranslate"><span class="pre">Potential</span></code> object using any of a number of methods.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="gravity.Potential.write_potential_to_h5.html#gravity.Potential.write_potential_to_h5" title="gravity.Potential.write_potential_to_h5"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_potential_to_h5</span></code></a>(output_filename[, ...])</p></td>
-<td><p>Write the <code class="docutils literal notranslate"><span class="pre">Potential</span></code> object to an <code class="docutils literal notranslate"><span class="pre">h5</span></code> file.</p></td>
+<td><p>Write an instance of <a class="reference internal" href="#gravity.Potential" title="gravity.Potential"><code class="xref py py-class docutils literal notranslate"><span class="pre">gravity.Potential</span></code></a> to an <code class="docutils literal notranslate"><span class="pre">HDF5</span></code> file.</p></td>
 </tr>
 </tbody>
 </table>
@@ -655,7 +624,19 @@ table below:</p>
 <table class="autosummary longtable table autosummary">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="gravity.Potential.pot.html#gravity.Potential.pot" title="gravity.Potential.pot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pot</span></code></a></p></td>
-<td><p>The potential array of the <code class="docutils literal notranslate"><span class="pre">Potential</span></code>.</p></td>
+<td><p>The gravitational potential of the system.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="gravity.Potential.fields.html#gravity.Potential.fields" title="gravity.Potential.fields"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fields</span></code></a></p></td>
+<td><p>The <code class="docutils literal notranslate"><span class="pre">fields</span></code> associated with the <code class="docutils literal notranslate"><span class="pre">Potential</span></code> object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="gravity.Potential.gravity.html#gravity.Potential.gravity" title="gravity.Potential.gravity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gravity</span></code></a></p></td>
+<td><p>The gravity type of the <code class="docutils literal notranslate"><span class="pre">Potential</span></code> instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="gravity.Potential.num_elements.html#gravity.Potential.num_elements" title="gravity.Potential.num_elements"><code class="xref py py-obj docutils literal notranslate"><span class="pre">num_elements</span></code></a></p></td>
+<td><p>The number of elements in each <code class="docutils literal notranslate"><span class="pre">field</span></code> array.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="gravity.Potential.attrs.html#gravity.Potential.attrs" title="gravity.Potential.attrs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">attrs</span></code></a></p></td>
+<td><p>Additional attributes associated with the object.</p></td>
 </tr>
 </tbody>
 </table>

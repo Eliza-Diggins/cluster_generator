@@ -433,7 +433,11 @@ document.write(`
 <span class="sd">===============</span>
 <span class="sd">Radial Profiles</span>
 <span class="sd">===============</span>
-<span class="sd">Radial profiles for use in cluster generation.</span>
+<span class="sd">Radial profiles, as instantiated through the :py:class:`radial_profiles.RadialProfile` class are wrappers for standard ``lambda`` functions</span>
+<span class="sd">which are used to provide additional structure for radial profiles of temperature, density, cumulative mass, and entropy in galaxy clusters.</span>
+
+<span class="sd">Each ``RadialProfile`` object has attached methods for altering the profile to add cores, truncate the profile, and a variety of other tasks.</span>
+
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
@@ -578,6 +582,48 @@ document.write(`
         <span class="kn">from</span> <span class="nn">scipy.interpolate</span> <span class="kn">import</span> <span class="n">UnivariateSpline</span>
         <span class="n">f</span> <span class="o">=</span> <span class="n">UnivariateSpline</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">f_r</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">f</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RadialProfile.from_binary"><a class="viewcode-back" href="../_as_gen/radial_profiles.RadialProfile.from_binary.html#radial_profiles.RadialProfile.from_binary">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_binary</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span><span class="n">f</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Loads a specific instance of a ``RadialProfile`` object from the serialized version of the instance saved to disk.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        f: str</span>
+<span class="sd">            The filename to open. Should be a valid ``.rp`` file type.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        RadialProfile</span>
+<span class="sd">            The ``RadialProfile`` object on disk.</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        The serialization of the ``RadialProfile`` object is done using the ``pickle`` library.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">dill</span> <span class="k">as</span> <span class="nn">pickle</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">bf</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">bf</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RadialProfile.to_binary"><a class="viewcode-back" href="../_as_gen/radial_profiles.RadialProfile.to_binary.html#radial_profiles.RadialProfile.to_binary">[docs]</a>    <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">f</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sends the ``RadialProfile`` instance to a serialized binary file.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        f: str</span>
+<span class="sd">            The preferred filename. For consistency, binary files should have ``.rp`` extension; however, this is not required.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">dill</span> <span class="k">as</span> <span class="nn">pickle</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">bf</span><span class="p">:</span>
+
+            <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">bf</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="RadialProfile.plot"><a class="viewcode-back" href="../_as_gen/radial_profiles.RadialProfile.plot.html#radial_profiles.RadialProfile.plot">[docs]</a>    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rmin</span><span class="p">,</span> <span class="n">rmax</span><span class="p">,</span> <span class="n">num_points</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">fig</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
              <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -1385,6 +1431,16 @@ document.write(`
     <span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="mf">3.0</span><span class="o">*</span><span class="n">m_r</span><span class="p">(</span><span class="n">r</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mf">4.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">r</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span> <span class="o">-</span> <span class="n">delta</span><span class="o">*</span><span class="n">rho_crit</span>
     <span class="n">r_delta</span> <span class="o">=</span> <span class="n">bisect</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">10000.0</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">r_delta</span><span class="p">,</span> <span class="n">m_r</span><span class="p">(</span><span class="n">r_delta</span><span class="p">)</span></div>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">power_law_profile</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">u</span><span class="o">.</span><span class="n">to_binary</span><span class="p">(</span><span class="s2">&quot;test.rp&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">u</span><span class="p">(</span><span class="mi">5000</span><span class="p">))</span>
+    <span class="k">del</span> <span class="n">u</span>
+
+    <span class="n">u</span> <span class="o">=</span> <span class="n">RadialProfile</span><span class="o">.</span><span class="n">from_binary</span><span class="p">(</span><span class="s2">&quot;test.rp&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">u</span><span class="p">(</span><span class="mi">5000</span><span class="p">))</span>
 </pre></div>
 
                 </article>

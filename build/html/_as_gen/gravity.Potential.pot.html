@@ -43,6 +43,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = '_as_gen/gravity.Potential.pot';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="gravity.Potential.fields" href="gravity.Potential.fields.html" />
     <link rel="prev" title="gravity.Potential.write_potential_to_h5" href="gravity.Potential.write_potential_to_h5.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -393,7 +394,10 @@ document.write(`
 <li class="toctree-l2"><a class="reference internal" href="utils.integrate.html">utils.integrate</a></li>
 <li class="toctree-l2"><a class="reference internal" href="utils.integrate_mass.html">utils.integrate_mass</a></li>
 <li class="toctree-l2"><a class="reference internal" href="utils.integrate_toinf.html">utils.integrate_toinf</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.log_string.html">utils.log_string</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.moving_average.html">utils.moving_average</a></li>
 <li class="toctree-l2"><a class="reference internal" href="utils.parse_prng.html">utils.parse_prng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.truncate_spline.html">utils.truncate_spline</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="radial_profiles.html">radial_profiles</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
@@ -433,7 +437,9 @@ document.write(`
 <li class="toctree-l3"><a class="reference internal" href="radial_profiles.RadialProfile.add_core.html">radial_profiles.RadialProfile.add_core</a></li>
 <li class="toctree-l3"><a class="reference internal" href="radial_profiles.RadialProfile.cutoff.html">radial_profiles.RadialProfile.cutoff</a></li>
 <li class="toctree-l3"><a class="reference internal" href="radial_profiles.RadialProfile.from_array.html">radial_profiles.RadialProfile.from_array</a></li>
+<li class="toctree-l3"><a class="reference internal" href="radial_profiles.RadialProfile.from_binary.html">radial_profiles.RadialProfile.from_binary</a></li>
 <li class="toctree-l3"><a class="reference internal" href="radial_profiles.RadialProfile.plot.html">radial_profiles.RadialProfile.plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="radial_profiles.RadialProfile.to_binary.html">radial_profiles.RadialProfile.to_binary</a></li>
 </ul>
 </li>
 </ul>
@@ -481,6 +487,10 @@ document.write(`
 <li class="toctree-l3"><a class="reference internal" href="gravity.Potential.potential.html">gravity.Potential.potential</a></li>
 <li class="toctree-l3"><a class="reference internal" href="gravity.Potential.write_potential_to_h5.html">gravity.Potential.write_potential_to_h5</a></li>
 <li class="toctree-l3 current active"><a class="current reference internal" href="#">gravity.Potential.pot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gravity.Potential.fields.html">gravity.Potential.fields</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gravity.Potential.gravity.html">gravity.Potential.gravity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gravity.Potential.num_elements.html">gravity.Potential.num_elements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gravity.Potential.attrs.html">gravity.Potential.attrs</a></li>
 </ul>
 </li>
 </ul>
@@ -555,7 +565,8 @@ document.write(`
 <dl class="py property">
 <dt class="sig sig-object py" id="gravity.Potential.pot">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Potential.</span></span><span class="sig-name descname"><span class="pre">pot</span></span><a class="headerlink" href="#gravity.Potential.pot" title="Permalink to this definition">#</a></dt>
-<dd><p>The potential array of the <code class="docutils literal notranslate"><span class="pre">Potential</span></code>.</p>
+<dd><p>The gravitational potential of the system. Equivalent to <code class="docutils literal notranslate"><span class="pre">self.fields[&quot;gravitational_potential&quot;]</span></code> or <code class="docutils literal notranslate"><span class="pre">self[&quot;gravitational_potential&quot;]</span></code>.
+If the <code class="docutils literal notranslate"><span class="pre">self[&quot;gravitational_potential&quot;]</span></code> field is <code class="docutils literal notranslate"><span class="pre">None</span></code>, calling <code class="docutils literal notranslate"><span class="pre">self.pot</span></code> will automatically attempt to generate a potential.</p>
 </dd></dl>
 
 </section>
@@ -579,6 +590,15 @@ document.write(`
         <p class="prev-next-subtitle">previous</p>
         <p class="prev-next-title">gravity.Potential.write_potential_to_h5</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="gravity.Potential.fields.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">gravity.Potential.fields</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div></div>
   
