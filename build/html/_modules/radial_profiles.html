@@ -134,13 +134,6 @@
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../introduction.html">
-                        Introduction
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
                       <a class="nav-link nav-internal" href="../radial_profiles.html">
                         Radial Profiles
                       </a>
@@ -160,19 +153,19 @@
                       </a>
                     </li>
                 
-            <div class="nav-item dropdown">
-                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    More
-                </button>
-                <div class="dropdown-menu">
-                    
+
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="../fields.html">
                         Generating 3D Cluster Fields
                       </a>
                     </li>
                 
-
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="../initial_conditions.html">
                         Initial Conditions Generation
@@ -284,13 +277,6 @@ document.write(`
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../introduction.html">
-                        Introduction
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
                       <a class="nav-link nav-internal" href="../radial_profiles.html">
                         Radial Profiles
                       </a>
@@ -310,19 +296,19 @@ document.write(`
                       </a>
                     </li>
                 
-            <div class="nav-item dropdown">
-                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    More
-                </button>
-                <div class="dropdown-menu">
-                    
+
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="../fields.html">
                         Generating 3D Cluster Fields
                       </a>
                     </li>
                 
-
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="../initial_conditions.html">
                         Initial Conditions Generation
@@ -441,16 +427,16 @@ document.write(`
 
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-
+<span class="kn">import</span> <span class="nn">inspect</span>
 <span class="c1">#  Minor Functions</span>
 <span class="c1"># ----------------------------------------------------------------------------------------------------------------- #</span>
 <span class="c1">#: Alternative factor for rho(r) in NFW profiles. See `the wiki&lt;https://en.wikipedia.org/wiki/Navarro%E2%80%93Frenk%E2%80%93White_profile&gt;`_</span>
-<span class="n">_nfw_factor</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">conc</span><span class="p">:</span> <span class="mf">1.0</span><span class="o">/</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">conc</span><span class="o">+</span><span class="mf">1.0</span><span class="p">)</span><span class="o">-</span><span class="n">conc</span><span class="o">/</span><span class="p">(</span><span class="mf">1.0</span><span class="o">+</span><span class="n">conc</span><span class="p">))</span>
+<span class="n">_nfw_factor</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">conc</span><span class="p">:</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">conc</span> <span class="o">+</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-</span> <span class="n">conc</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">conc</span><span class="p">))</span>
 
 
 <span class="c1">#  Classes</span>
 <span class="c1"># ----------------------------------------------------------------------------------------------------------------- #</span>
-<div class="viewcode-block" id="RadialProfile"><a class="viewcode-back" href="../_as_gen/radial_profiles.RadialProfile.html#radial_profiles.RadialProfile">[docs]</a><span class="k">class</span> <span class="nc">RadialProfile</span><span class="p">:</span>
+<div class="viewcode-block" id="RadialProfile"><a class="viewcode-back" href="../_as_gen/radial_profiles.RadialProfile.html#radial_profiles.RadialProfile">[docs]</a><span class="k">class</span> <span class="nc">RadialProfile</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The ``RadialProfile`` class is a container class for all of the radial profiles in ``cluster_generator``.</span>
 
@@ -466,7 +452,35 @@ document.write(`
 <span class="sd">            the new ``RadialProfile`` object has the same profile as the previous one.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-<div class="viewcode-block" id="RadialProfile.__init__"><a class="viewcode-back" href="../_as_gen/radial_profiles.RadialProfile.__init__.html#radial_profiles.RadialProfile.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">profile</span><span class="p">):</span>
+    <span class="c1">#: The built-in options for ``RadialProfile`` objects.</span>
+    <span class="n">builtin</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;constant_profile&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;power_law_profile&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;beta_model_profile&quot;</span><span class="p">,</span>
+               <span class="s1">&#39;hernquist_density_profile&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;cored_hernquist_density_profile&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;hernquist_mass_profile&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;nfw_density_profile&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;nfw_mass_profile&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;tnfw_density_profile&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;tnfw_mass_profile&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;snfw_density_profile&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;snfw_mass_profile&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;cored_snfw_density_profile&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;cored_snfw_mass_profile&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;cored_snfw_total_mass&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;einasto_density_profile&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;einasto_mass_profile&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;am06_density_profile&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;vikhlinin_density_profile&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;vikhlinin_temperature_profile&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;am06_temperature_profile&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;baseline_entropy_profile&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;broken_entropy_profile&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;walker_entropy_profile&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;rescale_profile_by_mass&#39;</span><span class="p">]</span>
+
+<div class="viewcode-block" id="RadialProfile.__init__"><a class="viewcode-back" href="../_as_gen/radial_profiles.RadialProfile.__init__.html#radial_profiles.RadialProfile.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">profile</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span> <span class="n">RadialProfile</span><span class="p">):</span>
             <span class="c1"># Consistency check for profile type consistency.</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">profile</span> <span class="o">=</span> <span class="n">profile</span><span class="o">.</span><span class="n">profile</span>
@@ -475,6 +489,18 @@ document.write(`
 
     <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">object</span><span class="o">.</span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;RadialProfile; type=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">.&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">object</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;RadialProfile; type=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">.&quot;</span>
 
     <span class="k">def</span> <span class="nf">_do_op</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">,</span> <span class="n">op</span><span class="p">):</span>
         <span class="c1"># Allows for operations between profiles.</span>
@@ -496,7 +522,7 @@ document.write(`
     <span class="fm">__rmul__</span> <span class="o">=</span> <span class="fm">__mul__</span>
 
     <span class="k">def</span> <span class="fm">__pow__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">power</span><span class="p">):</span>
-        <span class="n">p</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile</span><span class="p">(</span><span class="n">r</span><span class="p">)</span><span class="o">**</span><span class="n">power</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">**</span> <span class="n">power</span>
         <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
 
 <div class="viewcode-block" id="RadialProfile.add_core"><a class="viewcode-back" href="../_as_gen/radial_profiles.RadialProfile.add_core.html#radial_profiles.RadialProfile.add_core">[docs]</a>    <span class="k">def</span> <span class="nf">add_core</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r_core</span><span class="p">,</span> <span class="n">alpha</span><span class="p">):</span>
@@ -521,10 +547,12 @@ document.write(`
 <span class="sd">        This will cause any cuspy profile (i.e. one for which :math:`\left.\frac{d}{dr} f(r)\right|_{r=0} &gt; 0` and which grows</span>
 <span class="sd">        faster than the exponential term added to instead contain a core and go to 0 in its limit.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="k">def</span> <span class="nf">_core</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
-            <span class="n">x</span> <span class="o">=</span> <span class="n">r</span><span class="o">/</span><span class="n">r_core</span>
-            <span class="n">ret</span> <span class="o">=</span> <span class="mf">1.0</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="o">**</span><span class="n">alpha</span><span class="p">)</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile</span><span class="p">(</span><span class="n">r</span><span class="p">)</span><span class="o">*</span><span class="n">ret</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">r</span> <span class="o">/</span> <span class="n">r_core</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x</span> <span class="o">**</span> <span class="n">alpha</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">*</span> <span class="n">ret</span>
+
         <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">_core</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="RadialProfile.cutoff"><a class="viewcode-back" href="../_as_gen/radial_profiles.RadialProfile.cutoff.html#radial_profiles.RadialProfile.cutoff">[docs]</a>    <span class="k">def</span> <span class="nf">cutoff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r_cut</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
@@ -551,15 +579,17 @@ document.write(`
 
 <span class="sd">            1-\frac{1}{1+\exp\left(-2k\left(\frac{r}{r_{cut}}\right)\right)}.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="k">def</span> <span class="nf">_cutoff</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
-            <span class="n">x</span> <span class="o">=</span> <span class="n">r</span><span class="o">/</span><span class="n">r_cut</span>
-            <span class="n">step</span> <span class="o">=</span> <span class="mf">1.0</span><span class="o">/</span><span class="p">(</span><span class="mf">1.0</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">k</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">)))</span>
-            <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile</span><span class="p">(</span><span class="n">r</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mf">1.0</span><span class="o">-</span><span class="n">step</span><span class="p">)</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">r</span> <span class="o">/</span> <span class="n">r_cut</span>
+            <span class="n">step</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">k</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)))</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">step</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">p</span>
+
         <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">_cutoff</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="RadialProfile.from_array"><a class="viewcode-back" href="../_as_gen/radial_profiles.RadialProfile.from_array.html#radial_profiles.RadialProfile.from_array">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_array</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">f_r</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">from_array</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">f_r</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate a callable radial profile using an array of radii</span>
 <span class="sd">        and an array of values. </span>
@@ -582,10 +612,17 @@ document.write(`
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="kn">from</span> <span class="nn">scipy.interpolate</span> <span class="kn">import</span> <span class="n">UnivariateSpline</span>
         <span class="n">f</span> <span class="o">=</span> <span class="n">UnivariateSpline</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">f_r</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">f</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
+<div class="viewcode-block" id="RadialProfile.built_in"><a class="viewcode-back" href="../_as_gen/radial_profiles.RadialProfile.built_in.html#radial_profiles.RadialProfile.built_in">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">built_in</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span><span class="n">name</span><span class="p">,</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initializes a ``RadialProfile`` from the specified name and given args.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">builtin</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">globals</span><span class="p">()[</span><span class="n">name</span><span class="p">](</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The name </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> is either not builtin or is incorrect.&quot;</span><span class="p">)</span></div>
 <div class="viewcode-block" id="RadialProfile.from_binary"><a class="viewcode-back" href="../_as_gen/radial_profiles.RadialProfile.from_binary.html#radial_profiles.RadialProfile.from_binary">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_binary</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span><span class="n">f</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">from_binary</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Loads a specific instance of a ``RadialProfile`` object from the serialized version of the instance saved to disk.</span>
 
@@ -604,10 +641,10 @@ document.write(`
 <span class="sd">        The serialization of the ``RadialProfile`` object is done using the ``pickle`` library.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="kn">import</span> <span class="nn">dill</span> <span class="k">as</span> <span class="nn">pickle</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">bf</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">bf</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">bf</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="RadialProfile.to_binary"><a class="viewcode-back" href="../_as_gen/radial_profiles.RadialProfile.to_binary.html#radial_profiles.RadialProfile.to_binary">[docs]</a>    <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">f</span><span class="p">):</span>
+<div class="viewcode-block" id="RadialProfile.to_binary"><a class="viewcode-back" href="../_as_gen/radial_profiles.RadialProfile.to_binary.html#radial_profiles.RadialProfile.to_binary">[docs]</a>    <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sends the ``RadialProfile`` instance to a serialized binary file.</span>
 
@@ -622,9 +659,8 @@ document.write(`
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="kn">import</span> <span class="nn">dill</span> <span class="k">as</span> <span class="nn">pickle</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">bf</span><span class="p">:</span>
-
-            <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">bf</span><span class="p">)</span></div>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">bf</span><span class="p">:</span>
+            <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bf</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="RadialProfile.plot"><a class="viewcode-back" href="../_as_gen/radial_profiles.RadialProfile.plot.html#radial_profiles.RadialProfile.plot">[docs]</a>    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rmin</span><span class="p">,</span> <span class="n">rmax</span><span class="p">,</span> <span class="n">num_points</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">fig</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
              <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -651,7 +687,7 @@ document.write(`
         <span class="n">plt</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s2">&quot;font&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s2">&quot;axes&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">fig</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+            <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
         <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
         <span class="n">rr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">rmin</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">rmax</span><span class="p">),</span>
@@ -673,7 +709,7 @@ document.write(`
 <span class="sd">        The value of the constant.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">p</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="n">const</span>
-    <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">p</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="n">inspect</span><span class="o">.</span><span class="n">stack</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">])</span></div>
 
 
 <div class="viewcode-block" id="power_law_profile"><a class="viewcode-back" href="../_as_gen/radial_profiles.power_law_profile.html#radial_profiles.power_law_profile">[docs]</a><span class="k">def</span> <span class="nf">power_law_profile</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">r_s</span><span class="p">,</span> <span class="n">alpha</span><span class="p">):</span>
@@ -693,8 +729,8 @@ document.write(`
 <span class="sd">    alpha : float</span>
 <span class="sd">        Power-law index of the profile.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">p</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="n">A</span><span class="o">*</span><span class="p">(</span><span class="n">r</span><span class="o">/</span><span class="n">r_s</span><span class="p">)</span><span class="o">**</span><span class="n">alpha</span>
-    <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">p</span><span class="p">)</span></div>
+    <span class="n">p</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="n">A</span> <span class="o">*</span> <span class="p">(</span><span class="n">r</span> <span class="o">/</span> <span class="n">r_s</span><span class="p">)</span> <span class="o">**</span> <span class="n">alpha</span>
+    <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="n">inspect</span><span class="o">.</span><span class="n">stack</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">])</span></div>
 
 
 <div class="viewcode-block" id="beta_model_profile"><a class="viewcode-back" href="../_as_gen/radial_profiles.beta_model_profile.html#radial_profiles.beta_model_profile">[docs]</a><span class="k">def</span> <span class="nf">beta_model_profile</span><span class="p">(</span><span class="n">rho_c</span><span class="p">,</span> <span class="n">r_c</span><span class="p">,</span> <span class="n">beta</span><span class="p">):</span>
@@ -719,8 +755,8 @@ document.write(`
 <span class="sd">    ----------</span>
 <span class="sd">    .. [1] (Cavaliere A.,Fusco-Femiano R., 1976, A&amp;A, 49, 137).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">p</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="n">rho_c</span><span class="o">*</span><span class="p">((</span><span class="mi">1</span><span class="o">+</span><span class="p">(</span><span class="n">r</span><span class="o">/</span><span class="n">r_c</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="o">*</span><span class="n">beta</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">p</span><span class="p">)</span></div>
+    <span class="n">p</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="n">rho_c</span> <span class="o">*</span> <span class="p">((</span><span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="n">r</span> <span class="o">/</span> <span class="n">r_c</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="mf">1.5</span> <span class="o">*</span> <span class="n">beta</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="n">inspect</span><span class="o">.</span><span class="n">stack</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">])</span></div>
 
 
 <div class="viewcode-block" id="hernquist_density_profile"><a class="viewcode-back" href="../_as_gen/radial_profiles.hernquist_density_profile.html#radial_profiles.hernquist_density_profile">[docs]</a><span class="k">def</span> <span class="nf">hernquist_density_profile</span><span class="p">(</span><span class="n">M_0</span><span class="p">,</span> <span class="n">a</span><span class="p">):</span>
@@ -743,8 +779,8 @@ document.write(`
 <span class="sd">    ----------</span>
 <span class="sd">    .. [1] (Hernquist, L. 1990, ApJ, 356, 359).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">p</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="n">M_0</span><span class="o">/</span><span class="p">(</span><span class="mf">2.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">a</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span><span class="o">/</span><span class="p">((</span><span class="n">r</span><span class="o">/</span><span class="n">a</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mf">1.</span><span class="o">+</span><span class="n">r</span><span class="o">/</span><span class="n">a</span><span class="p">)</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">p</span><span class="p">)</span></div>
+    <span class="n">p</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="n">M_0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">a</span> <span class="o">**</span> <span class="mi">3</span><span class="p">)</span> <span class="o">/</span> <span class="p">((</span><span class="n">r</span> <span class="o">/</span> <span class="n">a</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">+</span> <span class="n">r</span> <span class="o">/</span> <span class="n">a</span><span class="p">)</span> <span class="o">**</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="n">inspect</span><span class="o">.</span><span class="n">stack</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">])</span></div>
 
 
 <div class="viewcode-block" id="cored_hernquist_density_profile"><a class="viewcode-back" href="../_as_gen/radial_profiles.cored_hernquist_density_profile.html#radial_profiles.cored_hernquist_density_profile">[docs]</a><span class="k">def</span> <span class="nf">cored_hernquist_density_profile</span><span class="p">(</span><span class="n">M_0</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
@@ -765,8 +801,8 @@ document.write(`
 <span class="sd">    RadialProfile</span>
 <span class="sd">        The corresponding radial profile object.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">p</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="n">M_0</span><span class="o">*</span><span class="n">b</span><span class="o">/</span><span class="p">(</span><span class="mf">2.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">a</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span><span class="o">/</span><span class="p">((</span><span class="mf">1.</span><span class="o">+</span><span class="n">b</span><span class="o">*</span><span class="n">r</span><span class="o">/</span><span class="n">a</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mf">1.</span><span class="o">+</span><span class="n">r</span><span class="o">/</span><span class="n">a</span><span class="p">)</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">p</span><span class="p">)</span></div>
+    <span class="n">p</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="n">M_0</span> <span class="o">*</span> <span class="n">b</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">a</span> <span class="o">**</span> <span class="mi">3</span><span class="p">)</span> <span class="o">/</span> <span class="p">((</span><span class="mf">1.</span> <span class="o">+</span> <span class="n">b</span> <span class="o">*</span> <span class="n">r</span> <span class="o">/</span> <span class="n">a</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">+</span> <span class="n">r</span> <span class="o">/</span> <span class="n">a</span><span class="p">)</span> <span class="o">**</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="n">inspect</span><span class="o">.</span><span class="n">stack</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">])</span></div>
 
 
 <div class="viewcode-block" id="hernquist_mass_profile"><a class="viewcode-back" href="../_as_gen/radial_profiles.hernquist_mass_profile.html#radial_profiles.hernquist_mass_profile">[docs]</a><span class="k">def</span> <span class="nf">hernquist_mass_profile</span><span class="p">(</span><span class="n">M_0</span><span class="p">,</span> <span class="n">a</span><span class="p">):</span>
@@ -786,8 +822,8 @@ document.write(`
 <span class="sd">    RadialProfile</span>
 <span class="sd">        The corresponding radial profile object.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">p</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="n">M_0</span><span class="o">*</span><span class="n">r</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="n">r</span><span class="o">+</span><span class="n">a</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
-    <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">p</span><span class="p">)</span></div>
+    <span class="n">p</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="n">M_0</span> <span class="o">*</span> <span class="n">r</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="n">r</span> <span class="o">+</span> <span class="n">a</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="n">inspect</span><span class="o">.</span><span class="n">stack</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">])</span></div>
 
 
 <div class="viewcode-block" id="convert_nfw_to_hernquist"><a class="viewcode-back" href="../_as_gen/radial_profiles.convert_nfw_to_hernquist.html#radial_profiles.convert_nfw_to_hernquist">[docs]</a><span class="k">def</span> <span class="nf">convert_nfw_to_hernquist</span><span class="p">(</span><span class="n">M_200</span><span class="p">,</span> <span class="n">r_200</span><span class="p">,</span> <span class="n">conc</span><span class="p">):</span>
@@ -811,8 +847,8 @@ document.write(`
 <span class="sd">    RadialProfile</span>
 <span class="sd">        The corresponding radial profile object.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">a</span> <span class="o">=</span> <span class="n">r_200</span><span class="o">/</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">0.5</span><span class="o">*</span><span class="n">conc</span><span class="o">*</span><span class="n">conc</span><span class="o">*</span><span class="n">_nfw_factor</span><span class="p">(</span><span class="n">conc</span><span class="p">))</span><span class="o">-</span><span class="mf">1.0</span><span class="p">)</span>
-    <span class="n">M0</span> <span class="o">=</span> <span class="n">M_200</span><span class="o">*</span><span class="p">(</span><span class="n">r_200</span><span class="o">+</span><span class="n">a</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="n">r_200</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">r_200</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">conc</span> <span class="o">*</span> <span class="n">conc</span> <span class="o">*</span> <span class="n">_nfw_factor</span><span class="p">(</span><span class="n">conc</span><span class="p">))</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span>
+    <span class="n">M0</span> <span class="o">=</span> <span class="n">M_200</span> <span class="o">*</span> <span class="p">(</span><span class="n">r_200</span> <span class="o">+</span> <span class="n">a</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">r_200</span> <span class="o">**</span> <span class="mi">2</span>
     <span class="k">return</span> <span class="n">M0</span><span class="p">,</span> <span class="n">a</span></div>
 
 
@@ -833,8 +869,8 @@ document.write(`
 <span class="sd">    RadialProfile</span>
 <span class="sd">        The corresponding radial profile object.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">p</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="n">rho_s</span><span class="o">/</span><span class="p">((</span><span class="n">r</span><span class="o">/</span><span class="n">r_s</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mf">1.0</span><span class="o">+</span><span class="n">r</span><span class="o">/</span><span class="n">r_s</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">p</span><span class="p">)</span></div>
+    <span class="n">p</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="n">rho_s</span> <span class="o">/</span> <span class="p">((</span><span class="n">r</span> <span class="o">/</span> <span class="n">r_s</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">r</span> <span class="o">/</span> <span class="n">r_s</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="n">inspect</span><span class="o">.</span><span class="n">stack</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">])</span></div>
 
 
 <div class="viewcode-block" id="nfw_mass_profile"><a class="viewcode-back" href="../_as_gen/radial_profiles.nfw_mass_profile.html#radial_profiles.nfw_mass_profile">[docs]</a><span class="k">def</span> <span class="nf">nfw_mass_profile</span><span class="p">(</span><span class="n">rho_s</span><span class="p">,</span> <span class="n">r_s</span><span class="p">):</span>
@@ -854,10 +890,12 @@ document.write(`
 <span class="sd">    RadialProfile</span>
 <span class="sd">        The corresponding radial profile object.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="nf">_nfw</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">r</span><span class="o">/</span><span class="n">r_s</span>
-        <span class="k">return</span> <span class="mi">4</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">rho_s</span><span class="o">*</span><span class="n">r_s</span><span class="o">**</span><span class="mi">3</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">x</span><span class="p">)</span><span class="o">-</span><span class="n">x</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">x</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">_nfw</span><span class="p">)</span></div>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">r</span> <span class="o">/</span> <span class="n">r_s</span>
+        <span class="k">return</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">rho_s</span> <span class="o">*</span> <span class="n">r_s</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="n">x</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">x</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">_nfw</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="n">inspect</span><span class="o">.</span><span class="n">stack</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">])</span></div>
 
 
 <div class="viewcode-block" id="nfw_scale_density"><a class="viewcode-back" href="../_as_gen/radial_profiles.nfw_scale_density.html#radial_profiles.nfw_scale_density">[docs]</a><span class="k">def</span> <span class="nf">nfw_scale_density</span><span class="p">(</span><span class="n">conc</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">delta</span><span class="o">=</span><span class="mf">200.0</span><span class="p">,</span> <span class="n">cosmo</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -891,7 +929,7 @@ document.write(`
     <span class="k">if</span> <span class="n">cosmo</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">cosmo</span> <span class="o">=</span> <span class="n">Cosmology</span><span class="p">()</span>
     <span class="n">rho_crit</span> <span class="o">=</span> <span class="n">cosmo</span><span class="o">.</span><span class="n">critical_density</span><span class="p">(</span><span class="n">z</span><span class="p">)</span><span class="o">.</span><span class="n">to_value</span><span class="p">(</span><span class="s2">&quot;Msun/kpc**3&quot;</span><span class="p">)</span>
-    <span class="n">rho_s</span> <span class="o">=</span> <span class="n">delta</span><span class="o">*</span><span class="n">rho_crit</span><span class="o">*</span><span class="n">conc</span><span class="o">**</span><span class="mi">3</span><span class="o">*</span><span class="n">_nfw_factor</span><span class="p">(</span><span class="n">conc</span><span class="p">)</span><span class="o">/</span><span class="mf">3.</span>
+    <span class="n">rho_s</span> <span class="o">=</span> <span class="n">delta</span> <span class="o">*</span> <span class="n">rho_crit</span> <span class="o">*</span> <span class="n">conc</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">_nfw_factor</span><span class="p">(</span><span class="n">conc</span><span class="p">)</span> <span class="o">/</span> <span class="mf">3.</span>
     <span class="k">return</span> <span class="n">rho_s</span></div>
 
 
@@ -914,11 +952,13 @@ document.write(`
 <span class="sd">    RadialProfile</span>
 <span class="sd">        The corresponding radial profile object.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="nf">_tnfw</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
-        <span class="n">profile</span> <span class="o">=</span> <span class="n">rho_s</span><span class="o">/</span><span class="p">((</span><span class="n">r</span><span class="o">/</span><span class="n">r_s</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">r</span><span class="o">/</span><span class="n">r_s</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
-        <span class="n">profile</span> <span class="o">/=</span> <span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="p">(</span><span class="n">r</span><span class="o">/</span><span class="n">r_t</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">profile</span> <span class="o">=</span> <span class="n">rho_s</span> <span class="o">/</span> <span class="p">((</span><span class="n">r</span> <span class="o">/</span> <span class="n">r_s</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">r</span> <span class="o">/</span> <span class="n">r_s</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">profile</span> <span class="o">/=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="n">r</span> <span class="o">/</span> <span class="n">r_t</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">profile</span>
-    <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">_tnfw</span><span class="p">)</span></div>
+
+    <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">_tnfw</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="n">inspect</span><span class="o">.</span><span class="n">stack</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">])</span></div>
 
 
 <div class="viewcode-block" id="tnfw_mass_profile"><a class="viewcode-back" href="../_as_gen/radial_profiles.tnfw_mass_profile.html#radial_profiles.tnfw_mass_profile">[docs]</a><span class="k">def</span> <span class="nf">tnfw_mass_profile</span><span class="p">(</span><span class="n">rho_s</span><span class="p">,</span> <span class="n">r_s</span><span class="p">,</span> <span class="n">r_t</span><span class="p">):</span>
@@ -944,13 +984,15 @@ document.write(`
     <span class="n">xx</span> <span class="o">=</span> <span class="n">Symbol</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
     <span class="n">aa</span> <span class="o">=</span> <span class="n">Symbol</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">)</span>
     <span class="n">yy</span> <span class="o">=</span> <span class="n">Symbol</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
-    <span class="n">f</span> <span class="o">=</span> <span class="n">integrate</span><span class="p">(</span><span class="n">xx</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="n">xx</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">xx</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="p">(</span><span class="n">xx</span><span class="o">/</span><span class="n">aa</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">yy</span><span class="p">))</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">integrate</span><span class="p">(</span><span class="n">xx</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="n">xx</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">xx</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="n">xx</span> <span class="o">/</span> <span class="n">aa</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">yy</span><span class="p">))</span>
     <span class="n">fl</span> <span class="o">=</span> <span class="n">lambdify</span><span class="p">((</span><span class="n">yy</span><span class="p">,</span> <span class="n">aa</span><span class="p">),</span> <span class="n">f</span><span class="p">,</span> <span class="n">modules</span><span class="o">=</span><span class="s2">&quot;numpy&quot;</span><span class="p">)</span>
+
     <span class="k">def</span> <span class="nf">_tnfw</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">r</span> <span class="o">/</span> <span class="n">r_s</span>
         <span class="n">a</span> <span class="o">=</span> <span class="n">r_t</span> <span class="o">/</span> <span class="n">r_s</span>
-        <span class="k">return</span> <span class="mi">4</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">rho_s</span><span class="o">*</span><span class="n">r_s</span><span class="o">**</span><span class="mi">3</span><span class="o">*</span><span class="n">fl</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float64&#39;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">_tnfw</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">rho_s</span> <span class="o">*</span> <span class="n">r_s</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">fl</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float64&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">_tnfw</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="n">inspect</span><span class="o">.</span><span class="n">stack</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">])</span></div>
 
 
 <div class="viewcode-block" id="snfw_density_profile"><a class="viewcode-back" href="../_as_gen/radial_profiles.snfw_density_profile.html#radial_profiles.snfw_density_profile">[docs]</a><span class="k">def</span> <span class="nf">snfw_density_profile</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">a</span><span class="p">):</span>
@@ -970,10 +1012,12 @@ document.write(`
 <span class="sd">    RadialProfile</span>
 <span class="sd">        The corresponding radial profile object.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="nf">_snfw</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">r</span><span class="o">/</span><span class="n">a</span>
-        <span class="k">return</span> <span class="mf">3.</span><span class="o">*</span><span class="n">M</span><span class="o">/</span><span class="p">(</span><span class="mf">16.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">a</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">x</span><span class="o">*</span><span class="p">(</span><span class="mf">1.</span><span class="o">+</span><span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mf">2.5</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">_snfw</span><span class="p">)</span></div>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">r</span> <span class="o">/</span> <span class="n">a</span>
+        <span class="k">return</span> <span class="mf">3.</span> <span class="o">*</span> <span class="n">M</span> <span class="o">/</span> <span class="p">(</span><span class="mf">16.</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">a</span> <span class="o">**</span> <span class="mi">3</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">+</span> <span class="n">x</span><span class="p">)</span> <span class="o">**</span> <span class="mf">2.5</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">_snfw</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="n">inspect</span><span class="o">.</span><span class="n">stack</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">])</span></div>
 
 
 <div class="viewcode-block" id="snfw_mass_profile"><a class="viewcode-back" href="../_as_gen/radial_profiles.snfw_mass_profile.html#radial_profiles.snfw_mass_profile">[docs]</a><span class="k">def</span> <span class="nf">snfw_mass_profile</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">a</span><span class="p">):</span>
@@ -993,10 +1037,12 @@ document.write(`
 <span class="sd">    RadialProfile</span>
 <span class="sd">        The corresponding radial profile object.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="nf">_snfw</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">r</span><span class="o">/</span><span class="n">a</span>
-        <span class="k">return</span> <span class="n">M</span><span class="o">*</span><span class="p">(</span><span class="mf">1.</span><span class="o">-</span><span class="p">(</span><span class="mf">2.</span><span class="o">+</span><span class="mf">3.</span><span class="o">*</span><span class="n">x</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mf">2.</span><span class="o">*</span><span class="p">(</span><span class="mf">1.</span><span class="o">+</span><span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mf">1.5</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">_snfw</span><span class="p">)</span></div>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">r</span> <span class="o">/</span> <span class="n">a</span>
+        <span class="k">return</span> <span class="n">M</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">-</span> <span class="p">(</span><span class="mf">2.</span> <span class="o">+</span> <span class="mf">3.</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">+</span> <span class="n">x</span><span class="p">)</span> <span class="o">**</span> <span class="mf">1.5</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">_snfw</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="n">inspect</span><span class="o">.</span><span class="n">stack</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">])</span></div>
 
 
 <div class="viewcode-block" id="snfw_total_mass"><a class="viewcode-back" href="../_as_gen/radial_profiles.snfw_total_mass.html#radial_profiles.snfw_total_mass">[docs]</a><span class="k">def</span> <span class="nf">snfw_total_mass</span><span class="p">(</span><span class="n">mass</span><span class="p">,</span> <span class="n">radius</span><span class="p">,</span> <span class="n">a</span><span class="p">):</span>
@@ -1020,7 +1066,7 @@ document.write(`
 <span class="sd">        The corresponding radial profile object.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">mp</span> <span class="o">=</span> <span class="n">snfw_mass_profile</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">mass</span><span class="o">/</span><span class="n">mp</span><span class="p">(</span><span class="n">radius</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">mass</span> <span class="o">/</span> <span class="n">mp</span><span class="p">(</span><span class="n">radius</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="cored_snfw_density_profile"><a class="viewcode-back" href="../_as_gen/radial_profiles.cored_snfw_density_profile.html#radial_profiles.cored_snfw_density_profile">[docs]</a><span class="k">def</span> <span class="nf">cored_snfw_density_profile</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">r_c</span><span class="p">):</span>
@@ -1042,11 +1088,13 @@ document.write(`
 <span class="sd">    RadialProfile</span>
 <span class="sd">        The corresponding radial profile object.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">b</span> <span class="o">=</span> <span class="n">a</span><span class="o">/</span><span class="n">r_c</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">a</span> <span class="o">/</span> <span class="n">r_c</span>
+
     <span class="k">def</span> <span class="nf">_snfw</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">r</span><span class="o">/</span><span class="n">a</span>
-        <span class="k">return</span> <span class="mf">3.</span><span class="o">*</span><span class="n">M</span><span class="o">*</span><span class="n">b</span><span class="o">/</span><span class="p">(</span><span class="mf">16.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">a</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span><span class="o">/</span><span class="p">((</span><span class="mf">1.</span><span class="o">+</span><span class="n">b</span><span class="o">*</span><span class="n">x</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mf">1.</span><span class="o">+</span><span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mf">2.5</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">_snfw</span><span class="p">)</span></div>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">r</span> <span class="o">/</span> <span class="n">a</span>
+        <span class="k">return</span> <span class="mf">3.</span> <span class="o">*</span> <span class="n">M</span> <span class="o">*</span> <span class="n">b</span> <span class="o">/</span> <span class="p">(</span><span class="mf">16.</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">a</span> <span class="o">**</span> <span class="mi">3</span><span class="p">)</span> <span class="o">/</span> <span class="p">((</span><span class="mf">1.</span> <span class="o">+</span> <span class="n">b</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">+</span> <span class="n">x</span><span class="p">)</span> <span class="o">**</span> <span class="mf">2.5</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">_snfw</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="n">inspect</span><span class="o">.</span><span class="n">stack</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">])</span></div>
 
 
 <div class="viewcode-block" id="cored_snfw_mass_profile"><a class="viewcode-back" href="../_as_gen/radial_profiles.cored_snfw_mass_profile.html#radial_profiles.cored_snfw_mass_profile">[docs]</a><span class="k">def</span> <span class="nf">cored_snfw_mass_profile</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">r_c</span><span class="p">):</span>
@@ -1068,17 +1116,19 @@ document.write(`
 <span class="sd">    RadialProfile</span>
 <span class="sd">        The corresponding radial profile object.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">b</span> <span class="o">=</span> <span class="n">a</span><span class="o">/</span><span class="n">r_c</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">a</span> <span class="o">/</span> <span class="n">r_c</span>
+
     <span class="k">def</span> <span class="nf">_snfw</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">r</span><span class="o">/</span><span class="n">a</span>
-        <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="mf">1.</span><span class="p">))</span>
-        <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">(</span><span class="n">b</span><span class="o">/</span><span class="p">(</span><span class="mf">1.0</span><span class="o">-</span><span class="n">b</span><span class="p">)))</span>
-        <span class="n">e</span> <span class="o">=</span> <span class="n">b</span><span class="o">*</span><span class="p">(</span><span class="n">b</span><span class="o">-</span><span class="mf">1.</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
-        <span class="n">ret</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span><span class="o">-</span><span class="mf">1.0</span><span class="o">/</span><span class="n">y</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">b</span><span class="o">-</span><span class="mf">2.</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">b</span><span class="o">-</span><span class="mf">1.</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
-        <span class="n">ret</span> <span class="o">+=</span> <span class="p">(</span><span class="mf">1.0</span><span class="o">/</span><span class="n">y</span><span class="o">**</span><span class="mi">3</span><span class="o">-</span><span class="mf">1.0</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mf">3.</span><span class="o">*</span><span class="p">(</span><span class="n">b</span><span class="o">-</span><span class="mf">1.</span><span class="p">))</span>
-        <span class="n">ret</span> <span class="o">+=</span> <span class="n">d</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span><span class="n">y</span><span class="o">*</span><span class="n">d</span><span class="p">)</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span><span class="n">d</span><span class="p">))</span><span class="o">/</span><span class="n">e</span>
-        <span class="k">return</span> <span class="mf">1.5</span><span class="o">*</span><span class="n">M</span><span class="o">*</span><span class="n">b</span><span class="o">*</span><span class="n">ret</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float64&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">_snfw</span><span class="p">)</span></div>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">r</span> <span class="o">/</span> <span class="n">a</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mf">1.</span><span class="p">))</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">(</span><span class="n">b</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">b</span><span class="p">)))</span>
+        <span class="n">e</span> <span class="o">=</span> <span class="n">b</span> <span class="o">*</span> <span class="p">(</span><span class="n">b</span> <span class="o">-</span> <span class="mf">1.</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">y</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">b</span> <span class="o">-</span> <span class="mf">2.</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">b</span> <span class="o">-</span> <span class="mf">1.</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+        <span class="n">ret</span> <span class="o">+=</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">y</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">3.</span> <span class="o">*</span> <span class="p">(</span><span class="n">b</span> <span class="o">-</span> <span class="mf">1.</span><span class="p">))</span>
+        <span class="n">ret</span> <span class="o">+=</span> <span class="n">d</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span><span class="n">y</span> <span class="o">*</span> <span class="n">d</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span><span class="n">d</span><span class="p">))</span> <span class="o">/</span> <span class="n">e</span>
+        <span class="k">return</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">M</span> <span class="o">*</span> <span class="n">b</span> <span class="o">*</span> <span class="n">ret</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float64&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">_snfw</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="n">inspect</span><span class="o">.</span><span class="n">stack</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">])</span></div>
 
 
 <div class="viewcode-block" id="snfw_conc"><a class="viewcode-back" href="../_as_gen/radial_profiles.snfw_conc.html#radial_profiles.snfw_conc">[docs]</a><span class="k">def</span> <span class="nf">snfw_conc</span><span class="p">(</span><span class="n">conc_nfw</span><span class="p">):</span>
@@ -1098,7 +1148,7 @@ document.write(`
 <span class="sd">    RadialProfile</span>
 <span class="sd">        The corresponding radial profile object.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="mf">0.76</span><span class="o">*</span><span class="n">conc_nfw</span><span class="o">+</span><span class="mf">1.36</span></div>
+    <span class="k">return</span> <span class="mf">0.76</span> <span class="o">*</span> <span class="n">conc_nfw</span> <span class="o">+</span> <span class="mf">1.36</span></div>
 
 
 <div class="viewcode-block" id="cored_snfw_total_mass"><a class="viewcode-back" href="../_as_gen/radial_profiles.cored_snfw_total_mass.html#radial_profiles.cored_snfw_total_mass">[docs]</a><span class="k">def</span> <span class="nf">cored_snfw_total_mass</span><span class="p">(</span><span class="n">mass</span><span class="p">,</span> <span class="n">radius</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">r_c</span><span class="p">):</span>
@@ -1124,10 +1174,10 @@ document.write(`
 <span class="sd">        The corresponding radial profile object.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">mp</span> <span class="o">=</span> <span class="n">cored_snfw_mass_profile</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">r_c</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">mass</span><span class="o">/</span><span class="n">mp</span><span class="p">(</span><span class="n">radius</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">mass</span> <span class="o">/</span> <span class="n">mp</span><span class="p">(</span><span class="n">radius</span><span class="p">)</span></div>
 
 
-<span class="n">_dn</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">n</span><span class="p">:</span> <span class="mf">3.0</span><span class="o">*</span><span class="n">n</span> <span class="o">-</span> <span class="mf">1.</span><span class="o">/</span><span class="mf">3.</span> <span class="o">+</span> <span class="mf">8.0</span><span class="o">/</span><span class="p">(</span><span class="mf">1215.</span><span class="o">*</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="mf">184.0</span><span class="o">/</span><span class="p">(</span><span class="mf">229635.</span><span class="o">*</span><span class="n">n</span><span class="o">*</span><span class="n">n</span><span class="p">)</span>
+<span class="n">_dn</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">n</span><span class="p">:</span> <span class="mf">3.0</span> <span class="o">*</span> <span class="n">n</span> <span class="o">-</span> <span class="mf">1.</span> <span class="o">/</span> <span class="mf">3.</span> <span class="o">+</span> <span class="mf">8.0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1215.</span> <span class="o">*</span> <span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="mf">184.0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">229635.</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="einasto_density_profile"><a class="viewcode-back" href="../_as_gen/radial_profiles.einasto_density_profile.html#radial_profiles.einasto_density_profile">[docs]</a><span class="k">def</span> <span class="nf">einasto_density_profile</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">r_s</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
@@ -1151,13 +1201,15 @@ document.write(`
 <span class="sd">        The corresponding radial profile object.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">gamma</span>
-    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">1.0</span><span class="o">/</span><span class="n">n</span>
-    <span class="n">h</span> <span class="o">=</span> <span class="n">r_s</span><span class="o">/</span><span class="n">_dn</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">**</span><span class="n">n</span>
-    <span class="n">rho_0</span> <span class="o">=</span> <span class="n">M</span><span class="o">/</span><span class="p">(</span><span class="mf">4.0</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">h</span><span class="o">**</span><span class="mi">3</span><span class="o">*</span><span class="n">n</span><span class="o">*</span><span class="n">gamma</span><span class="p">(</span><span class="mf">3.0</span><span class="o">*</span><span class="n">n</span><span class="p">))</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">n</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="n">r_s</span> <span class="o">/</span> <span class="n">_dn</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">**</span> <span class="n">n</span>
+    <span class="n">rho_0</span> <span class="o">=</span> <span class="n">M</span> <span class="o">/</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">h</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">gamma</span><span class="p">(</span><span class="mf">3.0</span> <span class="o">*</span> <span class="n">n</span><span class="p">))</span>
+
     <span class="k">def</span> <span class="nf">_einasto</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
-        <span class="n">s</span> <span class="o">=</span> <span class="n">r</span><span class="o">/</span><span class="n">h</span>
-        <span class="k">return</span> <span class="n">rho_0</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">s</span><span class="o">**</span><span class="n">alpha</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">_einasto</span><span class="p">)</span></div>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">r</span> <span class="o">/</span> <span class="n">h</span>
+        <span class="k">return</span> <span class="n">rho_0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">s</span> <span class="o">**</span> <span class="n">alpha</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">_einasto</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="n">inspect</span><span class="o">.</span><span class="n">stack</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">])</span></div>
 
 
 <div class="viewcode-block" id="einasto_mass_profile"><a class="viewcode-back" href="../_as_gen/radial_profiles.einasto_mass_profile.html#radial_profiles.einasto_mass_profile">[docs]</a><span class="k">def</span> <span class="nf">einasto_mass_profile</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">r_s</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
@@ -1181,12 +1233,14 @@ document.write(`
 <span class="sd">        The corresponding radial profile object.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">gammaincc</span>
-    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">1.0</span><span class="o">/</span><span class="n">n</span>
-    <span class="n">h</span> <span class="o">=</span> <span class="n">r_s</span><span class="o">/</span><span class="n">_dn</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">**</span><span class="n">n</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">n</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="n">r_s</span> <span class="o">/</span> <span class="n">_dn</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">**</span> <span class="n">n</span>
+
     <span class="k">def</span> <span class="nf">_einasto</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
-        <span class="n">s</span> <span class="o">=</span> <span class="n">r</span><span class="o">/</span><span class="n">h</span>
-        <span class="k">return</span> <span class="n">M</span><span class="o">*</span><span class="p">(</span><span class="mf">1.0</span><span class="o">-</span><span class="n">gammaincc</span><span class="p">(</span><span class="mf">3.0</span><span class="o">*</span><span class="n">n</span><span class="p">,</span> <span class="n">s</span><span class="o">**</span><span class="n">alpha</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">_einasto</span><span class="p">)</span></div>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">r</span> <span class="o">/</span> <span class="n">h</span>
+        <span class="k">return</span> <span class="n">M</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">gammaincc</span><span class="p">(</span><span class="mf">3.0</span> <span class="o">*</span> <span class="n">n</span><span class="p">,</span> <span class="n">s</span> <span class="o">**</span> <span class="n">alpha</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">_einasto</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="n">inspect</span><span class="o">.</span><span class="n">stack</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">])</span></div>
 
 
 <div class="viewcode-block" id="am06_density_profile"><a class="viewcode-back" href="../_as_gen/radial_profiles.am06_density_profile.html#radial_profiles.am06_density_profile">[docs]</a><span class="k">def</span> <span class="nf">am06_density_profile</span><span class="p">(</span><span class="n">rho_0</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">a_c</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
@@ -1212,10 +1266,10 @@ document.write(`
 <span class="sd">    RadialProfile</span>
 <span class="sd">        The corresponding radial profile object.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">alpha</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.</span><span class="o">-</span><span class="n">n</span><span class="o">*</span><span class="p">(</span><span class="n">c</span><span class="o">-</span><span class="mf">1.</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">c</span><span class="o">-</span><span class="n">a</span><span class="o">/</span><span class="n">a_c</span><span class="p">)</span>
-    <span class="n">beta</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">-</span><span class="n">n</span><span class="o">*</span><span class="p">(</span><span class="mf">1.</span><span class="o">-</span><span class="n">a</span><span class="o">/</span><span class="n">a_c</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">c</span><span class="o">-</span><span class="n">a</span><span class="o">/</span><span class="n">a_c</span><span class="p">)</span>
-    <span class="n">p</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="n">rho_0</span><span class="o">*</span><span class="p">(</span><span class="mf">1.</span><span class="o">+</span><span class="n">r</span><span class="o">/</span><span class="n">a_c</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mf">1.</span><span class="o">+</span><span class="n">r</span><span class="o">/</span><span class="n">a_c</span><span class="o">/</span><span class="n">c</span><span class="p">)</span><span class="o">**</span><span class="n">alpha</span><span class="o">*</span><span class="p">(</span><span class="mf">1.</span><span class="o">+</span><span class="n">r</span><span class="o">/</span><span class="n">a</span><span class="p">)</span><span class="o">**</span><span class="n">beta</span>
-    <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">p</span><span class="p">)</span></div>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.</span> <span class="o">-</span> <span class="n">n</span> <span class="o">*</span> <span class="p">(</span><span class="n">c</span> <span class="o">-</span> <span class="mf">1.</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">c</span> <span class="o">-</span> <span class="n">a</span> <span class="o">/</span> <span class="n">a_c</span><span class="p">)</span>
+    <span class="n">beta</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">-</span> <span class="n">n</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">-</span> <span class="n">a</span> <span class="o">/</span> <span class="n">a_c</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">c</span> <span class="o">-</span> <span class="n">a</span> <span class="o">/</span> <span class="n">a_c</span><span class="p">)</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="n">rho_0</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">+</span> <span class="n">r</span> <span class="o">/</span> <span class="n">a_c</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">+</span> <span class="n">r</span> <span class="o">/</span> <span class="n">a_c</span> <span class="o">/</span> <span class="n">c</span><span class="p">)</span> <span class="o">**</span> <span class="n">alpha</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">+</span> <span class="n">r</span> <span class="o">/</span> <span class="n">a</span><span class="p">)</span> <span class="o">**</span> <span class="n">beta</span>
+    <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="n">inspect</span><span class="o">.</span><span class="n">stack</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">])</span></div>
 
 
 <div class="viewcode-block" id="vikhlinin_density_profile"><a class="viewcode-back" href="../_as_gen/radial_profiles.vikhlinin_density_profile.html#radial_profiles.vikhlinin_density_profile">[docs]</a><span class="k">def</span> <span class="nf">vikhlinin_density_profile</span><span class="p">(</span><span class="n">rho_0</span><span class="p">,</span> <span class="n">r_c</span><span class="p">,</span> <span class="n">r_s</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span>
@@ -1250,10 +1304,10 @@ document.write(`
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">gamma</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">gamma</span> <span class="o">=</span> <span class="mf">3.0</span>
-    <span class="n">profile</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="n">rho_0</span><span class="o">*</span><span class="p">(</span><span class="n">r</span><span class="o">/</span><span class="n">r_c</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="o">*</span><span class="n">alpha</span><span class="p">)</span> <span class="o">*</span> \
-                        <span class="p">(</span><span class="mf">1.</span><span class="o">+</span><span class="p">(</span><span class="n">r</span><span class="o">/</span><span class="n">r_c</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="o">*</span><span class="n">beta</span><span class="o">+</span><span class="mf">0.25</span><span class="o">*</span><span class="n">alpha</span><span class="p">)</span> <span class="o">*</span> \
-                        <span class="p">(</span><span class="mf">1.</span><span class="o">+</span><span class="p">(</span><span class="n">r</span><span class="o">/</span><span class="n">r_s</span><span class="p">)</span><span class="o">**</span><span class="n">gamma</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="o">*</span><span class="n">epsilon</span><span class="o">/</span><span class="n">gamma</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">profile</span><span class="p">)</span></div>
+    <span class="n">profile</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="n">rho_0</span> <span class="o">*</span> <span class="p">(</span><span class="n">r</span> <span class="o">/</span> <span class="n">r_c</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">)</span> <span class="o">*</span> \
+                        <span class="p">(</span><span class="mf">1.</span> <span class="o">+</span> <span class="p">(</span><span class="n">r</span> <span class="o">/</span> <span class="n">r_c</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="mf">1.5</span> <span class="o">*</span> <span class="n">beta</span> <span class="o">+</span> <span class="mf">0.25</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">)</span> <span class="o">*</span> \
+                        <span class="p">(</span><span class="mf">1.</span> <span class="o">+</span> <span class="p">(</span><span class="n">r</span> <span class="o">/</span> <span class="n">r_s</span><span class="p">)</span> <span class="o">**</span> <span class="n">gamma</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">epsilon</span> <span class="o">/</span> <span class="n">gamma</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="n">inspect</span><span class="o">.</span><span class="n">stack</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">])</span></div>
 
 
 <div class="viewcode-block" id="vikhlinin_temperature_profile"><a class="viewcode-back" href="../_as_gen/radial_profiles.vikhlinin_temperature_profile.html#radial_profiles.vikhlinin_temperature_profile">[docs]</a><span class="k">def</span> <span class="nf">vikhlinin_temperature_profile</span><span class="p">(</span><span class="n">T_0</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">r_t</span><span class="p">,</span> <span class="n">T_min</span><span class="p">,</span>
@@ -1287,11 +1341,13 @@ document.write(`
 <span class="sd">    RadialProfile</span>
 <span class="sd">        The corresponding radial profile object.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="nf">_temp</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="n">r</span><span class="o">/</span><span class="n">r_cool</span><span class="p">)</span><span class="o">**</span><span class="n">a_cool</span>
-        <span class="n">t</span> <span class="o">=</span> <span class="p">(</span><span class="n">r</span><span class="o">/</span><span class="n">r_t</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="n">a</span><span class="p">)</span><span class="o">/</span><span class="p">((</span><span class="mf">1.</span><span class="o">+</span><span class="p">(</span><span class="n">r</span><span class="o">/</span><span class="n">r_t</span><span class="p">)</span><span class="o">**</span><span class="n">b</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="n">c</span><span class="o">/</span><span class="n">b</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">T_0</span><span class="o">*</span><span class="n">t</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="n">T_min</span><span class="o">/</span><span class="n">T_0</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">_temp</span><span class="p">)</span></div>
+        <span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="n">r</span> <span class="o">/</span> <span class="n">r_cool</span><span class="p">)</span> <span class="o">**</span> <span class="n">a_cool</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="p">(</span><span class="n">r</span> <span class="o">/</span> <span class="n">r_t</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="n">a</span><span class="p">)</span> <span class="o">/</span> <span class="p">((</span><span class="mf">1.</span> <span class="o">+</span> <span class="p">(</span><span class="n">r</span> <span class="o">/</span> <span class="n">r_t</span><span class="p">)</span> <span class="o">**</span> <span class="n">b</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="n">c</span> <span class="o">/</span> <span class="n">b</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">T_0</span> <span class="o">*</span> <span class="n">t</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">T_min</span> <span class="o">/</span> <span class="n">T_0</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">_temp</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="n">inspect</span><span class="o">.</span><span class="n">stack</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">])</span></div>
 
 
 <div class="viewcode-block" id="am06_temperature_profile"><a class="viewcode-back" href="../_as_gen/radial_profiles.am06_temperature_profile.html#radial_profiles.am06_temperature_profile">[docs]</a><span class="k">def</span> <span class="nf">am06_temperature_profile</span><span class="p">(</span><span class="n">T_0</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">a_c</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
@@ -1316,8 +1372,8 @@ document.write(`
 <span class="sd">    RadialProfile</span>
 <span class="sd">        The corresponding radial profile object.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">p</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="n">T_0</span><span class="o">/</span><span class="p">(</span><span class="mf">1.</span><span class="o">+</span><span class="n">r</span><span class="o">/</span><span class="n">a</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">c</span><span class="o">+</span><span class="n">r</span><span class="o">/</span><span class="n">a_c</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mf">1.</span><span class="o">+</span><span class="n">r</span><span class="o">/</span><span class="n">a_c</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">p</span><span class="p">)</span></div>
+    <span class="n">p</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="n">T_0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">+</span> <span class="n">r</span> <span class="o">/</span> <span class="n">a</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">c</span> <span class="o">+</span> <span class="n">r</span> <span class="o">/</span> <span class="n">a_c</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">+</span> <span class="n">r</span> <span class="o">/</span> <span class="n">a_c</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="n">inspect</span><span class="o">.</span><span class="n">stack</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">])</span></div>
 
 
 <div class="viewcode-block" id="baseline_entropy_profile"><a class="viewcode-back" href="../_as_gen/radial_profiles.baseline_entropy_profile.html#radial_profiles.baseline_entropy_profile">[docs]</a><span class="k">def</span> <span class="nf">baseline_entropy_profile</span><span class="p">(</span><span class="n">K_0</span><span class="p">,</span> <span class="n">K_200</span><span class="p">,</span> <span class="n">r_200</span><span class="p">,</span> <span class="n">alpha</span><span class="p">):</span>
@@ -1341,23 +1397,25 @@ document.write(`
 <span class="sd">    RadialProfile</span>
 <span class="sd">        The corresponding radial profile object.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">p</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="n">K_0</span> <span class="o">+</span> <span class="n">K_200</span><span class="o">*</span><span class="p">(</span><span class="n">r</span><span class="o">/</span><span class="n">r_200</span><span class="p">)</span><span class="o">**</span><span class="n">alpha</span>
-    <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">p</span><span class="p">)</span></div>
+    <span class="n">p</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="n">K_0</span> <span class="o">+</span> <span class="n">K_200</span> <span class="o">*</span> <span class="p">(</span><span class="n">r</span> <span class="o">/</span> <span class="n">r_200</span><span class="p">)</span> <span class="o">**</span> <span class="n">alpha</span>
+    <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="n">inspect</span><span class="o">.</span><span class="n">stack</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">])</span></div>
 
 
 <div class="viewcode-block" id="broken_entropy_profile"><a class="viewcode-back" href="../_as_gen/radial_profiles.broken_entropy_profile.html#radial_profiles.broken_entropy_profile">[docs]</a><span class="k">def</span> <span class="nf">broken_entropy_profile</span><span class="p">(</span><span class="n">r_s</span><span class="p">,</span> <span class="n">K_scale</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">K_0</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">_entr</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">r</span><span class="o">/</span><span class="n">r_s</span>
-        <span class="n">ret</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="n">alpha</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mf">1.</span><span class="o">+</span><span class="n">x</span><span class="o">**</span><span class="mi">5</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mf">0.2</span><span class="o">*</span><span class="p">(</span><span class="mf">1.1</span><span class="o">-</span><span class="n">alpha</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">K_scale</span><span class="o">*</span><span class="p">(</span><span class="n">K_0</span><span class="o">+</span><span class="n">ret</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">_entr</span><span class="p">)</span></div>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">r</span> <span class="o">/</span> <span class="n">r_s</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">**</span> <span class="n">alpha</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">+</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">5</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="mf">0.2</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.1</span> <span class="o">-</span> <span class="n">alpha</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">K_scale</span> <span class="o">*</span> <span class="p">(</span><span class="n">K_0</span> <span class="o">+</span> <span class="n">ret</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">_entr</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="n">inspect</span><span class="o">.</span><span class="n">stack</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">])</span></div>
 
 
 <div class="viewcode-block" id="walker_entropy_profile"><a class="viewcode-back" href="../_as_gen/radial_profiles.walker_entropy_profile.html#radial_profiles.walker_entropy_profile">[docs]</a><span class="k">def</span> <span class="nf">walker_entropy_profile</span><span class="p">(</span><span class="n">r_200</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">K_scale</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">1.1</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">_entr</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">r</span><span class="o">/</span><span class="n">r_200</span>
-        <span class="k">return</span> <span class="n">K_scale</span><span class="o">*</span><span class="p">(</span><span class="n">A</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="n">alpha</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">x</span><span class="o">/</span><span class="n">B</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">_entr</span><span class="p">)</span></div>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">r</span> <span class="o">/</span> <span class="n">r_200</span>
+        <span class="k">return</span> <span class="n">K_scale</span> <span class="o">*</span> <span class="p">(</span><span class="n">A</span> <span class="o">*</span> <span class="n">x</span> <span class="o">**</span> <span class="n">alpha</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">x</span> <span class="o">/</span> <span class="n">B</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">_entr</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="n">inspect</span><span class="o">.</span><span class="n">stack</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">])</span></div>
 
 
 <div class="viewcode-block" id="rescale_profile_by_mass"><a class="viewcode-back" href="../_as_gen/radial_profiles.rescale_profile_by_mass.html#radial_profiles.rescale_profile_by_mass">[docs]</a><span class="k">def</span> <span class="nf">rescale_profile_by_mass</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span> <span class="n">mass</span><span class="p">,</span> <span class="n">radius</span><span class="p">):</span>
@@ -1376,9 +1434,9 @@ document.write(`
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">quad</span>
-    <span class="n">mass_int</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="n">profile</span><span class="p">(</span><span class="n">r</span><span class="p">)</span><span class="o">*</span><span class="n">r</span><span class="o">*</span><span class="n">r</span>
-    <span class="n">rescale</span> <span class="o">=</span> <span class="n">mass</span><span class="o">/</span><span class="p">(</span><span class="mf">4.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">quad</span><span class="p">(</span><span class="n">mass_int</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">radius</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
-    <span class="k">return</span> <span class="n">rescale</span><span class="o">*</span><span class="n">profile</span></div>
+    <span class="n">mass_int</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="n">profile</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">*</span> <span class="n">r</span> <span class="o">*</span> <span class="n">r</span>
+    <span class="n">rescale</span> <span class="o">=</span> <span class="n">mass</span> <span class="o">/</span> <span class="p">(</span><span class="mf">4.</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">quad</span><span class="p">(</span><span class="n">mass_int</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">radius</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">rescale</span> <span class="o">*</span> <span class="n">profile</span></div>
 
 
 <div class="viewcode-block" id="find_overdensity_radius"><a class="viewcode-back" href="../_as_gen/radial_profiles.find_overdensity_radius.html#radial_profiles.find_overdensity_radius">[docs]</a><span class="k">def</span> <span class="nf">find_overdensity_radius</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">delta</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">cosmo</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -1403,7 +1461,7 @@ document.write(`
     <span class="k">if</span> <span class="n">cosmo</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">cosmo</span> <span class="o">=</span> <span class="n">Cosmology</span><span class="p">()</span>
     <span class="n">rho_crit</span> <span class="o">=</span> <span class="n">cosmo</span><span class="o">.</span><span class="n">critical_density</span><span class="p">(</span><span class="n">z</span><span class="p">)</span><span class="o">.</span><span class="n">to_value</span><span class="p">(</span><span class="s2">&quot;Msun/kpc**3&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="p">(</span><span class="mf">3.0</span><span class="o">*</span><span class="n">m</span><span class="o">/</span><span class="p">(</span><span class="mf">4.0</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">delta</span><span class="o">*</span><span class="n">rho_crit</span><span class="p">))</span><span class="o">**</span><span class="p">(</span><span class="mf">1.</span><span class="o">/</span><span class="mf">3.</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="p">(</span><span class="mf">3.0</span> <span class="o">*</span> <span class="n">m</span> <span class="o">/</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">delta</span> <span class="o">*</span> <span class="n">rho_crit</span><span class="p">))</span> <span class="o">**</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">/</span> <span class="mf">3.</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="find_radius_mass"><a class="viewcode-back" href="../_as_gen/radial_profiles.find_radius_mass.html#radial_profiles.find_radius_mass">[docs]</a><span class="k">def</span> <span class="nf">find_radius_mass</span><span class="p">(</span><span class="n">m_r</span><span class="p">,</span> <span class="n">delta</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">cosmo</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -1429,12 +1487,14 @@ document.write(`
     <span class="k">if</span> <span class="n">cosmo</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">cosmo</span> <span class="o">=</span> <span class="n">Cosmology</span><span class="p">()</span>
     <span class="n">rho_crit</span> <span class="o">=</span> <span class="n">cosmo</span><span class="o">.</span><span class="n">critical_density</span><span class="p">(</span><span class="n">z</span><span class="p">)</span><span class="o">.</span><span class="n">to_value</span><span class="p">(</span><span class="s2">&quot;Msun/kpc**3&quot;</span><span class="p">)</span>
-    <span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="mf">3.0</span><span class="o">*</span><span class="n">m_r</span><span class="p">(</span><span class="n">r</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mf">4.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">r</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span> <span class="o">-</span> <span class="n">delta</span><span class="o">*</span><span class="n">rho_crit</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="mf">3.0</span> <span class="o">*</span> <span class="n">m_r</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">4.</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">r</span> <span class="o">**</span> <span class="mi">3</span><span class="p">)</span> <span class="o">-</span> <span class="n">delta</span> <span class="o">*</span> <span class="n">rho_crit</span>
     <span class="n">r_delta</span> <span class="o">=</span> <span class="n">bisect</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">10000.0</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">r_delta</span><span class="p">,</span> <span class="n">m_r</span><span class="p">(</span><span class="n">r_delta</span><span class="p">)</span></div>
 
+
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">u</span> <span class="o">=</span> <span class="n">power_law_profile</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="nb">globals</span><span class="p">()</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">power_law_profile</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
     <span class="n">u</span><span class="o">.</span><span class="n">to_binary</span><span class="p">(</span><span class="s2">&quot;test.rp&quot;</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">u</span><span class="p">(</span><span class="mi">5000</span><span class="p">))</span>
     <span class="k">del</span> <span class="n">u</span>

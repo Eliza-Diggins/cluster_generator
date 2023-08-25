@@ -134,13 +134,6 @@
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../introduction.html">
-                        Introduction
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
                       <a class="nav-link nav-internal" href="../radial_profiles.html">
                         Radial Profiles
                       </a>
@@ -160,19 +153,19 @@
                       </a>
                     </li>
                 
-            <div class="nav-item dropdown">
-                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    More
-                </button>
-                <div class="dropdown-menu">
-                    
+
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="../fields.html">
                         Generating 3D Cluster Fields
                       </a>
                     </li>
                 
-
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="../initial_conditions.html">
                         Initial Conditions Generation
@@ -284,13 +277,6 @@ document.write(`
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../introduction.html">
-                        Introduction
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
                       <a class="nav-link nav-internal" href="../radial_profiles.html">
                         Radial Profiles
                       </a>
@@ -310,19 +296,19 @@ document.write(`
                       </a>
                     </li>
                 
-            <div class="nav-item dropdown">
-                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    More
-                </button>
-                <div class="dropdown-menu">
-                    
+
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="../fields.html">
                         Generating 3D Cluster Fields
                       </a>
                     </li>
                 
-
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="../initial_conditions.html">
                         Initial Conditions Generation
@@ -484,20 +470,6 @@ document.write(`
 
 <span class="c1"># -- Utility functions -- #</span>
 <span class="n">_truncator_function</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">x</span><span class="p">:</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="p">(</span><span class="n">x</span><span class="o">/</span><span class="n">r</span><span class="p">)</span><span class="o">**</span><span class="n">a</span><span class="p">)</span>
-<span class="c1">#  Settings</span>
-<span class="c1"># ----------------------------------------------------------------------------------------------------------------- #</span>
-<span class="c1">#TODO: This could read from a bin file</span>
-<span class="c1">#: parameters for cluster generator.</span>
-<span class="n">cg_params</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="p">(</span><span class="s2">&quot;mond&quot;</span><span class="p">,</span><span class="s2">&quot;interp_alpha&quot;</span><span class="p">):</span> <span class="mi">1</span><span class="p">,</span>
-    <span class="p">(</span><span class="s2">&quot;mond&quot;</span><span class="p">,</span><span class="s2">&quot;a_0&quot;</span><span class="p">):</span> <span class="n">unyt_quantity</span><span class="p">(</span><span class="mf">1.2e-10</span><span class="p">,</span><span class="s2">&quot;m/s**2&quot;</span><span class="p">),</span>
-    <span class="p">(</span><span class="s2">&quot;mond&quot;</span><span class="p">,</span><span class="s2">&quot;QUMOND_interp&quot;</span><span class="p">):</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="p">(</span><span class="s2">&quot;mond&quot;</span><span class="p">,</span><span class="s2">&quot;AQUAL_interp&quot;</span><span class="p">):</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="p">(</span><span class="s2">&quot;util&quot;</span><span class="p">,</span><span class="s2">&quot;adj_factor&quot;</span><span class="p">):</span> <span class="mf">1.2</span>
-<span class="p">}</span>
-
-<span class="n">cg_params</span><span class="p">[</span><span class="s2">&quot;mond&quot;</span><span class="p">,</span><span class="s2">&quot;QUMOND_interp&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">((</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="p">(</span><span class="mi">4</span><span class="o">/</span><span class="n">x</span><span class="o">**</span><span class="n">cg_params</span><span class="p">[</span><span class="s2">&quot;mond&quot;</span><span class="p">,</span><span class="s2">&quot;interp_alpha&quot;</span><span class="p">]))</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">cg_params</span><span class="p">[</span><span class="s2">&quot;mond&quot;</span><span class="p">,</span><span class="s2">&quot;interp_alpha&quot;</span><span class="p">])</span>
-<span class="n">cg_params</span><span class="p">[</span><span class="s2">&quot;mond&quot;</span><span class="p">,</span><span class="s2">&quot;AQUAL_interp&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">x</span><span class="o">**</span><span class="p">(</span><span class="n">cg_params</span><span class="p">[</span><span class="s2">&quot;mond&quot;</span><span class="p">,</span><span class="s2">&quot;interp_alpha&quot;</span><span class="p">]))</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">cg_params</span><span class="p">[</span><span class="s2">&quot;mond&quot;</span><span class="p">,</span><span class="s2">&quot;interp_alpha&quot;</span><span class="p">])</span>
 
 <span class="c1"># -------------------------------------------------------------------------------------------------------------------- #</span>
 <span class="c1"># Type Assertions ==================================================================================================== #</span>

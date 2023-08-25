@@ -44,7 +44,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'examples';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="API" href="api.html" />
+    <link rel="next" title="Data Structures in cluster_generator" href="notebooks/api_guides/1.html" />
     <link rel="prev" title="Setting Up Idealized Cluster Problems in Various Codes" href="codes.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -135,13 +135,6 @@
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="introduction.html">
-                        Introduction
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
                       <a class="nav-link nav-internal" href="radial_profiles.html">
                         Radial Profiles
                       </a>
@@ -161,19 +154,19 @@
                       </a>
                     </li>
                 
-            <div class="nav-item dropdown">
-                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    More
-                </button>
-                <div class="dropdown-menu">
-                    
+
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="fields.html">
                         Generating 3D Cluster Fields
                       </a>
                     </li>
                 
-
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="initial_conditions.html">
                         Initial Conditions Generation
@@ -263,7 +256,7 @@ document.write(`
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
       
-      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+      <div class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -289,13 +282,6 @@ document.write(`
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="introduction.html">
-                        Introduction
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
                       <a class="nav-link nav-internal" href="radial_profiles.html">
                         Radial Profiles
                       </a>
@@ -315,19 +301,19 @@ document.write(`
                       </a>
                     </li>
                 
-            <div class="nav-item dropdown">
-                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    More
-                </button>
-                <div class="dropdown-menu">
-                    
+
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="fields.html">
                         Generating 3D Cluster Fields
                       </a>
                     </li>
                 
-
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="initial_conditions.html">
                         Initial Conditions Generation
@@ -382,6 +368,19 @@ document.write(`
     
   </div>
   
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item"><nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="notebooks/api_guides/1.html">Data Structures in cluster_generator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/api_guides/2.html">Virialization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/api_guides/3.html">Advanced Use Cases</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
   </div>
@@ -433,9 +432,24 @@ document.write(`
                   
   <section id="examples">
 <span id="id1"></span><h1>Examples<a class="headerlink" href="#examples" title="Permalink to this heading">#</a></h1>
-<section id="building-cluster">
-<h2>Building Cluster<a class="headerlink" href="#building-cluster" title="Permalink to this heading">#</a></h2>
-</section>
+<p>This gallery contains a variety of examples of accomplishing different tasks within <code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code>. If you notice any
+breakage points or issues, please notify the developers.</p>
+<hr style="height:10px;background-color:black"><section id="api-guides">
+<h2>API Guides<a class="headerlink" href="#api-guides" title="Permalink to this heading">#</a></h2>
+<p>These guides / examples are aimed at those users who are already somewhat familiar with the API but want to see more of the
+nuts and bolts of the system.</p>
+<hr style="height:2px;background-color:black"><div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/api_guides/1.html">Data Structures in cluster_generator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/api_guides/2.html">Virialization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/api_guides/3.html">Advanced Use Cases</a></li>
+</ul>
+</div>
+<hr style="height:10px;background-color:black"></section>
+<section id="code-examples">
+<h2>Code Examples<a class="headerlink" href="#code-examples" title="Permalink to this heading">#</a></h2>
+<p>These guides show how to generate any of a number of initial conditions for specific codes.</p>
+<hr style="height:2px;background-color:black"></section>
 </section>
 
 
@@ -459,11 +473,11 @@ document.write(`
       </div>
     </a>
     <a class="right-next"
-       href="api.html"
+       href="notebooks/api_guides/1.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">API</p>
+        <p class="prev-next-title">Data Structures in cluster_generator</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -485,7 +499,8 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#building-cluster">Building Cluster</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#api-guides">API Guides</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-examples">Code Examples</a></li>
 </ul>
   </nav></div>
 

@@ -41,10 +41,12 @@
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="_static/copybutton.js?v=f281be69"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'Getting_Started';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Using Radial Profiles" href="quick_notebooks/book_1.html" />
+    <link rel="next" title="Quickstart Guide: The Basics" href="notebooks/quick_notebooks/quickbook.html" />
     <link rel="prev" title="cluster_generator" href="index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -135,13 +137,6 @@
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="introduction.html">
-                        Introduction
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
                       <a class="nav-link nav-internal" href="radial_profiles.html">
                         Radial Profiles
                       </a>
@@ -161,19 +156,19 @@
                       </a>
                     </li>
                 
-            <div class="nav-item dropdown">
-                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    More
-                </button>
-                <div class="dropdown-menu">
-                    
+
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="fields.html">
                         Generating 3D Cluster Fields
                       </a>
                     </li>
                 
-
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="initial_conditions.html">
                         Initial Conditions Generation
@@ -289,13 +284,6 @@ document.write(`
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="introduction.html">
-                        Introduction
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
                       <a class="nav-link nav-internal" href="radial_profiles.html">
                         Radial Profiles
                       </a>
@@ -315,19 +303,19 @@ document.write(`
                       </a>
                     </li>
                 
-            <div class="nav-item dropdown">
-                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    More
-                </button>
-                <div class="dropdown-menu">
-                    
+
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="fields.html">
                         Generating 3D Cluster Fields
                       </a>
                     </li>
                 
-
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="initial_conditions.html">
                         Initial Conditions Generation
@@ -386,11 +374,11 @@ document.write(`
         <div class="sidebar-primary-item"><nav class="bd-docs-nav bd-links"
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
-  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Guides:</span></p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Quickstart Guides:</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="quick_notebooks/book_1.html">Using Radial Profiles</a></li>
-
-<li class="toctree-l1"><a class="reference internal" href="quick_notebooks/book_2.html">Building Your First Cluster</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/quick_notebooks/quickbook.html">Quickstart Guide: The Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/quick_notebooks/quickbook2.html">Quickstart Guide: Getting the most out of <code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/quick_notebooks/quickbook3.html">Quickstart Guide: What About MOND?</a></li>
 </ul>
 </div>
 </nav></div>
@@ -446,10 +434,91 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <section id="quickstart-guide">
-<span id="quickstart"></span><h1>Quickstart Guide<a class="headerlink" href="#quickstart-guide" title="Permalink to this heading">#</a></h1>
-<p>This quickstart guide will provide the basic tools necessary to successfully produce the initial conditions for whichever
-code you choose to use for your simulations. Below, you’ll find instructions on installing <code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code>.</p>
-<hr style="height:10px;background-color:black"><section id="getting-the-package">
+<span id="getting-started"></span><h1>Quickstart Guide<a class="headerlink" href="#quickstart-guide" title="Permalink to this heading">#</a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">#</a></h2>
+<p>Galaxy clusters are the largest gravitationally bound objects in the universe
+and the current endpoints of the process of cosmological structure formation.
+Clusters are made of dark matter (DM), the hot, magnetized, and X-ray-emitting
+gas known as the intracluster medium (ICM), and their constituent galaxies.</p>
+<p>For many applications, especially those focusing on the properties of the DM
+and ICM, clusters can be approximated as roughly spherically symmetric objects.
+This is often done using standard radial profiles for the various physical
+properties of the cluster, as well as assuming hydrostatic and virial equilibrium.</p>
+<p>These models are especially useful for semi-analytic studies and idealized
+N-body / (magneto)hydrodynamic simulations of clusters, whether of single objects
+or mergers between two or more. This is the purpose of the <code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code>
+package, which generates equilibrium cluster models from radial profile inputs.
+These models can be used to produce distributions of gas, DM, and star particles
+in hydrostatic and virial equilibrium for input into simulations. There is also
+the ability to create magnetic or velocity fields in three dimensions based on
+the properties of the cluster(s) which are modeled. Finally, <code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code>
+can be used to set up initial conditions for single-cluster or merger simulations
+for a number of N-body/hydrodynamic codes used in the astrophysics commmunity.</p>
+</section>
+<section id="id1">
+<h2>Getting Started<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
+<p>To begin using <code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code>, first install the library by following the instructions in the <a class="reference internal" href="#installation"><span class="std std-ref">Getting the Package</span></a> section.</p>
+<p>Once you’ve installed the package, have a look at the note on unit conventions (<a class="reference internal" href="#units"><span class="std std-ref">here</span></a>). Once you’re familiar with the units,
+we recommend you begin on this page by reading through our quickstart guide to get your feet wet.</p>
+<hr style="height:2px;background-color:black"><div class="toctree-wrapper compound">
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Quickstart Guides:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/quick_notebooks/quickbook.html">Quickstart Guide: The Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/quick_notebooks/quickbook2.html">Quickstart Guide: Getting the most out of <code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/quick_notebooks/quickbook3.html">Quickstart Guide: What About MOND?</a></li>
+</ul>
+</div>
+<hr style="height:2px;background-color:black"><p>If you’re already somewhat familiar with
+the code and you’re looking for something a little more in depth, the following sections may provide a more concrete introduction to
+many of the core aspects of the code:</p>
+<p>The best place to start is <a class="reference internal" href="radial_profiles.html#radial-profiles"><span class="std std-ref">Radial Profiles</span></a>, to see which analytical radial profile models for gas, DM,
+and star properties can be used to create equilibrium models, which are discussed
+in the <a class="reference internal" href="models.html#cluster-models"><span class="std std-ref">Cluster Models</span></a> section. This section begins with some helpful mathematical
+background in <a class="reference internal" href="models.html#math-overview-models"><span class="std std-ref">Cluster Models: Mathematical Overview</span></a>. For some, this may be all you need.</p>
+<p>However, if you want to use these models to generate particles for simulations or
+other analysis, check out the <a class="reference internal" href="particles.html#particles"><span class="std std-ref">Particles</span></a> section. For setting up DM and/or
+star particles in virial equilibrium, <a class="reference internal" href="particles.html#math-overview-particles"><span class="std std-ref">Virial Equilibria: Mathematical Overview</span></a> provides a
+mathematical overview.</p>
+<p>If you want to create 3-dimensional magnetic or velocity fields based on the
+cluster properties, check out <a class="reference internal" href="fields.html#fields"><span class="std std-ref">Generating 3D Cluster Fields</span></a>.</p>
+<p>Finally, though one can follow all of the steps individually to create initial
+conditions for simulations, <code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code> provides some handy tools and
+documentation to create initial conditions for a number of popular codes in the
+<a class="reference internal" href="initial_conditions.html#initial-conditions"><span class="std std-ref">Initial Conditions Generation</span></a> and <a class="reference internal" href="codes.html#codes"><span class="std std-ref">Setting Up Idealized Cluster Problems in Various Codes</span></a> sections.</p>
+<p>Code examples are given throughout the text, but some fully-worked examples of
+generating models from start to finish are given in the <a class="reference internal" href="examples.html#examples"><span class="std std-ref">Examples</span></a> section.</p>
+<section id="units">
+<span id="id2"></span><h3>Units<a class="headerlink" href="#units" title="Permalink to this heading">#</a></h3>
+<p>The unit system assumed in <code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code> is designed to use units
+appropriate for cluster scales:</p>
+<ul class="simple">
+<li><p>Length: <span class="math notranslate nohighlight">\({\rm kpc}\)</span></p></li>
+<li><p>Time: <span class="math notranslate nohighlight">\({\rm Myr}\)</span></p></li>
+<li><p>Mass: <span class="math notranslate nohighlight">\({\rm M_\odot}\)</span></p></li>
+</ul>
+<p>From these three, the units for other quantities, such as density, pressure,
+specific energy, gravitational potential, etc. are straighforwardly derived.
+These are the units which will be assumed for all inputs (whether arrays or
+scalars) to the functions in <code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code>, unless otherwise specified
+in the documentation and/or docstrings. What this means in practice is that if
+one supplies an input without units, it is assumed to be in the above units
+depending on the type of input (e.g., position, velocity, etc.). If you supply
+an input with units attached from <a class="reference external" href="https://yt-project.org">yt</a> or
+<a class="reference external" href="http://unyt.readthedocs.org">unyt</a>, it will be converted to the above units
+internally before performing any calculations.</p>
+<p>Some examples:</p>
+<p>Most quantities which are returned as outputs of <code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code> functions
+have units attached, using <a class="reference external" href="http://unyt.readthedocs.org">unyt</a>. These are usually in the above unit system.
+For some output quantities, these units are sometimes used:</p>
+<ul class="simple">
+<li><p>Number density: <span class="math notranslate nohighlight">\({\rm cm^{-3}}\)</span></p></li>
+<li><p>Temperature: <span class="math notranslate nohighlight">\({\rm keV}\)</span></p></li>
+<li><p>Entropy: <span class="math notranslate nohighlight">\({\rm keV~cm^2}\)</span></p></li>
+</ul>
+<hr style="height:10px;background-color:black"></section>
+</section>
+<section id="getting-the-package">
 <span id="installation"></span><h2>Getting the Package<a class="headerlink" href="#getting-the-package" title="Permalink to this heading">#</a></h2>
 <section id="from-pypi">
 <h3>From PyPI<a class="headerlink" href="#from-pypi" title="Permalink to this heading">#</a></h3>
@@ -489,8 +558,8 @@ simulations which are created using initial conditions from
 <code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code>.</p>
 </div>
 </section>
-<section id="id1">
-<h3>Installation<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<section id="id6">
+<h3>Installation<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code> can be installed in a few different ways. The simplest way
 is via the conda package if you have the
 <a class="reference external" href="https://store.continuum.io/cshop/anaconda/">Anaconda Python Distribution</a>:</p>
@@ -514,25 +583,6 @@ in your Python distribution:</p>
 </section>
 </section>
 </section>
-<section id="getting-started">
-<h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this heading">#</a></h1>
-<p>Now that you have <code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code> installed, we’re ready to start using the software. The guides below contain all of the
-info new users need to get started using <code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code>’s API.</p>
-<div class="toctree-wrapper compound">
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Guides:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="quick_notebooks/book_1.html">Using Radial Profiles</a></li>
-<li class="toctree-l1"><a class="reference internal" href="quick_notebooks/book_1.html#More-Advanced-Usage">More Advanced Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="quick_notebooks/book_2.html">Building Your First Cluster</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="quick_notebooks/book_2.html#Checking-Out-the-Cluster">Checking Out the Cluster</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quick_notebooks/book_2.html#Virializing-Your-Cluster">Virializing Your Cluster</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quick_notebooks/book_2.html#Generating-Particles">Generating Particles</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quick_notebooks/book_2.html#Saving-Models-to-Disk">Saving Models to Disk</a></li>
-</ul>
-</li>
-</ul>
-</div>
-</section>
 
 
                 </article>
@@ -555,11 +605,11 @@ info new users need to get started using <code class="docutils literal notransla
       </div>
     </a>
     <a class="right-next"
-       href="quick_notebooks/book_1.html"
+       href="notebooks/quick_notebooks/quickbook.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Using Radial Profiles</p>
+        <p class="prev-next-title">Quickstart Guide: The Basics</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -581,19 +631,19 @@ info new users need to get started using <code class="docutils literal notransla
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Quickstart Guide</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Getting Started</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#units">Units</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-the-package">Getting the Package</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#from-pypi">From PyPI</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#from-source">From Source</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dependencies">Dependencies</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Installation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Installation</a></li>
 </ul>
 </li>
 </ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-started">Getting Started</a></li>
-</ul>
-
   </nav></div>
 
   <div class="sidebar-secondary-item">

@@ -1,0 +1,1023 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>virial &#8212; cluster_generator  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fd506691" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=ccbe24c1"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/mermaid@10.2.0/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({startOnLoad:true});</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/virial';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  <div class="navbar-header-items__start">
+    
+      <div class="navbar-item">
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">cluster_generator  documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../Getting_Started.html">
+                        Quickstart Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../radial_profiles.html">
+                        Radial Profiles
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../models.html">
+                        Cluster Models
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../particles.html">
+                        Particles
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../fields.html">
+                        Generating 3D Cluster Fields
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../initial_conditions.html">
+                        Initial Conditions Generation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../codes.html">
+                        Setting Up Idealized Cluster Problems in Various Codes
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../examples.html">
+                        Examples
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../api.html">
+                        API
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+        </div>
+      
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+    </div>
+  
+
+  
+</div>
+
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../Getting_Started.html">
+                        Quickstart Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../radial_profiles.html">
+                        Radial Profiles
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../models.html">
+                        Cluster Models
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../particles.html">
+                        Particles
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../fields.html">
+                        Generating 3D Cluster Fields
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../initial_conditions.html">
+                        Initial Conditions Generation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../codes.html">
+                        Setting Up Idealized Cluster Problems in Various Codes
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../examples.html">
+                        Examples
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../api.html">
+                        API
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+  </ul>
+</nav></div>
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumbs">
+  <ul class="bd-breadcrumbs" role="navigation" aria-label="Breadcrumb">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">virial</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <h1>Source code for virial</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Virialization tools for the ``cluster-generator`` system.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">tqdm.auto</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">from</span> <span class="nn">scipy.interpolate</span> <span class="kn">import</span> <span class="n">InterpolatedUnivariateSpline</span>
+<span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">erf</span>
+<span class="kn">from</span> <span class="nn">cluster_generator.utils</span> <span class="kn">import</span> \
+    <span class="n">quad</span><span class="p">,</span> <span class="n">generate_particle_radii</span><span class="p">,</span> <span class="n">mylog</span>
+<span class="kn">from</span> <span class="nn">cluster_generator.particles</span> <span class="kn">import</span> \
+    <span class="n">ClusterParticles</span>
+<span class="kn">from</span> <span class="nn">cluster_generator.cython_utils</span> <span class="kn">import</span> <span class="n">generate_velocities</span><span class="p">,</span> <span class="n">generate_lma_velocities</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
+<span class="kn">from</span> <span class="nn">unyt</span> <span class="kn">import</span> <span class="n">unyt_array</span>
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">fsolve</span>
+
+<div class="viewcode-block" id="VirialEquilibrium"><a class="viewcode-back" href="../_as_gen/virial.VirialEquilibrium.html#virial.VirialEquilibrium">[docs]</a><span class="k">class</span> <span class="nc">VirialEquilibrium</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The ``VirialEquilibrium`` class is used to generate the necessary distribution functions to determine halo and</span>
+<span class="sd">    stellar particle velocities in initial conditions.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    model : :class:`~cluster_generator.model.ClusterModel`</span>
+<span class="sd">        The cluster model which will be used to</span>
+<span class="sd">        construct the virial equilibrium.</span>
+<span class="sd">    ptype : string, optional</span>
+<span class="sd">        The type of the particles which can be generated from this</span>
+<span class="sd">        object, either &quot;dark_matter&quot; or &quot;stellar&quot;. Default: &quot;dark_matter&quot;</span>
+<span class="sd">    df : unyt_array</span>
+<span class="sd">        The particle distribution function. If not supplied, it will</span>
+<span class="sd">        be generated.</span>
+<span class="sd">    gravity: str</span>
+<span class="sd">        .. warning::</span>
+<span class="sd">            Work in progress.</span>
+<span class="sd">    type: str</span>
+<span class="sd">        The type of equilibrium to facilitate. If ``eddington``, the edington formula is used. if ``lma``, then LMA is used.</span>
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+
+<span class="sd">    Generating the Phase Space Density</span>
+<span class="sd">    ++++++++++++++++++++++++++++++++++</span>
+<span class="sd">    The particles in the simulation may be thought of as occupying a 6-dimensional &quot;phase space&quot;, :math:`\textbf{x}\times\dot{\textbf{x}}`.</span>
+<span class="sd">    Regardless of the dynamics of the system, Liouville&#39;s Theorem applies to the phase space density of the system and therefore,</span>
+<span class="sd">    the Collisionless Boltzmann Equation and the Jean&#39;s Equation are both valid universally. The question of virialization is to</span>
+<span class="sd">    determine the velocities of the constituent particles in such a way that the system remains in a steady state.</span>
+
+<span class="sd">    **The Eddington Formula Approach**:</span>
+
+<span class="sd">    .. attention ::</span>
+
+<span class="sd">        This approach is only viable with Newtonian gravity. The integrand generated in this process is only invertible for</span>
+<span class="sd">        the phase density because it fits the form of an Abel Integral, which generically fails to happen in non-newtonian</span>
+<span class="sd">        gravity theories.</span>
+
+<span class="sd">    Consider a velocity distribution function :math:`f(\textbf{v})`. Then (in Newtonian gravity),</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \nabla ^2 \Phi = 4\pi G \rho = 4\pi G \int f d^3\textbf{v}.</span>
+
+<span class="sd">    The RHS of the equation may be expanded in spherical coordinates to yield a non-trivial differential equation in :math:`f`.</span>
+<span class="sd">    In the case of galaxy clusters, the Jean&#39;s Theorem applies, stipulating that :math:`f` be a function only of energy and angular momentum. If,</span>
+<span class="sd">    as is typical, we assume that the system is irrotational, the angular momentum is constant and the function becomes dependent only</span>
+<span class="sd">    on the energy. To simplify the notation, we denote the **relative potential** to be :math:`\Psi = -\Phi + \Phi_0` and the relative energy</span>
+<span class="sd">    to be :math:`\mathcal{E} = -E + \Phi_0 = \Psi - \frac{1}{2}v^2`.  In this case, the equation above may be simplified to the form</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \rho(r) = 4\pi \int_0^\Psi f(\mathcal{E})\sqrt{2(\Psi - \mathcal{E})} d\mathcal{E}.</span>
+
+<span class="sd">    If :math:`\rho` is considered a function of the relative potential, then one may obtain the equation</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \frac{1}{\sqrt{8}\pi}\frac{d\rho}{d\Psi} = \int_0^\Psi \frac{f(\mathcal{E}) d\mathcal{E}}{\sqrt{\Psi-\mathcal{E}}}</span>
+
+<span class="sd">    Blinney and Tremaine note that this is an Abel integral and may be inverted to yield</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        f(\mathcal{E}) = \frac{1}{\sqrt{8}\pi^2} \frac{d}{d\mathcal{E}}\int_0^\mathcal{E} \frac{d\rho}{d\Psi} \frac{d\Psi}{\sqrt{\mathcal{E}-\Psi}}</span>
+
+<span class="sd">    This is the approach used in ``cluster_generator`` for the generation of virialized systems when using Newtonian dynamics.</span>
+
+<span class="sd">    **The Local Maxwellian Approximation**</span>
+
+<span class="sd">    While the Eddington Formula provides an ideal approach in Newtonian gravity, when using non-newtonian gravity or badly behaved profiles even in Newtonian</span>
+<span class="sd">    gravity, analytical approaches may become non-viable; however, the Local Maxwellian approximation (LMA) can be used to obtain a viable estimate</span>
+<span class="sd">    for the distribution function nonetheless. Consider the Jeans Equation in spherically symmetry:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \frac{\partial \rho \sigma_r^2}{\partial r} + \frac{2\rho}{r}\left(\sigma_r^2 -\sigma^2_\theta\right) + \rho \frac{\partial \Phi}{\partial r} = 0.</span>
+
+<span class="sd">    If one also assumes that the stress tensor is entirely isotropic, then the equation may be manipulated to allow one to find the velocity dispersion</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \sigma_r^2 = \frac{1}{\rho_h}\int_r^\infty \rho_h \frac{d\Phi}{dr} dr</span>
+
+<span class="sd">    We are then able to assume a gaussian distribution function for the velocities, and thus a maxwellian distribution for the speeds</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        F(v,r) = 4\pi \left(\frac{1}{2\pi \sigma^2}\right) v^2 \exp\left(\frac{-v^2}{2\bar{v_r}^2}\right)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1">#  Dunder Methods</span>
+    <span class="c1"># ----------------------------------------------------------------------------------------------------------------- #</span>
+<div class="viewcode-block" id="VirialEquilibrium.__init__"><a class="viewcode-back" href="../_as_gen/virial.VirialEquilibrium.__init__.html#virial.VirialEquilibrium.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">ptype</span><span class="o">=</span><span class="s1">&#39;dark_matter&#39;</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">sigma2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="nb">type</span><span class="o">=</span><span class="s2">&quot;eddington&quot;</span><span class="p">):</span>
+        <span class="c1">#  Assigning basic attributes</span>
+        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+        <span class="c1">#: The number of elements in the model&#39;s field samples. (Inherited)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_elements</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">num_elements</span>
+        <span class="c1">#: the particle type (``dark_matter`` or ``stellar``).</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ptype</span> <span class="o">=</span> <span class="n">ptype</span>
+        <span class="c1">#: The model object corresponding to the virialization problem.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+        <span class="c1">#: The type of equilibrium construction to use.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="nb">type</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;eddington&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_df</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_sigma</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+            <span class="c1"># - Generate the DF function - #</span>
+            <span class="k">if</span> <span class="n">df</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_df</span> <span class="o">=</span> <span class="n">df</span>
+
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;lma&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_df</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_sigma</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+            <span class="k">if</span> <span class="n">sigma2</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_sigma</span> <span class="o">=</span> <span class="n">sigma2</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The equilibrium type </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2"> is not valid.&quot;</span><span class="p">)</span></div>
+
+    <span class="c1"># Properties</span>
+    <span class="c1"># ----------------------------------------------------------------------------------------------------------------- #</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">df</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;eddington&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_df</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_df</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_generate_df</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">mylog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span><span class="si">}</span><span class="s2"> has equilibrium type </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2"> and so no &#39;df&#39; exists.&quot;</span><span class="p">)</span>
+
+    <span class="nd">@df</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">df</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;eddington&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_df</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">d</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">f</span> <span class="o">=</span> <span class="n">InterpolatedUnivariateSpline</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ee</span><span class="p">,</span><span class="n">f</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">mylog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span><span class="si">}</span><span class="s2"> has equilibrium type </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2"> and so no &#39;df&#39; exists.&quot;</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">sigma</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;lma&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sigma</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sigma</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_generate_sigma</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">mylog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span><span class="si">}</span><span class="s2"> has equilibrium type </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2"> and so no &#39;sigma&#39; exists.&quot;</span><span class="p">)</span>
+
+    <span class="nd">@sigma</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">sigma</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;lma&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_sigma</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">mylog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span><span class="si">}</span><span class="s2"> has equilibrium type </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2"> and so no &#39;sigma&#39; exists.&quot;</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">ee</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The ``relative potential``, :math:`\Psi(r) = -\Phi +\Phi_0`. In this case, :math:`\Phi_0 = 0`.</span>
+
+<span class="sd">        .. warning::</span>
+
+<span class="sd">            The relative potential here is in order of decreasing :math:`r`.</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="s2">&quot;gravitational_potential&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">ff</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Reverse direction of ``self.df`` as a numpy array. &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_df</span><span class="o">.</span><span class="n">d</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="c1">#  Private Functions</span>
+    <span class="c1"># ----------------------------------------------------------------------------------------------------------------- #</span>
+    <span class="k">def</span> <span class="nf">_generate_df</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates the distribution function :math:`DF(\textbf{x},\textbf{v}` for the given cluster.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#  Sanity Check</span>
+        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">!=</span> <span class="s2">&quot;eddington&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The method _generate_df is not available to VirialEquilibrium models with type </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="c1">#  Pulling necessary field data out of the model.</span>
+        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+        <span class="c1"># --- Particle density --- #</span>
+        <span class="c1"># ? Grabs the particle densities and then constructs a density spline as a function of the</span>
+        <span class="c1"># ? relative potential (self.ee)</span>
+        <span class="n">pden</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ptype</span><span class="si">}</span><span class="s2">_density&quot;</span><span class="p">][::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">density_spline</span> <span class="o">=</span> <span class="n">InterpolatedUnivariateSpline</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ee</span><span class="p">,</span> <span class="n">pden</span><span class="p">)</span>
+
+        <span class="c1"># -- Preparing to conduct the integration -- #</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_elements</span><span class="p">)</span>
+        <span class="n">dgdp</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">t</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span> <span class="mi">2</span><span class="o">*</span><span class="n">density_spline</span><span class="p">(</span><span class="n">e</span><span class="o">-</span><span class="n">t</span><span class="o">*</span><span class="n">t</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">pbar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">leave</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">total</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_elements</span><span class="p">,</span>
+                    <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Computing particle DF (Eddington) &quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_elements</span><span class="p">):</span>
+            <span class="n">g</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">quad</span><span class="p">(</span><span class="n">dgdp</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ee</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> <span class="n">epsabs</span><span class="o">=</span><span class="mf">1.49e-05</span><span class="p">,</span>
+                        <span class="n">epsrel</span><span class="o">=</span><span class="mf">1.49e-05</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ee</span><span class="p">[</span><span class="n">i</span><span class="p">]))[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">pbar</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+        <span class="n">pbar</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="n">g_spline</span> <span class="o">=</span> <span class="n">InterpolatedUnivariateSpline</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ee</span><span class="p">,</span> <span class="n">g</span><span class="p">)</span>
+        <span class="n">ff</span> <span class="o">=</span> <span class="n">g_spline</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ee</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">8.</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">f</span> <span class="o">=</span> <span class="n">InterpolatedUnivariateSpline</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ee</span><span class="p">,</span> <span class="n">ff</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_df</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="p">(</span><span class="n">ff</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;Msun*Myr**3/kpc**6&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_generate_sigma</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates the :math:`\sigma^2` values for the distribution function at each radius.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        ------</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#  Sanity Check</span>
+        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+        <span class="c1"># - Checking type - #</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">!=</span> <span class="s2">&quot;lma&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;The method _generate_sigma is not available to VirialEquilibrium models with type </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># - Asserting necessary fields - #</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="s2">&quot;gravitational_potential&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">pot</span> <span class="c1"># Generates the potential from the inherited model.</span>
+
+        <span class="c1">#  Constructing splines for estimation</span>
+        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+        <span class="c1"># ! DENSITY SPLINE: truncation approach to force asymptotic behavior at large radii.</span>
+        <span class="c1">#</span>
+        <span class="c1"># - Generating the cutoff radius - #</span>
+        <span class="n">_rmax</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">)</span>
+
+        <span class="c1"># - Building the density spline - #</span>
+        <span class="n">pden</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ptype</span><span class="si">}</span><span class="s2">_density&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;Msun/kpc**3&quot;</span><span class="p">)</span>
+        <span class="n">density_spline</span> <span class="o">=</span> <span class="n">InterpolatedUnivariateSpline</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">,</span> <span class="n">pden</span><span class="o">.</span><span class="n">d</span><span class="p">,</span><span class="n">k</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+        <span class="n">_slope</span> <span class="o">=</span> <span class="n">_rmax</span><span class="o">*</span><span class="n">density_spline</span><span class="p">(</span><span class="n">_rmax</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="n">density_spline</span><span class="p">(</span><span class="n">_rmax</span><span class="p">)</span>
+        <span class="n">_density_spline</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">piecewise</span><span class="p">(</span><span class="n">r</span><span class="p">,[</span><span class="n">r</span><span class="o">&lt;</span><span class="n">_rmax</span><span class="p">,</span><span class="n">r</span><span class="o">&gt;=</span><span class="n">_rmax</span><span class="p">],</span>
+                                                 <span class="p">[</span><span class="n">density_spline</span><span class="p">,</span><span class="k">lambda</span> <span class="n">l</span><span class="p">:</span> <span class="n">density_spline</span><span class="p">(</span><span class="n">_rmax</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">l</span><span class="o">/</span><span class="n">_rmax</span><span class="p">)</span><span class="o">**</span><span class="n">_slope</span><span class="p">])</span>
+
+        <span class="c1"># ! POTENTIAL SPLINE: truncating slope on the integrand at large radii.</span>
+
+        <span class="c1"># - Potential - #</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="s2">&quot;gravitational_potential&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;kpc**2/Myr**2&quot;</span><span class="p">)</span>
+        <span class="n">potential_spline</span> <span class="o">=</span> <span class="n">InterpolatedUnivariateSpline</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">,</span><span class="n">g</span><span class="o">.</span><span class="n">d</span><span class="p">,</span><span class="n">k</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+        <span class="n">_dp_func</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">piecewise</span><span class="p">(</span><span class="n">r</span><span class="p">,[</span><span class="n">r</span><span class="o">&lt;</span><span class="n">_rmax</span><span class="p">,</span><span class="n">r</span><span class="o">&gt;=</span><span class="n">_rmax</span><span class="p">],</span>
+                                          <span class="p">[</span><span class="k">lambda</span> <span class="n">l</span><span class="p">:</span> <span class="n">potential_spline</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="k">lambda</span> <span class="n">l</span><span class="p">:</span> <span class="n">potential_spline</span><span class="p">(</span><span class="n">_rmax</span><span class="p">,</span><span class="mi">1</span><span class="p">)])</span>
+
+        <span class="c1"># --- Building the integrands --- #</span>
+        <span class="n">integrand</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">density_spline</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">*</span><span class="n">potential_spline</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">inf_integrand</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">_density_spline</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">*</span><span class="n">_dp_func</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+        <span class="c1">#  Performing the integration</span>
+        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+        <span class="n">sig</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_elements</span><span class="p">)</span>
+        <span class="n">pbar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">leave</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">total</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_elements</span><span class="p">,</span>
+                    <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Computing particle dispersions (LMA) &quot;</span><span class="p">)</span>
+
+        <span class="n">inf_int</span> <span class="o">=</span> <span class="n">quad</span><span class="p">(</span><span class="n">inf_integrand</span><span class="p">,</span><span class="n">_rmax</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span><span class="n">limit</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span><span class="n">epsabs</span><span class="o">=</span><span class="mf">1.49e-05</span><span class="p">,</span>
+                        <span class="n">epsrel</span><span class="o">=</span><span class="mf">1.49e-05</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">r</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">):</span>
+            <span class="n">sig</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">quad</span><span class="p">(</span><span class="n">integrand</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span><span class="n">_rmax</span><span class="p">,</span><span class="n">limit</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">epsabs</span><span class="o">=</span><span class="mf">1.49e-05</span><span class="p">,</span>
+                        <span class="n">epsrel</span><span class="o">=</span><span class="mf">1.49e-05</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">pbar</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+        <span class="n">pbar</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">sig</span> <span class="o">+=</span> <span class="n">inf_int</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sigma</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="p">(</span><span class="n">sig</span><span class="p">,</span><span class="s2">&quot;Msun / (Myr**2 * kpc)&quot;</span><span class="p">)</span><span class="o">/</span><span class="n">pden</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sigma</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sigma</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;kpc**2/Myr**2&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="VirialEquilibrium.check_virial"><a class="viewcode-back" href="../_as_gen/virial.VirialEquilibrium.check_virial.html#virial.VirialEquilibrium.check_virial">[docs]</a>    <span class="k">def</span> <span class="nf">check_virial</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Computes the radial density profile for the collisionless </span>
+<span class="sd">        particles computed from integrating over the distribution </span>
+<span class="sd">        function, and the relative difference between this and the </span>
+<span class="sd">        input density profile.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        rho : NumPy array</span>
+<span class="sd">            The density profile computed from integrating the</span>
+<span class="sd">            distribution function. </span>
+<span class="sd">        chk : NumPy array</span>
+<span class="sd">            The relative difference between the input density</span>
+<span class="sd">            profile and the one calculated using this method.</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        See [1]_ for a complete discussion. The basis of the derivation is as follows:</span>
+
+<span class="sd">        Let :math:`f(\textbf{v})` be the distribution function of the system. Then, by definition,</span>
+
+<span class="sd">        .. math::</span>
+
+<span class="sd">            \rho =  \int f d^3\textbf{v}.</span>
+
+<span class="sd">        Invoking the Jeans Theorem, we may acknowledge that :math:`f` is a function only of :math:`L,\mathcal{E}`. Furthermore,</span>
+<span class="sd">        due to the assumption of an isotropic dispersion tensor, :math:`f` is a function only of the energy. We therefore write</span>
+<span class="sd">        the above equation as</span>
+
+<span class="sd">        .. math::</span>
+
+<span class="sd">                \rho = 4\pi \int_0^\Psi f(\mathcal{E})\sqrt{2(\Psi-\mathcal{E})}\; d\mathcal{E},</span>
+
+<span class="sd">        where</span>
+<span class="sd">        .. math::</span>
+
+<span class="sd">            \Psi = -\Phi + \Phi_0, \;\;\text{and}\;\;\mathcal{E} = \Psi - \frac{1}{2}v^2.</span>
+
+<span class="sd">        These quantities are referred to as **relative potential** and **relative energy**.</span>
+
+<span class="sd">        References</span>
+<span class="sd">        ----------</span>
+<span class="sd">            [1] Binney, J., &amp; Tremaine, S. (2011). Galactic dynamics (Vol. 20). Princeton university press.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#  Preparing arrays and pulling data</span>
+        <span class="c1"># ----------------------------------------------------------------------------------------------------------------- #</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">!=</span> <span class="s2">&quot;eddington&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The model does not use a form of virialization that can use this function.&quot;</span><span class="p">)</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_elements</span>
+        <span class="n">rho</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+        <span class="n">pden</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ptype</span><span class="si">}</span><span class="s2">_density&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span> <span class="c1">#-&gt; This is the profile / model density array.</span>
+
+        <span class="c1"># - Defining the integrand - #</span>
+        <span class="n">rho_int</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">e</span><span class="p">,</span> <span class="n">psi</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">psi</span><span class="o">-</span><span class="n">e</span><span class="p">))</span>
+
+        <span class="c1"># - Carrying out the cumulative integration - #</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ee</span><span class="p">):</span>
+            <span class="n">rho</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mf">4.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">quad</span><span class="p">(</span><span class="n">rho_int</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">e</span><span class="p">,))[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="c1"># - performing the check.</span>
+        <span class="n">chk</span> <span class="o">=</span> <span class="p">(</span><span class="n">rho</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">pden</span><span class="p">)</span><span class="o">/</span><span class="n">pden</span>
+        <span class="n">mylog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;The maximum relative deviation of this profile from &quot;</span>
+                   <span class="s2">&quot;virial equilibrium is </span><span class="si">%g</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">chk</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">rho</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">chk</span></div>
+
+<div class="viewcode-block" id="VirialEquilibrium.generate_particles"><a class="viewcode-back" href="../_as_gen/virial.VirialEquilibrium.generate_particles.html#virial.VirialEquilibrium.generate_particles">[docs]</a>    <span class="k">def</span> <span class="nf">generate_particles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_particles</span><span class="p">,</span> <span class="n">r_max</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sub_sample</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                           <span class="n">compute_potential</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">prng</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a set of dark matter or star particles in virial equilibrium.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        num_particles : integer</span>
+<span class="sd">            The number of particles to generate.</span>
+<span class="sd">        r_max : float, optional</span>
+<span class="sd">            The maximum radius in kpc within which to generate </span>
+<span class="sd">            particle positions. If not supplied, it will generate</span>
+<span class="sd">            positions out to the maximum radius available. Default: None</span>
+<span class="sd">        sub_sample : integer, optional</span>
+<span class="sd">            This option allows one to generate a sub-sample of unique</span>
+<span class="sd">            particle radii and velocities which will then be repeated</span>
+<span class="sd">            to fill the required number of particles. Default: 1, which</span>
+<span class="sd">            means no sub-sampling.</span>
+<span class="sd">        compute_potential : boolean, optional</span>
+<span class="sd">            If True, the gravitational potential for each particle will</span>
+<span class="sd">            be computed. Default: False</span>
+<span class="sd">        prng : :class:`~numpy.random.RandomState` object, integer, or None</span>
+<span class="sd">            A pseudo-random number generator. Typically will only </span>
+<span class="sd">            be specified if you have a reason to generate the same </span>
+<span class="sd">            set of random numbers, such as for a test. Default is None, </span>
+<span class="sd">            which sets the seed based on the system time.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        particles : :class:`~cluster_generator.particles.ClusterParticles`</span>
+<span class="sd">            A set of dark matter or star particles.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#  Setup</span>
+        <span class="c1"># ----------------------------------------------------------------------------------------------------------------- #</span>
+        <span class="kn">from</span> <span class="nn">cluster_generator.utils</span> <span class="kn">import</span> <span class="n">parse_prng</span>
+
+        <span class="n">num_particles_sub</span> <span class="o">=</span> <span class="n">num_particles</span> <span class="o">//</span> <span class="n">sub_sample</span> <span class="c1"># number of particles for which to generate.</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;dark_matter&quot;</span><span class="p">:</span> <span class="s2">&quot;dm&quot;</span><span class="p">,</span>  <span class="s2">&quot;stellar&quot;</span><span class="p">:</span> <span class="s2">&quot;star&quot;</span><span class="p">}[</span><span class="bp">self</span><span class="o">.</span><span class="n">ptype</span><span class="p">]</span> <span class="c1"># particle type reference.</span>
+
+        <span class="c1">#- Pulling fields - #</span>
+        <span class="n">density</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ptype</span><span class="si">}</span><span class="s2">_density&quot;</span>
+        <span class="n">mass</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ptype</span><span class="si">}</span><span class="s2">_mass&quot;</span>
+
+        <span class="c1">#  Constructing the particle positions</span>
+        <span class="c1"># ----------------------------------------------------------------------------------------------------------------- #</span>
+        <span class="n">prng</span> <span class="o">=</span> <span class="n">parse_prng</span><span class="p">(</span><span class="n">prng</span><span class="p">)</span>
+
+        <span class="n">mylog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;We will be assigning </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2"> particles.&quot;</span><span class="p">,</span>
+                   <span class="n">num_particles</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ptype</span><span class="p">)</span>
+        <span class="n">mylog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Compute </span><span class="si">%s</span><span class="s2"> particle positions.&quot;</span><span class="p">,</span> <span class="n">num_particles</span><span class="p">)</span>
+
+        <span class="c1"># --- Determining the appropriate radii by inverse sampling --- #</span>
+        <span class="n">nonzero</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="n">density</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.0</span>
+        <span class="n">radius_sub</span><span class="p">,</span> <span class="n">mtot</span> <span class="o">=</span> <span class="n">generate_particle_radii</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">[</span><span class="n">nonzero</span><span class="p">],</span>
+                                                   <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="n">mass</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">[</span><span class="n">nonzero</span><span class="p">],</span>
+                                                   <span class="n">num_particles_sub</span><span class="p">,</span> <span class="n">r_max</span><span class="o">=</span><span class="n">r_max</span><span class="p">,</span>
+                                                   <span class="n">prng</span><span class="o">=</span><span class="n">prng</span><span class="p">)</span>
+
+        <span class="c1"># --- Tiling if there is a sub-sampling procedure --- #</span>
+        <span class="k">if</span> <span class="n">sub_sample</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">radius</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">radius_sub</span><span class="p">,</span> <span class="n">sub_sample</span><span class="p">)[:</span><span class="n">num_particles</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">radius</span> <span class="o">=</span> <span class="n">radius_sub</span>
+
+        <span class="c1"># --- Angular Distribution (uniform) --- #</span>
+        <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arccos</span><span class="p">(</span><span class="n">prng</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">low</span><span class="o">=-</span><span class="mf">1.</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">num_particles</span><span class="p">))</span>
+        <span class="n">phi</span> <span class="o">=</span> <span class="mf">2.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">prng</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">num_particles</span><span class="p">)</span>
+
+        <span class="n">fields</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+
+        <span class="n">fields</span><span class="p">[</span><span class="n">key</span><span class="p">,</span> <span class="s2">&quot;particle_position&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">radius</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">phi</span><span class="p">),</span> <span class="n">radius</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi</span><span class="p">),</span>
+             <span class="n">radius</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)],</span> <span class="s2">&quot;kpc&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+
+        <span class="c1"># Computing necessary velocities</span>
+        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;eddington&quot;</span><span class="p">:</span>
+            <span class="n">mylog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Computing </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ptype</span><span class="si">}</span><span class="s2"> velocities using </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2"> method.&quot;</span><span class="p">)</span>
+
+            <span class="c1">#  Solving Via the Eddington Formula</span>
+            <span class="c1"># -------------------------------------------------------------------------------------------------------- #</span>
+
+            <span class="c1"># --- Pulling the necessary fields --- #</span>
+            <span class="n">energy_spline</span> <span class="o">=</span> <span class="n">InterpolatedUnivariateSpline</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">,</span>
+                                                         <span class="bp">self</span><span class="o">.</span><span class="n">ee</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+            <span class="n">psi</span> <span class="o">=</span> <span class="n">energy_spline</span><span class="p">(</span><span class="n">radius_sub</span><span class="p">)</span> <span class="c1"># - Relative potential pulled from energy spline function.</span>
+            <span class="n">vesc</span> <span class="o">=</span> <span class="mf">2.</span><span class="o">*</span><span class="n">psi</span> <span class="c1"># - (after root) becomes the escape velocity.</span>
+            <span class="n">fv2esc</span> <span class="o">=</span> <span class="n">vesc</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="p">(</span><span class="n">psi</span><span class="p">)</span> <span class="c1"># - self.f is the distribution function (backward),</span>
+            <span class="n">vesc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">vesc</span><span class="p">)</span>
+
+            <span class="n">velocity_sub</span> <span class="o">=</span> <span class="n">generate_velocities</span><span class="p">(</span>
+                <span class="n">psi</span><span class="p">,</span> <span class="n">vesc</span><span class="p">,</span> <span class="n">fv2esc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="o">.</span><span class="n">_eval_args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="o">.</span><span class="n">_eval_args</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="o">.</span><span class="n">_eval_args</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+
+
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;lma&quot;</span><span class="p">:</span>
+            <span class="n">mylog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Computing </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ptype</span><span class="si">}</span><span class="s2"> velocities using </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2"> method.&quot;</span><span class="p">)</span>
+
+            <span class="c1">#  Solving via the local maxwellian approximation</span>
+            <span class="c1"># -------------------------------------------------------------------------------------------------------- #</span>
+
+            <span class="c1"># --- Generating the dispersion spline --- #</span>
+            <span class="n">dispersion_spline</span> <span class="o">=</span> <span class="n">InterpolatedUnivariateSpline</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">sigma</span><span class="p">)</span>
+            <span class="n">dispersion_array</span> <span class="o">=</span> <span class="n">dispersion_spline</span><span class="p">(</span><span class="n">radius_sub</span><span class="p">)</span> <span class="c1"># assigns the correct dispersion to each of the radii in the particle sample.</span>
+
+            <span class="c1"># --- Computing the relevant escape velocities at each radius --- #</span>
+            <span class="n">potential_spline</span> <span class="o">=</span> <span class="n">InterpolatedUnivariateSpline</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">pot</span><span class="p">)</span>
+            <span class="n">_potentials</span> <span class="o">=</span> <span class="n">potential_spline</span><span class="p">(</span><span class="n">radius_sub</span><span class="p">)</span>
+            <span class="n">vesc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">_potentials</span><span class="p">))</span>
+
+            <span class="c1"># --- Creating the distribution function --- #</span>
+            <span class="n">_base_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1000</span><span class="p">)</span>
+            <span class="n">_cumval</span> <span class="o">=</span> <span class="n">erf</span><span class="p">(</span><span class="n">_base_array</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="mi">2</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">))</span><span class="o">*</span><span class="n">_base_array</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">_base_array</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+            <span class="n">cumdist_spline</span> <span class="o">=</span> <span class="n">InterpolatedUnivariateSpline</span><span class="p">(</span><span class="n">_cumval</span><span class="p">,</span><span class="n">_base_array</span><span class="p">,</span><span class="n">ext</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+            <span class="c1"># --- Calling the generator --- #</span>
+            <span class="n">velocity_sub</span> <span class="o">=</span> <span class="n">generate_lma_velocities</span><span class="p">(</span>
+                <span class="n">dispersion_array</span><span class="p">,</span>
+                <span class="n">vesc</span><span class="p">,</span>
+                <span class="n">cumdist_spline</span><span class="o">.</span><span class="n">_eval_args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                <span class="n">cumdist_spline</span><span class="o">.</span><span class="n">_eval_args</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                <span class="n">cumdist_spline</span><span class="o">.</span><span class="n">_eval_args</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+                <span class="mf">0.950</span>
+            <span class="p">)</span>
+
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The virialization method </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2"> was not recognized.&quot;</span><span class="p">)</span>
+
+        <span class="c1">#  Cleanup</span>
+        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+
+        <span class="k">if</span> <span class="n">sub_sample</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">velocity</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">velocity_sub</span><span class="p">,</span> <span class="n">sub_sample</span><span class="p">)[:</span><span class="n">num_particles</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">velocity</span> <span class="o">=</span> <span class="n">velocity_sub</span>
+
+        <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arccos</span><span class="p">(</span><span class="n">prng</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">low</span><span class="o">=-</span><span class="mf">1.</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">num_particles</span><span class="p">))</span>
+        <span class="n">phi</span> <span class="o">=</span> <span class="mf">2.</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">prng</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">num_particles</span><span class="p">)</span>
+
+        <span class="n">fields</span><span class="p">[</span><span class="n">key</span><span class="p">,</span> <span class="s2">&quot;particle_velocity&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">velocity</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">phi</span><span class="p">),</span>
+             <span class="n">velocity</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi</span><span class="p">),</span>
+             <span class="n">velocity</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)],</span> <span class="s2">&quot;kpc/Myr&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+
+        <span class="n">fields</span><span class="p">[</span><span class="n">key</span><span class="p">,</span> <span class="s2">&quot;particle_mass&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">mtot</span> <span class="o">/</span> <span class="n">num_particles</span><span class="p">]</span> <span class="o">*</span> <span class="n">num_particles</span><span class="p">,</span> <span class="s2">&quot;Msun&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">compute_potential</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;eddington&quot;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">sub_sample</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">phi</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">psi</span><span class="p">,</span> <span class="n">sub_sample</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">phi</span> <span class="o">=</span> <span class="o">-</span><span class="n">psi</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">sub_sample</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">_potentials</span><span class="p">,</span><span class="n">sub_sample</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">phi</span> <span class="o">=</span> <span class="n">_potentials</span>
+
+            <span class="n">fields</span><span class="p">[</span><span class="n">key</span><span class="p">,</span> <span class="s2">&quot;particle_potential&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="p">(</span>
+                <span class="n">phi</span><span class="p">,</span> <span class="s2">&quot;kpc**2/Myr**2&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">ClusterParticles</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">fields</span><span class="p">)</span></div></div>
+</pre></div>
+
+                </article>
+              
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+  <p class="copyright">
+    
+      © Copyright 2020, John ZuHone.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.1.2.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.13.3.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

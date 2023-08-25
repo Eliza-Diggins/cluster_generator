@@ -20,7 +20,10 @@
       :template: class.rst
       :recursive:
    
-      Potential
+      AQUALGravity
+      Gravity
+      NewtonianGravity
+      QUMONDGravity
    
    
 

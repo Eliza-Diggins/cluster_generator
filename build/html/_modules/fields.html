@@ -1,0 +1,1117 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>fields &#8212; cluster_generator  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fd506691" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=ccbe24c1"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/mermaid@10.2.0/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({startOnLoad:true});</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/fields';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  <div class="navbar-header-items__start">
+    
+      <div class="navbar-item">
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">cluster_generator  documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../Getting_Started.html">
+                        Quickstart Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../radial_profiles.html">
+                        Radial Profiles
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../models.html">
+                        Cluster Models
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../particles.html">
+                        Particles
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../fields.html">
+                        Generating 3D Cluster Fields
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../initial_conditions.html">
+                        Initial Conditions Generation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../codes.html">
+                        Setting Up Idealized Cluster Problems in Various Codes
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../examples.html">
+                        Examples
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../api.html">
+                        API
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+        </div>
+      
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+    </div>
+  
+
+  
+</div>
+
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../Getting_Started.html">
+                        Quickstart Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../radial_profiles.html">
+                        Radial Profiles
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../models.html">
+                        Cluster Models
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../particles.html">
+                        Particles
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../fields.html">
+                        Generating 3D Cluster Fields
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../initial_conditions.html">
+                        Initial Conditions Generation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../codes.html">
+                        Setting Up Idealized Cluster Problems in Various Codes
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../examples.html">
+                        Examples
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../api.html">
+                        API
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+  </ul>
+</nav></div>
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumbs">
+  <ul class="bd-breadcrumbs" role="navigation" aria-label="Breadcrumb">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">fields</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <h1>Source code for fields</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">3D fields for magnetic field initiation and other field based tasks.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">cluster_generator.utils</span> <span class="kn">import</span> <span class="n">mylog</span><span class="p">,</span> <span class="n">parse_prng</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">cluster_generator.model</span> <span class="kn">import</span> <span class="n">ClusterModel</span>
+<span class="kn">from</span> <span class="nn">unyt</span> <span class="kn">import</span> <span class="n">unyt_array</span>
+
+
+<div class="viewcode-block" id="parse_value"><a class="viewcode-back" href="../_as_gen/fields.parse_value.html#fields.parse_value">[docs]</a><span class="k">def</span> <span class="nf">parse_value</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">default_units</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Parses an array of values into the correct units.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    value: array-like or tuple</span>
+<span class="sd">        The array from which to convert values to correct units. If ``value`` is a ``unyt_array``, the unit is simply converted,</span>
+<span class="sd">        if ``value`` is a tuple in the form ``(v_array,v_unit)``, the conversion will be made and will return an ``unyt_array``.</span>
+<span class="sd">        Finally, if ``value`` is an array, it is assumed that the ``default_units`` are correct.</span>
+<span class="sd">    default_units: str</span>
+<span class="sd">        The default unit for the quantity.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    unyt_array:</span>
+<span class="sd">        The converted array.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">unyt_array</span><span class="p">):</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">v</span><span class="p">,</span> <span class="n">value</span><span class="o">.</span><span class="n">units</span><span class="p">)</span><span class="o">.</span><span class="n">in_units</span><span class="p">(</span><span class="n">default_units</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="p">(</span><span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">value</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">in_units</span><span class="p">(</span><span class="n">default_units</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">default_units</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">val</span></div>
+
+
+<div class="viewcode-block" id="rot_3d"><a class="viewcode-back" href="../_as_gen/fields.rot_3d.html#fields.rot_3d">[docs]</a><span class="k">def</span> <span class="nf">rot_3d</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">gx</span><span class="p">,</span> <span class="n">gy</span><span class="p">,</span> <span class="n">gz</span><span class="p">,</span> <span class="n">ang</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Rotates the vector ``[gx,gy,gz]`` by an angle ``ang`` around a specified axis.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    axis: int</span>
+<span class="sd">        The axis to rotate about. Options are ``1,2,3``.</span>
+<span class="sd">    gx: float</span>
+<span class="sd">    gy: float</span>
+<span class="sd">    gz: float</span>
+<span class="sd">    ang: float</span>
+<span class="sd">        The angle over which to rotate.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    gx: float</span>
+<span class="sd">    gy: float</span>
+<span class="sd">    gz: float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">ang</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">ang</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">axis</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">gy</span><span class="p">,</span> <span class="n">gz</span> <span class="o">=</span> <span class="n">c</span><span class="o">*</span><span class="n">gy</span> <span class="o">+</span> <span class="n">s</span><span class="o">*</span><span class="n">gz</span><span class="p">,</span> <span class="o">-</span><span class="n">s</span><span class="o">*</span><span class="n">gy</span> <span class="o">+</span> <span class="n">c</span><span class="o">*</span><span class="n">gz</span>
+    <span class="k">elif</span> <span class="n">axis</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">gx</span><span class="p">,</span> <span class="n">gz</span> <span class="o">=</span> <span class="n">c</span><span class="o">*</span><span class="n">gx</span> <span class="o">-</span> <span class="n">s</span><span class="o">*</span><span class="n">gz</span><span class="p">,</span> <span class="n">s</span><span class="o">*</span><span class="n">gx</span> <span class="o">+</span> <span class="n">c</span><span class="o">*</span><span class="n">gz</span>
+    <span class="k">elif</span> <span class="n">axis</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="n">gx</span><span class="p">,</span> <span class="n">gy</span> <span class="o">=</span> <span class="n">c</span><span class="o">*</span><span class="n">gx</span> <span class="o">+</span> <span class="n">s</span><span class="o">*</span><span class="n">gy</span><span class="p">,</span> <span class="o">-</span><span class="n">s</span><span class="o">*</span><span class="n">gx</span> <span class="o">+</span> <span class="n">c</span><span class="o">*</span><span class="n">gy</span>
+
+    <span class="k">return</span> <span class="n">gx</span><span class="p">,</span> <span class="n">gy</span><span class="p">,</span> <span class="n">gz</span></div>
+
+
+<div class="viewcode-block" id="ClusterField"><a class="viewcode-back" href="../_as_gen/fields.ClusterField.html#fields.ClusterField">[docs]</a><span class="k">class</span> <span class="nc">ClusterField</span><span class="p">:</span>
+    <span class="n">_units</span> <span class="o">=</span> <span class="s2">&quot;dimensionless&quot;</span>
+    <span class="n">_name</span> <span class="o">=</span> <span class="s2">&quot;vector&quot;</span>
+
+<div class="viewcode-block" id="ClusterField.__init__"><a class="viewcode-back" href="../_as_gen/fields.ClusterField.__init__.html#fields.ClusterField.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">left_edge</span><span class="p">,</span> <span class="n">right_edge</span><span class="p">,</span> <span class="n">ddims</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> 
+                 <span class="n">vector_potential</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">divergence_clean</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        left_edge: array-like</span>
+<span class="sd">            The lower edge of the box [kpc] for each of the dimensions.</span>
+<span class="sd">        right_edge: array-like</span>
+<span class="sd">            The upper edge of the box [kpc] for each of the dimensions.</span>
+<span class="sd">        ddims: array-like</span>
+<span class="sd">            The number of grids in each of the axes.</span>
+<span class="sd">        padding: The amount of additional padding to add to the boundary.</span>
+<span class="sd">        vector_potential</span>
+<span class="sd">        divergence_clean</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#  Basic Management</span>
+        <span class="c1"># ----------------------------------------------------------------------------------------------------------------- #</span>
+        <span class="c1"># - Type conversions and setup</span>
+        <span class="n">ddims</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ddims</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;int&quot;</span><span class="p">)</span>
+        <span class="n">left_edge</span> <span class="o">=</span> <span class="n">parse_value</span><span class="p">(</span><span class="n">left_edge</span><span class="p">,</span> <span class="s2">&quot;kpc&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">v</span>
+        <span class="n">right_edge</span> <span class="o">=</span> <span class="n">parse_value</span><span class="p">(</span><span class="n">right_edge</span><span class="p">,</span> <span class="s2">&quot;kpc&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">v</span>
+        <span class="n">width</span> <span class="o">=</span> <span class="n">right_edge</span><span class="o">-</span><span class="n">left_edge</span>
+        <span class="n">deltas</span> <span class="o">=</span> <span class="n">width</span><span class="o">/</span><span class="n">ddims</span>
+
+        <span class="c1"># - Accounting for padding - #</span>
+        <span class="n">pad_dims</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="mf">0.5</span><span class="o">*</span><span class="n">padding</span><span class="o">*</span><span class="n">ddims</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;int&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">left_edge</span> <span class="o">=</span> <span class="n">left_edge</span> <span class="o">-</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">pad_dims</span><span class="o">*</span><span class="n">deltas</span> 
+        <span class="bp">self</span><span class="o">.</span><span class="n">right_edge</span> <span class="o">=</span> <span class="n">right_edge</span> <span class="o">+</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">pad_dims</span><span class="o">*</span><span class="n">deltas</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ddims</span> <span class="o">=</span> <span class="n">ddims</span> <span class="o">+</span> <span class="n">pad_dims</span>
+
+        <span class="c1"># - Additional attributes - #</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vector_potential</span> <span class="o">=</span> <span class="n">vector_potential</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">divergence_clean</span> <span class="o">=</span> <span class="n">divergence_clean</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dz</span> <span class="o">=</span> <span class="n">deltas</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">comps</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">ax</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="s2">&quot;xyz&quot;</span><span class="p">]</span></div>
+
+    <span class="k">def</span> <span class="nf">_compute_coords</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates the coordinate mgrids from the grid&quot;&quot;&quot;</span>
+        <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">nz</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ddims</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mgrid</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">nx</span><span class="p">,</span><span class="mi">0</span><span class="p">:</span><span class="n">ny</span><span class="p">,</span><span class="mi">0</span><span class="p">:</span><span class="n">nz</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.5</span>
+        <span class="n">x</span> <span class="o">*=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dx</span>
+        <span class="n">y</span> <span class="o">*=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dy</span>
+        <span class="n">z</span> <span class="o">*=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dz</span>
+        <span class="n">x</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">left_edge</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">y</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">left_edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">z</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">left_edge</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span>
+
+    <span class="k">def</span> <span class="nf">_compute_waves</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">nz</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ddims</span>
+
+        <span class="n">kx</span><span class="p">,</span> <span class="n">ky</span><span class="p">,</span> <span class="n">kz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mgrid</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">nx</span><span class="p">,</span><span class="mi">0</span><span class="p">:</span><span class="n">ny</span><span class="p">,</span><span class="mi">0</span><span class="p">:</span><span class="n">nz</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float64&quot;</span><span class="p">)</span>
+        <span class="n">kx</span><span class="p">[</span><span class="n">kx</span> <span class="o">&gt;</span> <span class="n">nx</span><span class="o">//</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">kx</span><span class="p">[</span><span class="n">kx</span> <span class="o">&gt;</span> <span class="n">nx</span><span class="o">//</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">nx</span>
+        <span class="n">ky</span><span class="p">[</span><span class="n">ky</span> <span class="o">&gt;</span> <span class="n">ny</span><span class="o">//</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">ky</span><span class="p">[</span><span class="n">ky</span> <span class="o">&gt;</span> <span class="n">ny</span><span class="o">//</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">ny</span>
+        <span class="n">kz</span><span class="p">[</span><span class="n">kz</span> <span class="o">&gt;</span> <span class="n">nz</span><span class="o">//</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">kz</span><span class="p">[</span><span class="n">kz</span> <span class="o">&gt;</span> <span class="n">nz</span><span class="o">//</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">nz</span>
+        <span class="n">kx</span> <span class="o">*=</span> <span class="mf">2.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="p">(</span><span class="n">nx</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">dx</span><span class="p">)</span>
+        <span class="n">ky</span> <span class="o">*=</span> <span class="mf">2.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="p">(</span><span class="n">ny</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">dy</span><span class="p">)</span>
+        <span class="n">kz</span> <span class="o">*=</span> <span class="mf">2.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="p">(</span><span class="n">nz</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">dz</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">kx</span><span class="p">,</span> <span class="n">ky</span><span class="p">,</span> <span class="n">kz</span>
+
+    <span class="k">def</span> <span class="nf">_rot_3d</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">ang</span><span class="p">):</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">ang</span><span class="p">)</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">ang</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">axis</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">gy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gz</span> <span class="o">=</span> <span class="n">c</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">gy</span><span class="o">+</span><span class="n">s</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">gz</span><span class="p">,</span> <span class="o">-</span><span class="n">s</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">gy</span><span class="o">+</span><span class="n">c</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">gz</span>
+        <span class="k">elif</span> <span class="n">axis</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">gx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gz</span> <span class="o">=</span> <span class="n">c</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">gx</span><span class="o">-</span><span class="n">s</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">gz</span><span class="p">,</span> <span class="n">s</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">gx</span><span class="o">+</span><span class="n">c</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">gz</span>
+        <span class="k">elif</span> <span class="n">axis</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">gx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gy</span> <span class="o">=</span> <span class="n">c</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">gx</span><span class="o">+</span><span class="n">s</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">gy</span><span class="p">,</span> <span class="o">-</span><span class="n">s</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">gx</span><span class="o">+</span><span class="n">c</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">gy</span>
+
+    <span class="k">def</span> <span class="nf">_divergence_clean</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kx</span><span class="p">,</span> <span class="n">ky</span><span class="p">,</span> <span class="n">kz</span><span class="p">):</span>
+
+        <span class="n">mylog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Perform divergence cleaning.&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">gx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftn</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gx</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftn</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gy</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftn</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gz</span><span class="p">)</span>
+
+        <span class="c1"># These k&#39;s are different because we are</span>
+        <span class="c1"># using the finite difference form of the</span>
+        <span class="c1"># divergence operator.</span>
+        <span class="n">kxd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">kx</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">dx</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">dx</span>
+        <span class="n">kyd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">ky</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">dy</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">dy</span>
+        <span class="n">kzd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">kz</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">dz</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">dz</span>
+        <span class="n">kkd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">kxd</span> <span class="o">*</span> <span class="n">kxd</span> <span class="o">+</span> <span class="n">kyd</span> <span class="o">*</span> <span class="n">kyd</span> <span class="o">+</span> <span class="n">kzd</span> <span class="o">*</span> <span class="n">kzd</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="n">invalid</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">,</span> <span class="n">divide</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">):</span>
+            <span class="n">kxd</span> <span class="o">/=</span> <span class="n">kkd</span>
+            <span class="n">kyd</span> <span class="o">/=</span> <span class="n">kkd</span>
+            <span class="n">kzd</span> <span class="o">/=</span> <span class="n">kkd</span>
+            <span class="n">kxd</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">kxd</span><span class="p">)]</span> <span class="o">=</span> <span class="mf">0.0</span>
+            <span class="n">kyd</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">kyd</span><span class="p">)]</span> <span class="o">=</span> <span class="mf">0.0</span>
+            <span class="n">kzd</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">kzd</span><span class="p">)]</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">gx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gz</span> <span class="o">=</span> \
+            <span class="p">[(</span><span class="mf">1.0</span><span class="o">-</span><span class="n">kxd</span><span class="o">*</span><span class="n">kxd</span><span class="p">)</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">gx</span><span class="o">-</span><span class="n">kxd</span><span class="o">*</span><span class="n">kyd</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">gy</span><span class="o">-</span><span class="n">kxd</span><span class="o">*</span><span class="n">kzd</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">gz</span><span class="p">,</span>
+             <span class="o">-</span><span class="n">kyd</span><span class="o">*</span><span class="n">kxd</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">gx</span><span class="o">+</span><span class="p">(</span><span class="mf">1.0</span><span class="o">-</span><span class="n">kyd</span><span class="o">*</span><span class="n">kyd</span><span class="p">)</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">gy</span><span class="o">-</span><span class="n">kyd</span><span class="o">*</span><span class="n">kzd</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">gz</span><span class="p">,</span>
+             <span class="o">-</span><span class="n">kzd</span><span class="o">*</span><span class="n">kxd</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">gx</span><span class="o">-</span><span class="n">kzd</span><span class="o">*</span><span class="n">kyd</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">gy</span><span class="o">+</span><span class="p">(</span><span class="mf">1.0</span><span class="o">-</span><span class="n">kzd</span><span class="o">*</span><span class="n">kzd</span><span class="p">)</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">gz</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">gx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifftn</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gx</span><span class="p">)</span><span class="o">.</span><span class="n">real</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifftn</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gy</span><span class="p">)</span><span class="o">.</span><span class="n">real</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifftn</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gz</span><span class="p">)</span><span class="o">.</span><span class="n">real</span>
+
+        <span class="k">del</span> <span class="n">kxd</span><span class="p">,</span> <span class="n">kyd</span><span class="p">,</span> <span class="n">kzd</span><span class="p">,</span> <span class="n">kkd</span>
+
+    <span class="k">def</span> <span class="nf">_compute_vector_potential</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kx</span><span class="p">,</span> <span class="n">ky</span><span class="p">,</span> <span class="n">kz</span><span class="p">):</span>
+
+        <span class="n">kk</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">kx</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">ky</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">kz</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="n">mylog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Compute vector potential.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Rotate vector potential</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">gx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftn</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gx</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftn</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gy</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftn</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gz</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="n">invalid</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">,</span> <span class="n">divide</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">):</span>
+            <span class="n">alpha</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arccos</span><span class="p">(</span><span class="n">kx</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">kx</span> <span class="o">*</span> <span class="n">kx</span> <span class="o">+</span> <span class="n">ky</span> <span class="o">*</span> <span class="n">ky</span><span class="p">))</span>
+        <span class="n">alpha</span><span class="p">[</span><span class="n">ky</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">]</span> <span class="o">-=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+        <span class="n">alpha</span><span class="p">[</span><span class="n">ky</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">]</span> <span class="o">*=</span> <span class="o">-</span><span class="mf">1.</span>
+        <span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="n">invalid</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">,</span> <span class="n">divide</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">):</span>
+            <span class="n">beta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arccos</span><span class="p">(</span><span class="n">kz</span> <span class="o">/</span> <span class="n">kk</span><span class="p">)</span>
+        <span class="n">alpha</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="n">alpha</span><span class="p">)]</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">alpha</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">alpha</span><span class="p">)]</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">beta</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">beta</span><span class="p">)]</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">beta</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="n">beta</span><span class="p">)]</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rot_3d</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rot_3d</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">beta</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="n">invalid</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">,</span> <span class="n">divide</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">gx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gy</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.0</span><span class="o">+</span><span class="mf">1.0</span><span class="n">j</span><span class="p">)</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">gy</span><span class="o">/</span><span class="n">kk</span><span class="p">,</span> <span class="o">-</span><span class="p">(</span><span class="mf">0.0</span><span class="o">+</span><span class="mf">1.0</span><span class="n">j</span><span class="p">)</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">gx</span><span class="o">/</span><span class="n">kk</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">gz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gx</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;complex&quot;</span><span class="p">)</span>
+
+        <span class="k">del</span> <span class="n">kk</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">gx</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gx</span><span class="p">)]</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gx</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gx</span><span class="p">)]</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gy</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gy</span><span class="p">)]</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gy</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gy</span><span class="p">)]</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rot_3d</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="n">beta</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rot_3d</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="n">alpha</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">gx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifftn</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gx</span><span class="p">)</span><span class="o">.</span><span class="n">real</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifftn</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gy</span><span class="p">)</span><span class="o">.</span><span class="n">real</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifftn</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gz</span><span class="p">)</span><span class="o">.</span><span class="n">real</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">item</span> <span class="ow">in</span> <span class="s2">&quot;xyz&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">unyt_array</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">),</span> <span class="s2">&quot;kpc&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">comps</span><span class="p">:</span>
+            <span class="n">comp</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;g</span><span class="si">{</span><span class="n">item</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="k">return</span> <span class="n">unyt_array</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">comp</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">units</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">units</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">vector_potential</span><span class="p">:</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_units</span><span class="si">}</span><span class="s2">*kpc&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_units</span>
+
+<div class="viewcode-block" id="ClusterField.write_file"><a class="viewcode-back" href="../_as_gen/fields.ClusterField.write_file.html#fields.ClusterField.write_file">[docs]</a>    <span class="k">def</span> <span class="nf">write_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                   <span class="n">length_unit</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">field_unit</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                   <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;hdf5&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Write the 3D field to a file. The coordinates of</span>
+<span class="sd">        the cells along the different axes are also written.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : string</span>
+<span class="sd">            The name of the file to write the fields to.</span>
+<span class="sd">        overwrite : boolean, optional</span>
+<span class="sd">            Overwrite an existing file with the same name. Default False.</span>
+<span class="sd">        length_unit : string, optional</span>
+<span class="sd">            The length unit (affects coordinates and potential fields).</span>
+<span class="sd">            Default: &quot;kpc&quot;</span>
+<span class="sd">        field_unit : string, optional</span>
+<span class="sd">            The units for the field </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">h5py</span>
+        <span class="kn">from</span> <span class="nn">scipy.io</span> <span class="kn">import</span> <span class="n">FortranFile</span>
+        <span class="k">if</span> <span class="n">length_unit</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">length_unit</span> <span class="o">=</span> <span class="s2">&quot;kpc&quot;</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">overwrite</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cannot create </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">. &quot;</span>
+                          <span class="sa">f</span><span class="s2">&quot;It exists and overwrite=False.&quot;</span><span class="p">)</span>
+        <span class="n">all_comps</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">comps</span>
+        <span class="k">if</span> <span class="nb">format</span> <span class="o">==</span> <span class="s2">&quot;hdf5&quot;</span><span class="p">:</span>
+            <span class="n">write_class</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span>
+        <span class="k">elif</span> <span class="nb">format</span> <span class="o">==</span> <span class="s2">&quot;fortran&quot;</span><span class="p">:</span>
+            <span class="n">write_class</span> <span class="o">=</span> <span class="n">FortranFile</span>
+        <span class="k">with</span> <span class="n">write_class</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">format</span> <span class="o">==</span> <span class="s2">&quot;fortran&quot;</span><span class="p">:</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write_record</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">all_comps</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">field</span> <span class="ow">in</span> <span class="s2">&quot;xyz&quot;</span><span class="p">:</span>
+                    <span class="n">fd</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">field</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">length_unit</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">field_unit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">vector_potential</span><span class="p">:</span>
+                        <span class="n">units</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">length_unit</span><span class="si">}</span><span class="s2">*</span><span class="si">{</span><span class="n">field_unit</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">units</span> <span class="o">=</span> <span class="n">field_unit</span>
+                    <span class="n">fd</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">field</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">units</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">fd</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">field</span><span class="p">]</span>
+                <span class="k">if</span> <span class="nb">format</span> <span class="o">==</span> <span class="s2">&quot;hdf5&quot;</span><span class="p">:</span>
+                    <span class="n">d</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">fd</span><span class="o">.</span><span class="n">d</span><span class="p">)</span>
+                    <span class="n">d</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;units&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">fd</span><span class="o">.</span><span class="n">units</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="nb">format</span> <span class="o">==</span> <span class="s2">&quot;fortran&quot;</span><span class="p">:</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write_record</span><span class="p">(</span><span class="n">fd</span><span class="o">.</span><span class="n">d</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">format</span> <span class="o">==</span> <span class="s2">&quot;hdf5&quot;</span><span class="p">:</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;units&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">units</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;vector_potential&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vector_potential</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ClusterField.map_field_to_particles"><a class="viewcode-back" href="../_as_gen/fields.ClusterField.map_field_to_particles.html#fields.ClusterField.map_field_to_particles">[docs]</a>    <span class="k">def</span> <span class="nf">map_field_to_particles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cluster_particles</span><span class="p">,</span>
+                               <span class="n">ptype</span><span class="o">=</span><span class="s2">&quot;gas&quot;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Map the 3D field to a set of particles, creating new</span>
+<span class="sd">        particle fields. This uses tri-linear interpolation. </span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        cluster_particles : :class:`~cluster_generator.particles.ClusterParticles`</span>
+<span class="sd">            The ClusterParticles object which will have new</span>
+<span class="sd">            fields added.</span>
+<span class="sd">        ptype : string, optional</span>
+<span class="sd">            The particle type to add the new fields to. Default:</span>
+<span class="sd">            &quot;gas&quot;, which will almost always be the case.</span>
+<span class="sd">        units : string, optional</span>
+<span class="sd">            Change the units of the field. Default: None, which</span>
+<span class="sd">            implies they will remain in &quot;galactic&quot; units. </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">scipy.interpolate</span> <span class="kn">import</span> <span class="n">RegularGridInterpolator</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">cluster_particles</span><span class="o">.</span><span class="n">num_particles</span><span class="p">[</span><span class="n">ptype</span><span class="p">],</span> <span class="mi">3</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="s2">&quot;xyz&quot;</span><span class="p">):</span>
+            <span class="n">func</span> <span class="o">=</span> <span class="n">RegularGridInterpolator</span><span class="p">((</span><span class="bp">self</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;z&quot;</span><span class="p">]),</span>
+                                           <span class="bp">self</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="o">+</span><span class="s2">&quot;_&quot;</span><span class="o">+</span><span class="n">ax</span><span class="p">],</span> 
+                                           <span class="n">bounds_error</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">fill_value</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+            <span class="n">v</span><span class="p">[:,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">cluster_particles</span><span class="p">[</span><span class="n">ptype</span><span class="p">,</span> <span class="s2">&quot;particle_position&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">)</span>
+        <span class="n">cluster_particles</span><span class="o">.</span><span class="n">set_field</span><span class="p">(</span><span class="n">ptype</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> 
+                                    <span class="n">unyt_array</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">units</span><span class="p">),</span> <span class="n">units</span><span class="o">=</span><span class="n">units</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="GaussianRandomField"><a class="viewcode-back" href="../_as_gen/fields.GaussianRandomField.html#fields.GaussianRandomField">[docs]</a><span class="k">class</span> <span class="nc">GaussianRandomField</span><span class="p">(</span><span class="n">ClusterField</span><span class="p">):</span>
+<div class="viewcode-block" id="GaussianRandomField.__init__"><a class="viewcode-back" href="../_as_gen/fields.GaussianRandomField.__init__.html#fields.GaussianRandomField.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">left_edge</span><span class="p">,</span> <span class="n">right_edge</span><span class="p">,</span> <span class="n">ddims</span><span class="p">,</span> <span class="n">l_min</span><span class="p">,</span> <span class="n">l_max</span><span class="p">,</span>
+                 <span class="n">padding</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=-</span><span class="mf">11.</span><span class="o">/</span><span class="mf">3.</span><span class="p">,</span> <span class="n">g_rms</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">ctr1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">ctr2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ctr3</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">r1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">r2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">r3</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+                 <span class="n">g1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">g2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">g3</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vector_potential</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
+                 <span class="n">divergence_clean</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">prng</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">r_max</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+        <span class="n">prng</span> <span class="o">=</span> <span class="n">parse_prng</span><span class="p">(</span><span class="n">prng</span><span class="p">)</span>
+
+        <span class="nb">super</span><span class="p">(</span><span class="n">GaussianRandomField</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">left_edge</span><span class="p">,</span> <span class="n">right_edge</span><span class="p">,</span> <span class="n">ddims</span><span class="p">,</span>
+                                                  <span class="n">padding</span><span class="o">=</span><span class="n">padding</span><span class="p">,</span>
+                                                  <span class="n">vector_potential</span><span class="o">=</span><span class="n">vector_potential</span><span class="p">,</span>
+                                                  <span class="n">divergence_clean</span><span class="o">=</span><span class="n">divergence_clean</span><span class="p">)</span>
+
+        <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">nz</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ddims</span>
+
+        <span class="n">num_halos</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">r1</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">num_halos</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">r2</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">num_halos</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">r3</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">num_halos</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">if</span> <span class="n">num_halos</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">ctr1</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">ctr1</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">left_edge</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">right_edge</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">ctr1</span> <span class="o">=</span> <span class="n">parse_value</span><span class="p">(</span><span class="n">ctr1</span><span class="p">,</span> <span class="s2">&quot;kpc&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">v</span>
+            <span class="n">r1</span> <span class="o">=</span> <span class="n">parse_value</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="s2">&quot;kpc&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">v</span>
+            <span class="n">g1</span> <span class="o">=</span> <span class="n">parse_value</span><span class="p">(</span><span class="n">g1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_units</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">num_halos</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">ctr2</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Need to specify &#39;ctr2&#39; for the second halo!&quot;</span><span class="p">)</span>
+            <span class="n">ctr2</span> <span class="o">=</span> <span class="n">parse_value</span><span class="p">(</span><span class="n">ctr2</span><span class="p">,</span> <span class="s2">&quot;kpc&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">v</span>
+            <span class="n">r2</span> <span class="o">=</span> <span class="n">parse_value</span><span class="p">(</span><span class="n">r2</span><span class="p">,</span> <span class="s2">&quot;kpc&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">v</span>
+            <span class="n">g2</span> <span class="o">=</span> <span class="n">parse_value</span><span class="p">(</span><span class="n">g2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_units</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">num_halos</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">ctr3</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Need to specify &#39;ctr3&#39; for the second halo!&quot;</span><span class="p">)</span>
+            <span class="n">ctr3</span> <span class="o">=</span> <span class="n">parse_value</span><span class="p">(</span><span class="n">ctr3</span><span class="p">,</span> <span class="s2">&quot;kpc&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">v</span>
+            <span class="n">r3</span> <span class="o">=</span> <span class="n">parse_value</span><span class="p">(</span><span class="n">r3</span><span class="p">,</span> <span class="s2">&quot;kpc&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">v</span>
+            <span class="n">g3</span> <span class="o">=</span> <span class="n">parse_value</span><span class="p">(</span><span class="n">g3</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_units</span><span class="p">)</span>
+
+        <span class="c1"># Derived stuff</span>
+
+        <span class="n">l_min</span> <span class="o">=</span> <span class="n">parse_value</span><span class="p">(</span><span class="n">l_min</span><span class="p">,</span> <span class="s2">&quot;kpc&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">v</span>
+        <span class="n">l_max</span> <span class="o">=</span> <span class="n">parse_value</span><span class="p">(</span><span class="n">l_max</span><span class="p">,</span> <span class="s2">&quot;kpc&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">v</span>
+
+        <span class="n">k0</span> <span class="o">=</span> <span class="mf">2.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="n">l_min</span>
+        <span class="n">k1</span> <span class="o">=</span> <span class="mf">2.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="n">l_max</span>
+
+        <span class="n">mylog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Setting up the Gaussian random fields.&quot;</span><span class="p">)</span>
+
+        <span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mf">2.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="mi">1</span><span class="n">j</span><span class="o">*</span><span class="n">prng</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="n">nx</span><span class="p">,</span><span class="n">ny</span><span class="p">,</span><span class="n">nz</span><span class="p">)))</span>
+
+        <span class="n">v</span><span class="p">[:,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">2.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">((</span><span class="n">v</span><span class="p">[:,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imag</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;int&quot;</span><span class="p">))</span><span class="o">-</span><span class="mf">1.</span><span class="o">+</span><span class="mi">0</span><span class="n">j</span>
+        <span class="n">v</span><span class="p">[:,</span><span class="n">nx</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span><span class="n">ny</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span><span class="n">nz</span><span class="o">//</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">2.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">((</span><span class="n">v</span><span class="p">[:,</span><span class="n">nx</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span><span class="n">ny</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span><span class="n">nz</span><span class="o">//</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">imag</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;int&quot;</span><span class="p">))</span><span class="o">-</span><span class="mf">1.</span><span class="o">+</span><span class="mi">0</span><span class="n">j</span>
+        <span class="n">v</span><span class="p">[:,</span><span class="mi">0</span><span class="p">,</span><span class="n">ny</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span><span class="n">nz</span><span class="o">//</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">2.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">((</span><span class="n">v</span><span class="p">[:,</span><span class="mi">0</span><span class="p">,</span><span class="n">ny</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span><span class="n">nz</span><span class="o">//</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">imag</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;int&quot;</span><span class="p">))</span><span class="o">-</span><span class="mf">1.</span><span class="o">+</span><span class="mi">0</span><span class="n">j</span>
+        <span class="n">v</span><span class="p">[:,</span><span class="n">nx</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">nz</span><span class="o">//</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">2.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">((</span><span class="n">v</span><span class="p">[:,</span><span class="n">nx</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">nz</span><span class="o">//</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">imag</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;int&quot;</span><span class="p">))</span><span class="o">-</span><span class="mf">1.</span><span class="o">+</span><span class="mi">0</span><span class="n">j</span>
+        <span class="n">v</span><span class="p">[:,</span><span class="n">nx</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span><span class="n">ny</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">2.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">((</span><span class="n">v</span><span class="p">[:,</span><span class="n">nx</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span><span class="n">ny</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imag</span> <span class="o">&lt;</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;int&quot;</span><span class="p">))</span><span class="o">-</span><span class="mf">1.</span><span class="o">+</span><span class="mi">0</span><span class="n">j</span>
+        <span class="n">v</span><span class="p">[:,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">nz</span><span class="o">//</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">2.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">((</span><span class="n">v</span><span class="p">[:,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">nz</span><span class="o">//</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">imag</span> <span class="o">&lt;</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;int&quot;</span><span class="p">))</span><span class="o">-</span><span class="mf">1.</span><span class="o">+</span><span class="mi">0</span><span class="n">j</span>
+        <span class="n">v</span><span class="p">[:,</span><span class="mi">0</span><span class="p">,</span><span class="n">ny</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">2.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">((</span><span class="n">v</span><span class="p">[:,</span><span class="mi">0</span><span class="p">,</span><span class="n">ny</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imag</span> <span class="o">&lt;</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;int&quot;</span><span class="p">))</span><span class="o">-</span><span class="mf">1.</span><span class="o">+</span><span class="mi">0</span><span class="n">j</span>
+        <span class="n">v</span><span class="p">[:,</span><span class="n">nx</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">2.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">((</span><span class="n">v</span><span class="p">[:,</span><span class="n">nx</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imag</span> <span class="o">&lt;</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;int&quot;</span><span class="p">))</span><span class="o">-</span><span class="mf">1.</span><span class="o">+</span><span class="mi">0</span><span class="n">j</span>
+
+        <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="o">-</span><span class="mf">2.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">prng</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="n">nx</span><span class="p">,</span><span class="n">ny</span><span class="p">,</span><span class="n">nz</span><span class="p">)))),</span> <span class="n">v</span><span class="p">)</span>
+
+        <span class="n">kx</span><span class="p">,</span> <span class="n">ky</span><span class="p">,</span> <span class="n">kz</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_waves</span><span class="p">()</span>
+        <span class="n">kk</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">kx</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">ky</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">kz</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="n">invalid</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">,</span> <span class="n">divide</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">):</span>
+            <span class="n">sigma</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span><span class="o">+</span><span class="p">(</span><span class="n">kk</span><span class="o">/</span><span class="n">k1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mf">0.25</span><span class="o">*</span><span class="n">alpha</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">kk</span><span class="o">/</span><span class="n">k0</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">sigma</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="n">sigma</span><span class="p">)]</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">sigma</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">sigma</span><span class="p">)]</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="k">del</span> <span class="n">kk</span>
+
+        <span class="n">v</span><span class="p">[:,</span><span class="n">nx</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">ny</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">nz</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="n">nz</span><span class="o">//</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">conjugate</span><span class="p">(</span><span class="n">v</span><span class="p">[:,</span><span class="mi">1</span><span class="p">:</span><span class="n">nx</span><span class="p">,</span><span class="mi">1</span><span class="p">:</span><span class="n">ny</span><span class="p">,</span><span class="mi">1</span><span class="p">:</span><span class="n">nz</span><span class="o">//</span><span class="mi">2</span><span class="p">])</span>
+        <span class="n">v</span><span class="p">[:,</span><span class="n">nx</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">ny</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="n">ny</span><span class="o">//</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">nz</span><span class="o">//</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">conjugate</span><span class="p">(</span><span class="n">v</span><span class="p">[:,</span><span class="mi">1</span><span class="p">:</span><span class="n">nx</span><span class="p">,</span><span class="mi">1</span><span class="p">:</span><span class="n">ny</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span><span class="n">nz</span><span class="o">//</span><span class="mi">2</span><span class="p">])</span>
+        <span class="n">v</span><span class="p">[:,</span><span class="n">nx</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">ny</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="n">ny</span><span class="o">//</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">conjugate</span><span class="p">(</span><span class="n">v</span><span class="p">[:,</span><span class="mi">1</span><span class="p">:</span><span class="n">nx</span><span class="p">,</span><span class="mi">1</span><span class="p">:</span><span class="n">ny</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">v</span><span class="p">[:,</span><span class="n">nx</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">nz</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="n">nz</span><span class="o">//</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">conjugate</span><span class="p">(</span><span class="n">v</span><span class="p">[:,</span><span class="mi">1</span><span class="p">:</span><span class="n">nx</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">:</span><span class="n">nz</span><span class="o">//</span><span class="mi">2</span><span class="p">])</span>
+        <span class="n">v</span><span class="p">[:,</span><span class="mi">0</span><span class="p">,</span><span class="n">ny</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">nz</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="n">nz</span><span class="o">//</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">conjugate</span><span class="p">(</span><span class="n">v</span><span class="p">[:,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">:</span><span class="n">ny</span><span class="p">,</span><span class="mi">1</span><span class="p">:</span><span class="n">nz</span><span class="o">//</span><span class="mi">2</span><span class="p">])</span>
+        <span class="n">v</span><span class="p">[:,</span><span class="n">nx</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="n">nx</span><span class="o">//</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">ny</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span><span class="n">nz</span><span class="o">//</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">conjugate</span><span class="p">(</span><span class="n">v</span><span class="p">[:,</span><span class="mi">1</span><span class="p">:</span><span class="n">nx</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span><span class="n">ny</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span><span class="n">nz</span><span class="o">//</span><span class="mi">2</span><span class="p">])</span>
+        <span class="n">v</span><span class="p">[:,</span><span class="n">nx</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="n">nx</span><span class="o">//</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">ny</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">conjugate</span><span class="p">(</span><span class="n">v</span><span class="p">[:,</span><span class="mi">1</span><span class="p">:</span><span class="n">nx</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span><span class="n">ny</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">v</span><span class="p">[:,</span><span class="n">nx</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="n">nx</span><span class="o">//</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">nz</span><span class="o">//</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">conjugate</span><span class="p">(</span><span class="n">v</span><span class="p">[:,</span><span class="mi">1</span><span class="p">:</span><span class="n">nx</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">nz</span><span class="o">//</span><span class="mi">2</span><span class="p">])</span>
+        <span class="n">v</span><span class="p">[:,</span><span class="mi">0</span><span class="p">,</span><span class="n">ny</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="n">ny</span><span class="o">//</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">nz</span><span class="o">//</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">conjugate</span><span class="p">(</span><span class="n">v</span><span class="p">[:,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">:</span><span class="n">ny</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span><span class="n">nz</span><span class="o">//</span><span class="mi">2</span><span class="p">])</span>
+        <span class="n">v</span><span class="p">[:,</span><span class="n">nx</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="n">nx</span><span class="o">//</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">conjugate</span><span class="p">(</span><span class="n">v</span><span class="p">[:,</span><span class="mi">1</span><span class="p">:</span><span class="n">nx</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">v</span><span class="p">[:,</span><span class="mi">0</span><span class="p">,</span><span class="n">ny</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="n">ny</span><span class="o">//</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">conjugate</span><span class="p">(</span><span class="n">v</span><span class="p">[:,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">:</span><span class="n">ny</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">v</span><span class="p">[:,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">nz</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="n">nz</span><span class="o">//</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">conjugate</span><span class="p">(</span><span class="n">v</span><span class="p">[:,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">:</span><span class="n">nz</span><span class="o">//</span><span class="mi">2</span><span class="p">])</span>
+
+        <span class="n">gx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifftn</span><span class="p">(</span><span class="n">sigma</span><span class="o">*</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">,:,:,:])</span><span class="o">.</span><span class="n">real</span>
+        <span class="n">gy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifftn</span><span class="p">(</span><span class="n">sigma</span><span class="o">*</span><span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">,:,:,:])</span><span class="o">.</span><span class="n">real</span>
+        <span class="n">gz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifftn</span><span class="p">(</span><span class="n">sigma</span><span class="o">*</span><span class="n">v</span><span class="p">[</span><span class="mi">2</span><span class="p">,:,:,:])</span><span class="o">.</span><span class="n">real</span>
+
+        <span class="k">del</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">v</span>
+
+        <span class="n">g_avg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">gx</span><span class="o">*</span><span class="n">gx</span><span class="o">+</span><span class="n">gy</span><span class="o">*</span><span class="n">gy</span><span class="o">+</span><span class="n">gz</span><span class="o">*</span><span class="n">gz</span><span class="p">))</span>
+
+        <span class="n">gx</span> <span class="o">/=</span> <span class="n">g_avg</span>
+        <span class="n">gy</span> <span class="o">/=</span> <span class="n">g_avg</span>
+        <span class="n">gz</span> <span class="o">/=</span> <span class="n">g_avg</span>
+
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_coords</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">num_halos</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">g_rms</span> <span class="o">=</span> <span class="n">parse_value</span><span class="p">(</span><span class="n">g_rms</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_units</span><span class="p">)</span>
+            <span class="n">mylog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Scaling the fields by the constant value </span><span class="si">{</span><span class="n">g_rms</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">num_halos</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">mylog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Scaling the fields by cluster 1.&quot;</span><span class="p">)</span>
+                <span class="n">rr1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">x</span><span class="o">-</span><span class="n">ctr1</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">y</span><span class="o">-</span><span class="n">ctr1</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">z</span><span class="o">-</span><span class="n">ctr1</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">r_max</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">rr1</span><span class="p">[</span><span class="n">rr1</span> <span class="o">&gt;</span> <span class="n">r_max</span><span class="p">]</span> <span class="o">=</span> <span class="n">r_max</span>
+                <span class="n">idxs1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">searchsorted</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">rr1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+                <span class="n">dr1</span> <span class="o">=</span> <span class="p">(</span><span class="n">rr1</span><span class="o">-</span><span class="n">r1</span><span class="p">[</span><span class="n">idxs1</span><span class="p">])</span><span class="o">/</span><span class="p">(</span><span class="n">r1</span><span class="p">[</span><span class="n">idxs1</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">r1</span><span class="p">[</span><span class="n">idxs1</span><span class="p">])</span>
+                <span class="n">g_rms</span> <span class="o">=</span> <span class="p">((</span><span class="mf">1.</span><span class="o">-</span><span class="n">dr1</span><span class="p">)</span><span class="o">*</span><span class="n">g1</span><span class="p">[</span><span class="n">idxs1</span><span class="p">]</span> <span class="o">+</span> <span class="n">dr1</span><span class="o">*</span><span class="n">g1</span><span class="p">[</span><span class="n">idxs1</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span>
+            <span class="k">if</span> <span class="n">num_halos</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">mylog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Scaling the fields by cluster 2.&quot;</span><span class="p">)</span>
+                <span class="n">rr2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">x</span><span class="o">-</span><span class="n">ctr2</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">y</span><span class="o">-</span><span class="n">ctr2</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">z</span><span class="o">-</span><span class="n">ctr2</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">r_max</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">rr2</span><span class="p">[</span><span class="n">rr2</span> <span class="o">&gt;</span> <span class="n">r_max</span><span class="p">]</span> <span class="o">=</span> <span class="n">r_max</span>
+                <span class="n">idxs2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">searchsorted</span><span class="p">(</span><span class="n">r2</span><span class="p">,</span> <span class="n">rr2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+                <span class="n">dr2</span> <span class="o">=</span> <span class="p">(</span><span class="n">rr2</span><span class="o">-</span><span class="n">r2</span><span class="p">[</span><span class="n">idxs2</span><span class="p">])</span><span class="o">/</span><span class="p">(</span><span class="n">r2</span><span class="p">[</span><span class="n">idxs2</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">r2</span><span class="p">[</span><span class="n">idxs2</span><span class="p">])</span>
+                <span class="n">g_rms</span> <span class="o">+=</span> <span class="p">((</span><span class="mf">1.</span><span class="o">-</span><span class="n">dr2</span><span class="p">)</span><span class="o">*</span><span class="n">g2</span><span class="p">[</span><span class="n">idxs2</span><span class="p">]</span> <span class="o">+</span> <span class="n">dr2</span><span class="o">*</span><span class="n">g2</span><span class="p">[</span><span class="n">idxs2</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span>
+            <span class="k">if</span> <span class="n">num_halos</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+                <span class="n">mylog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Scaling the fields by cluster 3.&quot;</span><span class="p">)</span>
+                <span class="n">rr3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">x</span><span class="o">-</span><span class="n">ctr3</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">y</span><span class="o">-</span><span class="n">ctr3</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">z</span><span class="o">-</span><span class="n">ctr3</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">r_max</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">rr3</span><span class="p">[</span><span class="n">rr3</span> <span class="o">&gt;</span> <span class="n">r_max</span><span class="p">]</span> <span class="o">=</span> <span class="n">r_max</span>
+                <span class="n">idxs3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">searchsorted</span><span class="p">(</span><span class="n">r3</span><span class="p">,</span> <span class="n">rr3</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+                <span class="n">dr3</span> <span class="o">=</span> <span class="p">(</span><span class="n">rr3</span><span class="o">-</span><span class="n">r3</span><span class="p">[</span><span class="n">idxs3</span><span class="p">])</span><span class="o">/</span><span class="p">(</span><span class="n">r3</span><span class="p">[</span><span class="n">idxs3</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">r3</span><span class="p">[</span><span class="n">idxs3</span><span class="p">])</span>
+                <span class="n">g_rms</span> <span class="o">+=</span> <span class="p">((</span><span class="mf">1.</span><span class="o">-</span><span class="n">dr3</span><span class="p">)</span><span class="o">*</span><span class="n">g3</span><span class="p">[</span><span class="n">idxs3</span><span class="p">]</span> <span class="o">+</span> <span class="n">dr3</span><span class="o">*</span><span class="n">g3</span><span class="p">[</span><span class="n">idxs3</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span>
+            <span class="n">g_rms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">g_rms</span><span class="p">)</span><span class="o">.</span><span class="n">in_units</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_units</span><span class="p">)</span><span class="o">.</span><span class="n">d</span>
+
+        <span class="n">gx</span> <span class="o">*=</span> <span class="n">g_rms</span>
+        <span class="n">gy</span> <span class="o">*=</span> <span class="n">g_rms</span>
+        <span class="n">gz</span> <span class="o">*=</span> <span class="n">g_rms</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">,:,</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">z</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,:]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">gx</span> <span class="o">=</span> <span class="n">gx</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gy</span> <span class="o">=</span> <span class="n">gy</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gz</span> <span class="o">=</span> <span class="n">gz</span>
+
+        <span class="n">rescale</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gx</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">gy</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">gz</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+        <span class="k">del</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">g_rms</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">divergence_clean</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_divergence_clean</span><span class="p">(</span><span class="n">kx</span><span class="p">,</span> <span class="n">ky</span><span class="p">,</span> <span class="n">kz</span><span class="p">)</span>
+
+        <span class="n">rescale</span> <span class="o">/=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gx</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">gy</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">gz</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">gx</span> <span class="o">*=</span> <span class="n">rescale</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gy</span> <span class="o">*=</span> <span class="n">rescale</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gz</span> <span class="o">*=</span> <span class="n">rescale</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">vector_potential</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_compute_vector_potential</span><span class="p">(</span><span class="n">kx</span><span class="p">,</span> <span class="n">ky</span><span class="p">,</span> <span class="n">kz</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="RandomMagneticField"><a class="viewcode-back" href="../_as_gen/fields.RandomMagneticField.html#fields.RandomMagneticField">[docs]</a><span class="k">class</span> <span class="nc">RandomMagneticField</span><span class="p">(</span><span class="n">GaussianRandomField</span><span class="p">):</span>
+    <span class="n">_units</span> <span class="o">=</span> <span class="s2">&quot;gauss&quot;</span>
+    <span class="n">_name</span> <span class="o">=</span> <span class="s2">&quot;magnetic_field&quot;</span>
+    <span class="n">_vector_potential</span> <span class="o">=</span> <span class="kc">False</span>
+
+<div class="viewcode-block" id="RandomMagneticField.__init__"><a class="viewcode-back" href="../_as_gen/fields.RandomMagneticField.__init__.html#fields.RandomMagneticField.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">left_edge</span><span class="p">,</span> <span class="n">right_edge</span><span class="p">,</span> <span class="n">ddims</span><span class="p">,</span> <span class="n">l_min</span><span class="p">,</span> <span class="n">l_max</span><span class="p">,</span>
+                 <span class="n">B_rms</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=-</span><span class="mf">11.</span><span class="o">/</span><span class="mf">3.</span><span class="p">,</span> <span class="n">prng</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">RandomMagneticField</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">left_edge</span><span class="p">,</span> <span class="n">right_edge</span><span class="p">,</span> <span class="n">ddims</span><span class="p">,</span>
+            <span class="n">l_min</span><span class="p">,</span> <span class="n">l_max</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="n">padding</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">divergence_clean</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
+            <span class="n">g_rms</span><span class="o">=</span><span class="n">B_rms</span><span class="p">,</span> <span class="n">vector_potential</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_vector_potential</span><span class="p">,</span> <span class="n">prng</span><span class="o">=</span><span class="n">prng</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="RadialRandomMagneticField"><a class="viewcode-back" href="../_as_gen/fields.RadialRandomMagneticField.html#fields.RadialRandomMagneticField">[docs]</a><span class="k">class</span> <span class="nc">RadialRandomMagneticField</span><span class="p">(</span><span class="n">GaussianRandomField</span><span class="p">):</span>
+    <span class="n">_units</span> <span class="o">=</span> <span class="s2">&quot;gauss&quot;</span>
+    <span class="n">_name</span> <span class="o">=</span> <span class="s2">&quot;magnetic_field&quot;</span>
+    <span class="n">_vector_potential</span> <span class="o">=</span> <span class="kc">False</span>
+
+<div class="viewcode-block" id="RadialRandomMagneticField.__init__"><a class="viewcode-back" href="../_as_gen/fields.RadialRandomMagneticField.__init__.html#fields.RadialRandomMagneticField.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">left_edge</span><span class="p">,</span> <span class="n">right_edge</span><span class="p">,</span> <span class="n">ddims</span><span class="p">,</span> <span class="n">l_min</span><span class="p">,</span> <span class="n">l_max</span><span class="p">,</span>
+                 <span class="n">ctr1</span><span class="p">,</span> <span class="n">profile1</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">ctr2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">profile2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">ctr3</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">profile3</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=-</span><span class="mf">11.</span><span class="o">/</span><span class="mf">3.</span><span class="p">,</span> <span class="n">r_max</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+                 <span class="n">prng</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">profile1</span><span class="p">,</span> <span class="n">ClusterModel</span><span class="p">):</span>
+            <span class="n">r1</span> <span class="o">=</span> <span class="n">profile1</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_value</span><span class="p">(</span><span class="s2">&quot;kpc&quot;</span><span class="p">)</span>
+            <span class="n">B1</span> <span class="o">=</span> <span class="n">profile1</span><span class="p">[</span><span class="s2">&quot;magnetic_field_strength&quot;</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">profile1</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">r1</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="o">.</span><span class="n">from_hdf5</span><span class="p">(</span><span class="n">profile1</span><span class="p">,</span> <span class="n">dataset_name</span><span class="o">=</span><span class="s2">&quot;radius&quot;</span><span class="p">,</span>
+                                      <span class="n">group_name</span><span class="o">=</span><span class="s2">&quot;fields&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;kpc&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">d</span>
+            <span class="n">B1</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="o">.</span><span class="n">from_hdf5</span><span class="p">(</span><span class="n">profile1</span><span class="p">,</span>
+                <span class="n">dataset_name</span><span class="o">=</span><span class="s2">&quot;magnetic_field_strength&quot;</span><span class="p">,</span> <span class="n">group_name</span><span class="o">=</span><span class="s2">&quot;fields&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">r1</span><span class="p">,</span> <span class="n">B1</span> <span class="o">=</span> <span class="n">profile1</span>
+        <span class="k">if</span> <span class="n">profile2</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">profile2</span><span class="p">,</span> <span class="n">ClusterModel</span><span class="p">):</span>
+                <span class="n">r2</span> <span class="o">=</span> <span class="n">profile2</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_value</span><span class="p">(</span><span class="s2">&quot;kpc&quot;</span><span class="p">)</span>
+                <span class="n">B2</span> <span class="o">=</span> <span class="n">profile2</span><span class="p">[</span><span class="s2">&quot;magnetic_field_strength&quot;</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">profile2</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="n">r2</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="o">.</span><span class="n">from_hdf5</span><span class="p">(</span><span class="n">profile2</span><span class="p">,</span> <span class="n">dataset_name</span><span class="o">=</span><span class="s2">&quot;radius&quot;</span><span class="p">,</span>
+                                          <span class="n">group_name</span><span class="o">=</span><span class="s2">&quot;fields&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;kpc&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">d</span>
+                <span class="n">B2</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="o">.</span><span class="n">from_hdf5</span><span class="p">(</span><span class="n">profile2</span><span class="p">,</span>
+                    <span class="n">dataset_name</span><span class="o">=</span><span class="s2">&quot;magnetic_field_strength&quot;</span><span class="p">,</span> <span class="n">group_name</span><span class="o">=</span><span class="s2">&quot;fields&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">r2</span><span class="p">,</span> <span class="n">B2</span> <span class="o">=</span> <span class="n">profile2</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">r2</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">B2</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">profile3</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">profile3</span><span class="p">,</span> <span class="n">ClusterModel</span><span class="p">):</span>
+                <span class="n">r3</span> <span class="o">=</span> <span class="n">profile3</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_value</span><span class="p">(</span><span class="s2">&quot;kpc&quot;</span><span class="p">)</span>
+                <span class="n">B3</span> <span class="o">=</span> <span class="n">profile3</span><span class="p">[</span><span class="s2">&quot;magnetic_field_strength&quot;</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">profile3</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="n">r3</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="o">.</span><span class="n">from_hdf5</span><span class="p">(</span><span class="n">profile3</span><span class="p">,</span> <span class="n">dataset_name</span><span class="o">=</span><span class="s2">&quot;radius&quot;</span><span class="p">,</span>
+                                          <span class="n">group_name</span><span class="o">=</span><span class="s2">&quot;fields&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;kpc&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">d</span>
+                <span class="n">B3</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="o">.</span><span class="n">from_hdf5</span><span class="p">(</span><span class="n">profile3</span><span class="p">,</span>
+                    <span class="n">dataset_name</span><span class="o">=</span><span class="s2">&quot;magnetic_field_strength&quot;</span><span class="p">,</span> <span class="n">group_name</span><span class="o">=</span><span class="s2">&quot;fields&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">r3</span><span class="p">,</span> <span class="n">B3</span> <span class="o">=</span> <span class="n">profile3</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">r3</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">B3</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">RadialRandomMagneticField</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+              <span class="n">left_edge</span><span class="p">,</span> <span class="n">right_edge</span><span class="p">,</span> <span class="n">ddims</span><span class="p">,</span> <span class="n">l_min</span><span class="p">,</span> <span class="n">l_max</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="n">padding</span><span class="p">,</span>
+              <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">ctr1</span><span class="o">=</span><span class="n">ctr1</span><span class="p">,</span> <span class="n">ctr2</span><span class="o">=</span><span class="n">ctr2</span><span class="p">,</span> <span class="n">ctr3</span><span class="o">=</span><span class="n">ctr3</span><span class="p">,</span> <span class="n">r1</span><span class="o">=</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="o">=</span><span class="n">r2</span><span class="p">,</span> 
+              <span class="n">r3</span><span class="o">=</span><span class="n">r3</span><span class="p">,</span> <span class="n">g1</span><span class="o">=</span><span class="n">B1</span><span class="p">,</span> <span class="n">g2</span><span class="o">=</span><span class="n">B2</span><span class="p">,</span> <span class="n">g3</span><span class="o">=</span><span class="n">B3</span><span class="p">,</span> <span class="n">divergence_clean</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">r_max</span><span class="o">=</span><span class="n">r_max</span><span class="p">,</span>
+              <span class="n">vector_potential</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_vector_potential</span><span class="p">,</span> <span class="n">prng</span><span class="o">=</span><span class="n">prng</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="RandomMagneticVectorPotential"><a class="viewcode-back" href="../_as_gen/fields.RandomMagneticVectorPotential.html#fields.RandomMagneticVectorPotential">[docs]</a><span class="k">class</span> <span class="nc">RandomMagneticVectorPotential</span><span class="p">(</span><span class="n">RandomMagneticField</span><span class="p">):</span>
+    <span class="n">_name</span> <span class="o">=</span> <span class="s2">&quot;magnetic_vector_potential&quot;</span>
+    <span class="n">_vector_potential</span> <span class="o">=</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="RadialRandomMagneticVectorPotential"><a class="viewcode-back" href="../_as_gen/fields.RadialRandomMagneticVectorPotential.html#fields.RadialRandomMagneticVectorPotential">[docs]</a><span class="k">class</span> <span class="nc">RadialRandomMagneticVectorPotential</span><span class="p">(</span><span class="n">RadialRandomMagneticField</span><span class="p">):</span>
+    <span class="n">_name</span> <span class="o">=</span> <span class="s2">&quot;magnetic_vector_potential&quot;</span>
+    <span class="n">_vector_potential</span> <span class="o">=</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="RandomVelocityField"><a class="viewcode-back" href="../_as_gen/fields.RandomVelocityField.html#fields.RandomVelocityField">[docs]</a><span class="k">class</span> <span class="nc">RandomVelocityField</span><span class="p">(</span><span class="n">GaussianRandomField</span><span class="p">):</span>
+    <span class="n">_units</span> <span class="o">=</span> <span class="s2">&quot;kpc/Myr&quot;</span>
+    <span class="n">_name</span> <span class="o">=</span> <span class="s2">&quot;velocity&quot;</span>
+
+<div class="viewcode-block" id="RandomVelocityField.__init__"><a class="viewcode-back" href="../_as_gen/fields.RandomVelocityField.__init__.html#fields.RandomVelocityField.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">left_edge</span><span class="p">,</span> <span class="n">right_edge</span><span class="p">,</span> <span class="n">ddims</span><span class="p">,</span> <span class="n">l_min</span><span class="p">,</span> <span class="n">l_max</span><span class="p">,</span>
+                 <span class="n">V_rms</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=-</span><span class="mf">11.</span><span class="o">/</span><span class="mf">3.</span><span class="p">,</span> <span class="n">divergence_clean</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="n">prng</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">RandomVelocityField</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">left_edge</span><span class="p">,</span> <span class="n">right_edge</span><span class="p">,</span> <span class="n">ddims</span><span class="p">,</span>
+            <span class="n">l_min</span><span class="p">,</span> <span class="n">l_max</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="n">padding</span><span class="p">,</span> <span class="n">g_rms</span><span class="o">=</span><span class="n">V_rms</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">prng</span><span class="o">=</span><span class="n">prng</span><span class="p">,</span>
+            <span class="n">divergence_clean</span><span class="o">=</span><span class="n">divergence_clean</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="RadialRandomVelocityField"><a class="viewcode-back" href="../_as_gen/fields.RadialRandomVelocityField.html#fields.RadialRandomVelocityField">[docs]</a><span class="k">class</span> <span class="nc">RadialRandomVelocityField</span><span class="p">(</span><span class="n">GaussianRandomField</span><span class="p">):</span>
+    <span class="n">_units</span> <span class="o">=</span> <span class="s2">&quot;kpc/Myr&quot;</span>
+    <span class="n">_name</span> <span class="o">=</span> <span class="s2">&quot;velocity&quot;</span>
+
+<div class="viewcode-block" id="RadialRandomVelocityField.__init__"><a class="viewcode-back" href="../_as_gen/fields.RadialRandomVelocityField.__init__.html#fields.RadialRandomVelocityField.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">left_edge</span><span class="p">,</span> <span class="n">right_edge</span><span class="p">,</span> <span class="n">ddims</span><span class="p">,</span> <span class="n">l_min</span><span class="p">,</span> <span class="n">l_max</span><span class="p">,</span>
+                 <span class="n">ctr1</span><span class="p">,</span> <span class="n">profile1</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">ctr2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">profile2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">ctr3</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">profile3</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=-</span><span class="mf">11.</span><span class="o">/</span><span class="mf">3.</span><span class="p">,</span> <span class="n">r_max</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">divergence_clean</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">prng</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">profile1</span><span class="p">,</span> <span class="n">ClusterModel</span><span class="p">):</span>
+            <span class="n">r1</span> <span class="o">=</span> <span class="n">profile1</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_value</span><span class="p">(</span><span class="s2">&quot;kpc&quot;</span><span class="p">)</span>
+            <span class="n">V1</span> <span class="o">=</span> <span class="n">profile1</span><span class="p">[</span><span class="s2">&quot;velocity_dispersion&quot;</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">profile1</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">r1</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="o">.</span><span class="n">from_hdf5</span><span class="p">(</span><span class="n">profile1</span><span class="p">,</span> <span class="n">dataset_name</span><span class="o">=</span><span class="s2">&quot;radius&quot;</span><span class="p">,</span>
+                                      <span class="n">group_name</span><span class="o">=</span><span class="s2">&quot;fields&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">d</span>
+            <span class="n">V1</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="o">.</span><span class="n">from_hdf5</span><span class="p">(</span><span class="n">profile1</span><span class="p">,</span>
+                <span class="n">dataset_name</span><span class="o">=</span><span class="s2">&quot;velocity_dispersion&quot;</span><span class="p">,</span> <span class="n">group_name</span><span class="o">=</span><span class="s2">&quot;fields&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">r1</span><span class="p">,</span> <span class="n">V1</span> <span class="o">=</span> <span class="n">profile1</span>
+        <span class="k">if</span> <span class="n">profile2</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">profile2</span><span class="p">,</span> <span class="n">ClusterModel</span><span class="p">):</span>
+                <span class="n">r2</span> <span class="o">=</span> <span class="n">profile2</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_value</span><span class="p">(</span><span class="s2">&quot;kpc&quot;</span><span class="p">)</span>
+                <span class="n">V2</span> <span class="o">=</span> <span class="n">profile2</span><span class="p">[</span><span class="s2">&quot;velocity_dispersion&quot;</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">profile2</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="n">r2</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="o">.</span><span class="n">from_hdf5</span><span class="p">(</span><span class="n">profile2</span><span class="p">,</span> <span class="n">dataset_name</span><span class="o">=</span><span class="s2">&quot;radius&quot;</span><span class="p">,</span>
+                                          <span class="n">group_name</span><span class="o">=</span><span class="s2">&quot;fields&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">d</span>
+                <span class="n">V2</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="o">.</span><span class="n">from_hdf5</span><span class="p">(</span><span class="n">profile2</span><span class="p">,</span>
+                    <span class="n">dataset_name</span><span class="o">=</span><span class="s2">&quot;velocity_dispersion&quot;</span><span class="p">,</span> <span class="n">group_name</span><span class="o">=</span><span class="s2">&quot;fields&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">r2</span><span class="p">,</span> <span class="n">V2</span> <span class="o">=</span> <span class="n">profile2</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">r2</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">V2</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">profile3</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">profile3</span><span class="p">,</span> <span class="n">ClusterModel</span><span class="p">):</span>
+                <span class="n">r3</span> <span class="o">=</span> <span class="n">profile3</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_value</span><span class="p">(</span><span class="s2">&quot;kpc&quot;</span><span class="p">)</span>
+                <span class="n">V3</span> <span class="o">=</span> <span class="n">profile3</span><span class="p">[</span><span class="s2">&quot;velocity_dispersion&quot;</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">profile3</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="n">r3</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="o">.</span><span class="n">from_hdf5</span><span class="p">(</span><span class="n">profile3</span><span class="p">,</span> <span class="n">dataset_name</span><span class="o">=</span><span class="s2">&quot;radius&quot;</span><span class="p">,</span>
+                                          <span class="n">group_name</span><span class="o">=</span><span class="s2">&quot;fields&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;kpc&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">d</span>
+                <span class="n">V3</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="o">.</span><span class="n">from_hdf5</span><span class="p">(</span><span class="n">profile3</span><span class="p">,</span>
+                    <span class="n">dataset_name</span><span class="o">=</span><span class="s2">&quot;velocity_dispersion&quot;</span><span class="p">,</span> <span class="n">group_name</span><span class="o">=</span><span class="s2">&quot;fields&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">r3</span><span class="p">,</span> <span class="n">V3</span> <span class="o">=</span> <span class="n">profile3</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">r3</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">V3</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">RadialRandomVelocityField</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">left_edge</span><span class="p">,</span> <span class="n">right_edge</span><span class="p">,</span> 
+            <span class="n">ddims</span><span class="p">,</span> <span class="n">l_min</span><span class="p">,</span> <span class="n">l_max</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="n">padding</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">ctr1</span><span class="o">=</span><span class="n">ctr1</span><span class="p">,</span> 
+            <span class="n">ctr2</span><span class="o">=</span><span class="n">ctr2</span><span class="p">,</span> <span class="n">ctr3</span><span class="o">=</span><span class="n">ctr3</span><span class="p">,</span> <span class="n">r1</span><span class="o">=</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="o">=</span><span class="n">r2</span><span class="p">,</span> <span class="n">r3</span><span class="o">=</span><span class="n">r3</span><span class="p">,</span> <span class="n">g1</span><span class="o">=</span><span class="n">V1</span><span class="p">,</span> <span class="n">g2</span><span class="o">=</span><span class="n">V2</span><span class="p">,</span> <span class="n">g3</span><span class="o">=</span><span class="n">V3</span><span class="p">,</span> 
+            <span class="n">divergence_clean</span><span class="o">=</span><span class="n">divergence_clean</span><span class="p">,</span> <span class="n">r_max</span><span class="o">=</span><span class="n">r_max</span><span class="p">,</span> <span class="n">prng</span><span class="o">=</span><span class="n">prng</span><span class="p">)</span></div></div>
+
+
+</pre></div>
+
+                </article>
+              
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+  <p class="copyright">
+    
+      © Copyright 2020, John ZuHone.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.1.2.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.13.3.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
