@@ -485,19 +485,23 @@ document.write(`
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
-<span class="sd">    &gt;&gt;&gt; from cluster_generator.radial_profiles import hernquist_density_profile</span>
-<span class="sd">    &gt;&gt;&gt; from scipy.interpolate import InterpolatedUnivariateSpline</span>
-<span class="sd">    &gt;&gt;&gt; import matplotlib.pyplot as plt</span>
-<span class="sd">    &gt;&gt;&gt; x = np.geomspace(0.1,1000,1000)</span>
-<span class="sd">    &gt;&gt;&gt; rho = hernquist_density_profile(1e6,1000)(x)</span>
-<span class="sd">    &gt;&gt;&gt; rho_spline = InterpolatedUnivariateSpline(x,rho)</span>
-<span class="sd">    &gt;&gt;&gt; xl = np.geomspace(0.1,1e7,1000)</span>
-<span class="sd">    &gt;&gt;&gt; _rho_trunc = truncate_spline(rho_spline,1000,7)</span>
-<span class="sd">    &gt;&gt;&gt; plt.figure()</span>
-<span class="sd">    &gt;&gt;&gt; plt.loglog(x,rho,&quot;k-&quot;,lw=3)</span>
-<span class="sd">    &gt;&gt;&gt; plt.loglog(xl,rho_spline(xl),&quot;k:&quot;)</span>
-<span class="sd">    &gt;&gt;&gt; plt.loglog(xl,_rho_trunc(xl),&quot;r-.&quot;)</span>
-<span class="sd">    &gt;&gt;&gt; plt.show()</span>
+
+<span class="sd">    .. code_block:: python</span>
+
+<span class="sd">        from cluster_generator.radial_profiles import hernquist_density_profile</span>
+<span class="sd">        from scipy.interpolate import InterpolatedUnivariateSpline</span>
+<span class="sd">        import matplotlib.pyplot as plt</span>
+<span class="sd">        x = np.geomspace(0.1,1000,1000)</span>
+<span class="sd">        rho = hernquist_density_profile(1e6,1000)(x)</span>
+<span class="sd">        rho_spline = InterpolatedUnivariateSpline(x,rho)</span>
+<span class="sd">        xl = np.geomspace(0.1,1e7,1000)</span>
+<span class="sd">        _rho_trunc = truncate_spline(rho_spline,1000,7)</span>
+<span class="sd">        plt.figure()</span>
+<span class="sd">        plt.loglog(x,rho,&quot;k-&quot;,lw=3)</span>
+<span class="sd">        plt.loglog(xl,rho_spline(xl),&quot;k:&quot;)</span>
+<span class="sd">        plt.loglog(xl,_rho_trunc(xl),&quot;r-.&quot;)</span>
+<span class="sd">        plt.show()</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">_gamma</span> <span class="o">=</span> <span class="n">r_t</span> <span class="o">*</span> <span class="n">f</span><span class="p">(</span><span class="n">r_t</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">f</span><span class="p">(</span><span class="n">r_t</span><span class="p">)</span>  <span class="c1"># This is the slope.</span>
     <span class="k">return</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">g</span><span class="o">=</span><span class="n">_gamma</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">a</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">r_t</span><span class="p">:</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">_truncator_function</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">_truncator_function</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span>

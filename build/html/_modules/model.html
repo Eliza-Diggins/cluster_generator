@@ -583,15 +583,20 @@ document.write(`
 
 <span class="sd">        Examples</span>
 <span class="sd">        --------</span>
-<span class="sd">        &gt;&gt;&gt; from cluster_generator.tests.utils import generate_mdr_potential</span>
-<span class="sd">        &gt;&gt;&gt; import matplotlib.pyplot as plt</span>
-<span class="sd">        &gt;&gt;&gt; m,d,r = generate_mdr_potential()</span>
-<span class="sd">        &gt;&gt;&gt; fields = {&quot;total_mass&quot;:m,&quot;total_density&quot;:d,&quot;radius&quot;:r}</span>
-<span class="sd">        &gt;&gt;&gt; model = ClusterModel.from_arrays(fields)</span>
-<span class="sd">        &gt;&gt;&gt; print(model.fields.keys())</span>
-<span class="sd">        dict_keys([&#39;total_mass&#39;, &#39;total_density&#39;, &#39;radius&#39;, &#39;gravitational_potential&#39;])</span>
-<span class="sd">        &gt;&gt;&gt; _ = model.pot # Generate the potential</span>
-<span class="sd">        &gt;&gt;&gt; model.plot(&quot;gravitational_potential&quot;)</span>
+
+<span class="sd">        .. code_block:: python</span>
+
+<span class="sd">            from cluster_generator.tests.utils import generate_mdr_potential</span>
+<span class="sd">            import matplotlib.pyplot as plt</span>
+<span class="sd">            import pytest</span>
+<span class="sd">            mdr = getfixture(&quot;generate_mdr_potential&quot;)</span>
+<span class="sd">            m,d,r = mdr</span>
+<span class="sd">            fields = {&quot;total_mass&quot;:m,&quot;total_density&quot;:d,&quot;radius&quot;:r}</span>
+<span class="sd">            model = ClusterModel.from_arrays(fields)</span>
+<span class="sd">            print(model.fields.keys())</span>
+
+<span class="sd">            _ = model.pot # Generate the potential</span>
+<span class="sd">            model.plot(&quot;gravitational_potential&quot;)</span>
 
 <span class="sd">        .. image:: ../_images/model/from_arrays_plot.png</span>
 <span class="sd">        &quot;&quot;&quot;</span>
