@@ -141,34 +141,8 @@
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../models.html">
-                        Cluster Models
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../particles.html">
-                        Particles
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../fields.html">
-                        Generating 3D Cluster Fields
-                      </a>
-                    </li>
-                
-            <div class="nav-item dropdown">
-                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    More
-                </button>
-                <div class="dropdown-menu">
-                    
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../initial_conditions.html">
-                        Initial Conditions Generation
+                      <a class="nav-link nav-internal" href="../collections.html">
+                        Collections
                       </a>
                     </li>
                 
@@ -186,7 +160,12 @@
                       </a>
                     </li>
                 
-
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="../api.html">
                         API
@@ -284,34 +263,8 @@ document.write(`
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../models.html">
-                        Cluster Models
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../particles.html">
-                        Particles
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../fields.html">
-                        Generating 3D Cluster Fields
-                      </a>
-                    </li>
-                
-            <div class="nav-item dropdown">
-                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    More
-                </button>
-                <div class="dropdown-menu">
-                    
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../initial_conditions.html">
-                        Initial Conditions Generation
+                      <a class="nav-link nav-internal" href="../collections.html">
+                        Collections
                       </a>
                     </li>
                 
@@ -329,7 +282,12 @@ document.write(`
                       </a>
                     </li>
                 
-
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="../api.html">
                         API
@@ -423,14 +381,16 @@ document.write(`
 <span class="sd">solving the Poisson equation in each of the available gravitational theories. The various available gravitational theories are</span>
 <span class="sd">implemented in classes inheriting from the base :py:class:`gravity.Gravity` class.</span>
 <span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">halo</span> <span class="kn">import</span> <span class="n">Halo</span>
 <span class="kn">from</span> <span class="nn">scipy.interpolate</span> <span class="kn">import</span> <span class="n">InterpolatedUnivariateSpline</span>
 <span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">fsolve</span>
 <span class="kn">from</span> <span class="nn">unyt</span> <span class="kn">import</span> <span class="n">unyt_array</span><span class="p">,</span> <span class="n">unyt_quantity</span>
-<span class="kn">from</span> <span class="nn">halo</span> <span class="kn">import</span> <span class="n">Halo</span>
+
 <span class="kn">from</span> <span class="nn">cluster_generator.utils</span> <span class="kn">import</span> \
     <span class="n">integrate</span><span class="p">,</span> <span class="n">mylog</span><span class="p">,</span> <span class="n">G</span><span class="p">,</span> <span class="n">integrate_toinf</span><span class="p">,</span> <span class="n">truncate_spline</span><span class="p">,</span> <span class="n">log_string</span>
-<span class="kn">import</span> <span class="nn">sys</span>
 
 <span class="c1"># -------------------------------------------------------------------------------------------------------------------- #</span>
 <span class="c1"># Constants ========================================================================================================== #</span>
@@ -476,7 +436,7 @@ document.write(`
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">is_calculated</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Will return ``True`` if there is already a value for the gravitational potential in place.&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="s2">&quot;gravitational_field&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fields</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;gravitational_potential&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s2">&quot;gravitational_potential&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fields</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;gravitational_potential&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="kc">False</span>
@@ -551,9 +511,8 @@ document.write(`
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;gravitational_potential&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">G</span> <span class="o">*</span> <span class="p">(</span><span class="n">gpot1</span> <span class="o">+</span> <span class="n">gpot2</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;gravitational_potential&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">convert_to_units</span><span class="p">(</span><span class="s2">&quot;kpc**2/Myr**2&quot;</span><span class="p">)</span></div>
 
-
 <div class="viewcode-block" id="NewtonianGravity.compute_mass"><a class="viewcode-back" href="../_as_gen/gravity.NewtonianGravity.compute_mass.html#gravity.NewtonianGravity.compute_mass">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">compute_mass</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span><span class="n">attrs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">compute_mass</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Computes the dynamical mass from the provided fields.</span>
 
@@ -570,8 +529,8 @@ document.write(`
 <span class="sd">            Computation result</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">with</span> <span class="n">Halo</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">log_string</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dyn. Mass comp; </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">_classname</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">),</span><span class="n">stream</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span> <span class="k">as</span> <span class="n">h</span><span class="p">:</span>
-            <span class="n">_val</span> <span class="o">=-</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;gravitational_field&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">G</span>
+        <span class="k">with</span> <span class="n">Halo</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">log_string</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dyn. Mass comp; </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">_classname</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">),</span> <span class="n">stream</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span> <span class="k">as</span> <span class="n">h</span><span class="p">:</span>
+            <span class="n">_val</span> <span class="o">=</span> <span class="o">-</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;gravitational_field&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">G</span>
             <span class="n">h</span><span class="o">.</span><span class="n">succeed</span><span class="p">(</span><span class="n">log_string</span><span class="p">(</span><span class="s2">&quot;Dyn. Mass comp: [DONE] &quot;</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">_val</span></div></div>
 
@@ -678,7 +637,7 @@ document.write(`
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;gravitational_potential&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">convert_to_units</span><span class="p">(</span><span class="s2">&quot;kpc**2/Myr**2&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="AQUALGravity.compute_mass"><a class="viewcode-back" href="../_as_gen/gravity.AQUALGravity.compute_mass.html#gravity.AQUALGravity.compute_mass">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">compute_mass</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span><span class="n">attrs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">compute_mass</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Computes the dynamical mass from the provided fields.</span>
 
@@ -697,7 +656,7 @@ document.write(`
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1">#  Managing attributes</span>
         <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
-        <span class="k">with</span> <span class="n">Halo</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">log_string</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dyn. Mass comp; </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">_classname</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">),</span><span class="n">stream</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span> <span class="k">as</span> <span class="n">h</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">Halo</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">log_string</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dyn. Mass comp; </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">_classname</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">),</span> <span class="n">stream</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span> <span class="k">as</span> <span class="n">h</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">attrs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">attrs</span> <span class="o">=</span> <span class="p">{}</span>
 
@@ -713,11 +672,12 @@ document.write(`
             <span class="c1"># -------------------------------------------------------------------------------------------------------- #</span>
             <span class="n">h</span><span class="o">.</span><span class="n">succeed</span><span class="p">(</span><span class="n">log_string</span><span class="p">(</span><span class="s2">&quot;Dyn. Mass comp: [DONE] &quot;</span><span class="p">))</span>
         <span class="k">return</span> <span class="p">(</span><span class="o">-</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;gravitational_field&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">G</span><span class="p">)</span> <span class="o">*</span> <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;interp_function&quot;</span><span class="p">](</span>
-                <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;gravitational_field&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;kpc/Myr**2&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">d</span><span class="p">)</span> <span class="o">/</span> <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;a_0&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;kpc/Myr**2&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">d</span><span class="p">)</span></div>
+            <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;gravitational_field&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;kpc/Myr**2&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">d</span><span class="p">)</span> <span class="o">/</span> <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;a_0&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;kpc/Myr**2&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">d</span><span class="p">)</span></div>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_interp</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-        <span class="k">return</span>  <span class="n">x</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">x</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">x</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">x</span><span class="p">)</span></div>
+
 
 <div class="viewcode-block" id="QUMONDGravity"><a class="viewcode-back" href="../_as_gen/gravity.QUMONDGravity.html#gravity.QUMONDGravity">[docs]</a><span class="k">class</span> <span class="nc">QUMONDGravity</span><span class="p">(</span><span class="n">Gravity</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -795,7 +755,7 @@ document.write(`
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;gravitational_potential&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">convert_to_units</span><span class="p">(</span><span class="s2">&quot;kpc**2/Myr**2&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="QUMONDGravity.compute_mass"><a class="viewcode-back" href="../_as_gen/gravity.QUMONDGravity.compute_mass.html#gravity.QUMONDGravity.compute_mass">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">compute_mass</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span> <span class="n">attrs</span> <span class="o">=</span> <span class="p">{}):</span>
+    <span class="k">def</span> <span class="nf">compute_mass</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="p">{}):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Computes the dynamical mass from the provided fields.</span>
 
@@ -812,7 +772,7 @@ document.write(`
 <span class="sd">            Computation result</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">with</span> <span class="n">Halo</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">log_string</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dyn. Mass comp; </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">_classname</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">),</span><span class="n">stream</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span> <span class="k">as</span> <span class="n">h</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">Halo</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">log_string</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dyn. Mass comp; </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">_classname</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">),</span> <span class="n">stream</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="n">enabled</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="k">as</span> <span class="n">h</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">attrs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">attrs</span> <span class="o">=</span> <span class="p">{}</span>
 
@@ -827,14 +787,16 @@ document.write(`
 
             <span class="c1"># - Creating a function equivalent of the gravitational field - #</span>
             <span class="n">_gravitational_field_spline</span> <span class="o">=</span> <span class="n">InterpolatedUnivariateSpline</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">,</span>
-                                                                       <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;gravitational_field&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;kpc/Myr**2&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">d</span> <span class="o">/</span>
+                                                                       <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;gravitational_field&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span>
+                                                                           <span class="s2">&quot;kpc/Myr**2&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">d</span> <span class="o">/</span>
                                                                        <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;a_0&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;kpc/Myr**2&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">d</span><span class="p">)</span>
 
             <span class="n">_fsolve_function</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;interp_function&quot;</span><span class="p">](</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">_gravitational_field_spline</span><span class="p">(</span>
                 <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">)</span>
 
             <span class="c1"># - Computing the guess - #</span>
-            <span class="n">_x_guess</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;gravitational_field&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">)</span> <span class="o">*</span> <span class="n">_gravitational_field_spline</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">))</span>
+            <span class="n">_x_guess</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;gravitational_field&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">)</span> <span class="o">*</span> <span class="n">_gravitational_field_spline</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">))</span>
 
             <span class="c1"># - solving - #</span>
             <span class="n">_x</span> <span class="o">=</span> <span class="n">fsolve</span><span class="p">(</span><span class="n">_fsolve_function</span><span class="p">,</span> <span class="n">_x_guess</span><span class="p">)</span>
@@ -843,9 +805,10 @@ document.write(`
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_interp</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-        <span class="k">return</span>  <span class="p">((</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span>
-        <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="mi">4</span> <span class="o">/</span> <span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span> <span class="o">**</span> <span class="p">(</span>
-                                 <span class="mi">1</span> <span class="p">))</span></div>
+        <span class="k">return</span> <span class="p">((</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="mi">4</span> <span class="o">/</span> <span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span> <span class="o">**</span> <span class="p">(</span>
+                    <span class="mi">1</span><span class="p">))</span></div>
+
 
 <span class="c1"># -------------------------------------------------------------------------------------------------------------------- #</span>
 <span class="c1"># Catalog ============================================================================================================ #</span>

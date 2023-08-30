@@ -1,0 +1,725 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Using Builtin Collections &#8212; cluster_generator  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fd506691" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=ccbe24c1"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/api_guides/4';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="API" href="../../api.html" />
+    <link rel="prev" title="Advanced Use Cases" href="3.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  <div class="navbar-header-items__start">
+    
+      <div class="navbar-item">
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">cluster_generator  documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../Getting_Started.html">
+                        Quickstart Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../radial_profiles.html">
+                        Radial Profiles
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../collections.html">
+                        Collections
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../codes.html">
+                        Setting Up Idealized Cluster Problems in Various Codes
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../../examples.html">
+                        Examples
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../api.html">
+                        API
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+        </div>
+      
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+    </div>
+  
+
+  
+    <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+    </label>
+  
+</div>
+
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../Getting_Started.html">
+                        Quickstart Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../radial_profiles.html">
+                        Radial Profiles
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../collections.html">
+                        Collections
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../codes.html">
+                        Setting Up Idealized Cluster Problems in Various Codes
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../../examples.html">
+                        Examples
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../api.html">
+                        API
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+  </ul>
+</nav></div>
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item"><nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="1.html">Data Structures in cluster_generator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.html">Virialization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.html">Advanced Use Cases</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Using Builtin Collections</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumbs">
+  <ul class="bd-breadcrumbs" role="navigation" aria-label="Breadcrumb">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../examples.html" class="nav-link">Examples</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">Using Builtin Collections</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section id="Using-Builtin-Collections">
+<h1>Using Builtin Collections<a class="headerlink" href="#Using-Builtin-Collections" title="Permalink to this heading">#</a></h1>
+<p>One of the most useful things that <code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code> provides is our <code class="docutils literal notranslate"><span class="pre">collections</span></code> module, which allows the user to access a variety of pre-existing cluster models from a variety of popular pieces of literature. Furthermore, the user can create and save their own collections to have easy access to their preferred clusters directly from the commandline. In this guide, we’ll walk through all of the things you need to know about the collections module.</p>
+<hr class="docutils" />
+<section id="Contents">
+<h2>Contents<a class="headerlink" href="#Contents" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="#What-is-a-Collection"><span class="std std-ref">What is a Collection?</span></a></p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="What-is-a-Collection">
+<h2>What is a Collection<a class="headerlink" href="#What-is-a-Collection" title="Permalink to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">ClusterCollection</span></code> objects are the core class of the builtin clusters implementation. Each <code class="docutils literal notranslate"><span class="pre">ClusterCollection</span></code> takes only one argument to initialize: <code class="docutils literal notranslate"><span class="pre">path</span></code>, which is the path to the correct <code class="docutils literal notranslate"><span class="pre">.yaml</span></code> file holding the underlying data. If you’re interested in the development side of this (say if you want to build your own), then see the Collections page from the main menu. In some cases, additional classes are available which inherit from <code class="docutils literal notranslate"><span class="pre">ClusterCollection</span></code>. These objects represent
+builtin datasets that can be accessed. Let’s see just one of them right away.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cluster_generator</span> <span class="k">as</span> <span class="nn">cg</span>
+<span class="kn">from</span> <span class="nn">cluster_generator.collection</span> <span class="kn">import</span> <span class="n">Vikhlinin06</span>
+
+<span class="c1"># -- Initializing the collection -- #</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">Vikhlinin06</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+✔ cluster_generator : [INFO     ] Wed Aug 30 10:34:13 2023 Loading collect (...)⠙ cluster_generator : [INFO     ] Wed Aug 30 10:34:13 2023 Loading collect (...) cluster_generator : [INFO     ] Wed Aug 30 10:34:14 2023 Loaded collection Vikhlinin et. al. 2006
+
+</pre></div></div>
+</div>
+<p>Once loaded, you can start looking at all of the various attributes these objects get. In the next code block, we show off a few of the most important:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># -- print the object -- #</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+
+<span class="c1"># -- look at the available items -- #</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Available clusters: </span><span class="si">{</span><span class="n">v</span><span class="o">.</span><span class="n">names</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># -- what are the profiles? -- #</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Profiles: </span><span class="si">{</span><span class="n">v</span><span class="o">.</span><span class="n">profiles</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># -- individual fits -- #</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The parameters for </span><span class="si">{</span><span class="n">v</span><span class="o">.</span><span class="n">names</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> are </span><span class="si">{</span><span class="n">v</span><span class="o">.</span><span class="n">objs</span><span class="p">[</span><span class="n">v</span><span class="o">.</span><span class="n">names</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+ClusterCollection; name = Vikhlinin et. al. 2006, length = 13.
+Available clusters: [&#39;A133         &#39;, &#39;A262         &#39;, &#39;A383         &#39;, &#39;A478         &#39;, &#39;A907         &#39;, &#39;A1413        &#39;, &#39;A1795        &#39;, &#39;A1991        &#39;, &#39;A2029        &#39;, &#39;A2390        &#39;, &#39;RX J1159+5531&#39;, &#39;MKW 4        &#39;, &#39;USGC S152    &#39;]
+Profiles: {&#39;density&#39;: &lt;function vikhlinin_density_profile at 0x7fc0a305cd30&gt;, &#39;temperature&#39;: &lt;function vikhlinin_temperature_profile at 0x7fc0a305cdc0&gt;}
+The parameters for A262          are {&#39;Name         &#39;: &#39;A262         &#39;, &#39;r_det&#39;: 450, &#39;r_min&#39;: 10, &#39;z     &#39;: 0.0162, &#39;rho_0  &#39;: 91429, &#39;r_c  &#39;: 70.7, &#39;r_s   &#39;: 365.6, &#39;alpha&#39;: 1.712, &#39;beta &#39;: 0.345, &#39;epsilon&#39;: 1.76, &#39;gamma&#39;: 3, &#39;T0   &#39;: 2.42, &#39;rt  &#39;: 350, &#39;a    &#39;: -0.02, &#39;b   &#39;: 5.0, &#39;c   &#39;: 1.1, &#39;Tmin  &#39;: 1.5488, &#39;r_cool&#39;: 19, &#39;a_cool&#39;: 5.25}
+
+</pre></div></div>
+</div>
+<p>So all of the data we might want is right there, but cluster collections can do even more. Let’s look at the <code class="docutils literal notranslate"><span class="pre">load_model</span></code> method:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">load_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">model_name</span><span class="p">,</span><span class="n">r_min</span><span class="p">,</span><span class="n">r_max</span><span class="p">,</span><span class="n">num_points</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">gravity</span><span class="o">=</span><span class="s2">&quot;Newtonian&quot;</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Loads the model with name ``model_name``.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    model_name: str</span>
+<span class="sd">        The name of the model to load.</span>
+<span class="sd">    r_min: float</span>
+<span class="sd">        The minimum radius at which to load.</span>
+<span class="sd">    r_max: float</span>
+<span class="sd">        The maximum radius at which to load.</span>
+<span class="sd">    num_points: int</span>
+<span class="sd">        The number of constituent points to use.</span>
+<span class="sd">    gravity: str</span>
+<span class="sd">        The gravity theory to use.</span>
+<span class="sd">    **kwargs</span>
+<span class="sd">        additional parameters to pass through the loading system.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ClusterModel</span>
+<span class="sd">        The finished cluster model.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Now, for <strong>some datasets</strong>, there are slimmed down <code class="docutils literal notranslate"><span class="pre">load_model</span></code> methods which fill in some of these arguments. For example, with the <code class="docutils literal notranslate"><span class="pre">Vikhlinin06</span></code> class, the same function looks like this</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">load_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">model_name</span><span class="p">,</span><span class="n">r_min</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">r_max</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">num_points</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">gravity</span><span class="o">=</span><span class="s2">&quot;Newtonian&quot;</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Loads the model with name ``model_name``.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    model_name: str</span>
+<span class="sd">        The name of the model to load.</span>
+<span class="sd">    r_min: float, optional.</span>
+<span class="sd">        The minimum radius at which to load. Defaults to ``rmin`` field in dataset.</span>
+<span class="sd">    r_max: float, optional.</span>
+<span class="sd">        The maximum radius at which to load. Defaults to ``r_det`` field.</span>
+<span class="sd">    num_points: int</span>
+<span class="sd">        The number of constituent points to use.</span>
+<span class="sd">    gravity: str</span>
+<span class="sd">        The gravity theory to use.</span>
+<span class="sd">    **kwargs</span>
+<span class="sd">        additional parameters to pass through the loading system.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ClusterModel</span>
+<span class="sd">        The finished cluster model.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>so we can load these a bit easier:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">abell_383</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="s2">&quot;A383&quot;</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">abell_383</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s2">&quot;temperature&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s2">&quot;linear&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">8</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span><span class="mi">3000</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">KeyError</span>                                  Traceback (most recent call last)
+Cell <span class="ansi-green-fg">In[3], line 1</span>
+<span class="ansi-green-fg">----&gt; 1</span> abell_383 <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">v</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">load_model</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">A383</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">      3</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span class="ansi-bold" style="color: rgb(0,0,255)">matplotlib</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">pyplot</span> <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> <span class="ansi-bold" style="color: rgb(0,0,255)">plt</span>
+<span class="ansi-green-intense-fg ansi-bold">      5</span> abell_383<span style="color: rgb(98,98,98)">.</span>plot(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">temperature</span><span style="color: rgb(175,0,0)">&#34;</span>)
+
+File <span class="ansi-green-fg">~/cluster_generator/cluster_generator/collection.py:283</span>, in <span class="ansi-cyan-fg">Vikhlinin06.load_model</span><span class="ansi-blue-fg">(self, model_name, r_min, r_max, num_points, gravity, **kwargs)</span>
+<span class="ansi-green-intense-fg ansi-bold">    280</span> <span style="color: rgb(95,135,135)">#  Sanity Check</span>
+<span class="ansi-green-intense-fg ansi-bold">    281</span> <span style="color: rgb(95,135,135)"># ------------------------------------------------------------------------------------------------------------ #</span>
+<span class="ansi-green-intense-fg ansi-bold">    282</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> <span class="ansi-bold" style="color: rgb(175,0,255)">not</span> r_min:
+<span class="ansi-green-fg">--&gt; 283</span>     r_min <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">objs</span><span class="ansi-yellow-bg">[</span><span class="ansi-yellow-bg">model_name</span><span class="ansi-yellow-bg">]</span>[<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">r_min</span><span style="color: rgb(175,0,0)">&#34;</span>]
+<span class="ansi-green-intense-fg ansi-bold">    285</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> <span class="ansi-bold" style="color: rgb(175,0,255)">not</span> r_max:
+<span class="ansi-green-intense-fg ansi-bold">    286</span>     r_max <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>objs[model_name][<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">r_det</span><span style="color: rgb(175,0,0)">&#34;</span>]
+
+<span class="ansi-red-fg">KeyError</span>: &#39;A383&#39;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+</pre></div></div>
+</div>
+<p>One can easily verify that this temperature profile matches that of the original paper! We can also do more complex things. For example:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">v</span><span class="o">.</span><span class="n">names</span><span class="p">:</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s2">&quot;temperature&quot;</span><span class="p">,</span><span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">15</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span><span class="mi">3000</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="IO-Management">
+<h2>IO Management<a class="headerlink" href="#IO-Management" title="Permalink to this heading">#</a></h2>
+<hr class="docutils" />
+<p>We’ve seen what more-or-less constitutes the entire idea behind the <code class="docutils literal notranslate"><span class="pre">collection</span></code> module, but there are a few other useful things to mention regarding IO operations with these objects. First off, you can access your collections directory by using</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">cg</span><span class="o">.</span><span class="n">collection</span><span class="o">.</span><span class="n">collections_directory</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>You’ll notice that this path is, by default, configured to be within the package’s installation directory. This may be sub-optimal if you as the user intend on using a large number of collections and are worried about losing data if the package is updated or don’t want to create too large a directory tree in the installation directory. You can change the search directory directly by altering <code class="docutils literal notranslate"><span class="pre">collections.collections_directory</span></code>. You can also get a list of all of the available collections:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">cg</span><span class="o">.</span><span class="n">collection</span><span class="o">.</span><span class="n">get_collections</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">k</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;------------------------------------------------------&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">k</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="3.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Advanced Use Cases</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../../api.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">API</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Contents">Contents</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#What-is-a-Collection">What is a Collection</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#IO-Management">IO Management</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div class="tocsection sourcelink">
+    <a href="../../_sources/notebooks/api_guides/4.ipynb.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+  <p class="copyright">
+    
+      © Copyright 2020, John ZuHone.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.1.2.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.13.3.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

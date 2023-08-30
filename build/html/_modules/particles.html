@@ -141,34 +141,8 @@
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../models.html">
-                        Cluster Models
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../particles.html">
-                        Particles
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../fields.html">
-                        Generating 3D Cluster Fields
-                      </a>
-                    </li>
-                
-            <div class="nav-item dropdown">
-                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    More
-                </button>
-                <div class="dropdown-menu">
-                    
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../initial_conditions.html">
-                        Initial Conditions Generation
+                      <a class="nav-link nav-internal" href="../collections.html">
+                        Collections
                       </a>
                     </li>
                 
@@ -186,7 +160,12 @@
                       </a>
                     </li>
                 
-
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="../api.html">
                         API
@@ -284,34 +263,8 @@ document.write(`
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../models.html">
-                        Cluster Models
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../particles.html">
-                        Particles
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../fields.html">
-                        Generating 3D Cluster Fields
-                      </a>
-                    </li>
-                
-            <div class="nav-item dropdown">
-                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    More
-                </button>
-                <div class="dropdown-menu">
-                    
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../initial_conditions.html">
-                        Initial Conditions Generation
+                      <a class="nav-link nav-internal" href="../collections.html">
+                        Collections
                       </a>
                     </li>
                 
@@ -329,7 +282,12 @@ document.write(`
                       </a>
                     </li>
                 
-
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="../api.html">
                         API
@@ -419,24 +377,28 @@ document.write(`
 <span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Module for management of particle initial conditions.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span><span class="p">,</span> <span class="n">defaultdict</span>
-<span class="kn">from</span> <span class="nn">scipy.interpolate</span> <span class="kn">import</span> <span class="n">InterpolatedUnivariateSpline</span>
-<span class="kn">from</span> <span class="nn">cluster_generator.utils</span> <span class="kn">import</span> <span class="n">ensure_ytarray</span><span class="p">,</span> <span class="n">ensure_list</span><span class="p">,</span> \
-    <span class="n">mylog</span>
-<span class="kn">import</span> <span class="nn">h5py</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">unyt</span> <span class="kn">import</span> <span class="n">unyt_array</span><span class="p">,</span> <span class="n">unyt_quantity</span><span class="p">,</span> <span class="n">uconcatenate</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">import</span> <span class="nn">yaml</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">pathlib</span> <span class="k">as</span> <span class="nn">pt</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span><span class="p">,</span> <span class="n">defaultdict</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">import</span> <span class="nn">h5py</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">yaml</span>
+<span class="kn">from</span> <span class="nn">scipy.interpolate</span> <span class="kn">import</span> <span class="n">InterpolatedUnivariateSpline</span>
+<span class="kn">from</span> <span class="nn">unyt</span> <span class="kn">import</span> <span class="n">unyt_array</span><span class="p">,</span> <span class="n">unyt_quantity</span><span class="p">,</span> <span class="n">uconcatenate</span>
+
+<span class="kn">from</span> <span class="nn">cluster_generator.utils</span> <span class="kn">import</span> <span class="n">ensure_ytarray</span><span class="p">,</span> <span class="n">ensure_list</span><span class="p">,</span> \
+    <span class="n">mylog</span><span class="p">,</span> <span class="n">truncate_spline</span>
+
 <span class="c1"># -------------------------------------------------------------------------------------------------------------------- #</span>
 <span class="c1"># Setup ============================================================================================================== #</span>
 <span class="c1"># -------------------------------------------------------------------------------------------------------------------- #</span>
 <span class="c1"># - Loading the yaml file</span>
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pt</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parents</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="s2">&quot;bin&quot;</span><span class="p">,</span><span class="s2">&quot;.resources&quot;</span><span class="p">,</span><span class="s2">&quot;particle_fields.yaml&quot;</span><span class="p">))</span> <span class="k">as</span> <span class="n">gfile</span><span class="p">:</span>
-    <span class="n">_gadget_setup_dict</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">gfile</span><span class="p">,</span><span class="n">yaml</span><span class="o">.</span><span class="n">FullLoader</span><span class="p">)</span>
-    <span class="n">gadget_fields</span><span class="p">,</span> <span class="n">gadget_field_map</span><span class="p">,</span> <span class="n">gadget_field_units</span> <span class="o">=</span> <span class="n">_gadget_setup_dict</span><span class="p">[</span><span class="s2">&quot;gadget_fields&quot;</span><span class="p">],</span> <span class="n">_gadget_setup_dict</span><span class="p">[</span><span class="s2">&quot;gadget_field_map&quot;</span><span class="p">],</span> <span class="n">_gadget_setup_dict</span><span class="p">[</span><span class="s2">&quot;gadget_field_units&quot;</span><span class="p">]</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pt</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parents</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;bin&quot;</span><span class="p">,</span> <span class="s2">&quot;.resources&quot;</span><span class="p">,</span> <span class="s2">&quot;particle_fields.yaml&quot;</span><span class="p">))</span> <span class="k">as</span> <span class="n">gfile</span><span class="p">:</span>
+    <span class="n">_gadget_setup_dict</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">gfile</span><span class="p">,</span> <span class="n">yaml</span><span class="o">.</span><span class="n">FullLoader</span><span class="p">)</span>
+    <span class="n">gadget_fields</span><span class="p">,</span> <span class="n">gadget_field_map</span><span class="p">,</span> <span class="n">gadget_field_units</span> <span class="o">=</span> <span class="n">_gadget_setup_dict</span><span class="p">[</span><span class="s2">&quot;gadget_fields&quot;</span><span class="p">],</span> <span class="n">_gadget_setup_dict</span><span class="p">[</span>
+        <span class="s2">&quot;gadget_field_map&quot;</span><span class="p">],</span> <span class="n">_gadget_setup_dict</span><span class="p">[</span><span class="s2">&quot;gadget_field_units&quot;</span><span class="p">]</span>
 
 <span class="n">ptype_map</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">([(</span><span class="s2">&quot;PartType0&quot;</span><span class="p">,</span> <span class="s2">&quot;gas&quot;</span><span class="p">),</span>
                          <span class="p">(</span><span class="s2">&quot;PartType1&quot;</span><span class="p">,</span> <span class="s2">&quot;dm&quot;</span><span class="p">),</span>
@@ -444,6 +406,7 @@ document.write(`
                          <span class="p">(</span><span class="s2">&quot;PartType5&quot;</span><span class="p">,</span> <span class="s2">&quot;black_hole&quot;</span><span class="p">)])</span>
 
 <span class="n">rptype_map</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">([(</span><span class="n">v</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">ptype_map</span><span class="o">.</span><span class="n">items</span><span class="p">()])</span>
+
 
 <span class="c1"># -------------------------------------------------------------------------------------------------------------------- #</span>
 <span class="c1"># Classes ============================================================================================================ #</span>
@@ -476,12 +439,19 @@ document.write(`
 <span class="sd">    -----</span>
 <span class="sd">    - ``__getitem__`` and ``__setitem__`` index into ``self.fields``. Similarly, ``.keys()`` is an alias for ``self.fields.keys()``.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
 <div class="viewcode-block" id="ClusterParticles.__init__"><a class="viewcode-back" href="../_as_gen/particles.ClusterParticles.__init__.html#particles.ClusterParticles.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">particle_types</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span> <span class="n">box_size</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="c1">#: The associated particle types for this set of particles.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">particle_types</span> <span class="o">=</span> <span class="n">ensure_list</span><span class="p">(</span><span class="n">particle_types</span><span class="p">)</span>
+        <span class="c1">#: The available data fields related to the particles.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fields</span> <span class="o">=</span> <span class="n">fields</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_update_num_particles</span><span class="p">()</span> <span class="c1">#--&gt; Keeps number of particles current</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_update_field_names</span><span class="p">()</span> <span class="c1">#--&gt; Keeps field names current.</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_num_particles</span><span class="p">()</span>  <span class="c1"># --&gt; Keeps number of particles current</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_field_names</span><span class="p">()</span>  <span class="c1"># --&gt; Keeps field names current.</span>
+
+        <span class="c1">#: the particle set&#39;s box size.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">box_size</span> <span class="o">=</span> <span class="n">box_size</span>
+        <span class="c1">#: any passive scalars that are included.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">passive_scalars</span> <span class="o">=</span> <span class="p">[]</span></div>
 
     <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
@@ -489,6 +459,7 @@ document.write(`
 
     <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
     <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Cluster Particles [</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">particle_types</span><span class="si">}</span><span class="s2">]; N=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">num_particles</span><span class="si">}</span><span class="s2">.&quot;</span>
 
@@ -568,15 +539,15 @@ document.write(`
 <span class="sd">            The particle types to perform the radial cut on. If</span>
 <span class="sd">            not set, all will be exported.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">rm2</span> <span class="o">=</span> <span class="n">r_max</span><span class="o">*</span><span class="n">r_max</span>
+        <span class="n">rm2</span> <span class="o">=</span> <span class="n">r_max</span> <span class="o">*</span> <span class="n">r_max</span>
         <span class="k">if</span> <span class="n">center</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">center</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">]</span><span class="o">*</span><span class="mi">3</span><span class="p">)</span>
+            <span class="n">center</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">ptypes</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">ptypes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">particle_types</span>
         <span class="n">ptypes</span> <span class="o">=</span> <span class="n">ensure_list</span><span class="p">(</span><span class="n">ptypes</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">pt</span> <span class="ow">in</span> <span class="n">ptypes</span><span class="p">:</span>
-            <span class="n">cidx</span> <span class="o">=</span> <span class="p">((</span><span class="bp">self</span><span class="p">[</span><span class="n">pt</span><span class="p">,</span> <span class="s2">&quot;particle_position&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="o">-</span><span class="n">center</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">rm2</span>
+            <span class="n">cidx</span> <span class="o">=</span> <span class="p">((</span><span class="bp">self</span><span class="p">[</span><span class="n">pt</span><span class="p">,</span> <span class="s2">&quot;particle_position&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span> <span class="o">-</span> <span class="n">center</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">rm2</span>
             <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">field_names</span><span class="p">[</span><span class="n">pt</span><span class="p">]:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="n">pt</span><span class="p">,</span> <span class="n">field</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="n">pt</span><span class="p">,</span> <span class="n">field</span><span class="p">][</span><span class="n">cidx</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_update_num_particles</span><span class="p">()</span></div>
@@ -613,9 +584,9 @@ document.write(`
         <span class="k">if</span> <span class="n">use_pot_min</span><span class="p">:</span>
             <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;dm&quot;</span><span class="p">,</span> <span class="s2">&quot;potential_energy&quot;</span><span class="p">])</span>
             <span class="n">pos</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;dm&quot;</span><span class="p">,</span> <span class="s2">&quot;particle_position&quot;</span><span class="p">][</span><span class="n">idx</span><span class="p">]</span>
-                             <span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+                             <span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
             <span class="n">vel</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;dm&quot;</span><span class="p">,</span> <span class="s2">&quot;particle_velocity&quot;</span><span class="p">][</span><span class="n">idx</span><span class="p">]</span>
-                             <span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+                             <span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">pos</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">pos</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)),</span> <span class="s2">&quot;kpc&quot;</span><span class="p">)</span>
@@ -651,12 +622,19 @@ document.write(`
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">names</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># -- Seeking particle types for read in -- #</span>
         <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="c1"># finding the particle types.</span>
             <span class="k">if</span> <span class="n">ptypes</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">ptypes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
             <span class="n">ptypes</span> <span class="o">=</span> <span class="n">ensure_list</span><span class="p">(</span><span class="n">ptypes</span><span class="p">)</span>
+
+            <span class="c1"># loading the associated keys.</span>
             <span class="k">for</span> <span class="n">ptype</span> <span class="ow">in</span> <span class="n">ptypes</span><span class="p">:</span>
                 <span class="n">names</span><span class="p">[</span><span class="n">ptype</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="n">ptype</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+        <span class="c1"># -- Building the fields -- #</span>
         <span class="n">fields</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">ptype</span> <span class="ow">in</span> <span class="n">ptypes</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">names</span><span class="p">[</span><span class="n">ptype</span><span class="p">]:</span>
@@ -668,6 +646,7 @@ document.write(`
                                              <span class="n">group_name</span><span class="o">=</span><span class="n">ptype</span><span class="p">)</span>
                     <span class="n">fields</span><span class="p">[</span><span class="n">ptype</span><span class="p">,</span> <span class="n">field</span><span class="p">]</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="p">(</span>
                         <span class="n">a</span><span class="o">.</span><span class="n">d</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float64&quot;</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">units</span><span class="p">))</span><span class="o">.</span><span class="n">in_base</span><span class="p">(</span><span class="s2">&quot;galactic&quot;</span><span class="p">)</span>
+
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">ptypes</span><span class="p">,</span> <span class="n">fields</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ClusterParticles.from_h5_file"><a class="viewcode-back" href="../_as_gen/particles.ClusterParticles.from_h5_file.html#particles.ClusterParticles.from_h5_file">[docs]</a>    <span class="nd">@classmethod</span>
@@ -693,6 +672,7 @@ document.write(`
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">fields</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
         <span class="n">f</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+
         <span class="n">particle_types</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">if</span> <span class="n">ptypes</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">ptypes</span> <span class="o">=</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">f</span> <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;PartType&quot;</span><span class="p">)]</span>
@@ -703,6 +683,7 @@ document.write(`
             <span class="n">my_ptype</span> <span class="o">=</span> <span class="n">ptype_map</span><span class="p">[</span><span class="n">ptype</span><span class="p">]</span>
             <span class="n">particle_types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">my_ptype</span><span class="p">)</span>
             <span class="n">g</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="n">ptype</span><span class="p">]</span>
+
             <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">gadget_fields</span><span class="p">[</span><span class="n">my_ptype</span><span class="p">]:</span>
                 <span class="k">if</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">g</span><span class="p">:</span>
                     <span class="k">if</span> <span class="n">field</span> <span class="o">==</span> <span class="s2">&quot;ParticleIDs&quot;</span><span class="p">:</span>
@@ -710,14 +691,14 @@ document.write(`
                     <span class="k">else</span><span class="p">:</span>
                         <span class="n">fd</span> <span class="o">=</span> <span class="n">gadget_field_map</span><span class="p">[</span><span class="n">field</span><span class="p">]</span>
                         <span class="n">units</span> <span class="o">=</span> <span class="n">gadget_field_units</span><span class="p">[</span><span class="n">field</span><span class="p">]</span>
-                        <span class="n">fields</span><span class="p">[</span><span class="n">my_ptype</span><span class="p">,</span> <span class="n">fd</span><span class="p">]</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="p">(</span><span class="n">g</span><span class="p">[</span><span class="n">field</span><span class="p">],</span> <span class="n">units</span><span class="p">,</span> 
-                            <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float64&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">in_base</span><span class="p">(</span><span class="s2">&quot;galactic&quot;</span><span class="p">)</span>
+                        <span class="n">fields</span><span class="p">[</span><span class="n">my_ptype</span><span class="p">,</span> <span class="n">fd</span><span class="p">]</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="p">(</span><span class="n">g</span><span class="p">[</span><span class="n">field</span><span class="p">],</span> <span class="n">units</span><span class="p">,</span>
+                                                          <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float64&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">in_base</span><span class="p">(</span><span class="s2">&quot;galactic&quot;</span><span class="p">)</span>
             <span class="k">if</span> <span class="s2">&quot;Masses&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">g</span><span class="p">:</span>
                 <span class="n">n_ptype</span> <span class="o">=</span> <span class="n">g</span><span class="p">[</span><span class="s2">&quot;ParticleIDs&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">size</span>
                 <span class="n">units</span> <span class="o">=</span> <span class="n">gadget_field_units</span><span class="p">[</span><span class="s2">&quot;Masses&quot;</span><span class="p">]</span>
                 <span class="n">n_type</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">ptype</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
                 <span class="n">fields</span><span class="p">[</span><span class="n">my_ptype</span><span class="p">,</span> <span class="s2">&quot;particle_mass&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="p">(</span>
-                    <span class="p">[</span><span class="n">f</span><span class="p">[</span><span class="s2">&quot;Header&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;MassTable&quot;</span><span class="p">][</span><span class="n">n_type</span><span class="p">]]</span><span class="o">*</span><span class="n">n_ptype</span><span class="p">,</span>
+                    <span class="p">[</span><span class="n">f</span><span class="p">[</span><span class="s2">&quot;Header&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;MassTable&quot;</span><span class="p">][</span><span class="n">n_type</span><span class="p">]]</span> <span class="o">*</span> <span class="n">n_ptype</span><span class="p">,</span>
                     <span class="n">units</span><span class="p">)</span><span class="o">.</span><span class="n">in_base</span><span class="p">(</span><span class="s2">&quot;galactic&quot;</span><span class="p">)</span>
         <span class="n">box_size</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="s2">&quot;/Header&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;BoxSize&quot;</span><span class="p">]</span>
         <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
@@ -736,17 +717,19 @@ document.write(`
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">Path</span><span class="p">(</span><span class="n">output_filename</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">overwrite</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s2">&quot;Cannot create </span><span class="si">%s</span><span class="s2">. It exists and overwrite=False.&quot;</span> <span class="o">%</span> <span class="n">output_filename</span><span class="p">)</span>
+
         <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">output_filename</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">ptype</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">particle_types</span><span class="p">:</span>
                 <span class="n">f</span><span class="o">.</span><span class="n">create_group</span><span class="p">(</span><span class="n">ptype</span><span class="p">)</span>
+
         <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">field</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;particle_index&quot;</span><span class="p">:</span>
                 <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">output_filename</span><span class="p">,</span> <span class="s2">&quot;r+&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
                     <span class="n">g</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="n">field</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
                     <span class="n">g</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">&quot;particle_index&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="n">field</span><span class="p">])</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="n">field</span><span class="p">]</span><span class="o">.</span><span class="n">write_hdf5</span><span class="p">(</span><span class="n">output_filename</span><span class="p">,</span> 
-                    <span class="n">dataset_name</span><span class="o">=</span><span class="n">field</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">group_name</span><span class="o">=</span><span class="n">field</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
+                <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="n">field</span><span class="p">]</span><span class="o">.</span><span class="n">write_hdf5</span><span class="p">(</span><span class="n">output_filename</span><span class="p">,</span>
+                                              <span class="n">dataset_name</span><span class="o">=</span><span class="n">field</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">group_name</span><span class="o">=</span><span class="n">field</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
 
 <div class="viewcode-block" id="ClusterParticles.write_particles_to_h5"><a class="viewcode-back" href="../_as_gen/particles.ClusterParticles.write_particles_to_h5.html#particles.ClusterParticles.write_particles_to_h5">[docs]</a>    <span class="k">def</span> <span class="nf">write_particles_to_h5</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_filename</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">write_particles</span><span class="p">(</span><span class="n">output_filename</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="n">overwrite</span><span class="p">)</span></div>
@@ -840,7 +823,7 @@ document.write(`
             <span class="k">if</span> <span class="n">field</span> <span class="o">==</span> <span class="s2">&quot;PassiveScalars&quot;</span> <span class="ow">and</span> <span class="n">ptype</span> <span class="o">==</span> <span class="s2">&quot;gas&quot;</span><span class="p">:</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_passive_scalars</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                     <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span>
-                        <span class="p">[</span><span class="bp">self</span><span class="p">[</span><span class="n">ptype</span><span class="p">,</span> <span class="n">s</span><span class="p">]</span><span class="o">.</span><span class="n">d</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">passive_scalars</span><span class="p">],</span> 
+                        <span class="p">[</span><span class="bp">self</span><span class="p">[</span><span class="n">ptype</span><span class="p">,</span> <span class="n">s</span><span class="p">]</span><span class="o">.</span><span class="n">d</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">passive_scalars</span><span class="p">],</span>
                         <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
                     <span class="n">h5_group</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">&quot;PassiveScalars&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
@@ -883,7 +866,7 @@ document.write(`
             <span class="n">num_particles</span><span class="p">[</span><span class="n">ptype</span><span class="p">]</span> <span class="o">=</span> <span class="n">idxs</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
             <span class="n">g</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">create_group</span><span class="p">(</span><span class="n">gptype</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_write_gadget_fields</span><span class="p">(</span><span class="n">ptype</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">idxs</span><span class="p">,</span> <span class="n">dtype</span><span class="p">)</span>
-            <span class="n">ids</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_particles</span><span class="p">[</span><span class="n">ptype</span><span class="p">])</span><span class="o">+</span><span class="mi">1</span><span class="o">+</span><span class="n">npart</span>
+            <span class="n">ids</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_particles</span><span class="p">[</span><span class="n">ptype</span><span class="p">])</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">npart</span>
             <span class="n">g</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">&quot;ParticleIDs&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">ids</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;uint32&quot;</span><span class="p">))</span>
             <span class="n">npart</span> <span class="o">+=</span> <span class="n">num_particles</span><span class="p">[</span><span class="n">ptype</span><span class="p">]</span>
             <span class="k">if</span> <span class="n">ptype</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;star&quot;</span><span class="p">,</span> <span class="s2">&quot;dm&quot;</span><span class="p">,</span> <span class="s2">&quot;black_hole&quot;</span><span class="p">]:</span>
@@ -937,27 +920,64 @@ document.write(`
             <span class="n">pos</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">pop</span><span class="p">((</span><span class="n">ptype</span><span class="p">,</span> <span class="s2">&quot;particle_position&quot;</span><span class="p">))</span>
             <span class="n">vel</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">pop</span><span class="p">((</span><span class="n">ptype</span><span class="p">,</span> <span class="s2">&quot;particle_velocity&quot;</span><span class="p">))</span>
             <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="s2">&quot;xyz&quot;</span><span class="p">):</span>
-                <span class="n">data</span><span class="p">[</span><span class="n">ptype</span><span class="p">,</span> <span class="s2">&quot;particle_position_</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">ax</span><span class="p">]</span> <span class="o">=</span> <span class="n">pos</span><span class="p">[:,</span><span class="n">i</span><span class="p">]</span>
-                <span class="n">data</span><span class="p">[</span><span class="n">ptype</span><span class="p">,</span> <span class="s2">&quot;particle_velocity_</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">ax</span><span class="p">]</span> <span class="o">=</span> <span class="n">vel</span><span class="p">[:,</span><span class="n">i</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">load_particles</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">length_unit</span><span class="o">=</span><span class="s2">&quot;kpc&quot;</span><span class="p">,</span> <span class="n">bbox</span><span class="o">=</span><span class="p">[[</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">box_size</span><span class="p">]]</span><span class="o">*</span><span class="mi">3</span><span class="p">,</span>
+                <span class="n">data</span><span class="p">[</span><span class="n">ptype</span><span class="p">,</span> <span class="s2">&quot;particle_position_</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">ax</span><span class="p">]</span> <span class="o">=</span> <span class="n">pos</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span>
+                <span class="n">data</span><span class="p">[</span><span class="n">ptype</span><span class="p">,</span> <span class="s2">&quot;particle_velocity_</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">ax</span><span class="p">]</span> <span class="o">=</span> <span class="n">vel</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">load_particles</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">length_unit</span><span class="o">=</span><span class="s2">&quot;kpc&quot;</span><span class="p">,</span> <span class="n">bbox</span><span class="o">=</span><span class="p">[[</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">box_size</span><span class="p">]]</span> <span class="o">*</span> <span class="mi">3</span><span class="p">,</span>
                               <span class="n">mass_unit</span><span class="o">=</span><span class="s2">&quot;Msun&quot;</span><span class="p">,</span> <span class="n">time_unit</span><span class="o">=</span><span class="s2">&quot;Myr&quot;</span><span class="p">)</span></div></div>
 
 
 <span class="k">def</span> <span class="nf">_sample_clusters</span><span class="p">(</span><span class="n">particles</span><span class="p">,</span> <span class="n">hses</span><span class="p">,</span> <span class="n">center</span><span class="p">,</span> <span class="n">velocity</span><span class="p">,</span>
-                     <span class="n">radii</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">resample</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
+                     <span class="n">radii</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">resample</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                      <span class="n">passive_scalars</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function is used when combining clusters, which may be composed of both particles and ``ClusterModels``. In which case,</span>
+<span class="sd">    if there are **gas** particles in the ``particles`` object, they cannot just be added together but we need to recompute many</span>
+<span class="sd">    of the fluid variables and resample.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    particles: ClusterParticles</span>
+<span class="sd">        A ``ClusterParticles`` object to add gas particles to.</span>
+<span class="sd">    hses: list of ClusterModel</span>
+<span class="sd">        The ``ClusterModel`` objects to derive the sample from.</span>
+<span class="sd">    center: list of lists</span>
+<span class="sd">        The list of centers for the different HSE&#39;s</span>
+<span class="sd">    velocity: list of lists</span>
+<span class="sd">        The list of velocities for the different HSE&#39;s.</span>
+<span class="sd">    radii: list of float</span>
+<span class="sd">        This list should have the same length as ``hses`` and contains the maximal radii at which to conduct the resample for each</span>
+<span class="sd">        of the hse.</span>
+<span class="sd">    resample</span>
+<span class="sd">    passive_scalars</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1">#  Determining basic criteria for sampling</span>
+    <span class="c1"># ---------------------------------------------------------------------------------------------------------------- #</span>
     <span class="n">num_halos</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">hses</span><span class="p">)</span>
     <span class="n">center</span> <span class="o">=</span> <span class="p">[</span><span class="n">ensure_ytarray</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="s2">&quot;kpc&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">center</span><span class="p">]</span>
     <span class="n">velocity</span> <span class="o">=</span> <span class="p">[</span><span class="n">ensure_ytarray</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="s2">&quot;kpc/Myr&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">velocity</span><span class="p">]</span>
+
+    <span class="c1">#  Computing the correct relative locations of the different gas particles from center of each halo.</span>
+    <span class="c1"># ---------------------------------------------------------------------------------------------------------------- #</span>
     <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_halos</span><span class="p">,</span> <span class="n">particles</span><span class="o">.</span><span class="n">num_particles</span><span class="p">[</span><span class="s2">&quot;gas&quot;</span><span class="p">]))</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">center</span><span class="p">):</span>
-        <span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">,:]</span> <span class="o">=</span> <span class="p">((</span><span class="n">particles</span><span class="p">[</span><span class="s2">&quot;gas&quot;</span><span class="p">,</span> <span class="s2">&quot;particle_position&quot;</span><span class="p">]</span><span class="o">-</span><span class="n">c</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">d</span>
+        <span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="p">((</span><span class="n">particles</span><span class="p">[</span><span class="s2">&quot;gas&quot;</span><span class="p">,</span> <span class="s2">&quot;particle_position&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">c</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">d</span>
     <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+
+    <span class="c1">#  Generating the desired sampling radii</span>
+    <span class="c1"># ---------------------------------------------------------------------------------------------------------------- #</span>
     <span class="k">if</span> <span class="n">radii</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># We just take all of the possible radii</span>
         <span class="n">idxs</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">radii</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">radii</span><span class="p">)</span>
-        <span class="n">idxs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">r</span> <span class="o">&lt;=</span> <span class="n">radii</span><span class="p">[:,</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">idxs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">r</span> <span class="o">&lt;=</span> <span class="n">radii</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="c1">#  Computing the full resample</span>
+    <span class="c1"># ---------------------------------------------------------------------------------------------------------------- #</span>
     <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_halos</span><span class="p">,</span> <span class="n">particles</span><span class="o">.</span><span class="n">num_particles</span><span class="p">[</span><span class="s2">&quot;gas&quot;</span><span class="p">]))</span>
     <span class="n">e</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_halos</span><span class="p">,</span> <span class="n">particles</span><span class="o">.</span><span class="n">num_particles</span><span class="p">[</span><span class="s2">&quot;gas&quot;</span><span class="p">]))</span>
     <span class="n">m</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_halos</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">particles</span><span class="o">.</span><span class="n">num_particles</span><span class="p">[</span><span class="s2">&quot;gas&quot;</span><span class="p">]))</span>
@@ -965,155 +985,106 @@ document.write(`
     <span class="k">if</span> <span class="n">passive_scalars</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">num_scalars</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">passive_scalars</span><span class="p">)</span>
         <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_halos</span><span class="p">,</span> <span class="n">num_scalars</span><span class="p">,</span> <span class="n">particles</span><span class="o">.</span><span class="n">num_particles</span><span class="p">[</span><span class="s2">&quot;gas&quot;</span><span class="p">]))</span>
+
+    <span class="c1"># - cycling through the halos - #</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_halos</span><span class="p">):</span>
         <span class="n">hse</span> <span class="o">=</span> <span class="n">hses</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">r_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span><span class="n">hse</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">])</span>
+
+        <span class="c1"># -- Sanity Check -- #</span>
         <span class="k">if</span> <span class="s2">&quot;density&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">hse</span><span class="p">:</span>
             <span class="k">continue</span>
+        <span class="c1"># -- Computing the density array for the relevant gas particles -- #</span>
         <span class="n">get_density</span> <span class="o">=</span> <span class="n">InterpolatedUnivariateSpline</span><span class="p">(</span><span class="n">hse</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">],</span> <span class="n">hse</span><span class="p">[</span><span class="s2">&quot;density&quot;</span><span class="p">])</span>
-        <span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">,:]</span> <span class="o">=</span> <span class="n">get_density</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">,:])</span>
-        <span class="n">e_arr</span> <span class="o">=</span> <span class="mf">1.5</span><span class="o">*</span><span class="n">hse</span><span class="p">[</span><span class="s2">&quot;pressure&quot;</span><span class="p">]</span><span class="o">/</span><span class="n">hse</span><span class="p">[</span><span class="s2">&quot;density&quot;</span><span class="p">]</span>
+        <span class="n">get_density</span> <span class="o">=</span> <span class="n">truncate_spline</span><span class="p">(</span><span class="n">get_density</span><span class="p">,</span> <span class="n">r_max</span><span class="o">.</span><span class="n">v</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+        <span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">get_density</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:])</span>
+        <span class="c1"># -- Computing the correct thermal energy density -- #</span>
+        <span class="n">e_arr</span> <span class="o">=</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">hse</span><span class="p">[</span><span class="s2">&quot;pressure&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">hse</span><span class="p">[</span><span class="s2">&quot;density&quot;</span><span class="p">]</span>  <span class="c1"># energy / unit mass</span>
         <span class="n">get_energy</span> <span class="o">=</span> <span class="n">InterpolatedUnivariateSpline</span><span class="p">(</span><span class="n">hse</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">],</span> <span class="n">e_arr</span><span class="p">)</span>
-        <span class="n">e</span><span class="p">[</span><span class="n">i</span><span class="p">,:]</span> <span class="o">=</span> <span class="n">get_energy</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">,:])</span><span class="o">*</span><span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">,:]</span>
-        <span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="p">,:,:]</span> <span class="o">=</span> <span class="n">velocity</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">[:,</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span><span class="o">*</span><span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">,:]</span>
+        <span class="n">get_energy</span> <span class="o">=</span> <span class="n">truncate_spline</span><span class="p">(</span><span class="n">get_energy</span><span class="p">,</span> <span class="n">r_max</span><span class="o">.</span><span class="n">v</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+        <span class="n">e</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">get_energy</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:])</span> <span class="o">*</span> <span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span>  <span class="c1"># proper energy density</span>
+
+        <span class="c1"># -- Computing the momentum density field -- #</span>
+        <span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">velocity</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="o">*</span> <span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span>
         <span class="k">if</span> <span class="n">num_scalars</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">passive_scalars</span><span class="p">):</span>
                 <span class="n">get_scalar</span> <span class="o">=</span> <span class="n">InterpolatedUnivariateSpline</span><span class="p">(</span><span class="n">hse</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">],</span> <span class="n">hse</span><span class="p">[</span><span class="n">name</span><span class="p">])</span>
-                <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,:]</span> <span class="o">=</span> <span class="n">get_scalar</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">,:])</span><span class="o">*</span><span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">,:]</span>
-    <span class="n">dens</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">eint</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">/</span><span class="n">dens</span>
-    <span class="n">mom</span>  <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">/</span><span class="n">dens</span>
+                <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">get_scalar</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:])</span> <span class="o">*</span> <span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span>
+
+    <span class="c1"># -- Combining the values -- #</span>
+    <span class="n">dens</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="s2">&quot;Msun/kpc**3&quot;</span><span class="p">)</span>
+    <span class="n">eint</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="s2">&quot;Msun/(Myr**2 * kpc)&quot;</span><span class="p">)</span> <span class="o">/</span> <span class="n">dens</span>
+    <span class="n">mom</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="s2">&quot;Msun/(kpc**2 * Myr)&quot;</span><span class="p">)</span> <span class="o">/</span> <span class="n">dens</span>
     <span class="k">if</span> <span class="n">num_scalars</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">ps</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">/</span><span class="n">dens</span>
+        <span class="n">ps</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">/</span> <span class="n">dens</span>
+
+    <span class="c1"># Recomputing</span>
+    <span class="c1"># ----------------------------------------------------------------------------------------------------------------- #</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">e</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="n">rs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">e</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)]</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)))</span>
+        <span class="n">mylog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;At radii beyond </span><span class="si">{</span><span class="n">rs</span><span class="si">}</span><span class="s2">, negative energies were detected.&quot;</span><span class="p">)</span>
+
     <span class="k">if</span> <span class="n">resample</span><span class="p">:</span>
-        <span class="n">vol</span> <span class="o">=</span> <span class="n">particles</span><span class="p">[</span><span class="s2">&quot;gas&quot;</span><span class="p">,</span> <span class="s2">&quot;particle_mass&quot;</span><span class="p">]</span><span class="o">/</span><span class="n">particles</span><span class="p">[</span><span class="s2">&quot;gas&quot;</span><span class="p">,</span> <span class="s2">&quot;density&quot;</span><span class="p">]</span>
-        <span class="n">particles</span><span class="p">[</span><span class="s2">&quot;gas&quot;</span><span class="p">,</span> <span class="s2">&quot;particle_mass&quot;</span><span class="p">][</span><span class="n">idxs</span><span class="p">]</span> <span class="o">=</span> <span class="n">dens</span><span class="p">[</span><span class="n">idxs</span><span class="p">]</span><span class="o">*</span><span class="n">vol</span><span class="p">[</span><span class="n">idxs</span><span class="p">]</span>
+        <span class="n">vol</span> <span class="o">=</span> <span class="n">particles</span><span class="p">[</span><span class="s2">&quot;gas&quot;</span><span class="p">,</span> <span class="s2">&quot;particle_mass&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">particles</span><span class="p">[</span><span class="s2">&quot;gas&quot;</span><span class="p">,</span> <span class="s2">&quot;density&quot;</span><span class="p">]</span>
+        <span class="n">particles</span><span class="p">[</span><span class="s2">&quot;gas&quot;</span><span class="p">,</span> <span class="s2">&quot;particle_mass&quot;</span><span class="p">][</span><span class="n">idxs</span><span class="p">]</span> <span class="o">=</span> <span class="n">dens</span><span class="p">[</span><span class="n">idxs</span><span class="p">]</span> <span class="o">*</span> <span class="n">vol</span><span class="p">[</span><span class="n">idxs</span><span class="p">]</span>
     <span class="n">particles</span><span class="p">[</span><span class="s2">&quot;gas&quot;</span><span class="p">,</span> <span class="s2">&quot;density&quot;</span><span class="p">][</span><span class="n">idxs</span><span class="p">]</span> <span class="o">=</span> <span class="n">dens</span><span class="p">[</span><span class="n">idxs</span><span class="p">]</span>
     <span class="n">particles</span><span class="p">[</span><span class="s2">&quot;gas&quot;</span><span class="p">,</span> <span class="s2">&quot;thermal_energy&quot;</span><span class="p">][</span><span class="n">idxs</span><span class="p">]</span> <span class="o">=</span> <span class="n">eint</span><span class="p">[</span><span class="n">idxs</span><span class="p">]</span>
     <span class="n">particles</span><span class="p">[</span><span class="s2">&quot;gas&quot;</span><span class="p">,</span> <span class="s2">&quot;particle_velocity&quot;</span><span class="p">][</span><span class="n">idxs</span><span class="p">]</span> <span class="o">=</span> <span class="n">mom</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">idxs</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">num_scalars</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">passive_scalars</span><span class="p">):</span>
-            <span class="n">particles</span><span class="p">[</span><span class="s2">&quot;gas&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">][</span><span class="n">idxs</span><span class="p">]</span> <span class="o">=</span> <span class="n">ps</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="n">idxs</span><span class="p">]</span>
+            <span class="n">particles</span><span class="p">[</span><span class="s2">&quot;gas&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">][</span><span class="n">idxs</span><span class="p">]</span> <span class="o">=</span> <span class="n">ps</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">idxs</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">particles</span>
 
 
-<div class="viewcode-block" id="combine_two_clusters"><a class="viewcode-back" href="../_as_gen/particles.combine_two_clusters.html#particles.combine_two_clusters">[docs]</a><span class="k">def</span> <span class="nf">combine_two_clusters</span><span class="p">(</span><span class="n">particles1</span><span class="p">,</span> <span class="n">particles2</span><span class="p">,</span> <span class="n">hse1</span><span class="p">,</span> <span class="n">hse2</span><span class="p">,</span>
-                         <span class="n">center1</span><span class="p">,</span> <span class="n">center2</span><span class="p">,</span> <span class="n">velocity1</span><span class="p">,</span> <span class="n">velocity2</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;TODO: Documentation&quot;&quot;&quot;</span>
-    <span class="n">center1</span> <span class="o">=</span> <span class="n">ensure_ytarray</span><span class="p">(</span><span class="n">center1</span><span class="p">,</span> <span class="s2">&quot;kpc&quot;</span><span class="p">)</span>
-    <span class="n">center2</span> <span class="o">=</span> <span class="n">ensure_ytarray</span><span class="p">(</span><span class="n">center2</span><span class="p">,</span> <span class="s2">&quot;kpc&quot;</span><span class="p">)</span>
-    <span class="n">velocity1</span> <span class="o">=</span> <span class="n">ensure_ytarray</span><span class="p">(</span><span class="n">velocity1</span><span class="p">,</span> <span class="s2">&quot;kpc/Myr&quot;</span><span class="p">)</span>
-    <span class="n">velocity2</span> <span class="o">=</span> <span class="n">ensure_ytarray</span><span class="p">(</span><span class="n">velocity2</span><span class="p">,</span> <span class="s2">&quot;kpc/Myr&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="s2">&quot;gas&quot;</span> <span class="ow">in</span> <span class="n">particles1</span><span class="o">.</span><span class="n">particle_types</span><span class="p">:</span>
-        <span class="n">particles1</span><span class="o">.</span><span class="n">add_offsets</span><span class="p">(</span><span class="n">center1</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span><span class="o">*</span><span class="mi">3</span><span class="p">,</span> <span class="n">ptypes</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;gas&quot;</span><span class="p">])</span>
-    <span class="k">if</span> <span class="s2">&quot;gas&quot;</span> <span class="ow">in</span> <span class="n">particles2</span><span class="o">.</span><span class="n">particle_types</span><span class="p">:</span>
-        <span class="n">particles2</span><span class="o">.</span><span class="n">add_offsets</span><span class="p">(</span><span class="n">center2</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span><span class="o">*</span><span class="mi">3</span><span class="p">,</span> <span class="n">ptypes</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;gas&quot;</span><span class="p">])</span>
-    <span class="n">ptypes1</span> <span class="o">=</span> <span class="n">particles1</span><span class="o">.</span><span class="n">particle_types</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="n">ptypes2</span> <span class="o">=</span> <span class="n">particles2</span><span class="o">.</span><span class="n">particle_types</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="k">if</span> <span class="s1">&#39;gas&#39;</span> <span class="ow">in</span> <span class="n">ptypes1</span><span class="p">:</span>
-        <span class="n">ptypes1</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;gas&#39;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="s1">&#39;gas&#39;</span> <span class="ow">in</span> <span class="n">ptypes2</span><span class="p">:</span>
-        <span class="n">ptypes2</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;gas&#39;</span><span class="p">)</span>
-    <span class="n">particles1</span><span class="o">.</span><span class="n">add_offsets</span><span class="p">(</span><span class="n">center1</span><span class="p">,</span> <span class="n">velocity1</span><span class="p">,</span> <span class="n">ptypes</span><span class="o">=</span><span class="n">ptypes1</span><span class="p">)</span>
-    <span class="n">particles2</span><span class="o">.</span><span class="n">add_offsets</span><span class="p">(</span><span class="n">center2</span><span class="p">,</span> <span class="n">velocity2</span><span class="p">,</span> <span class="n">ptypes</span><span class="o">=</span><span class="n">ptypes2</span><span class="p">)</span>
-    <span class="n">particles</span> <span class="o">=</span> <span class="n">particles1</span><span class="o">+</span><span class="n">particles2</span>
-    <span class="k">if</span> <span class="s2">&quot;gas&quot;</span> <span class="ow">in</span> <span class="n">particles</span><span class="o">.</span><span class="n">particle_types</span><span class="p">:</span>
-        <span class="n">particles</span> <span class="o">=</span> <span class="n">_sample_clusters</span><span class="p">(</span><span class="n">particles</span><span class="p">,</span> <span class="p">[</span><span class="n">hse1</span><span class="p">,</span> <span class="n">hse2</span><span class="p">],</span> 
-                                     <span class="p">[</span><span class="n">center1</span><span class="p">,</span> <span class="n">center2</span><span class="p">],</span> 
-                                     <span class="p">[</span><span class="n">velocity1</span><span class="p">,</span> <span class="n">velocity2</span><span class="p">])</span>
-    <span class="k">return</span> <span class="n">particles</span></div>
-
-
-<div class="viewcode-block" id="combine_three_clusters"><a class="viewcode-back" href="../_as_gen/particles.combine_three_clusters.html#particles.combine_three_clusters">[docs]</a><span class="k">def</span> <span class="nf">combine_three_clusters</span><span class="p">(</span><span class="n">particles1</span><span class="p">,</span> <span class="n">particles2</span><span class="p">,</span> <span class="n">particles3</span><span class="p">,</span>
-                           <span class="n">hse1</span><span class="p">,</span> <span class="n">hse2</span><span class="p">,</span> <span class="n">hse3</span><span class="p">,</span> <span class="n">center1</span><span class="p">,</span> <span class="n">center2</span><span class="p">,</span>
-                           <span class="n">center3</span><span class="p">,</span> <span class="n">velocity1</span><span class="p">,</span> <span class="n">velocity2</span><span class="p">,</span>
-                           <span class="n">velocity3</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;TODO: Documentation&quot;&quot;&quot;</span>
-    <span class="n">center1</span> <span class="o">=</span> <span class="n">ensure_ytarray</span><span class="p">(</span><span class="n">center1</span><span class="p">,</span> <span class="s2">&quot;kpc&quot;</span><span class="p">)</span>
-    <span class="n">center2</span> <span class="o">=</span> <span class="n">ensure_ytarray</span><span class="p">(</span><span class="n">center2</span><span class="p">,</span> <span class="s2">&quot;kpc&quot;</span><span class="p">)</span>
-    <span class="n">center3</span> <span class="o">=</span> <span class="n">ensure_ytarray</span><span class="p">(</span><span class="n">center3</span><span class="p">,</span> <span class="s2">&quot;kpc&quot;</span><span class="p">)</span>
-    <span class="n">velocity1</span> <span class="o">=</span> <span class="n">ensure_ytarray</span><span class="p">(</span><span class="n">velocity1</span><span class="p">,</span> <span class="s2">&quot;kpc/Myr&quot;</span><span class="p">)</span>
-    <span class="n">velocity2</span> <span class="o">=</span> <span class="n">ensure_ytarray</span><span class="p">(</span><span class="n">velocity2</span><span class="p">,</span> <span class="s2">&quot;kpc/Myr&quot;</span><span class="p">)</span>
-    <span class="n">velocity3</span> <span class="o">=</span> <span class="n">ensure_ytarray</span><span class="p">(</span><span class="n">velocity3</span><span class="p">,</span> <span class="s2">&quot;kpc/Myr&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="s2">&quot;gas&quot;</span> <span class="ow">in</span> <span class="n">particles1</span><span class="o">.</span><span class="n">particle_types</span><span class="p">:</span>
-        <span class="n">particles1</span><span class="o">.</span><span class="n">add_offsets</span><span class="p">(</span><span class="n">center1</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span><span class="o">*</span><span class="mi">3</span><span class="p">,</span> <span class="n">ptypes</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;gas&quot;</span><span class="p">])</span>
-    <span class="k">if</span> <span class="s2">&quot;gas&quot;</span> <span class="ow">in</span> <span class="n">particles2</span><span class="o">.</span><span class="n">particle_types</span><span class="p">:</span>
-        <span class="n">particles2</span><span class="o">.</span><span class="n">add_offsets</span><span class="p">(</span><span class="n">center2</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span><span class="o">*</span><span class="mi">3</span><span class="p">,</span> <span class="n">ptypes</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;gas&quot;</span><span class="p">])</span>
-    <span class="k">if</span> <span class="s2">&quot;gas&quot;</span> <span class="ow">in</span> <span class="n">particles3</span><span class="o">.</span><span class="n">particle_types</span><span class="p">:</span>
-        <span class="n">particles3</span><span class="o">.</span><span class="n">add_offsets</span><span class="p">(</span><span class="n">center3</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span><span class="o">*</span><span class="mi">3</span><span class="p">,</span> <span class="n">ptypes</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;gas&quot;</span><span class="p">])</span>
-    <span class="n">ptypes1</span> <span class="o">=</span> <span class="n">particles1</span><span class="o">.</span><span class="n">particle_types</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="n">ptypes2</span> <span class="o">=</span> <span class="n">particles2</span><span class="o">.</span><span class="n">particle_types</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="n">ptypes3</span> <span class="o">=</span> <span class="n">particles3</span><span class="o">.</span><span class="n">particle_types</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="k">if</span> <span class="s1">&#39;gas&#39;</span> <span class="ow">in</span> <span class="n">ptypes1</span><span class="p">:</span>
-        <span class="n">ptypes1</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;gas&#39;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="s1">&#39;gas&#39;</span> <span class="ow">in</span> <span class="n">ptypes2</span><span class="p">:</span>
-        <span class="n">ptypes2</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;gas&#39;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="s1">&#39;gas&#39;</span> <span class="ow">in</span> <span class="n">ptypes3</span><span class="p">:</span>
-        <span class="n">ptypes3</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;gas&#39;</span><span class="p">)</span>
-    <span class="n">particles1</span><span class="o">.</span><span class="n">add_offsets</span><span class="p">(</span><span class="n">center1</span><span class="p">,</span> <span class="n">velocity1</span><span class="p">,</span> <span class="n">ptypes</span><span class="o">=</span><span class="n">ptypes1</span><span class="p">)</span>
-    <span class="n">particles2</span><span class="o">.</span><span class="n">add_offsets</span><span class="p">(</span><span class="n">center2</span><span class="p">,</span> <span class="n">velocity2</span><span class="p">,</span> <span class="n">ptypes</span><span class="o">=</span><span class="n">ptypes2</span><span class="p">)</span>
-    <span class="n">particles3</span><span class="o">.</span><span class="n">add_offsets</span><span class="p">(</span><span class="n">center3</span><span class="p">,</span> <span class="n">velocity3</span><span class="p">,</span> <span class="n">ptypes</span><span class="o">=</span><span class="n">ptypes3</span><span class="p">)</span>
-    <span class="n">particles</span> <span class="o">=</span> <span class="n">particles1</span><span class="o">+</span><span class="n">particles2</span><span class="o">+</span><span class="n">particles3</span>
-    <span class="k">if</span> <span class="s2">&quot;gas&quot;</span> <span class="ow">in</span> <span class="n">particles</span><span class="o">.</span><span class="n">particle_types</span><span class="p">:</span>
-        <span class="n">particles</span> <span class="o">=</span> <span class="n">_sample_clusters</span><span class="p">(</span><span class="n">particles</span><span class="p">,</span> <span class="p">[</span><span class="n">hse1</span><span class="p">,</span> <span class="n">hse2</span><span class="p">,</span> <span class="n">hse3</span><span class="p">],</span>
-                                     <span class="p">[</span><span class="n">center1</span><span class="p">,</span> <span class="n">center2</span><span class="p">,</span> <span class="n">center3</span><span class="p">],</span>
-                                     <span class="p">[</span><span class="n">velocity1</span><span class="p">,</span> <span class="n">velocity2</span><span class="p">,</span> <span class="n">velocity3</span><span class="p">])</span>
-    <span class="k">return</span> <span class="n">particles</span></div>
-
-
-<div class="viewcode-block" id="resample_one_cluster"><a class="viewcode-back" href="../_as_gen/particles.resample_one_cluster.html#particles.resample_one_cluster">[docs]</a><span class="k">def</span> <span class="nf">resample_one_cluster</span><span class="p">(</span><span class="n">particles</span><span class="p">,</span> <span class="n">hse</span><span class="p">,</span> <span class="n">center</span><span class="p">,</span> <span class="n">velocity</span><span class="p">):</span>
+<div class="viewcode-block" id="concat_clusters"><a class="viewcode-back" href="../_as_gen/particles.concat_clusters.html#particles.concat_clusters">[docs]</a><span class="k">def</span> <span class="nf">concat_clusters</span><span class="p">(</span><span class="n">particles</span><span class="p">,</span> <span class="n">hses</span><span class="p">,</span> <span class="n">centers</span><span class="p">,</span> <span class="n">velocities</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Resample radial profiles onto a single cluster&#39;s particle </span>
-<span class="sd">    distribution.</span>
+<span class="sd">    Concatenates clusters together so that they form a self consistent joint system.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
+<span class="sd">    particles: list of ClusterParticles</span>
+<span class="sd">        The ``ClusterParticle`` instances to combine. These should all be based on sampling from an underlying cluster model.</span>
+<span class="sd">    hses: list of ClusterModel</span>
+<span class="sd">        The ``ClusterModel`` objects underlying the particle data.</span>
+<span class="sd">    centers: list of unyt_array</span>
+<span class="sd">        List of desired centers for the finished group of clusters. Should be of length same as particles and each element</span>
+<span class="sd">        should be a 3-tuple or list.</span>
+<span class="sd">    velocities: list of unyt_array</span>
+<span class="sd">        List of desired velocities for the finished group of clusters. Should be of length same as particles and each element</span>
+<span class="sd">        should be a 3-tuple or list.</span>
 
-<span class="sd">    particles : :class:`~cluster_generator.particles.ClusterParticles`</span>
-<span class="sd">    hse : </span>
-<span class="sd">    center : array_like</span>
-<span class="sd">    velocity : array_like</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="s2">&quot;gas&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">particles</span><span class="o">.</span><span class="n">particle_types</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">particles</span>
-    <span class="n">center</span> <span class="o">=</span> <span class="n">ensure_ytarray</span><span class="p">(</span><span class="n">center</span><span class="p">,</span> <span class="s2">&quot;kpc&quot;</span><span class="p">)</span>
-    <span class="n">velocity</span> <span class="o">=</span> <span class="n">ensure_ytarray</span><span class="p">(</span><span class="n">velocity</span><span class="p">,</span> <span class="s2">&quot;kpc/Myr&quot;</span><span class="p">)</span>
-    <span class="n">r</span> <span class="o">=</span> <span class="p">((</span><span class="n">particles</span><span class="p">[</span><span class="s2">&quot;gas&quot;</span><span class="p">,</span> <span class="s2">&quot;particle_position&quot;</span><span class="p">]</span><span class="o">-</span><span class="n">center</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">d</span>
-    <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
-    <span class="n">get_density</span> <span class="o">=</span> <span class="n">InterpolatedUnivariateSpline</span><span class="p">(</span><span class="n">hse</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">],</span> <span class="n">hse</span><span class="p">[</span><span class="s2">&quot;density&quot;</span><span class="p">])</span>
-    <span class="n">dens</span> <span class="o">=</span> <span class="n">get_density</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
-    <span class="n">e_arr</span> <span class="o">=</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">hse</span><span class="p">[</span><span class="s2">&quot;pressure&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">hse</span><span class="p">[</span><span class="s2">&quot;density&quot;</span><span class="p">]</span>
-    <span class="n">get_energy</span> <span class="o">=</span> <span class="n">InterpolatedUnivariateSpline</span><span class="p">(</span><span class="n">hse</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">],</span> <span class="n">e_arr</span><span class="p">)</span>
-    <span class="n">particles</span><span class="p">[</span><span class="s2">&quot;gas&quot;</span><span class="p">,</span> <span class="s2">&quot;thermal_energy&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="p">(</span><span class="n">get_energy</span><span class="p">(</span><span class="n">r</span><span class="p">),</span> 
-                                                    <span class="s2">&quot;kpc**2/Myr**2&quot;</span><span class="p">)</span>
-    <span class="n">vol</span> <span class="o">=</span> <span class="n">particles</span><span class="p">[</span><span class="s2">&quot;gas&quot;</span><span class="p">,</span> <span class="s2">&quot;particle_mass&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">particles</span><span class="p">[</span><span class="s2">&quot;gas&quot;</span><span class="p">,</span> <span class="s2">&quot;density&quot;</span><span class="p">]</span>
-    <span class="n">particles</span><span class="p">[</span><span class="s2">&quot;gas&quot;</span><span class="p">,</span> <span class="s2">&quot;particle_mass&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="p">(</span><span class="n">dens</span><span class="o">*</span><span class="n">vol</span><span class="o">.</span><span class="n">d</span><span class="p">,</span> <span class="s2">&quot;Msun&quot;</span><span class="p">)</span>
-    <span class="n">particles</span><span class="p">[</span><span class="s2">&quot;gas&quot;</span><span class="p">,</span> <span class="s2">&quot;particle_velocity&quot;</span><span class="p">][:,:]</span> <span class="o">=</span> <span class="n">velocity</span>
-    <span class="n">particles</span><span class="p">[</span><span class="s2">&quot;gas&quot;</span><span class="p">,</span> <span class="s2">&quot;density&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="p">(</span><span class="n">dens</span><span class="p">,</span> <span class="s2">&quot;Msun/kpc**3&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">particles</span></div>
+    <span class="n">mylog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Concatenating </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">particles</span><span class="p">)</span><span class="si">}</span><span class="s2"> clusters.&quot;</span><span class="p">)</span>
+
+    <span class="c1">#  Sanity Check</span>
+    <span class="c1"># ---------------------------------------------------------------------------------------------------------------- #</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">centers</span><span class="p">):</span>
+        <span class="n">centers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">ensure_ytarray</span><span class="p">(</span><span class="n">centers</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="s2">&quot;kpc&quot;</span><span class="p">)</span>
+        <span class="n">velocities</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">ensure_ytarray</span><span class="p">(</span><span class="n">velocities</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="s2">&quot;kpc/Myr&quot;</span><span class="p">)</span>
+
+    <span class="c1">#  Adding necessary velocity and space offsets</span>
+    <span class="c1"># ---------------------------------------------------------------------------------------------------------------- #</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">particle_set</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">particles</span><span class="p">):</span>
+        <span class="n">particle_set</span><span class="o">.</span><span class="n">add_offsets</span><span class="p">(</span><span class="n">centers</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">velocities</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+
+    <span class="n">returned_particles</span> <span class="o">=</span> <span class="n">particles</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">particles</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+        <span class="n">returned_particles</span> <span class="o">=</span> <span class="n">returned_particles</span> <span class="o">+</span> <span class="n">p</span>
+
+    <span class="k">if</span> <span class="s2">&quot;gas&quot;</span> <span class="ow">in</span> <span class="n">returned_particles</span><span class="o">.</span><span class="n">particle_types</span><span class="p">:</span>
+        <span class="n">returned_particles</span> <span class="o">=</span> <span class="n">_sample_clusters</span><span class="p">(</span><span class="n">returned_particles</span><span class="p">,</span> <span class="n">hses</span><span class="p">,</span> <span class="n">centers</span><span class="p">,</span> <span class="n">velocities</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">returned_particles</span></div>
 
 
-<div class="viewcode-block" id="resample_two_clusters"><a class="viewcode-back" href="../_as_gen/particles.resample_two_clusters.html#particles.resample_two_clusters">[docs]</a><span class="k">def</span> <span class="nf">resample_two_clusters</span><span class="p">(</span><span class="n">particles</span><span class="p">,</span> <span class="n">hse1</span><span class="p">,</span> <span class="n">hse2</span><span class="p">,</span> <span class="n">center1</span><span class="p">,</span> <span class="n">center2</span><span class="p">,</span>
-                          <span class="n">velocity1</span><span class="p">,</span> <span class="n">velocity2</span><span class="p">,</span> <span class="n">radii</span><span class="p">,</span>
-                          <span class="n">passive_scalars</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;TODO: Documentation&quot;&quot;&quot;</span>
-    <span class="n">particles</span> <span class="o">=</span> <span class="n">_sample_clusters</span><span class="p">(</span><span class="n">particles</span><span class="p">,</span> <span class="p">[</span><span class="n">hse1</span><span class="p">,</span> <span class="n">hse2</span><span class="p">],</span>
-                                 <span class="p">[</span><span class="n">center1</span><span class="p">,</span> <span class="n">center2</span><span class="p">],</span>
-                                 <span class="p">[</span><span class="n">velocity1</span><span class="p">,</span> <span class="n">velocity2</span><span class="p">],</span>
-                                 <span class="n">radii</span><span class="o">=</span><span class="n">radii</span><span class="p">,</span> <span class="n">resample</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                                 <span class="n">passive_scalars</span><span class="o">=</span><span class="n">passive_scalars</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">particles</span></div>
-
-
-<div class="viewcode-block" id="resample_three_clusters"><a class="viewcode-back" href="../_as_gen/particles.resample_three_clusters.html#particles.resample_three_clusters">[docs]</a><span class="k">def</span> <span class="nf">resample_three_clusters</span><span class="p">(</span><span class="n">particles</span><span class="p">,</span> <span class="n">hse1</span><span class="p">,</span> <span class="n">hse2</span><span class="p">,</span> <span class="n">hse3</span><span class="p">,</span> <span class="n">center1</span><span class="p">,</span>
-                            <span class="n">center2</span><span class="p">,</span> <span class="n">center3</span><span class="p">,</span> <span class="n">velocity1</span><span class="p">,</span> <span class="n">velocity2</span><span class="p">,</span>
-                            <span class="n">velocity3</span><span class="p">,</span> <span class="n">radii</span><span class="p">,</span> <span class="n">passive_scalars</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;TODO: Documentation&quot;&quot;&quot;</span>
-    <span class="n">particles</span> <span class="o">=</span> <span class="n">_sample_clusters</span><span class="p">(</span><span class="n">particles</span><span class="p">,</span> <span class="p">[</span><span class="n">hse1</span><span class="p">,</span> <span class="n">hse2</span><span class="p">,</span> <span class="n">hse3</span><span class="p">],</span>
-                                 <span class="p">[</span><span class="n">center1</span><span class="p">,</span> <span class="n">center2</span><span class="p">,</span> <span class="n">center3</span><span class="p">],</span>
-                                 <span class="p">[</span><span class="n">velocity1</span><span class="p">,</span> <span class="n">velocity2</span><span class="p">,</span> <span class="n">velocity3</span><span class="p">],</span>
-                                 <span class="n">radii</span><span class="o">=</span><span class="n">radii</span><span class="p">,</span> <span class="n">resample</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                                 <span class="n">passive_scalars</span><span class="o">=</span><span class="n">passive_scalars</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">particles</span></div>
+<div class="viewcode-block" id="resample_clusters"><a class="viewcode-back" href="../_as_gen/particles.resample_clusters.html#particles.resample_clusters">[docs]</a><span class="k">def</span> <span class="nf">resample_clusters</span><span class="p">(</span><span class="n">particles</span><span class="p">,</span> <span class="n">hses</span><span class="p">,</span> <span class="n">centers</span><span class="p">,</span> <span class="n">velocities</span><span class="p">,</span> <span class="n">radii</span><span class="p">,</span> <span class="n">passive_scalars</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">_sample_clusters</span><span class="p">(</span><span class="n">particles</span><span class="p">,</span> <span class="n">hses</span><span class="p">,</span> <span class="n">centers</span><span class="p">,</span> <span class="n">velocities</span><span class="p">,</span> <span class="n">radii</span> <span class="o">-</span> <span class="n">radii</span><span class="p">,</span> <span class="n">resample</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                            <span class="n">passive_scalars</span><span class="o">=</span><span class="n">passive_scalars</span><span class="p">)</span></div>
 </pre></div>
 
                 </article>

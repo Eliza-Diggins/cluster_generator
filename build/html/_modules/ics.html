@@ -141,34 +141,8 @@
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../models.html">
-                        Cluster Models
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../particles.html">
-                        Particles
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../fields.html">
-                        Generating 3D Cluster Fields
-                      </a>
-                    </li>
-                
-            <div class="nav-item dropdown">
-                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    More
-                </button>
-                <div class="dropdown-menu">
-                    
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../initial_conditions.html">
-                        Initial Conditions Generation
+                      <a class="nav-link nav-internal" href="../collections.html">
+                        Collections
                       </a>
                     </li>
                 
@@ -186,7 +160,12 @@
                       </a>
                     </li>
                 
-
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="../api.html">
                         API
@@ -284,34 +263,8 @@ document.write(`
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../models.html">
-                        Cluster Models
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../particles.html">
-                        Particles
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../fields.html">
-                        Generating 3D Cluster Fields
-                      </a>
-                    </li>
-                
-            <div class="nav-item dropdown">
-                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    More
-                </button>
-                <div class="dropdown-menu">
-                    
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../initial_conditions.html">
-                        Initial Conditions Generation
+                      <a class="nav-link nav-internal" href="../collections.html">
+                        Collections
                       </a>
                     </li>
                 
@@ -329,7 +282,12 @@ document.write(`
                       </a>
                     </li>
                 
-
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="../api.html">
                         API
@@ -416,19 +374,17 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <h1>Source code for ics</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">cluster_generator.utils</span> <span class="kn">import</span> <span class="n">ensure_ytarray</span><span class="p">,</span> <span class="n">ensure_list</span><span class="p">,</span> \
-    <span class="n">parse_prng</span>
-<span class="kn">from</span> <span class="nn">cluster_generator.model</span> <span class="kn">import</span> <span class="n">ClusterModel</span>
-<span class="kn">from</span> <span class="nn">cluster_generator.particles</span> <span class="kn">import</span> \
-    <span class="n">ClusterParticles</span><span class="p">,</span> \
-    <span class="n">combine_two_clusters</span><span class="p">,</span> \
-    <span class="n">combine_three_clusters</span><span class="p">,</span> \
-    <span class="n">resample_one_cluster</span><span class="p">,</span> \
-    <span class="n">resample_two_clusters</span><span class="p">,</span> \
-    <span class="n">resample_three_clusters</span>
-<span class="kn">import</span> <span class="nn">os</span>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">ruamel.yaml</span> <span class="kn">import</span> <span class="n">YAML</span>
+<span class="kn">from</span> <span class="nn">unyt</span> <span class="kn">import</span> <span class="n">unyt_array</span><span class="p">,</span> <span class="n">Unit</span>
+
+<span class="kn">from</span> <span class="nn">cluster_generator.model</span> <span class="kn">import</span> <span class="n">ClusterModel</span>
+<span class="kn">from</span> <span class="nn">cluster_generator.particles</span> <span class="kn">import</span> \
+    <span class="n">ClusterParticles</span><span class="p">,</span> <span class="n">concat_clusters</span><span class="p">,</span> <span class="n">resample_clusters</span>
+<span class="kn">from</span> <span class="nn">cluster_generator.utils</span> <span class="kn">import</span> <span class="n">ensure_ytarray</span><span class="p">,</span> <span class="n">ensure_list</span><span class="p">,</span> \
+    <span class="n">parse_prng</span>
 
 
 <div class="viewcode-block" id="compute_centers_for_binary"><a class="viewcode-back" href="../_as_gen/ics.compute_centers_for_binary.html#ics.compute_centers_for_binary">[docs]</a><span class="k">def</span> <span class="nf">compute_centers_for_binary</span><span class="p">(</span><span class="n">center</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
@@ -462,10 +418,10 @@ document.write(`
 <span class="sd">        The impact parameter in the z-direction, in kpc.</span>
 <span class="sd">        Default: 0.0</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">d</span><span class="o">*</span><span class="n">d</span><span class="o">-</span><span class="n">b</span><span class="o">*</span><span class="n">b</span><span class="o">-</span><span class="n">a</span><span class="o">*</span><span class="n">a</span><span class="p">)</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">d</span> <span class="o">*</span> <span class="n">d</span> <span class="o">-</span> <span class="n">b</span> <span class="o">*</span> <span class="n">b</span> <span class="o">-</span> <span class="n">a</span> <span class="o">*</span> <span class="n">a</span><span class="p">)</span>
     <span class="n">diff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">d</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">])</span>
-    <span class="n">center1</span> <span class="o">=</span> <span class="n">center</span> <span class="o">-</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">diff</span>
-    <span class="n">center2</span> <span class="o">=</span> <span class="n">center</span> <span class="o">+</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">diff</span>
+    <span class="n">center1</span> <span class="o">=</span> <span class="n">center</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">diff</span>
+    <span class="n">center2</span> <span class="o">=</span> <span class="n">center</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">diff</span>
     <span class="k">return</span> <span class="n">center1</span><span class="p">,</span> <span class="n">center2</span></div>
 
 
@@ -495,8 +451,9 @@ document.write(`
 <span class="sd">        The maximal radius up to which data is permitted.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
+
 <div class="viewcode-block" id="ClusterICs.__init__"><a class="viewcode-back" href="../_as_gen/ics.ClusterICs.__init__.html#ics.ClusterICs.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">basename</span><span class="p">,</span> <span class="n">num_halos</span><span class="p">,</span> <span class="n">profiles</span><span class="p">,</span> <span class="n">center</span><span class="p">,</span>
-                 <span class="n">velocity</span><span class="p">,</span> <span class="n">num_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mag_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+                 <span class="n">velocity</span><span class="p">,</span> <span class="n">num_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mag_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">particle_files</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">r_max</span><span class="o">=</span><span class="mf">20000.0</span><span class="p">):</span>
         <span class="c1">#  Managing parameters</span>
         <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
@@ -511,7 +468,7 @@ document.write(`
         <span class="c1">#: The velocities of the clusters.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span> <span class="o">=</span> <span class="n">ensure_ytarray</span><span class="p">(</span><span class="n">velocity</span><span class="p">,</span> <span class="s2">&quot;kpc/Myr&quot;</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_halos</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span> <span class="c1">#--&gt; make sure (3,) sized arrays become (1,3)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_halos</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># --&gt; make sure (3,) sized arrays become (1,3)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">center</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 
@@ -526,10 +483,10 @@ document.write(`
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">tot_np</span> <span class="o">=</span> <span class="n">num_particles</span>
 
-        <span class="c1">#  T</span>
+        <span class="c1">#  Checking for pre-provided particle files</span>
         <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_determine_num_particles</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">particle_files</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span><span class="o">*</span><span class="mi">3</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">particle_files</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="mi">3</span>
         <span class="k">if</span> <span class="n">particle_files</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">particle_files</span><span class="p">[:</span><span class="n">num_halos</span><span class="p">]</span> <span class="o">=</span> <span class="n">particle_files</span><span class="p">[:]</span></div>
 
@@ -547,16 +504,16 @@ document.write(`
         <span class="k">for</span> <span class="n">pf</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">profiles</span><span class="p">:</span>
             <span class="c1"># Loading the cluster model object #</span>
             <span class="n">p</span> <span class="o">=</span> <span class="n">ClusterModel</span><span class="o">.</span><span class="n">from_h5_file</span><span class="p">(</span><span class="n">pf</span><span class="p">)</span>
-            <span class="n">idxs</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">r_max</span> <span class="c1"># These are the valid radii for our use.</span>
+            <span class="n">idxs</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">r_max</span>  <span class="c1"># These are the valid radii for our use.</span>
 
             <span class="c1"># Determining allowable number.</span>
-            <span class="k">for</span> <span class="n">field_name</span><span class="p">,</span><span class="n">lst</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">([</span><span class="s2">&quot;dark_matter_mass&quot;</span><span class="p">,</span><span class="s2">&quot;gas_mass&quot;</span><span class="p">,</span><span class="s2">&quot;stellar_mass&quot;</span><span class="p">],</span>
-                                      <span class="p">[</span><span class="n">dm_masses</span><span class="p">,</span><span class="n">gas_masses</span><span class="p">,</span><span class="n">star_masses</span><span class="p">]):</span>
+            <span class="k">for</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">lst</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">([</span><span class="s2">&quot;dark_matter_mass&quot;</span><span class="p">,</span> <span class="s2">&quot;gas_mass&quot;</span><span class="p">,</span> <span class="s2">&quot;stellar_mass&quot;</span><span class="p">],</span>
+                                       <span class="p">[</span><span class="n">dm_masses</span><span class="p">,</span> <span class="n">gas_masses</span><span class="p">,</span> <span class="n">star_masses</span><span class="p">]):</span>
                 <span class="k">if</span> <span class="n">field_name</span> <span class="ow">in</span> <span class="n">p</span><span class="p">:</span>
                     <span class="c1"># We found a matching profile</span>
                     <span class="n">lst</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="n">field_name</span><span class="p">][</span><span class="n">idxs</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">lst</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">lst</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
 
         <span class="c1"># - Finding true total masses - #</span>
         <span class="n">tot_dm_mass</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dm_masses</span><span class="p">)</span>
@@ -567,15 +524,14 @@ document.write(`
         <span class="c1"># ----------------------------------------------------------------------------------------------------------------- #</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">num_particles</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_halos</span><span class="p">):</span>
-            <span class="k">for</span> <span class="n">ptype</span><span class="p">,</span><span class="n">pmasses</span><span class="p">,</span><span class="n">ptmass</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">([</span><span class="s2">&quot;dm&quot;</span><span class="p">,</span><span class="s2">&quot;gas&quot;</span><span class="p">,</span><span class="s2">&quot;star&quot;</span><span class="p">],</span>
-                                            <span class="p">[</span><span class="n">dm_masses</span><span class="p">,</span><span class="n">gas_masses</span><span class="p">,</span><span class="n">star_masses</span><span class="p">],</span>
-                                            <span class="p">[</span><span class="n">tot_dm_mass</span><span class="p">,</span><span class="n">tot_gas_mass</span><span class="p">,</span><span class="n">tot_star_mass</span><span class="p">]):</span>
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tot_np</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ptype</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                    <span class="n">_n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">rint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tot_np</span><span class="p">[</span><span class="n">ptype</span><span class="p">]</span><span class="o">*</span><span class="n">pmasses</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="n">ptmass</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;int&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">ptype</span><span class="p">,</span> <span class="n">pmasses</span><span class="p">,</span> <span class="n">ptmass</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">([</span><span class="s2">&quot;dm&quot;</span><span class="p">,</span> <span class="s2">&quot;gas&quot;</span><span class="p">,</span> <span class="s2">&quot;star&quot;</span><span class="p">],</span>
+                                              <span class="p">[</span><span class="n">dm_masses</span><span class="p">,</span> <span class="n">gas_masses</span><span class="p">,</span> <span class="n">star_masses</span><span class="p">],</span>
+                                              <span class="p">[</span><span class="n">tot_dm_mass</span><span class="p">,</span> <span class="n">tot_gas_mass</span><span class="p">,</span> <span class="n">tot_star_mass</span><span class="p">]):</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tot_np</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ptype</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">_n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">rint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tot_np</span><span class="p">[</span><span class="n">ptype</span><span class="p">]</span> <span class="o">*</span> <span class="n">pmasses</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="n">ptmass</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;int&quot;</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">_n</span> <span class="o">=</span> <span class="mi">0</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">num_particles</span><span class="p">[</span><span class="n">ptype</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_n</span><span class="p">)</span>
-
 
     <span class="k">def</span> <span class="nf">_generate_particles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">regenerate_particles</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">prng</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -587,7 +543,8 @@ document.write(`
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-
+<span class="sd">        ClusterParticles</span>
+<span class="sd">            The returned set of particles after sampling.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1">#  Setup</span>
         <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
@@ -631,63 +588,54 @@ document.write(`
 <span class="sd">        overwrite : boolean, optional</span>
 <span class="sd">            If True, overwrite a file with the same name. Default: False</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">ruamel.yaml.comments</span> <span class="kn">import</span> <span class="n">CommentedMap</span>
+
+        <span class="c1"># -- building out total counts -- #</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;dm&quot;</span><span class="p">,</span> <span class="s2">&quot;gas&quot;</span><span class="p">,</span> <span class="s2">&quot;star&quot;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tot_np</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tot_np</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c1"># -- Constructing commenting / indexing variables -- #</span>
+        <span class="n">_key_attr_com</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;basename&quot;</span>          <span class="p">:</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">basename</span><span class="p">,</span> <span class="s2">&quot;base name for ICs&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">),</span>
+            <span class="s2">&quot;num_halos&quot;</span>         <span class="p">:</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_halos</span><span class="p">,</span> <span class="s2">&quot;Number of halos&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">),</span>
+            <span class="s2">&quot;num_dm_particles&quot;</span>  <span class="p">:</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tot_np</span><span class="p">[</span><span class="s2">&quot;dm&quot;</span><span class="p">],</span> <span class="s2">&quot;Number of DM particles&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tot_np</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;dm&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="s2">&quot;num_star_particles&quot;</span><span class="p">:</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tot_np</span><span class="p">[</span><span class="s2">&quot;star&quot;</span><span class="p">],</span> <span class="s2">&quot;Number of star particles&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tot_np</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;star&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="s2">&quot;num_gas_particles&quot;</span> <span class="p">:</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tot_np</span><span class="p">[</span><span class="s2">&quot;gas&quot;</span><span class="p">],</span> <span class="s2">&quot;Number of gas particles&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tot_np</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;gas&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="s2">&quot;mag_field&quot;</span>         <span class="p">:</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mag_file</span><span class="p">,</span> <span class="s2">&quot;Magnetic Field file&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mag_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">),</span>
+            <span class="s2">&quot;r_max&quot;</span>             <span class="p">:</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">r_max</span><span class="p">,</span> <span class="s2">&quot;Maximal Radius&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="p">}</span>
+
+        <span class="c1">#  Existence Check</span>
+        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">overwrite</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2"> exists and overwrite=False!&quot;</span><span class="p">)</span>
-        <span class="kn">from</span> <span class="nn">ruamel.yaml.comments</span> <span class="kn">import</span> <span class="n">CommentedMap</span>
+
+        <span class="c1">#  Setup</span>
+        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
         <span class="n">out</span> <span class="o">=</span> <span class="n">CommentedMap</span><span class="p">()</span>
-        <span class="n">out</span><span class="p">[</span><span class="s2">&quot;basename&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">basename</span>
-        <span class="n">out</span><span class="o">.</span><span class="n">yaml_add_eol_comment</span><span class="p">(</span><span class="s2">&quot;base name for ICs&quot;</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s2">&quot;basename&quot;</span><span class="p">)</span>
-        <span class="n">out</span><span class="p">[</span><span class="s2">&quot;num_halos&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_halos</span>
-        <span class="n">out</span><span class="o">.</span><span class="n">yaml_add_eol_comment</span><span class="p">(</span><span class="s2">&quot;number of halos&quot;</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">&#39;num_halos&#39;</span><span class="p">)</span>
-        <span class="n">out</span><span class="p">[</span><span class="s2">&quot;profile1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profiles</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">out</span><span class="o">.</span><span class="n">yaml_add_eol_comment</span><span class="p">(</span><span class="s2">&quot;profile for cluster 1&quot;</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">&#39;profile1&#39;</span><span class="p">)</span>
-        <span class="n">out</span><span class="p">[</span><span class="s2">&quot;center1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-        <span class="n">out</span><span class="o">.</span><span class="n">yaml_add_eol_comment</span><span class="p">(</span><span class="s2">&quot;center for cluster 1&quot;</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">&#39;center1&#39;</span><span class="p">)</span>
-        <span class="n">out</span><span class="p">[</span><span class="s2">&quot;velocity1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-        <span class="n">out</span><span class="o">.</span><span class="n">yaml_add_eol_comment</span><span class="p">(</span><span class="s2">&quot;velocity for cluster 1&quot;</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">&#39;velocity1&#39;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">particle_files</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">out</span><span class="p">[</span><span class="s2">&quot;particle_file1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">particle_files</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="n">out</span><span class="o">.</span><span class="n">yaml_add_eol_comment</span><span class="p">(</span><span class="s2">&quot;particle file for cluster 1&quot;</span><span class="p">,</span>
-                                     <span class="n">key</span><span class="o">=</span><span class="s1">&#39;particle_file1&#39;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_halos</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">out</span><span class="p">[</span><span class="s2">&quot;profile2&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profiles</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-            <span class="n">out</span><span class="o">.</span><span class="n">yaml_add_eol_comment</span><span class="p">(</span><span class="s2">&quot;profile for cluster 2&quot;</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">&#39;profile2&#39;</span><span class="p">)</span>
-            <span class="n">out</span><span class="p">[</span><span class="s2">&quot;center2&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-            <span class="n">out</span><span class="o">.</span><span class="n">yaml_add_eol_comment</span><span class="p">(</span><span class="s2">&quot;center for cluster 2&quot;</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">&#39;center2&#39;</span><span class="p">)</span>
-            <span class="n">out</span><span class="p">[</span><span class="s2">&quot;velocity2&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-            <span class="n">out</span><span class="o">.</span><span class="n">yaml_add_eol_comment</span><span class="p">(</span><span class="s2">&quot;velocity for cluster 2&quot;</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">&#39;velocity2&#39;</span><span class="p">)</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">particle_files</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">out</span><span class="p">[</span><span class="s2">&quot;particle_file2&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">particle_files</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-                <span class="n">out</span><span class="o">.</span><span class="n">yaml_add_eol_comment</span><span class="p">(</span><span class="s2">&quot;particle file for cluster 2&quot;</span><span class="p">,</span> 
-                                         <span class="n">key</span><span class="o">=</span><span class="s1">&#39;particle_file2&#39;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_halos</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
-            <span class="n">out</span><span class="p">[</span><span class="s2">&quot;profile3&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profiles</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-            <span class="n">out</span><span class="o">.</span><span class="n">yaml_add_eol_comment</span><span class="p">(</span><span class="s2">&quot;profile for cluster 3&quot;</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">&#39;profile3&#39;</span><span class="p">)</span>
-            <span class="n">out</span><span class="p">[</span><span class="s2">&quot;center3&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-            <span class="n">out</span><span class="o">.</span><span class="n">yaml_add_eol_comment</span><span class="p">(</span><span class="s2">&quot;center for cluster 3&quot;</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">&#39;center3&#39;</span><span class="p">)</span>
-            <span class="n">out</span><span class="p">[</span><span class="s2">&quot;velocity3&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-            <span class="n">out</span><span class="o">.</span><span class="n">yaml_add_eol_comment</span><span class="p">(</span><span class="s2">&quot;velocity for cluster 3&quot;</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">&#39;velocity3&#39;</span><span class="p">)</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">particle_files</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">out</span><span class="p">[</span><span class="s2">&quot;particle_file3&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">particle_files</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-                <span class="n">out</span><span class="o">.</span><span class="n">yaml_add_eol_comment</span><span class="p">(</span><span class="s2">&quot;particle file for cluster 3&quot;</span><span class="p">,</span>
-                                         <span class="n">key</span><span class="o">=</span><span class="s1">&#39;particle_file3&#39;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tot_np</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;dm&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">out</span><span class="p">[</span><span class="s2">&quot;num_dm_particles&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tot_np</span><span class="p">[</span><span class="s2">&quot;dm&quot;</span><span class="p">]</span>
-            <span class="n">out</span><span class="o">.</span><span class="n">yaml_add_eol_comment</span><span class="p">(</span><span class="s2">&quot;number of DM particles&quot;</span><span class="p">,</span> 
-                                     <span class="n">key</span><span class="o">=</span><span class="s1">&#39;num_dm_particles&#39;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tot_np</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;gas&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">out</span><span class="p">[</span><span class="s2">&quot;num_gas_particles&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tot_np</span><span class="p">[</span><span class="s2">&quot;gas&quot;</span><span class="p">]</span>
-            <span class="n">out</span><span class="o">.</span><span class="n">yaml_add_eol_comment</span><span class="p">(</span><span class="s2">&quot;number of gas particles&quot;</span><span class="p">,</span> 
-                                     <span class="n">key</span><span class="o">=</span><span class="s1">&#39;num_gas_particles&#39;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tot_np</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;star&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">out</span><span class="p">[</span><span class="s2">&quot;num_star_particles&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tot_np</span><span class="p">[</span><span class="s2">&quot;star&quot;</span><span class="p">]</span>
-            <span class="n">out</span><span class="o">.</span><span class="n">yaml_add_eol_comment</span><span class="p">(</span><span class="s2">&quot;number of star particles&quot;</span><span class="p">,</span> 
-                                     <span class="n">key</span><span class="o">=</span><span class="s1">&#39;num_star_particles&#39;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mag_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">out</span><span class="p">[</span><span class="s2">&quot;mag_file&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mag_file</span>
-            <span class="n">out</span><span class="o">.</span><span class="n">yaml_add_eol_comment</span><span class="p">(</span><span class="s2">&quot;3D magnetic field file&quot;</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">&#39;mag_file&#39;</span><span class="p">)</span>
-        <span class="n">out</span><span class="p">[</span><span class="s2">&quot;r_max&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">r_max</span>
-        <span class="n">out</span><span class="o">.</span><span class="n">yaml_add_eol_comment</span><span class="p">(</span><span class="s2">&quot;Maximum radius of particles&quot;</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">&#39;r_max&#39;</span><span class="p">)</span>
+
+        <span class="c1"># -- Writing basic data -- #</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">_key_attr_com</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">v</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span>
+                <span class="n">out</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">out</span><span class="o">.</span><span class="n">yaml_add_eol_comment</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">key</span><span class="o">=</span><span class="n">k</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_halos</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">out</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;profile</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profiles</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">yaml_add_eol_comment</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;profile for cluster </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;profile</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">out</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;center</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">yaml_add_eol_comment</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;center for cluster </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;center</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">out</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;velocity</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">yaml_add_eol_comment</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;velocity for cluster </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;velocity</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">particle_files</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">out</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;particle_file</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">particle_files</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+
+                <span class="n">out</span><span class="o">.</span><span class="n">yaml_add_eol_comment</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;particle file for cluster </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+
+                                         <span class="n">key</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;particle_file</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="c1">#  Writing to file</span>
+        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
         <span class="n">yaml</span> <span class="o">=</span> <span class="n">YAML</span><span class="p">()</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="n">yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span></div>
@@ -704,15 +652,15 @@ document.write(`
             <span class="n">params</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
         <span class="n">basename</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;basename&quot;</span><span class="p">]</span>
         <span class="n">num_halos</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;num_halos&quot;</span><span class="p">]</span>
-        <span class="n">profiles</span> <span class="o">=</span> <span class="p">[</span><span class="n">params</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;profile</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_halos</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
-        <span class="n">center</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;center</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_halos</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
-        <span class="n">velocity</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;velocity</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">])</span> 
-                    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_halos</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
+        <span class="n">profiles</span> <span class="o">=</span> <span class="p">[</span><span class="n">params</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;profile</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_halos</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+        <span class="n">center</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;center</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_halos</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+        <span class="n">velocity</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;velocity</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">])</span>
+                    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_halos</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
         <span class="n">num_particles</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;num_</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">_particles&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
                          <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;gas&quot;</span><span class="p">,</span> <span class="s2">&quot;dm&quot;</span><span class="p">,</span> <span class="s2">&quot;star&quot;</span><span class="p">]}</span>
         <span class="n">mag_file</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;mag_file&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="n">particle_files</span> <span class="o">=</span> <span class="p">[</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;particle_file</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-                          <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_halos</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
+                          <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_halos</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
         <span class="n">r_max</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;r_max&quot;</span><span class="p">,</span> <span class="mf">20000.0</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">basename</span><span class="p">,</span> <span class="n">num_halos</span><span class="p">,</span> <span class="n">profiles</span><span class="p">,</span> <span class="n">center</span><span class="p">,</span> <span class="n">velocity</span><span class="p">,</span>
                    <span class="n">num_particles</span><span class="o">=</span><span class="n">num_particles</span><span class="p">,</span> <span class="n">mag_file</span><span class="o">=</span><span class="n">mag_file</span><span class="p">,</span>
@@ -736,21 +684,9 @@ document.write(`
         <span class="n">profiles</span> <span class="o">=</span> <span class="p">[</span><span class="n">ClusterModel</span><span class="o">.</span><span class="n">from_h5_file</span><span class="p">(</span><span class="n">hf</span><span class="p">)</span> <span class="k">for</span> <span class="n">hf</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">profiles</span><span class="p">]</span>
         <span class="n">parts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_particles</span><span class="p">(</span>
             <span class="n">regenerate_particles</span><span class="o">=</span><span class="n">regenerate_particles</span><span class="p">,</span> <span class="n">prng</span><span class="o">=</span><span class="n">prng</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_halos</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">all_parts</span> <span class="o">=</span> <span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="n">all_parts</span><span class="o">.</span><span class="n">add_offsets</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_halos</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="n">all_parts</span> <span class="o">=</span> <span class="n">combine_two_clusters</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">profiles</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-                                             <span class="n">profiles</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-                                             <span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-                                             <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">all_parts</span> <span class="o">=</span> <span class="n">combine_three_clusters</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">parts</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
-                                               <span class="n">profiles</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">profiles</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> 
-                                               <span class="n">profiles</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> 
-                                               <span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> 
-                                               <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-                                               <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+
+        <span class="n">all_parts</span> <span class="o">=</span> <span class="n">concat_clusters</span><span class="p">(</span><span class="n">parts</span><span class="p">,</span> <span class="n">profiles</span><span class="p">,</span> <span class="n">centers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="p">,</span> <span class="n">velocities</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="p">)</span>
+
         <span class="k">return</span> <span class="n">all_parts</span></div>
 
 <div class="viewcode-block" id="ClusterICs.resample_particle_ics"><a class="viewcode-back" href="../_as_gen/ics.ClusterICs.resample_particle_ics.html#ics.ClusterICs.resample_particle_ics">[docs]</a>    <span class="k">def</span> <span class="nf">resample_particle_ics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parts</span><span class="p">,</span> <span class="n">passive_scalars</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -767,27 +703,16 @@ document.write(`
 <span class="sd">            The name of file to output the resampled ICs to.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">profiles</span> <span class="o">=</span> <span class="p">[</span><span class="n">ClusterModel</span><span class="o">.</span><span class="n">from_h5_file</span><span class="p">(</span><span class="n">hf</span><span class="p">)</span> <span class="k">for</span> <span class="n">hf</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">profiles</span><span class="p">]</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_halos</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">new_parts</span> <span class="o">=</span> <span class="n">resample_one_cluster</span><span class="p">(</span><span class="n">parts</span><span class="p">,</span> <span class="n">profiles</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-                                             <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_halos</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="n">new_parts</span> <span class="o">=</span> <span class="n">resample_two_clusters</span><span class="p">(</span><span class="n">parts</span><span class="p">,</span> <span class="n">profiles</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">profiles</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-                                              <span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-                                              <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-                                              <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">r_max</span><span class="p">]</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span>
-                                              <span class="n">passive_scalars</span><span class="o">=</span><span class="n">passive_scalars</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">new_parts</span> <span class="o">=</span> <span class="n">resample_three_clusters</span><span class="p">(</span><span class="n">parts</span><span class="p">,</span> <span class="n">profiles</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">profiles</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> 
-                                                <span class="n">profiles</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> 
-                                                <span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> 
-                                                <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> 
-                                                <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">r_max</span><span class="p">]</span><span class="o">*</span><span class="mi">3</span><span class="p">,</span> 
-                                                <span class="n">passive_scalars</span><span class="o">=</span><span class="n">passive_scalars</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">new_parts</span></div>
+        <span class="k">return</span> <span class="n">resample_clusters</span><span class="p">(</span><span class="n">parts</span><span class="p">,</span> <span class="n">profiles</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="p">,</span> <span class="n">radii</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">r_max</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">profiles</span><span class="p">),</span>
+                                 <span class="n">passive_scalars</span><span class="o">=</span><span class="n">passive_scalars</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ClusterICs.create_dataset"><a class="viewcode-back" href="../_as_gen/ics.ClusterICs.create_dataset.html#ics.ClusterICs.create_dataset">[docs]</a>    <span class="k">def</span> <span class="nf">create_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domain_dimensions</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">left_edge</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                        <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        .. warning::</span>
+
+<span class="sd">            This function is currently non-functional. We are working on fixing the issue.</span>
+
 <span class="sd">        Create an in-memory, uniformly gridded dataset in 3D using yt by</span>
 <span class="sd">        placing the clusters into a box. When adding multiple clusters,</span>
 <span class="sd">        per-volume quantities from each cluster such as density and</span>
@@ -811,74 +736,87 @@ document.write(`
             <span class="n">left_edge</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
         <span class="n">left_edge</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">left_edge</span><span class="p">)</span>
         <span class="n">bbox</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="p">[</span><span class="n">left_edge</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">left_edge</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">box_size</span><span class="p">],</span>
-            <span class="p">[</span><span class="n">left_edge</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">left_edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">box_size</span><span class="p">],</span>
-            <span class="p">[</span><span class="n">left_edge</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">left_edge</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="n">box_size</span><span class="p">]</span>
+            <span class="p">[</span><span class="n">left_edge</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">left_edge</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">box_size</span><span class="p">],</span>
+            <span class="p">[</span><span class="n">left_edge</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">left_edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">box_size</span><span class="p">],</span>
+            <span class="p">[</span><span class="n">left_edge</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">left_edge</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">box_size</span><span class="p">]</span>
         <span class="p">]</span>
         <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mgrid</span><span class="p">[</span>
-            <span class="n">bbox</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span><span class="n">bbox</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]:</span><span class="n">domain_dimensions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">1</span><span class="n">j</span><span class="p">,</span>
-            <span class="n">bbox</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span><span class="n">bbox</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]:</span><span class="n">domain_dimensions</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="mi">1</span><span class="n">j</span><span class="p">,</span>
-            <span class="n">bbox</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span><span class="n">bbox</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">]:</span><span class="n">domain_dimensions</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="mi">1</span><span class="n">j</span><span class="p">,</span>
-        <span class="p">]</span>
+                  <span class="n">bbox</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span><span class="n">bbox</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]:</span><span class="n">domain_dimensions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span><span class="p">,</span>
+                  <span class="n">bbox</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span><span class="n">bbox</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]:</span><span class="n">domain_dimensions</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span><span class="p">,</span>
+                  <span class="n">bbox</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span><span class="n">bbox</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">]:</span><span class="n">domain_dimensions</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span><span class="p">,</span>
+                  <span class="p">]</span>
         <span class="n">fields1</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;density&quot;</span><span class="p">,</span> <span class="s2">&quot;pressure&quot;</span><span class="p">,</span> <span class="s2">&quot;dark_matter_density&quot;</span>
-                   <span class="s2">&quot;stellar_density&quot;</span><span class="p">,</span> <span class="s2">&quot;gravitational_potential&quot;</span><span class="p">]</span>
+                                          <span class="s2">&quot;stellar_density&quot;</span><span class="p">,</span> <span class="s2">&quot;gravitational_potential&quot;</span><span class="p">]</span>
         <span class="n">fields2</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;temperature&quot;</span><span class="p">]</span>
         <span class="n">fields3</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;velocity_x&quot;</span><span class="p">,</span> <span class="s2">&quot;velocity_y&quot;</span><span class="p">,</span> <span class="s2">&quot;velocity_z&quot;</span><span class="p">]</span>
         <span class="n">units</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;density&quot;</span><span class="p">:</span> <span class="s2">&quot;Msun/kpc**3&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;pressure&quot;</span><span class="p">:</span> <span class="s2">&quot;Msun/kpc/Myr**2&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;dark_matter_density&quot;</span><span class="p">:</span> <span class="s2">&quot;Msun/kpc**3&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;stellar_density&quot;</span><span class="p">:</span> <span class="s2">&quot;Msun/kpc**3&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;temperature&quot;</span><span class="p">:</span> <span class="s2">&quot;K&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;density&quot;</span>                <span class="p">:</span> <span class="s2">&quot;Msun/kpc**3&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;pressure&quot;</span>               <span class="p">:</span> <span class="s2">&quot;Msun/kpc/Myr**2&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;dark_matter_density&quot;</span>    <span class="p">:</span> <span class="s2">&quot;Msun/kpc**3&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;stellar_density&quot;</span>        <span class="p">:</span> <span class="s2">&quot;Msun/kpc**3&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;temperature&quot;</span>            <span class="p">:</span> <span class="s2">&quot;K&quot;</span><span class="p">,</span>
             <span class="s2">&quot;gravitational_potential&quot;</span><span class="p">:</span> <span class="s2">&quot;kpc**2/Myr**2&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;velocity_x&quot;</span><span class="p">:</span> <span class="s2">&quot;kpc/Myr&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;velocity_y&quot;</span><span class="p">:</span> <span class="s2">&quot;kpc/Myr&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;velocity_z&quot;</span><span class="p">:</span> <span class="s2">&quot;kpc/Myr&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;velocity_x&quot;</span>             <span class="p">:</span> <span class="s2">&quot;kpc/Myr&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;velocity_y&quot;</span>             <span class="p">:</span> <span class="s2">&quot;kpc/Myr&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;velocity_z&quot;</span>             <span class="p">:</span> <span class="s2">&quot;kpc/Myr&quot;</span><span class="p">,</span>
             <span class="s2">&quot;magnetic_field_strength&quot;</span><span class="p">:</span> <span class="s2">&quot;G&quot;</span>
         <span class="p">}</span>
-        <span class="n">fields</span> <span class="o">=</span> <span class="n">fields1</span><span class="o">+</span><span class="n">fields2</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="n">fields1</span> <span class="o">+</span> <span class="n">fields2</span>
         <span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">profile</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profiles</span><span class="p">):</span>
             <span class="n">p</span> <span class="o">=</span> <span class="n">ClusterModel</span><span class="o">.</span><span class="n">from_h5_file</span><span class="p">(</span><span class="n">profile</span><span class="p">)</span>
-            <span class="n">xx</span> <span class="o">=</span> <span class="n">x</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="o">.</span><span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-            <span class="n">yy</span> <span class="o">=</span> <span class="n">y</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="o">.</span><span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
-            <span class="n">zz</span> <span class="o">=</span> <span class="n">z</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="o">.</span><span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
-            <span class="n">rr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">xx</span><span class="o">*</span><span class="n">xx</span><span class="o">+</span><span class="n">yy</span><span class="o">*</span><span class="n">yy</span><span class="o">+</span><span class="n">zz</span><span class="o">*</span><span class="n">zz</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">fields</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+            <span class="n">xx</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="o">.</span><span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">yy</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="o">.</span><span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">zz</span> <span class="o">=</span> <span class="n">z</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="o">.</span><span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
+            <span class="n">rr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">xx</span> <span class="o">*</span> <span class="n">xx</span> <span class="o">+</span> <span class="n">yy</span> <span class="o">*</span> <span class="n">yy</span> <span class="o">+</span> <span class="n">zz</span> <span class="o">*</span> <span class="n">zz</span><span class="p">)</span>
             <span class="n">fd</span> <span class="o">=</span> <span class="n">InterpolatedUnivariateSpline</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">,</span>
                                               <span class="n">p</span><span class="p">[</span><span class="s2">&quot;density&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">field</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">p</span><span class="p">:</span>
                     <span class="k">continue</span>
                 <span class="k">if</span> <span class="n">field</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
-                    <span class="n">data</span><span class="p">[</span><span class="n">field</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">data</span><span class="p">[</span><span class="n">field</span><span class="p">]</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="p">(</span>
                         <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">domain_dimensions</span><span class="p">),</span> <span class="n">units</span><span class="p">[</span><span class="n">field</span><span class="p">]</span>
                     <span class="p">)</span>
                 <span class="n">f</span> <span class="o">=</span> <span class="n">InterpolatedUnivariateSpline</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">,</span>
                                                  <span class="n">p</span><span class="p">[</span><span class="n">field</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">fields1</span><span class="p">:</span>
-                    <span class="n">data</span><span class="p">[</span><span class="n">field</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="n">f</span><span class="p">(</span><span class="n">rr</span><span class="p">)</span>
+                    <span class="n">data</span><span class="p">[</span><span class="n">field</span><span class="p">]</span> <span class="o">+=</span> <span class="n">unyt_array</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">rr</span><span class="p">),</span> <span class="n">units</span><span class="p">[</span><span class="n">field</span><span class="p">])</span>
                 <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">fields2</span><span class="p">:</span>
-                    <span class="n">data</span><span class="p">[</span><span class="n">field</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="n">f</span><span class="p">(</span><span class="n">rr</span><span class="p">)</span><span class="o">*</span><span class="n">fd</span><span class="p">(</span><span class="n">rr</span><span class="p">)</span>
+                    <span class="n">data</span><span class="p">[</span><span class="n">field</span><span class="p">]</span> <span class="o">+=</span> <span class="n">unyt_array</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">rr</span><span class="p">)</span> <span class="o">*</span> <span class="n">fd</span><span class="p">(</span><span class="n">rr</span><span class="p">),</span> <span class="n">Unit</span><span class="p">(</span><span class="n">units</span><span class="p">[</span><span class="n">field</span><span class="p">]))</span>
             <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">fields3</span><span class="p">:</span>
-                <span class="n">data</span><span class="p">[</span><span class="n">field</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">fd</span><span class="p">(</span><span class="n">rr</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">field</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+                    <span class="n">data</span><span class="p">[</span><span class="n">field</span><span class="p">]</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="p">(</span>
+                        <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">domain_dimensions</span><span class="p">),</span> <span class="n">units</span><span class="p">[</span><span class="n">field</span><span class="p">]</span>
+                    <span class="p">)</span>
+
+                <span class="n">data</span><span class="p">[</span><span class="n">field</span><span class="p">]</span> <span class="o">+=</span> <span class="n">unyt_array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">fd</span><span class="p">(</span><span class="n">rr</span><span class="p">),</span> <span class="n">Unit</span><span class="p">(</span><span class="n">units</span><span class="p">[</span><span class="n">field</span><span class="p">]))</span>
         <span class="k">if</span> <span class="s2">&quot;density&quot;</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">fields2</span><span class="o">+</span><span class="n">fields3</span><span class="p">:</span>
-                <span class="n">data</span><span class="p">[</span><span class="n">field</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">/=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;density&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">load_uniform_grid</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">domain_dimensions</span><span class="p">,</span> <span class="n">length_unit</span><span class="o">=</span><span class="s2">&quot;kpc&quot;</span><span class="p">,</span> 
+            <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">fields2</span> <span class="o">+</span> <span class="n">fields3</span><span class="p">:</span>
+                <span class="n">data</span><span class="p">[</span><span class="n">field</span><span class="p">]</span> <span class="o">/=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;density&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">load_uniform_grid</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">domain_dimensions</span><span class="p">,</span> <span class="n">length_unit</span><span class="o">=</span><span class="s2">&quot;kpc&quot;</span><span class="p">,</span>
                                  <span class="n">bbox</span><span class="o">=</span><span class="n">bbox</span><span class="p">,</span> <span class="n">mass_unit</span><span class="o">=</span><span class="s2">&quot;Msun&quot;</span><span class="p">,</span> <span class="n">time_unit</span><span class="o">=</span><span class="s2">&quot;Myr&quot;</span><span class="p">,</span>
                                  <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div></div>
+
+
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">test</span> <span class="o">=</span> <span class="n">ClusterICs</span><span class="p">(</span>
-        <span class="s2">&quot;test&quot;</span><span class="p">,</span>
-        <span class="mi">2</span><span class="p">,</span>
-        <span class="p">[</span><span class="s2">&quot;/home/ediggins/test/Newtonian_model.h5&quot;</span><span class="p">,</span><span class="s2">&quot;/home/ediggins/test/AQUAL_model.h5&quot;</span><span class="p">],</span>
-        <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
-        <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
-        <span class="n">num_particles</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;dm&quot;</span><span class="p">:</span><span class="mf">2e4</span><span class="p">}</span>
+    <span class="c1"># test = ClusterICs(</span>
+    <span class="c1">#    &quot;test&quot;,</span>
+    <span class="c1">#    2,</span>
+    <span class="c1">#    [&quot;/home/ediggins/test/Newtonian_model.h5&quot;,&quot;/home/ediggins/test/AQUAL_model.h5&quot;],</span>
+    <span class="c1">#    [[0,0,0],[0,0,0]],</span>
+    <span class="c1">#    [[0,0,0],[0,0,0]],</span>
+    <span class="c1">#    num_particles={&quot;dm&quot;:2e4}</span>
+    <span class="c1">#</span>
+    <span class="c1"># )</span>
+    <span class="c1">#</span>
+    <span class="c1"># test.to_file(&quot;testic.h5&quot;,overwrite=True)</span>
+    <span class="n">test</span> <span class="o">=</span> <span class="n">ClusterICs</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s2">&quot;testic.h5&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+    <span class="n">ds</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">([</span><span class="mi">300</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">300</span><span class="p">],</span> <span class="mi">15000</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mi">5000</span><span class="p">,</span> <span class="o">-</span><span class="mi">5000</span><span class="p">,</span> <span class="o">-</span><span class="mi">5000</span><span class="p">])</span>
 
-    <span class="p">)</span>
-
-    <span class="n">test</span><span class="o">.</span><span class="n">setup_particle_ics</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">ds</span><span class="p">)</span>
 </pre></div>
 
                 </article>

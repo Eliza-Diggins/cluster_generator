@@ -41,6 +41,8 @@
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_as_gen/model.HydrostaticEquilibrium.rebuild_physical';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -142,34 +144,8 @@
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../models.html">
-                        Cluster Models
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../particles.html">
-                        Particles
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../fields.html">
-                        Generating 3D Cluster Fields
-                      </a>
-                    </li>
-                
-            <div class="nav-item dropdown">
-                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    More
-                </button>
-                <div class="dropdown-menu">
-                    
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../initial_conditions.html">
-                        Initial Conditions Generation
+                      <a class="nav-link nav-internal" href="../collections.html">
+                        Collections
                       </a>
                     </li>
                 
@@ -187,7 +163,12 @@
                       </a>
                     </li>
                 
-
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
                     <li class="nav-item current active">
                       <a class="nav-link nav-internal" href="../api.html">
                         API
@@ -289,34 +270,8 @@ document.write(`
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../models.html">
-                        Cluster Models
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../particles.html">
-                        Particles
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../fields.html">
-                        Generating 3D Cluster Fields
-                      </a>
-                    </li>
-                
-            <div class="nav-item dropdown">
-                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    More
-                </button>
-                <div class="dropdown-menu">
-                    
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../initial_conditions.html">
-                        Initial Conditions Generation
+                      <a class="nav-link nav-internal" href="../collections.html">
+                        Collections
                       </a>
                     </li>
                 
@@ -334,7 +289,12 @@ document.write(`
                       </a>
                     </li>
                 
-
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
                     <li class="nav-item current active">
                       <a class="nav-link nav-internal" href="../api.html">
                         API
@@ -595,11 +555,8 @@ document.write(`
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="particles.html">particles</a><input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-18"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="particles.combine_three_clusters.html">particles.combine_three_clusters</a></li>
-<li class="toctree-l2"><a class="reference internal" href="particles.combine_two_clusters.html">particles.combine_two_clusters</a></li>
-<li class="toctree-l2"><a class="reference internal" href="particles.resample_one_cluster.html">particles.resample_one_cluster</a></li>
-<li class="toctree-l2"><a class="reference internal" href="particles.resample_three_clusters.html">particles.resample_three_clusters</a></li>
-<li class="toctree-l2"><a class="reference internal" href="particles.resample_two_clusters.html">particles.resample_two_clusters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="particles.concat_clusters.html">particles.concat_clusters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="particles.resample_clusters.html">particles.resample_clusters</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="particles.ClusterParticles.html">particles.ClusterParticles</a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-19"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="particles.ClusterParticles.__init__.html">particles.ClusterParticles.__init__</a></li>
 <li class="toctree-l3"><a class="reference internal" href="particles.ClusterParticles.add_black_hole.html">particles.ClusterParticles.add_black_hole</a></li>
@@ -616,6 +573,10 @@ document.write(`
 <li class="toctree-l3"><a class="reference internal" href="particles.ClusterParticles.write_particles_to_h5.html">particles.ClusterParticles.write_particles_to_h5</a></li>
 <li class="toctree-l3"><a class="reference internal" href="particles.ClusterParticles.write_to_gadget_file.html">particles.ClusterParticles.write_to_gadget_file</a></li>
 <li class="toctree-l3"><a class="reference internal" href="particles.ClusterParticles.num_passive_scalars.html">particles.ClusterParticles.num_passive_scalars</a></li>
+<li class="toctree-l3"><a class="reference internal" href="particles.ClusterParticles.particle_types.html">particles.ClusterParticles.particle_types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="particles.ClusterParticles.fields.html">particles.ClusterParticles.fields</a></li>
+<li class="toctree-l3"><a class="reference internal" href="particles.ClusterParticles.box_size.html">particles.ClusterParticles.box_size</a></li>
+<li class="toctree-l3"><a class="reference internal" href="particles.ClusterParticles.passive_scalars.html">particles.ClusterParticles.passive_scalars</a></li>
 </ul>
 </li>
 </ul>
@@ -763,22 +724,21 @@ document.write(`
 <dl class="py method">
 <dt class="sig sig-object py" id="model.HydrostaticEquilibrium.rebuild_physical">
 <span class="sig-prename descclassname"><span class="pre">HydrostaticEquilibrium.</span></span><span class="sig-name descname"><span class="pre">rebuild_physical</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#model.HydrostaticEquilibrium.rebuild_physical" title="Permalink to this definition">#</a></dt>
-<dd><blockquote>
-<div><p>The <a class="reference internal" href="model.ClusterModel.rebuild_physical.html#model.ClusterModel.rebuild_physical" title="model.ClusterModel.rebuild_physical"><code class="xref py py-meth docutils literal notranslate"><span class="pre">model.ClusterModel.rebuild_physical()</span></code></a> method can be used to convert the instance calling the method into a
+<dd><p>The <a class="reference internal" href="model.ClusterModel.rebuild_physical.html#model.ClusterModel.rebuild_physical" title="model.ClusterModel.rebuild_physical"><code class="xref py py-meth docutils literal notranslate"><span class="pre">model.ClusterModel.rebuild_physical()</span></code></a> method can be used to convert the instance calling the method into a
 physically well constrained version of itself. See the Notes for the procedure used to accomplish this.</p>
-<p>None</p>
-<p>The general approach used here is that for any of the density profiles in the <a class="reference internal" href="model.ClusterModel.html#model.ClusterModel" title="model.ClusterModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">model.ClusterModel</span></code></a> instance, if :math:<a href="#id1"><span class="problematic" id="id2">`</span></a></p>
-</div></blockquote>
-<dl class="simple">
-<dt>ho_i &lt; 0`, the profile will be non-physical. Therefore,</dt><dd><p>we make the generic substitution :math:<a href="#id3"><span class="problematic" id="id4">`</span></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 </dl>
-<p>ho _i   o 0, ;;       ext{when};;
-ho_i &lt; 0`.</p>
-<blockquote>
-<div><p>All of the dependent quantities (Temperature, entropy, gravitational field, etc.) must be recomputed after the initial stage of fixing the density profiles. To do so, we recompute the the temperature manually and then
+<p class="rubric">Notes</p>
+<section id="method">
+<h2>Method<a class="headerlink" href="#method" title="Permalink to this heading">#</a></h2>
+<p>The general approach used here is that for any of the density profiles in the <a class="reference internal" href="model.ClusterModel.html#model.ClusterModel" title="model.ClusterModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">model.ClusterModel</span></code></a> instance, if <span class="math notranslate nohighlight">\(\rho_i &lt; 0\)</span>, the profile will be non-physical. Therefore,
+we make the generic substitution <span class="math notranslate nohighlight">\(\rho _i \to 0, \;\;\text{when}\;\; \rho_i &lt; 0\)</span>.</p>
+<p>All of the dependent quantities (Temperature, entropy, gravitational field, etc.) must be recomputed after the initial stage of fixing the density profiles. To do so, we recompute the the temperature manually and then
 re-initialize the new system using the corrected density and temperature profiles.</p>
-</div></blockquote>
+</section>
 </dd></dl>
 
 </section>
