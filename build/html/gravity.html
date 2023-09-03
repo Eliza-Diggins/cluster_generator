@@ -398,7 +398,7 @@ Newtonian Gravity</div>
 </div>
 <div class="sd-card-footer docutils">
 <div class="line-block">
-<div class="line"><strong>Class</strong>: <code class="xref py py-class docutils literal notranslate"><span class="pre">gravity.NewtonianGravity</span></code></div>
+<div class="line"><strong>Class</strong>: <a class="reference internal" href="_as_gen/gravity.NewtonianGravity.html#gravity.NewtonianGravity" title="gravity.NewtonianGravity"><code class="xref py py-class docutils literal notranslate"><span class="pre">gravity.NewtonianGravity</span></code></a></div>
 </div>
 </div>
 </div>
@@ -414,7 +414,7 @@ AQUAL Gravity</div>
 <div class="sd-card-footer docutils">
 <div class="line-block">
 <div class="line"><strong>Source</strong>: <a class="reference external" href="https://ui.adsabs.harvard.edu/link_gateway/1984ApJ...286....7B/ADS_PDF">1984ApJ…286….7B</a></div>
-<div class="line"><strong>Class</strong>: <code class="xref py py-class docutils literal notranslate"><span class="pre">gravity.AQUALGravity</span></code></div>
+<div class="line"><strong>Class</strong>: <a class="reference internal" href="_as_gen/gravity.AQUALGravity.html#gravity.AQUALGravity" title="gravity.AQUALGravity"><code class="xref py py-class docutils literal notranslate"><span class="pre">gravity.AQUALGravity</span></code></a></div>
 </div>
 </div>
 <a class="sd-stretched-link reference internal" href="#aqual"><span class="std std-ref"></span></a></div>
@@ -430,7 +430,7 @@ QUMOND Gravity</div>
 <div class="sd-card-footer docutils">
 <div class="line-block">
 <div class="line"><strong>Source</strong>: <a class="reference external" href="https://ui.adsabs.harvard.edu/link_gateway/2010MNRAS.403..886M/EPRINT_PDF">2010MNRAS.403..886M</a></div>
-<div class="line"><strong>Class</strong>: <code class="xref py py-class docutils literal notranslate"><span class="pre">gravity.QUMONDGravity</span></code></div>
+<div class="line"><strong>Class</strong>: <a class="reference internal" href="_as_gen/gravity.QUMONDGravity.html#gravity.QUMONDGravity" title="gravity.QUMONDGravity"><code class="xref py py-class docutils literal notranslate"><span class="pre">gravity.QUMONDGravity</span></code></a></div>
 </div>
 </div>
 <a class="sd-stretched-link reference internal" href="#qumond"><span class="std std-ref"></span></a></div>
@@ -485,7 +485,7 @@ theory; however, there remains no standout candidate for a complete MOND theory.
 <span class="math notranslate nohighlight">\(\mu(x) \to 1\)</span> as <span class="math notranslate nohighlight">\(x \to \infty\)</span>, and <span class="math notranslate nohighlight">\(\mu(x) \to x\)</span> as <span class="math notranslate nohighlight">\(x\to 0\)</span>.</p>
 <section id="implementation">
 <h4><a class="toc-backref" href="#id13" role="doc-backlink">Implementation</a><a class="headerlink" href="#implementation" title="Permalink to this heading">#</a></h4>
-<p>Cluster generator implements the AQUAL theory using the <code class="xref py py-class docutils literal notranslate"><span class="pre">gravity.AQUALGravity</span></code> class, which contains the relevant poisson solver. As with all of the
+<p>Cluster generator implements the AQUAL theory using the <a class="reference internal" href="_as_gen/gravity.AQUALGravity.html#gravity.AQUALGravity" title="gravity.AQUALGravity"><code class="xref py py-class docutils literal notranslate"><span class="pre">gravity.AQUALGravity</span></code></a> class, which contains the relevant poisson solver. As with all of the
 spherically symmetric gravity theories implemented in this library, there are only two major alterations that have to be made: the potential and the dynamical mass.</p>
 <div class="line-block">
 <div class="line"><strong>Potential</strong>:</div>
@@ -494,7 +494,7 @@ spherically symmetric gravity theories implemented in this library, there are on
 <div class="math notranslate nohighlight">
 \[\mu\left(\frac{|\nabla \Phi|}{a_0}\right)\nabla \Phi = \nabla \Psi,\]</div>
 <p>where <span class="math notranslate nohighlight">\(\Psi\)</span> is the Newtonian potential for the same system. Letting <span class="math notranslate nohighlight">\(\gamma = \nabla \Psi /a_0\)</span> and <span class="math notranslate nohighlight">\(\Gamma = \nabla \Phi / a_0\)</span>, this reduces to
-<span class="math notranslate nohighlight">\(\mu(|\Gamma|)\Gamma = \gamma\)</span>. As such, an implicit form of <span class="math notranslate nohighlight">\(\Gamma\)</span> can be solved for and then integrated. In the <code class="xref py py-meth docutils literal notranslate"><span class="pre">gravity.AQUALGravity.compute_potential()</span></code> method,
+<span class="math notranslate nohighlight">\(\mu(|\Gamma|)\Gamma = \gamma\)</span>. As such, an implicit form of <span class="math notranslate nohighlight">\(\Gamma\)</span> can be solved for and then integrated. In the <a class="reference internal" href="_as_gen/gravity.AQUALGravity.compute_potential.html#gravity.AQUALGravity.compute_potential" title="gravity.AQUALGravity.compute_potential"><code class="xref py py-meth docutils literal notranslate"><span class="pre">gravity.AQUALGravity.compute_potential()</span></code></a> method,
 we utilize a numerical solver to solve the implicit equation. To allow for optimal convergence, we first posit an approximate guess. To generate one, we assume <span class="math notranslate nohighlight">\(\mu(x) = x/(1+x)\)</span>, which
 is essentially the simplest interpolation function available. Then</p>
 <div class="math notranslate nohighlight">

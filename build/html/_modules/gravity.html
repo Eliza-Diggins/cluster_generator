@@ -1,0 +1,1323 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>gravity &#8212; cluster_generator  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fd506691" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=ccbe24c1"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/mermaid@10.2.0/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({startOnLoad:true});</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/gravity';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  <div class="navbar-header-items__start">
+    
+      <div class="navbar-item">
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">cluster_generator  documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../Getting_Started.html">
+                        Quickstart Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../gravity.html">
+                        Gravity Theories
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../models.html">
+                        Cluster Models
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../collections.html">
+                        Collections
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../examples.html">
+                        Examples
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../api.html">
+                        API
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+        </div>
+      
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+    </div>
+  
+
+  
+</div>
+
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../Getting_Started.html">
+                        Quickstart Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../gravity.html">
+                        Gravity Theories
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../models.html">
+                        Cluster Models
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../collections.html">
+                        Collections
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../examples.html">
+                        Examples
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../api.html">
+                        API
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+  </ul>
+</nav></div>
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumbs">
+  <ul class="bd-breadcrumbs" role="navigation" aria-label="Breadcrumb">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">gravity</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <h1>Source code for gravity</h1><div class="highlight"><pre>
+<span></span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Gravity</span>
+<span class="sd">=======</span>
+<span class="sd">The :py:mod:`gravity` module contains the :py:class:`gravity.Gravity` class, which essentially acts as a wrapper for</span>
+<span class="sd">solving the Poisson equation in each of the available gravitational theories. The various available gravitational theories are</span>
+<span class="sd">implemented in classes inheriting from the base :py:class:`gravity.Gravity` class.</span>
+
+<span class="sd">.. admonition:: Info</span>
+
+<span class="sd">    For more information on the underlying implementations, see :ref:`The Gravity Guide &lt;gravity&gt;`.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">halo</span> <span class="kn">import</span> <span class="n">Halo</span>
+<span class="kn">from</span> <span class="nn">scipy.interpolate</span> <span class="kn">import</span> <span class="n">InterpolatedUnivariateSpline</span>
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">fsolve</span>
+<span class="kn">from</span> <span class="nn">unyt</span> <span class="kn">import</span> <span class="n">unyt_array</span>
+
+<span class="kn">from</span> <span class="nn">cluster_generator.utils</span> <span class="kn">import</span> \
+    <span class="n">integrate</span><span class="p">,</span> <span class="n">mylog</span><span class="p">,</span> <span class="n">G</span><span class="p">,</span> <span class="n">log_string</span><span class="p">,</span> <span class="n">cgparams</span><span class="p">,</span> <span class="n">devLogger</span>
+
+<span class="c1"># -------------------------------------------------------------------------------------------------------------------- #</span>
+<span class="c1"># Constants ========================================================================================================== #</span>
+<span class="c1"># -------------------------------------------------------------------------------------------------------------------- #</span>
+<span class="c1">#: The MOND gravitational acceleration constant.</span>
+<span class="n">a0</span> <span class="o">=</span> <span class="n">cgparams</span><span class="p">[</span><span class="s2">&quot;gravity&quot;</span><span class="p">][</span><span class="s2">&quot;general&quot;</span><span class="p">][</span><span class="s2">&quot;mond&quot;</span><span class="p">][</span><span class="s2">&quot;a0&quot;</span><span class="p">]</span>
+
+
+<span class="c1"># -------------------------------------------------------------------------------------------------------------------- #</span>
+<span class="c1"># Classes ============================================================================================================ #</span>
+<span class="c1"># -------------------------------------------------------------------------------------------------------------------- #</span>
+<div class="viewcode-block" id="Gravity"><a class="viewcode-back" href="../_as_gen/gravity.Gravity.html#gravity.Gravity">[docs]</a><span class="k">class</span> <span class="nc">Gravity</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The :py:class:`~gravity.Gravity` is the base class for different gravity implementations in ``cluster_generator``.</span>
+<span class="sd">    This should typically not be called directly. Instead, select one of the fully constructed gravity theories from this module.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    model: :py:class:`model.ClusterModel`</span>
+<span class="sd">        The model to attach the :py:class:`gravity.Gravity` instance to.</span>
+
+<span class="sd">    **kwargs</span>
+<span class="sd">        Additional parameters to pass to the instance. These are stored in the ``self.attrs`` attribute.</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    :py:class:`gravity.NewtonianGravity`</span>
+<span class="sd">    :py:class:`gravity.AQUALGravity`</span>
+<span class="sd">    :py:class:`gravity.QUMONDGravity`</span>
+<span class="sd">    :py:class:`gravity.EMONDGravity`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_classname</span> <span class="o">=</span> <span class="s2">&quot;BaseGravity&quot;</span>
+
+    <span class="c1">#  DUNDER METHODS</span>
+    <span class="c1"># ----------------------------------------------------------------------------------------------------------------- #</span>
+<div class="viewcode-block" id="Gravity.__init__"><a class="viewcode-back" href="../_as_gen/gravity.Gravity.__init__.html#gravity.Gravity.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="c1">#: The model attached to the gravity instance.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+        <span class="c1">#: additional attributes attached to the instance</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">attrs</span> <span class="o">=</span> <span class="n">kwargs</span></div>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_classname</span><span class="si">}</span><span class="s2"> Instance&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fields</span>
+
+    <span class="c1">#  Properties</span>
+    <span class="c1"># ----------------------------------------------------------------------------------------------------------------- #</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">is_calculated</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Will return ``True`` if there is already a value for the gravitational potential in place.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="s2">&quot;gravitational_potential&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fields</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;gravitational_potential&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="kc">False</span>
+
+    <span class="c1">#  Methods</span>
+    <span class="c1"># ----------------------------------------------------------------------------------------------------------------- #</span>
+<div class="viewcode-block" id="Gravity.reset"><a class="viewcode-back" href="../_as_gen/gravity.Gravity.reset.html#gravity.Gravity.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Resets the :py:class:`model.ClusterModel` instance&#39;s `gravitation_potential` field to ``None``.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">mylog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Resetting </span><span class="si">{</span><span class="bp">self</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="s2">&quot;gravitational_field&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div></div>
+
+
+<div class="viewcode-block" id="NewtonianGravity"><a class="viewcode-back" href="../_as_gen/gravity.NewtonianGravity.html#gravity.NewtonianGravity">[docs]</a><span class="k">class</span> <span class="nc">NewtonianGravity</span><span class="p">(</span><span class="n">Gravity</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Newtonian gravity implementation.</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    :py:class:`gravity.Gravity`</span>
+<span class="sd">    :py:class:`gravity.AQUALGravity`</span>
+<span class="sd">    :py:class:`gravity.QUMONDGravity`</span>
+<span class="sd">    :py:class:`gravity.EMONDGravity`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Configuring the classname #</span>
+    <span class="n">_classname</span> <span class="o">=</span> <span class="s2">&quot;Newtonian&quot;</span>
+
+<div class="viewcode-block" id="NewtonianGravity.__init__"><a class="viewcode-back" href="../_as_gen/gravity.NewtonianGravity.__init__.html#gravity.NewtonianGravity.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="c1"># -- Providing the inherited structure -- #</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+    <span class="c1">#  Methods</span>
+    <span class="c1"># ---------------------------------------------------------------------------------------------------------------- #</span>
+<div class="viewcode-block" id="NewtonianGravity.potential"><a class="viewcode-back" href="../_as_gen/gravity.NewtonianGravity.potential.html#gravity.NewtonianGravity.potential">[docs]</a>    <span class="k">def</span> <span class="nf">potential</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Computes the gravitational potential of the object.</span>
+
+<span class="sd">        .. attention::</span>
+
+<span class="sd">            This method passes directly to the class method :py:meth:`~cluster_model.gravity.NewtonianGravity.compute_potential`. If you only</span>
+<span class="sd">            have fields and not a model, that is the better approach.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        force: bool</span>
+<span class="sd">            If ``True``, the potential will be recomputed even if it already exists.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#  Logging</span>
+        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+        <span class="n">mylog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Computing gravitational potential of </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span><span class="si">}</span><span class="s2">. gravity=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_classname</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+        <span class="c1">#  Sanity Check</span>
+        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">force</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_calculated</span><span class="p">:</span>
+            <span class="n">mylog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="s2">&quot;There is already a calculated potential for this model. To force recomputation, use force=True.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+        <span class="c1">#  Computing</span>
+        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+        <span class="c1"># - Pulling arrays</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;gravitational_potential&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_potential</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fields</span><span class="p">,</span> <span class="n">spinner</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="NewtonianGravity.compute_mass"><a class="viewcode-back" href="../_as_gen/gravity.NewtonianGravity.compute_mass.html#gravity.NewtonianGravity.compute_mass">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">compute_mass</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Computes the dynamical mass from the provided fields.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        fields: dict</span>
+<span class="sd">            The model fields associated with the object being computed.</span>
+<span class="sd">        attrs: dict</span>
+<span class="sd">            Additional attributes to use in computation.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        unyt_array</span>
+<span class="sd">            Computation result</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="o">-</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;gravitational_field&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">G</span></div>
+
+<div class="viewcode-block" id="NewtonianGravity.compute_potential"><a class="viewcode-back" href="../_as_gen/gravity.NewtonianGravity.compute_potential.html#gravity.NewtonianGravity.compute_potential">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">compute_potential</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">spinner</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Computes the gravitational potential of the system directly from the provided ``fields``.</span>
+
+<span class="sd">        .. attention::</span>
+
+<span class="sd">            It is almost always ill-advised to call :py:meth:`gravity.NewtonianGravity.compute_potential` directly if you</span>
+<span class="sd">            have an active instance of the object. The :py:meth:`gravity.NewtonianGravity.potential` method will compute</span>
+<span class="sd">            the potential directly from the ``self.model`` object if an instances exists. This method should be reserved for cases when it</span>
+<span class="sd">            is undesirable to have to construct a full system.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        fields: dict</span>
+<span class="sd">            The fields from which to compute the potential.</span>
+<span class="sd">        attrs: dict</span>
+<span class="sd">            Additional attributes to pass. These would match the instance&#39;s attributes if this were a fully realized</span>
+<span class="sd">            instance of the class.</span>
+<span class="sd">        spinner: bool</span>
+<span class="sd">            ``False`` to disable the spinners.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        unyt_array</span>
+<span class="sd">            The computed gravitational potential of the system.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#  Managing inputs</span>
+        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+        <span class="k">if</span> <span class="n">attrs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">attrs</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1">#  Computing the potential</span>
+        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+        <span class="n">devLogger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Computing gravitational potential from </span><span class="si">{</span><span class="n">fields</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span><span class="si">}</span><span class="s2">. gravity=</span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">_classname</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">Halo</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">log_string</span><span class="p">(</span><span class="s2">&quot;Computing potential...&quot;</span><span class="p">),</span> <span class="n">stream</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span>
+                  <span class="n">enabled</span><span class="o">=</span><span class="p">(</span><span class="n">cgparams</span><span class="p">[</span><span class="s2">&quot;system&quot;</span><span class="p">][</span><span class="s2">&quot;text&quot;</span><span class="p">][</span><span class="s2">&quot;spinners&quot;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">spinner</span><span class="p">))</span> <span class="k">as</span> <span class="n">h</span><span class="p">:</span>
+            <span class="c1"># - Pulling arrays</span>
+            <span class="n">rr</span> <span class="o">=</span> <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span>
+
+            <span class="n">devLogger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[[Potential]] Integrating gravitational potential profile. gravity=</span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">_classname</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+            <span class="n">tdens_func</span> <span class="o">=</span> <span class="n">InterpolatedUnivariateSpline</span><span class="p">(</span><span class="n">rr</span><span class="p">,</span> <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;total_density&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">)</span>
+
+            <span class="c1"># - Computing - #</span>
+            <span class="n">gpot_profile</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="n">tdens_func</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">*</span> <span class="n">r</span>
+
+            <span class="n">gpot1</span> <span class="o">=</span> <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;total_mass&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span>
+
+            <span class="n">_v</span><span class="p">,</span> <span class="n">errs</span> <span class="o">=</span> <span class="n">integrate</span><span class="p">(</span><span class="n">gpot_profile</span><span class="p">,</span> <span class="n">rr</span><span class="p">)</span>
+            <span class="n">gpot2</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="p">(</span><span class="mf">4.</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">_v</span><span class="p">,</span> <span class="s2">&quot;Msun/kpc&quot;</span><span class="p">)</span>
+
+            <span class="c1"># - Finishing computation - #</span>
+            <span class="n">potential</span> <span class="o">=</span> <span class="o">-</span><span class="n">G</span> <span class="o">*</span> <span class="p">(</span><span class="n">gpot1</span> <span class="o">+</span> <span class="n">gpot2</span><span class="p">)</span>
+            <span class="n">potential</span><span class="o">.</span><span class="n">convert_to_units</span><span class="p">(</span><span class="s2">&quot;kpc**2/Myr**2&quot;</span><span class="p">)</span>
+            <span class="n">h</span><span class="o">.</span><span class="n">succeed</span><span class="p">(</span><span class="n">log_string</span><span class="p">(</span><span class="s2">&quot;Computed potential.&quot;</span><span class="p">))</span>
+
+        <span class="c1">#  Managing warnings</span>
+        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">errs</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">mylog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Detected </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">errs</span><span class="p">)</span><span class="si">}</span><span class="s2"> warnings from integration. Likely due to physicality issues.&quot;</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">wi</span> <span class="ow">in</span> <span class="n">errs</span><span class="p">:</span>
+                <span class="n">devLogger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">wi</span><span class="o">.</span><span class="n">message</span><span class="p">)</span>
+
+        <span class="c1"># -- Done -- #</span>
+        <span class="k">return</span> <span class="n">potential</span></div></div>
+
+<span class="c1"># -------------------------------------------------------------------------------------------------------------------- #</span>
+<span class="c1"># MONDian Gravity Theories =====-===================================================================================== #</span>
+<span class="c1"># -------------------------------------------------------------------------------------------------------------------- #</span>
+<div class="viewcode-block" id="AQUALGravity"><a class="viewcode-back" href="../_as_gen/gravity.AQUALGravity.html#gravity.AQUALGravity">[docs]</a><span class="k">class</span> <span class="nc">AQUALGravity</span><span class="p">(</span><span class="n">Gravity</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Implementation of the AQUAL (Aquadratic Lagrangian) formulation of MOND.</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    :py:class:`gravity.Gravity`</span>
+<span class="sd">    :py:class:`gravity.NewtonianGravity`</span>
+<span class="sd">    :py:class:`gravity.QUMONDGravity`</span>
+<span class="sd">    :py:class:`gravity.EMONDGravity`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_classname</span> <span class="o">=</span> <span class="s2">&quot;AQUAL&quot;</span>
+    <span class="n">_interpolation_function</span> <span class="o">=</span> <span class="n">cgparams</span><span class="p">[</span><span class="s2">&quot;gravity&quot;</span><span class="p">][</span><span class="s2">&quot;AQUAL&quot;</span><span class="p">][</span><span class="s2">&quot;interpolation_function&quot;</span><span class="p">]</span>
+
+<div class="viewcode-block" id="AQUALGravity.__init__"><a class="viewcode-back" href="../_as_gen/gravity.AQUALGravity.__init__.html#gravity.AQUALGravity.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="c1"># -- Providing the inherited structure -- #</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="c1"># -- forcing inclusion of the necessary attributes -- #</span>
+        <span class="k">if</span> <span class="s2">&quot;interp_function&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">attrs</span><span class="p">:</span>
+            <span class="n">mylog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Gravity </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_classname</span><span class="si">}</span><span class="s2"> requires kwarg `interp_function`. Setting to default...&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;interp_function&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_interp</span>
+
+        <span class="k">if</span> <span class="s2">&quot;a_0&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">attrs</span><span class="p">:</span>
+            <span class="n">mylog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Gravity </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_classname</span><span class="si">}</span><span class="s2"> requires kwarg `a_0`. Setting to default...&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;a_0&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">a0</span></div>
+
+    <span class="c1">#  Methods</span>
+    <span class="c1"># ---------------------------------------------------------------------------------------------------------------- #</span>
+<div class="viewcode-block" id="AQUALGravity.potential"><a class="viewcode-back" href="../_as_gen/gravity.AQUALGravity.potential.html#gravity.AQUALGravity.potential">[docs]</a>    <span class="k">def</span> <span class="nf">potential</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Computes the gravitational potential of the object.</span>
+
+<span class="sd">        .. attention::</span>
+
+<span class="sd">            This method passes directly to the class method :py:meth:`~cluster_model.gravity.AQUALGravity.compute_potential`. If you only</span>
+<span class="sd">            have fields and not a model, that is the better approach.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        force: bool</span>
+<span class="sd">            If ``True``, the potential will be recomputed even if it already exists.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#  Logging</span>
+        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+        <span class="n">mylog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Computing gravitational potential of </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span><span class="si">}</span><span class="s2">. gravity=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_classname</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+        <span class="c1">#  Sanity Check</span>
+        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">force</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_calculated</span><span class="p">:</span>
+            <span class="n">mylog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="s2">&quot;There is already a calculated potential for this model. To force recomputation, use force=True.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+        <span class="c1">#  Computing</span>
+        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;gravitational_potential&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_potential</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fields</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">attrs</span><span class="p">,</span>
+                                                                              <span class="n">spinner</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AQUALGravity.compute_mass"><a class="viewcode-back" href="../_as_gen/gravity.AQUALGravity.compute_mass.html#gravity.AQUALGravity.compute_mass">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">compute_mass</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Computes the dynamical mass from the provided fields.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        fields: dict</span>
+<span class="sd">            The model fields associated with the object being computed.</span>
+<span class="sd">        attrs: dict</span>
+<span class="sd">            Additional attributes to use in computation.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        np.ndarray</span>
+<span class="sd">            Computation result</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#  Managing attributes</span>
+        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+        <span class="k">with</span> <span class="n">Halo</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">log_string</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dyn. Mass comp; </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">_classname</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">),</span> <span class="n">stream</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span> <span class="k">as</span> <span class="n">h</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">attrs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">attrs</span> <span class="o">=</span> <span class="p">{}</span>
+
+            <span class="k">if</span> <span class="s2">&quot;interp_function&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">attrs</span><span class="p">:</span>
+                <span class="n">mylog</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Gravity </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">_classname</span><span class="si">}</span><span class="s2"> requires kwarg `interp_function`. Setting to default...&quot;</span><span class="p">)</span>
+                <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;interp_function&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_interp</span>
+
+            <span class="k">if</span> <span class="s2">&quot;a_0&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">attrs</span><span class="p">:</span>
+                <span class="n">mylog</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Gravity </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">_classname</span><span class="si">}</span><span class="s2"> requires kwarg `a_0`. Setting to default...&quot;</span><span class="p">)</span>
+                <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;a_0&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">a0</span>
+
+            <span class="c1">#  Returning output</span>
+            <span class="c1"># -------------------------------------------------------------------------------------------------------- #</span>
+            <span class="n">h</span><span class="o">.</span><span class="n">succeed</span><span class="p">(</span><span class="n">log_string</span><span class="p">(</span><span class="s2">&quot;Dyn. Mass comp: [DONE] &quot;</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="o">-</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;gravitational_field&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">G</span><span class="p">)</span> <span class="o">*</span> <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;interp_function&quot;</span><span class="p">](</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;gravitational_field&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;kpc/Myr**2&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">d</span><span class="p">)</span> <span class="o">/</span> <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;a_0&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;kpc/Myr**2&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">d</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AQUALGravity.compute_potential"><a class="viewcode-back" href="../_as_gen/gravity.AQUALGravity.compute_potential.html#gravity.AQUALGravity.compute_potential">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">compute_potential</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">spinner</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Computes the gravitational potential of the system directly from the provided ``fields``.</span>
+
+<span class="sd">        .. attention::</span>
+
+<span class="sd">            It is almost always ill-advised to call :py:meth:`gravity.AQUALGravity.compute_potential` directly if you</span>
+<span class="sd">            have an active instance of the object. The :py:meth:`gravity.AQUALGravity.potential` method will compute</span>
+<span class="sd">            the potential directly from the ``self.model`` object if an instances exists. This method should be reserved for cases when it</span>
+<span class="sd">            is undesirable to have to construct a full system.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        fields: dict</span>
+<span class="sd">            The fields from which to compute the potential.</span>
+<span class="sd">        attrs: dict</span>
+<span class="sd">            Additional attributes to pass. These would match the instance&#39;s attributes if this were a fully realized</span>
+<span class="sd">            instance of the class.</span>
+<span class="sd">        spinner: bool</span>
+<span class="sd">            ``False`` to disable the spinners.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        unyt_array</span>
+<span class="sd">            The computed gravitational potential of the system.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#  Logging and array construction</span>
+        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+        <span class="n">devLogger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[[Potential]] Integrating gravitational potential profile. gravity=</span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">_classname</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+        <span class="c1">#  Managing required attributes</span>
+        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+        <span class="c1"># - providing a_0 - #</span>
+        <span class="k">if</span> <span class="n">attrs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="s2">&quot;a_0&quot;</span> <span class="ow">in</span> <span class="n">attrs</span><span class="p">:</span>
+            <span class="n">a_0</span> <span class="o">=</span> <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;a_0&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;kpc/Myr**2&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">d</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">a_0</span> <span class="o">=</span> <span class="n">a0</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;kpc/Myr**2&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">d</span>
+
+        <span class="c1"># - providing the interpolation function - #</span>
+        <span class="k">if</span> <span class="n">attrs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="s2">&quot;interp_function&quot;</span> <span class="ow">in</span> <span class="n">attrs</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">attrs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">attrs</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;interp_function&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_interp</span>
+
+        <span class="c1"># Carrying out computations</span>
+        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+        <span class="k">with</span> <span class="n">Halo</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">log_string</span><span class="p">(</span><span class="s2">&quot;Computing potential...&quot;</span><span class="p">),</span> <span class="n">stream</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span>
+                  <span class="n">enabled</span><span class="o">=</span><span class="p">(</span><span class="n">cgparams</span><span class="p">[</span><span class="s2">&quot;system&quot;</span><span class="p">][</span><span class="s2">&quot;text&quot;</span><span class="p">][</span><span class="s2">&quot;spinners&quot;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">spinner</span><span class="p">))</span> <span class="k">as</span> <span class="n">h</span><span class="p">:</span>
+
+            <span class="c1"># -- Pulling necessary arrays -- #</span>
+            <span class="n">rr</span> <span class="o">=</span> <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span>
+            <span class="n">tmass</span> <span class="o">=</span> <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;total_mass&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span>
+
+            <span class="c1"># -- Computing the gamma function (mu(Gamma)Gamma = gamma) -- gamma = newt_acceleration. -- #</span>
+            <span class="n">gamma_func</span> <span class="o">=</span> <span class="n">InterpolatedUnivariateSpline</span><span class="p">(</span><span class="n">rr</span><span class="p">,</span> <span class="n">G</span><span class="o">.</span><span class="n">d</span> <span class="o">*</span> <span class="n">tmass</span> <span class="o">/</span> <span class="p">(</span><span class="n">a_0</span> <span class="o">*</span> <span class="p">(</span><span class="n">rr</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)))</span>
+            <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;gamma&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="p">(</span><span class="n">gamma_func</span><span class="p">(</span><span class="n">rr</span><span class="p">))</span>
+            <span class="n">gamma</span> <span class="o">=</span> <span class="n">gamma_func</span><span class="p">(</span><span class="n">rr</span><span class="p">)</span>
+
+            <span class="c1"># - generating guess solution - #</span>
+            <span class="n">devLogger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[[Potential]] Creating AQUAL guess solution for implicit equation...&quot;</span><span class="p">)</span>
+            <span class="n">guess_function</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">gamma</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">gamma</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">gamma</span><span class="p">)</span> <span class="o">*</span> <span class="n">gamma</span><span class="p">))</span>
+            <span class="n">_guess</span> <span class="o">=</span> <span class="n">guess_function</span><span class="p">(</span><span class="n">rr</span><span class="p">)</span>
+
+            <span class="c1"># - solving - #</span>
+            <span class="n">mylog</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[[Potential]] Optimizing implicit solution...&quot;</span><span class="p">)</span>
+            <span class="n">_fsolve_function</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">t</span> <span class="o">*</span> <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;interp_function&quot;</span><span class="p">](</span><span class="n">t</span><span class="p">)</span> <span class="o">-</span> <span class="n">gamma</span>
+
+            <span class="n">_test_guess</span> <span class="o">=</span> <span class="n">_fsolve_function</span><span class="p">(</span><span class="n">_guess</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span><span class="n">_test_guess</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">cgparams</span><span class="p">[</span><span class="s2">&quot;numerical&quot;</span><span class="p">][</span><span class="s2">&quot;implicit&quot;</span><span class="p">][</span><span class="s2">&quot;check_tolerance&quot;</span><span class="p">]:</span>
+                <span class="n">_Gamma_solution</span> <span class="o">=</span> <span class="n">_guess</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">_Gamma_solution</span> <span class="o">=</span> <span class="n">fsolve</span><span class="p">(</span><span class="n">_fsolve_function</span><span class="p">,</span> <span class="n">x0</span><span class="o">=</span><span class="n">_guess</span><span class="p">,</span><span class="n">xtol</span><span class="o">=</span><span class="n">cgparams</span><span class="p">[</span><span class="s2">&quot;numerical&quot;</span><span class="p">][</span><span class="s2">&quot;implicit&quot;</span><span class="p">][</span><span class="s2">&quot;solve_tolerance&quot;</span><span class="p">])</span>
+
+            <span class="n">Gamma</span> <span class="o">=</span> <span class="n">InterpolatedUnivariateSpline</span><span class="p">(</span><span class="n">rr</span><span class="p">,</span> <span class="n">_Gamma_solution</span><span class="p">)</span>
+
+            <span class="n">_v</span><span class="p">,</span> <span class="n">errs</span> <span class="o">=</span> <span class="n">integrate</span><span class="p">(</span><span class="n">Gamma</span><span class="p">,</span> <span class="n">rr</span><span class="p">,</span> <span class="n">rmax</span><span class="o">=</span><span class="n">rr</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">gpot2</span> <span class="o">=</span> <span class="n">a_0</span> <span class="o">*</span> <span class="n">unyt_array</span><span class="p">(</span><span class="n">_v</span><span class="p">,</span> <span class="s2">&quot;(kpc**2)/Myr**2&quot;</span><span class="p">)</span>
+
+            <span class="c1"># - Finishing computation - #</span>
+            <span class="n">potential</span> <span class="o">=</span> <span class="o">-</span><span class="n">gpot2</span>
+            <span class="n">potential</span><span class="o">.</span><span class="n">convert_to_units</span><span class="p">(</span><span class="s2">&quot;kpc**2/Myr**2&quot;</span><span class="p">)</span>
+            <span class="n">h</span><span class="o">.</span><span class="n">succeed</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">log_string</span><span class="p">(</span><span class="s2">&quot;Computed potential...&quot;</span><span class="p">))</span>
+
+        <span class="c1">#  Managing warnings</span>
+        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">errs</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">mylog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Detected </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">errs</span><span class="p">)</span><span class="si">}</span><span class="s2"> warnings from integration. Likely due to physicality issues.&quot;</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">wi</span> <span class="ow">in</span> <span class="n">errs</span><span class="p">:</span>
+                <span class="n">devLogger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">wi</span><span class="o">.</span><span class="n">message</span><span class="p">)</span>
+
+        <span class="c1"># -- DONE -- #</span>
+        <span class="k">return</span> <span class="n">potential</span></div>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_interp</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_interpolation_function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="QUMONDGravity"><a class="viewcode-back" href="../_as_gen/gravity.QUMONDGravity.html#gravity.QUMONDGravity">[docs]</a><span class="k">class</span> <span class="nc">QUMONDGravity</span><span class="p">(</span><span class="n">Gravity</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    QUMOND implementation of :py:class:`gravity.Gravity`.</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    :py:class:`gravity.Gravity`</span>
+<span class="sd">    :py:class:`gravity.NewtonianGravity`</span>
+<span class="sd">    :py:class:`gravity.AQUALGravity`</span>
+<span class="sd">    :py:class:`gravity.EMONDGravity`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_classname</span> <span class="o">=</span> <span class="s2">&quot;QUMOND&quot;</span>
+    <span class="n">_interpolation_function</span> <span class="o">=</span> <span class="n">cgparams</span><span class="p">[</span><span class="s2">&quot;gravity&quot;</span><span class="p">][</span><span class="s2">&quot;QUMOND&quot;</span><span class="p">][</span><span class="s2">&quot;interpolation_function&quot;</span><span class="p">]</span>
+
+<div class="viewcode-block" id="QUMONDGravity.__init__"><a class="viewcode-back" href="../_as_gen/gravity.QUMONDGravity.__init__.html#gravity.QUMONDGravity.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="c1"># -- Providing the inherited structure -- #</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+
+        <span class="c1"># -- Checking for necessary attributes -- #</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">attrs</span> <span class="o">=</span> <span class="n">kwargs</span>
+
+        <span class="k">if</span> <span class="s2">&quot;interp_function&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">attrs</span><span class="p">:</span>
+            <span class="n">mylog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Gravity </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_classname</span><span class="si">}</span><span class="s2"> requires kwarg `interp_function`. Setting to default...&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;interp_function&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_interp</span>
+
+        <span class="k">if</span> <span class="s2">&quot;a_0&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">attrs</span><span class="p">:</span>
+            <span class="n">mylog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Gravity </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_classname</span><span class="si">}</span><span class="s2"> requires kwarg `a_0`. Setting to default...&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;a_0&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">a0</span></div>
+
+    <span class="c1">#  Methods</span>
+    <span class="c1"># ---------------------------------------------------------------------------------------------------------------- #</span>
+<div class="viewcode-block" id="QUMONDGravity.potential"><a class="viewcode-back" href="../_as_gen/gravity.QUMONDGravity.potential.html#gravity.QUMONDGravity.potential">[docs]</a>    <span class="k">def</span> <span class="nf">potential</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Computes the potential array for the model to which this instance is attached.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        force: bool</span>
+<span class="sd">            If ``True``, a new computation will occur even if the model already has a potential field.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        np.ndarray</span>
+<span class="sd">            The relevant solution to the Poisson equation.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#  Logging</span>
+        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+        <span class="n">mylog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Computing gravitational potential of </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span><span class="si">}</span><span class="s2">. gravity=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_classname</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+        <span class="c1">#  Sanity Check</span>
+        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">force</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_calculated</span><span class="p">:</span>
+            <span class="n">mylog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="s2">&quot;There is already a calculated potential for this model. To force recomputation, use force=True.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+        <span class="c1">#  Computing</span>
+        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+        <span class="c1"># ------------------------#                                                                                #</span>
+        <span class="c1"># In the far field, the acceleration in QUMOND goes as 1/r, which is not integrable. As such, our scheme   #</span>
+        <span class="c1"># is to set the gauge at 2*rmax and then integrate out to it. Because we only need the potential out to rr #</span>
+        <span class="c1"># its fine to not have an entirely integrated curve.                                                       #</span>
+        <span class="c1"># -------------------------------------------------------------------------------------------------------- #</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;gravitational_potential&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_potential</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fields</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">attrs</span><span class="p">,</span>
+                                                                              <span class="n">spinner</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QUMONDGravity.compute_mass"><a class="viewcode-back" href="../_as_gen/gravity.QUMONDGravity.compute_mass.html#gravity.QUMONDGravity.compute_mass">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">compute_mass</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Computes the dynamical mass from the provided fields.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        fields: dict</span>
+<span class="sd">            The model fields associated with the object being computed.</span>
+<span class="sd">        attrs: dict</span>
+<span class="sd">            Additional attributes to use in computation.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        np.ndarray</span>
+<span class="sd">            Computation result</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="n">Halo</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">log_string</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dyn. Mass comp; </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">_classname</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">),</span> <span class="n">stream</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="n">enabled</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="k">as</span> <span class="n">h</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">attrs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">attrs</span> <span class="o">=</span> <span class="p">{}</span>
+
+            <span class="k">if</span> <span class="s2">&quot;interp_function&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">attrs</span><span class="p">:</span>
+                <span class="n">mylog</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Gravity </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">_classname</span><span class="si">}</span><span class="s2"> requires kwarg `interp_function`. Setting to default...&quot;</span><span class="p">)</span>
+                <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;interp_function&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_interp</span>
+
+            <span class="k">if</span> <span class="s2">&quot;a_0&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">attrs</span><span class="p">:</span>
+                <span class="n">mylog</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Gravity </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">_classname</span><span class="si">}</span><span class="s2"> requires kwarg `a_0`. Setting to default...&quot;</span><span class="p">)</span>
+                <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;a_0&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">a0</span>
+            <span class="c1"># Compute the mass from QUMOND poisson equation</span>
+
+            <span class="c1"># - Creating a function equivalent of the gravitational field - #</span>
+            <span class="n">_gravitational_field_spline</span> <span class="o">=</span> <span class="n">InterpolatedUnivariateSpline</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">,</span>
+                                                                       <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;gravitational_field&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span>
+                                                                           <span class="s2">&quot;kpc/Myr**2&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">d</span> <span class="o">/</span>
+                                                                       <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;a_0&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;kpc/Myr**2&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">d</span><span class="p">)</span>
+
+            <span class="n">_fsolve_function</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;interp_function&quot;</span><span class="p">](</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">_gravitational_field_spline</span><span class="p">(</span>
+                <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">)</span>
+
+            <span class="c1"># - Computing the guess - #</span>
+            <span class="n">_x_guess</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;gravitational_field&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">)</span> <span class="o">*</span> <span class="n">_gravitational_field_spline</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">))</span>
+
+            <span class="c1"># - solving - #</span>
+            <span class="n">_x</span> <span class="o">=</span> <span class="n">fsolve</span><span class="p">(</span><span class="n">_fsolve_function</span><span class="p">,</span> <span class="n">_x_guess</span><span class="p">)</span>
+            <span class="n">h</span><span class="o">.</span><span class="n">succeed</span><span class="p">(</span><span class="n">log_string</span><span class="p">(</span><span class="s2">&quot;Dyn. Mass comp: [DONE] &quot;</span><span class="p">))</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;a_0&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">G</span><span class="p">)</span> <span class="o">*</span> <span class="n">_x</span></div>
+
+<div class="viewcode-block" id="QUMONDGravity.compute_potential"><a class="viewcode-back" href="../_as_gen/gravity.QUMONDGravity.compute_potential.html#gravity.QUMONDGravity.compute_potential">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">compute_potential</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">spinner</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Computes the gravitational potential of the system directly from the provided ``fields``.</span>
+
+<span class="sd">        .. attention::</span>
+
+<span class="sd">            It is almost always ill-advised to call :py:meth:`gravity.QUMONDGravity.compute_potential` directly if you</span>
+<span class="sd">            have an active instance of the object. The :py:meth:`gravity.QUMONDGravity.potential` method will compute</span>
+<span class="sd">            the potential directly from the ``self.model`` object if an instances exists. This method should be reserved for cases when it</span>
+<span class="sd">            is undesirable to have to construct a full system.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        fields: dict</span>
+<span class="sd">            The fields from which to compute the potential.</span>
+<span class="sd">        attrs: dict</span>
+<span class="sd">            Additional attributes to pass. These would match the instance&#39;s attributes if this were a fully realized</span>
+<span class="sd">            instance of the class.</span>
+<span class="sd">        spinner: bool</span>
+<span class="sd">            ``False`` to disable the spinners.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        unyt_array</span>
+<span class="sd">            The computed gravitational potential of the system.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#  Logging</span>
+        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+        <span class="n">devLogger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[[Potential]] Integrating gravitational potential profile. gravity=</span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">_classname</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+        <span class="c1">#  Managing Attributes</span>
+        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+        <span class="c1"># - providing a_0 - #</span>
+        <span class="k">if</span> <span class="n">attrs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="s2">&quot;a_0&quot;</span> <span class="ow">in</span> <span class="n">attrs</span><span class="p">:</span>
+            <span class="n">a_0</span> <span class="o">=</span> <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;a_0&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;kpc/Myr**2&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">d</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">a_0</span> <span class="o">=</span> <span class="n">a0</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;kpc/Myr**2&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">d</span>
+
+        <span class="c1"># - providing the interpolation function - #</span>
+        <span class="k">if</span> <span class="n">attrs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="s2">&quot;interp_function&quot;</span> <span class="ow">in</span> <span class="n">attrs</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">attrs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">attrs</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;interp_function&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_interp</span>
+
+        <span class="c1">#  Computing</span>
+        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+        <span class="k">with</span> <span class="n">Halo</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">log_string</span><span class="p">(</span><span class="s2">&quot;Computing potential...&quot;</span><span class="p">),</span> <span class="n">stream</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span>
+                  <span class="n">enabled</span><span class="o">=</span><span class="p">(</span><span class="n">cgparams</span><span class="p">[</span><span class="s2">&quot;system&quot;</span><span class="p">][</span><span class="s2">&quot;text&quot;</span><span class="p">][</span><span class="s2">&quot;spinners&quot;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">spinner</span><span class="p">))</span> <span class="k">as</span> <span class="n">h</span><span class="p">:</span>
+
+            <span class="c1"># -- grabbing arrays -- #</span>
+            <span class="n">rr</span> <span class="o">=</span> <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;kpc&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">d</span>
+
+            <span class="c1"># -- Computing the newtonian potential first -- #</span>
+            <span class="n">newtonian_potential</span> <span class="o">=</span> <span class="n">NewtonianGravity</span><span class="o">.</span><span class="n">compute_potential</span><span class="p">(</span><span class="n">fields</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">spinner</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+            <span class="c1"># -- determining the correct form of the proper potential -- #</span>
+            <span class="n">n_accel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">newtonian_potential</span><span class="o">.</span><span class="n">d</span><span class="p">,</span> <span class="n">rr</span><span class="p">)</span>
+            <span class="n">dphi</span> <span class="o">=</span> <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;interp_function&quot;</span><span class="p">](</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">n_accel</span><span class="p">)</span> <span class="o">/</span> <span class="n">a_0</span><span class="p">)</span> <span class="o">*</span> <span class="n">n_accel</span>
+
+            <span class="n">dphi_func</span> <span class="o">=</span> <span class="n">InterpolatedUnivariateSpline</span><span class="p">(</span><span class="n">rr</span><span class="p">,</span> <span class="n">dphi</span><span class="p">)</span>
+            <span class="n">_v</span><span class="p">,</span> <span class="n">errs</span> <span class="o">=</span> <span class="n">integrate</span><span class="p">(</span><span class="n">dphi_func</span><span class="p">,</span> <span class="n">rr</span><span class="p">,</span> <span class="n">rr</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">gpot2</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="p">(</span><span class="n">_v</span><span class="p">,</span> <span class="s2">&quot;kpc**2/Myr**2&quot;</span><span class="p">)</span>
+
+            <span class="c1"># - Finishing computation - #</span>
+            <span class="n">potential</span> <span class="o">=</span> <span class="o">-</span><span class="n">gpot2</span>
+            <span class="n">potential</span><span class="o">.</span><span class="n">convert_to_units</span><span class="p">(</span><span class="s2">&quot;kpc**2/Myr**2&quot;</span><span class="p">)</span>
+            <span class="n">h</span><span class="o">.</span><span class="n">succeed</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">log_string</span><span class="p">(</span><span class="s2">&quot;Computed potential...&quot;</span><span class="p">))</span>
+
+        <span class="c1">#  Managing warnings</span>
+        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">errs</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">mylog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Detected </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">errs</span><span class="p">)</span><span class="si">}</span><span class="s2"> warnings from integration. Likely due to physicality issues.&quot;</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">wi</span> <span class="ow">in</span> <span class="n">errs</span><span class="p">:</span>
+                <span class="n">devLogger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">wi</span><span class="o">.</span><span class="n">message</span><span class="p">)</span>
+
+        <span class="c1"># -- DONE -- #</span>
+        <span class="k">return</span> <span class="n">potential</span></div>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_interp</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_interpolation_function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="EMONDGravity"><a class="viewcode-back" href="../_as_gen/gravity.EMONDGravity.html#gravity.EMONDGravity">[docs]</a><span class="k">class</span> <span class="nc">EMONDGravity</span><span class="p">(</span><span class="n">Gravity</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Implementation of the Extended MOND formulation of MOND.</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    :py:class:`gravity.Gravity`</span>
+<span class="sd">    :py:class:`gravity.NewtonianGravity`</span>
+<span class="sd">    :py:class:`gravity.QUMONDGravity`</span>
+<span class="sd">    :py:class:`gravity.AQUALGravity`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_classname</span> <span class="o">=</span> <span class="s2">&quot;EMOND&quot;</span>
+    <span class="n">_interpolation_function</span> <span class="o">=</span> <span class="n">cgparams</span><span class="p">[</span><span class="s2">&quot;gravity&quot;</span><span class="p">][</span><span class="s2">&quot;AQUAL&quot;</span><span class="p">][</span><span class="s2">&quot;interpolation_function&quot;</span><span class="p">]</span>
+    <span class="n">_base_a0</span> <span class="o">=</span> <span class="n">cgparams</span><span class="p">[</span><span class="s2">&quot;gravity&quot;</span><span class="p">][</span><span class="s2">&quot;EMOND&quot;</span><span class="p">][</span><span class="s2">&quot;a0_function&quot;</span><span class="p">]</span>
+<div class="viewcode-block" id="EMONDGravity.__init__"><a class="viewcode-back" href="../_as_gen/gravity.EMONDGravity.__init__.html#gravity.EMONDGravity.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="c1"># -- Providing the inherited structure -- #</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="s2">&quot;a_0&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">attrs</span><span class="p">:</span>
+            <span class="n">mylog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Gravity </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_classname</span><span class="si">}</span><span class="s2"> requires kwarg `a_0`. Setting to default...&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;a_0&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_a0</span></div>
+
+    <span class="c1">#  Methods</span>
+    <span class="c1"># ---------------------------------------------------------------------------------------------------------------- #</span>
+<div class="viewcode-block" id="EMONDGravity.potential"><a class="viewcode-back" href="../_as_gen/gravity.EMONDGravity.potential.html#gravity.EMONDGravity.potential">[docs]</a>    <span class="k">def</span> <span class="nf">potential</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Computes the gravitational potential of the object.</span>
+
+<span class="sd">        .. attention::</span>
+
+<span class="sd">            This method passes directly to the class method :py:meth:`~cluster_model.gravity.AQUALGravity.compute_potential`. If you only</span>
+<span class="sd">            have fields and not a model, that is the better approach.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        force: bool</span>
+<span class="sd">            If ``True``, the potential will be recomputed even if it already exists.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#  Logging</span>
+        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+        <span class="n">mylog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Computing gravitational potential of </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span><span class="si">}</span><span class="s2">. gravity=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_classname</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+        <span class="c1">#  Sanity Check</span>
+        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">force</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_calculated</span><span class="p">:</span>
+            <span class="n">mylog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="s2">&quot;There is already a calculated potential for this model. To force recomputation, use force=True.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+        <span class="c1">#  Computing</span>
+        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;gravitational_potential&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_potential</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fields</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">attrs</span><span class="p">,</span>
+                                                                              <span class="n">spinner</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="EMONDGravity.compute_mass"><a class="viewcode-back" href="../_as_gen/gravity.EMONDGravity.compute_mass.html#gravity.EMONDGravity.compute_mass">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">compute_mass</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Computes the dynamical mass from the provided fields.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        fields: dict</span>
+<span class="sd">            The model fields associated with the object being computed.</span>
+<span class="sd">        attrs: dict</span>
+<span class="sd">            Additional attributes to use in computation.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        np.ndarray</span>
+<span class="sd">            Computation result</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#  Managing attributes</span>
+        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+        <span class="k">with</span> <span class="n">Halo</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">log_string</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dyn. Mass comp; </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">_classname</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">),</span> <span class="n">stream</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span> <span class="k">as</span> <span class="n">h</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">attrs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">attrs</span> <span class="o">=</span> <span class="p">{}</span>
+
+            <span class="k">if</span> <span class="s2">&quot;interp_function&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">attrs</span><span class="p">:</span>
+                <span class="n">mylog</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Gravity </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">_classname</span><span class="si">}</span><span class="s2"> requires kwarg `interp_function`. Setting to default...&quot;</span><span class="p">)</span>
+                <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;interp_function&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_interp</span>
+
+            <span class="k">if</span> <span class="s2">&quot;a_0&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">attrs</span><span class="p">:</span>
+                <span class="n">mylog</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Gravity </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">_classname</span><span class="si">}</span><span class="s2"> requires kwarg `a_0`. Setting to default...&quot;</span><span class="p">)</span>
+                <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;a_0&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_base_a0</span>
+
+            <span class="c1">#  Returning output</span>
+            <span class="c1"># -------------------------------------------------------------------------------------------------------- #</span>
+            <span class="n">h</span><span class="o">.</span><span class="n">succeed</span><span class="p">(</span><span class="n">log_string</span><span class="p">(</span><span class="s2">&quot;Dyn. Mass comp: [DONE] &quot;</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="o">-</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;gravitational_field&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">G</span><span class="p">)</span> <span class="o">*</span> <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;interp_function&quot;</span><span class="p">](</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;gravitational_field&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;kpc/Myr**2&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">d</span><span class="p">)</span> <span class="o">/</span> <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;a_0&quot;</span><span class="p">](</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;gravitational_potential&quot;</span><span class="p">]))</span></div>
+
+<div class="viewcode-block" id="EMONDGravity.compute_potential"><a class="viewcode-back" href="../_as_gen/gravity.EMONDGravity.compute_potential.html#gravity.EMONDGravity.compute_potential">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">compute_potential</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">spinner</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">rmax</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Computes the gravitational potential of the system directly from the provided ``fields``.</span>
+
+<span class="sd">        .. attention::</span>
+
+<span class="sd">            It is almost always ill-advised to call :py:meth:`gravity.AQUALGravity.compute_potential` directly if you</span>
+<span class="sd">            have an active instance of the object. The :py:meth:`gravity.AQUALGravity.potential` method will compute</span>
+<span class="sd">            the potential directly from the ``self.model`` object if an instances exists. This method should be reserved for cases when it</span>
+<span class="sd">            is undesirable to have to construct a full system.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        fields: dict</span>
+<span class="sd">            The fields from which to compute the potential.</span>
+<span class="sd">        attrs: dict</span>
+<span class="sd">            Additional attributes to pass. These would match the instance&#39;s attributes if this were a fully realized</span>
+<span class="sd">            instance of the class.</span>
+<span class="sd">        spinner: bool</span>
+<span class="sd">            ``False`` to disable the spinners.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        unyt_array</span>
+<span class="sd">            The computed gravitational potential of the system.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#  Logging and array construction</span>
+        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+        <span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">solve_ivp</span>
+        <span class="kn">from</span> <span class="nn">cluster_generator.utils</span> <span class="kn">import</span> <span class="n">truncate_spline</span>
+        <span class="n">devLogger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[[Potential]] Integrating gravitational potential profile. gravity=</span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">_classname</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+        <span class="c1">#  Managing required attributes</span>
+        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+        <span class="c1"># - providing a_0 - #</span>
+        <span class="k">if</span> <span class="n">attrs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">attrs</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">if</span> <span class="s2">&quot;a_0&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">attrs</span><span class="p">:</span>
+            <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;a_0&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_base_a0</span>
+
+        <span class="c1"># - providing the interpolation function - #</span>
+        <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;interp_function&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_interp</span>
+
+
+        <span class="c1"># Carrying out computations</span>
+        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+        <span class="k">with</span> <span class="n">Halo</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">log_string</span><span class="p">(</span><span class="s2">&quot;Computing potential...&quot;</span><span class="p">),</span> <span class="n">stream</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span>
+                  <span class="n">enabled</span><span class="o">=</span><span class="p">(</span><span class="n">cgparams</span><span class="p">[</span><span class="s2">&quot;system&quot;</span><span class="p">][</span><span class="s2">&quot;text&quot;</span><span class="p">][</span><span class="s2">&quot;spinners&quot;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">spinner</span><span class="p">))</span> <span class="k">as</span> <span class="n">h</span><span class="p">:</span>
+
+            <span class="c1"># -- Pulling necessary arrays -- #</span>
+            <span class="n">rr</span> <span class="o">=</span> <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">rmax</span><span class="p">:</span>
+                <span class="n">rmax</span> <span class="o">=</span> <span class="n">rr</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+            <span class="n">tmass</span> <span class="o">=</span> <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;total_mass&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span>
+            <span class="n">alpha</span> <span class="o">=</span> <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;alpha&quot;</span><span class="p">]</span>
+
+            <span class="c1"># -- Computing the gamma function (mu(Gamma)Gamma = gamma) -- gamma = newt_acceleration. -- #</span>
+            <span class="n">gamma_func</span> <span class="o">=</span> <span class="n">InterpolatedUnivariateSpline</span><span class="p">(</span><span class="n">rr</span><span class="p">,</span> <span class="n">G</span><span class="o">.</span><span class="n">d</span> <span class="o">*</span> <span class="n">tmass</span> <span class="o">/</span> <span class="p">(</span><span class="n">rr</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
+            <span class="n">gamma_func</span> <span class="o">=</span> <span class="n">truncate_spline</span><span class="p">(</span><span class="n">gamma_func</span><span class="p">,</span><span class="n">rr</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="mi">7</span><span class="p">)</span>
+
+            <span class="n">gamma_f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">p</span><span class="p">:</span> <span class="n">gamma_func</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">/</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;a_0&quot;</span><span class="p">](</span><span class="n">p</span><span class="p">)</span>
+
+            <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;newtonian_field&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="p">(</span><span class="n">gamma_func</span><span class="p">(</span><span class="n">rr</span><span class="p">))</span>
+            <span class="n">gamma</span> <span class="o">=</span> <span class="n">gamma_func</span><span class="p">(</span><span class="n">rr</span><span class="p">)</span>
+
+
+            <span class="c1"># -- setting up lambda functions -- #</span>
+            <span class="n">devLogger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[[Potential]] Creating EMOND differential equation...&quot;</span><span class="p">)</span>
+            <span class="n">Gamma_function</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">p</span><span class="p">:</span> <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;a_0&quot;</span><span class="p">](</span><span class="n">p</span><span class="p">)</span><span class="o">*</span><span class="p">((</span><span class="mi">1</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">gamma_f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">p</span><span class="p">))</span><span class="o">/</span><span class="n">gamma_f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">p</span><span class="p">))</span><span class="o">**</span><span class="n">alpha</span><span class="p">))</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">alpha</span><span class="p">))</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">gamma_f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">p</span><span class="p">))</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">gamma_f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">p</span><span class="p">)))</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">alpha</span><span class="p">))</span>
+
+            <span class="n">devLogger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[[Potential]] Solving EMOND differential equation...&quot;</span><span class="p">)</span>
+            <span class="n">sol</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span><span class="n">Gamma_function</span><span class="p">,(</span><span class="n">rmax</span><span class="p">,</span><span class="n">rr</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span><span class="n">y0</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">t_eval</span><span class="o">=</span><span class="n">rr</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;DOP853&quot;</span><span class="p">)</span>
+
+            <span class="n">gpot2</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">,::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;(kpc**2)/Myr**2&quot;</span><span class="p">)</span>
+
+            <span class="c1"># - Finishing computation - #</span>
+            <span class="n">potential</span> <span class="o">=</span> <span class="n">gpot2</span>
+            <span class="n">potential</span><span class="o">.</span><span class="n">convert_to_units</span><span class="p">(</span><span class="s2">&quot;kpc**2/Myr**2&quot;</span><span class="p">)</span>
+            <span class="n">h</span><span class="o">.</span><span class="n">succeed</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">log_string</span><span class="p">(</span><span class="s2">&quot;Computed potential...&quot;</span><span class="p">))</span>
+
+        <span class="c1"># -- DONE -- #</span>
+        <span class="k">return</span> <span class="n">potential</span></div>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_interp</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_interpolation_function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
+
+<span class="c1"># -------------------------------------------------------------------------------------------------------------------- #</span>
+<span class="c1"># Catalog ============================================================================================================ #</span>
+<span class="c1"># -------------------------------------------------------------------------------------------------------------------- #</span>
+<span class="c1"># -- gravity catalog -- #</span>
+<span class="n">available_gravities</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;Newtonian&quot;</span><span class="p">:</span> <span class="n">NewtonianGravity</span><span class="p">,</span>
+    <span class="s2">&quot;AQUAL&quot;</span>    <span class="p">:</span> <span class="n">AQUALGravity</span><span class="p">,</span>
+    <span class="s2">&quot;QUMOND&quot;</span>   <span class="p">:</span> <span class="n">QUMONDGravity</span>
+<span class="p">}</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">cluster_generator.radial_profiles</span> <span class="kn">import</span> <span class="n">find_overdensity_radius</span><span class="p">,</span> <span class="n">snfw_mass_profile</span><span class="p">,</span> <span class="n">snfw_total_mass</span><span class="p">,</span> \
+        <span class="n">snfw_density_profile</span>
+
+    <span class="n">z</span> <span class="o">=</span> <span class="mf">0.1</span>
+    <span class="n">M200</span> <span class="o">=</span> <span class="mf">1.5e15</span>
+    <span class="n">conc</span> <span class="o">=</span> <span class="mf">4.0</span>
+    <span class="n">r200</span> <span class="o">=</span> <span class="n">find_overdensity_radius</span><span class="p">(</span><span class="n">M200</span><span class="p">,</span> <span class="mf">200.0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="n">z</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">r200</span> <span class="o">/</span> <span class="n">conc</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="n">snfw_total_mass</span><span class="p">(</span><span class="n">M200</span><span class="p">,</span> <span class="n">r200</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+    <span class="n">rhot</span> <span class="o">=</span> <span class="n">snfw_density_profile</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">snfw_mass_profile</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+
+    <span class="n">rmin</span><span class="p">,</span> <span class="n">rmax</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">r200</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">geomspace</span><span class="p">(</span><span class="n">rmin</span><span class="p">,</span> <span class="n">rmax</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+    <span class="n">m</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="p">(</span><span class="n">m</span><span class="p">(</span><span class="n">r</span><span class="p">),</span> <span class="s2">&quot;Msun&quot;</span><span class="p">),</span> <span class="n">unyt_array</span><span class="p">(</span><span class="n">rhot</span><span class="p">(</span><span class="n">r</span><span class="p">),</span> <span class="s2">&quot;Msun/kpc**3&quot;</span><span class="p">),</span> <span class="n">unyt_array</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="s2">&quot;kpc&quot;</span><span class="p">)</span>
+
+    <span class="n">QUMONDGravity</span><span class="o">.</span><span class="n">compute_potential</span><span class="p">({</span><span class="s2">&quot;total_mass&quot;</span><span class="p">:</span> <span class="n">m</span><span class="p">,</span> <span class="s2">&quot;total_density&quot;</span><span class="p">:</span> <span class="n">d</span><span class="p">,</span> <span class="s2">&quot;radius&quot;</span><span class="p">:</span> <span class="n">r</span><span class="p">})</span>
+</pre></div>
+
+                </article>
+              
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+  <p class="copyright">
+    
+      © Copyright 2020, John ZuHone and Eliza DIggins.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.1.2.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.13.3.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

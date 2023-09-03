@@ -46,7 +46,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'api';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="radial_profiles" href="_as_gen/radial_profiles.html" />
+    <link rel="next" title="utils" href="_as_gen/utils.html" />
     <link rel="prev" title="Feature Guide: Using Builtin Collections" href="notebooks/api_guides/4.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -333,7 +333,22 @@ document.write(`
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="_as_gen/radial_profiles.html">radial_profiles</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="_as_gen/utils.html">utils</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="_as_gen/utils.ensure_list.html">utils.ensure_list</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_as_gen/utils.ensure_ytarray.html">utils.ensure_ytarray</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_as_gen/utils.ensure_ytquantity.html">utils.ensure_ytquantity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_as_gen/utils.eprint.html">utils.eprint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_as_gen/utils.generate_particle_radii.html">utils.generate_particle_radii</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_as_gen/utils.integrate.html">utils.integrate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_as_gen/utils.integrate_mass.html">utils.integrate_mass</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_as_gen/utils.integrate_toinf.html">utils.integrate_toinf</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_as_gen/utils.log_string.html">utils.log_string</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_as_gen/utils.moving_average.html">utils.moving_average</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_as_gen/utils.parse_prng.html">utils.parse_prng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_as_gen/utils.truncate_spline.html">utils.truncate_spline</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="_as_gen/radial_profiles.html">radial_profiles</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="_as_gen/radial_profiles.am06_density_profile.html">radial_profiles.am06_density_profile</a></li>
 <li class="toctree-l2"><a class="reference internal" href="_as_gen/radial_profiles.am06_temperature_profile.html">radial_profiles.am06_temperature_profile</a></li>
 <li class="toctree-l2"><a class="reference internal" href="_as_gen/radial_profiles.baseline_entropy_profile.html">radial_profiles.baseline_entropy_profile</a></li>
@@ -365,7 +380,7 @@ document.write(`
 <li class="toctree-l2"><a class="reference internal" href="_as_gen/radial_profiles.vikhlinin_density_profile.html">radial_profiles.vikhlinin_density_profile</a></li>
 <li class="toctree-l2"><a class="reference internal" href="_as_gen/radial_profiles.vikhlinin_temperature_profile.html">radial_profiles.vikhlinin_temperature_profile</a></li>
 <li class="toctree-l2"><a class="reference internal" href="_as_gen/radial_profiles.walker_entropy_profile.html">radial_profiles.walker_entropy_profile</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="_as_gen/radial_profiles.RadialProfile.html">radial_profiles.RadialProfile</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="_as_gen/radial_profiles.RadialProfile.html">radial_profiles.RadialProfile</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="_as_gen/radial_profiles.RadialProfile.__init__.html">radial_profiles.RadialProfile.__init__</a></li>
 <li class="toctree-l3"><a class="reference internal" href="_as_gen/radial_profiles.RadialProfile.add_core.html">radial_profiles.RadialProfile.add_core</a></li>
 <li class="toctree-l3"><a class="reference internal" href="_as_gen/radial_profiles.RadialProfile.built_in.html">radial_profiles.RadialProfile.built_in</a></li>
@@ -377,6 +392,285 @@ document.write(`
 <li class="toctree-l3"><a class="reference internal" href="_as_gen/radial_profiles.RadialProfile.builtin.html">radial_profiles.RadialProfile.builtin</a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="_as_gen/fields.html">fields</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="_as_gen/fields.parse_value.html">fields.parse_value</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_as_gen/fields.rot_3d.html">fields.rot_3d</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="_as_gen/fields.ClusterField.html">fields.ClusterField</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/fields.ClusterField.__init__.html">fields.ClusterField.__init__</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/fields.ClusterField.map_field_to_particles.html">fields.ClusterField.map_field_to_particles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/fields.ClusterField.write_file.html">fields.ClusterField.write_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/fields.ClusterField.units.html">fields.ClusterField.units</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="_as_gen/fields.GaussianRandomField.html">fields.GaussianRandomField</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/fields.GaussianRandomField.__init__.html">fields.GaussianRandomField.__init__</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/fields.GaussianRandomField.map_field_to_particles.html">fields.GaussianRandomField.map_field_to_particles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/fields.GaussianRandomField.write_file.html">fields.GaussianRandomField.write_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/fields.GaussianRandomField.units.html">fields.GaussianRandomField.units</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="_as_gen/fields.RadialRandomMagneticField.html">fields.RadialRandomMagneticField</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/fields.RadialRandomMagneticField.__init__.html">fields.RadialRandomMagneticField.__init__</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/fields.RadialRandomMagneticField.map_field_to_particles.html">fields.RadialRandomMagneticField.map_field_to_particles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/fields.RadialRandomMagneticField.write_file.html">fields.RadialRandomMagneticField.write_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/fields.RadialRandomMagneticField.units.html">fields.RadialRandomMagneticField.units</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="_as_gen/fields.RadialRandomMagneticVectorPotential.html">fields.RadialRandomMagneticVectorPotential</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/fields.RadialRandomMagneticVectorPotential.__init__.html">fields.RadialRandomMagneticVectorPotential.__init__</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/fields.RadialRandomMagneticVectorPotential.map_field_to_particles.html">fields.RadialRandomMagneticVectorPotential.map_field_to_particles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/fields.RadialRandomMagneticVectorPotential.write_file.html">fields.RadialRandomMagneticVectorPotential.write_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/fields.RadialRandomMagneticVectorPotential.units.html">fields.RadialRandomMagneticVectorPotential.units</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="_as_gen/fields.RadialRandomVelocityField.html">fields.RadialRandomVelocityField</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/fields.RadialRandomVelocityField.__init__.html">fields.RadialRandomVelocityField.__init__</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/fields.RadialRandomVelocityField.map_field_to_particles.html">fields.RadialRandomVelocityField.map_field_to_particles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/fields.RadialRandomVelocityField.write_file.html">fields.RadialRandomVelocityField.write_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/fields.RadialRandomVelocityField.units.html">fields.RadialRandomVelocityField.units</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="_as_gen/fields.RandomMagneticField.html">fields.RandomMagneticField</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-10"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/fields.RandomMagneticField.__init__.html">fields.RandomMagneticField.__init__</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/fields.RandomMagneticField.map_field_to_particles.html">fields.RandomMagneticField.map_field_to_particles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/fields.RandomMagneticField.write_file.html">fields.RandomMagneticField.write_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/fields.RandomMagneticField.units.html">fields.RandomMagneticField.units</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="_as_gen/fields.RandomMagneticVectorPotential.html">fields.RandomMagneticVectorPotential</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-11"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/fields.RandomMagneticVectorPotential.__init__.html">fields.RandomMagneticVectorPotential.__init__</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/fields.RandomMagneticVectorPotential.map_field_to_particles.html">fields.RandomMagneticVectorPotential.map_field_to_particles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/fields.RandomMagneticVectorPotential.write_file.html">fields.RandomMagneticVectorPotential.write_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/fields.RandomMagneticVectorPotential.units.html">fields.RandomMagneticVectorPotential.units</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="_as_gen/fields.RandomVelocityField.html">fields.RandomVelocityField</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-12"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/fields.RandomVelocityField.__init__.html">fields.RandomVelocityField.__init__</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/fields.RandomVelocityField.map_field_to_particles.html">fields.RandomVelocityField.map_field_to_particles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/fields.RandomVelocityField.write_file.html">fields.RandomVelocityField.write_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/fields.RandomVelocityField.units.html">fields.RandomVelocityField.units</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="_as_gen/ics.html">ics</a><input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-13"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="_as_gen/ics.compute_centers_for_binary.html">ics.compute_centers_for_binary</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="_as_gen/ics.ClusterICs.html">ics.ClusterICs</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-14"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/ics.ClusterICs.__init__.html">ics.ClusterICs.__init__</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/ics.ClusterICs.create_dataset.html">ics.ClusterICs.create_dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/ics.ClusterICs.from_file.html">ics.ClusterICs.from_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/ics.ClusterICs.resample_particle_ics.html">ics.ClusterICs.resample_particle_ics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/ics.ClusterICs.setup_particle_ics.html">ics.ClusterICs.setup_particle_ics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/ics.ClusterICs.to_file.html">ics.ClusterICs.to_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/ics.ClusterICs.basename.html">ics.ClusterICs.basename</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/ics.ClusterICs.num_halos.html">ics.ClusterICs.num_halos</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/ics.ClusterICs.profiles.html">ics.ClusterICs.profiles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/ics.ClusterICs.center.html">ics.ClusterICs.center</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/ics.ClusterICs.velocity.html">ics.ClusterICs.velocity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/ics.ClusterICs.mag_file.html">ics.ClusterICs.mag_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/ics.ClusterICs.r_max.html">ics.ClusterICs.r_max</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/ics.ClusterICs.tot_np.html">ics.ClusterICs.tot_np</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="_as_gen/model.html">model</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-15"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="_as_gen/model.ClusterModel.html">model.ClusterModel</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-16"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.ClusterModel.__init__.html">model.ClusterModel.__init__</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.ClusterModel.check_dm_virial.html">model.ClusterModel.check_dm_virial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.ClusterModel.check_hse.html">model.ClusterModel.check_hse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.ClusterModel.check_star_virial.html">model.ClusterModel.check_star_virial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.ClusterModel.find_field_at_radius.html">model.ClusterModel.find_field_at_radius</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.ClusterModel.from_arrays.html">model.ClusterModel.from_arrays</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.ClusterModel.from_dens_and_entr.html">model.ClusterModel.from_dens_and_entr</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.ClusterModel.from_dens_and_tden.html">model.ClusterModel.from_dens_and_tden</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.ClusterModel.from_dens_and_temp.html">model.ClusterModel.from_dens_and_temp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.ClusterModel.from_h5_file.html">model.ClusterModel.from_h5_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.ClusterModel.generate_dm_particles.html">model.ClusterModel.generate_dm_particles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.ClusterModel.generate_gas_particles.html">model.ClusterModel.generate_gas_particles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.ClusterModel.generate_star_particles.html">model.ClusterModel.generate_star_particles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.ClusterModel.generate_tracer_particles.html">model.ClusterModel.generate_tracer_particles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.ClusterModel.is_physical.html">model.ClusterModel.is_physical</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.ClusterModel.keys.html">model.ClusterModel.keys</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.ClusterModel.mass_in_radius.html">model.ClusterModel.mass_in_radius</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.ClusterModel.no_gas.html">model.ClusterModel.no_gas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.ClusterModel.plot.html">model.ClusterModel.plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.ClusterModel.rebuild_physical.html">model.ClusterModel.rebuild_physical</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.ClusterModel.set_field.html">model.ClusterModel.set_field</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.ClusterModel.set_magnetic_field_from_beta.html">model.ClusterModel.set_magnetic_field_from_beta</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.ClusterModel.set_magnetic_field_from_density.html">model.ClusterModel.set_magnetic_field_from_density</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.ClusterModel.set_rmax.html">model.ClusterModel.set_rmax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.ClusterModel.write_model_to_ascii.html">model.ClusterModel.write_model_to_ascii</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.ClusterModel.write_model_to_binary.html">model.ClusterModel.write_model_to_binary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.ClusterModel.write_model_to_h5.html">model.ClusterModel.write_model_to_h5</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.ClusterModel.default_fields.html">model.ClusterModel.default_fields</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.ClusterModel.dm_virial.html">model.ClusterModel.dm_virial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.ClusterModel.pot.html">model.ClusterModel.pot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.ClusterModel.star_virial.html">model.ClusterModel.star_virial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.ClusterModel.virialization_method.html">model.ClusterModel.virialization_method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.ClusterModel.fields.html">model.ClusterModel.fields</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.ClusterModel.num_elements.html">model.ClusterModel.num_elements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.ClusterModel.attrs.html">model.ClusterModel.attrs</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="_as_gen/model.HydrostaticEquilibrium.html">model.HydrostaticEquilibrium</a><input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-17"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.HydrostaticEquilibrium.__init__.html">model.HydrostaticEquilibrium.__init__</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.HydrostaticEquilibrium.check_dm_virial.html">model.HydrostaticEquilibrium.check_dm_virial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.HydrostaticEquilibrium.check_hse.html">model.HydrostaticEquilibrium.check_hse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.HydrostaticEquilibrium.check_star_virial.html">model.HydrostaticEquilibrium.check_star_virial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.HydrostaticEquilibrium.find_field_at_radius.html">model.HydrostaticEquilibrium.find_field_at_radius</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.HydrostaticEquilibrium.from_arrays.html">model.HydrostaticEquilibrium.from_arrays</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.HydrostaticEquilibrium.from_dens_and_entr.html">model.HydrostaticEquilibrium.from_dens_and_entr</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.HydrostaticEquilibrium.from_dens_and_tden.html">model.HydrostaticEquilibrium.from_dens_and_tden</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.HydrostaticEquilibrium.from_dens_and_temp.html">model.HydrostaticEquilibrium.from_dens_and_temp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.HydrostaticEquilibrium.from_h5_file.html">model.HydrostaticEquilibrium.from_h5_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.HydrostaticEquilibrium.generate_dm_particles.html">model.HydrostaticEquilibrium.generate_dm_particles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.HydrostaticEquilibrium.generate_gas_particles.html">model.HydrostaticEquilibrium.generate_gas_particles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.HydrostaticEquilibrium.generate_star_particles.html">model.HydrostaticEquilibrium.generate_star_particles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.HydrostaticEquilibrium.generate_tracer_particles.html">model.HydrostaticEquilibrium.generate_tracer_particles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.HydrostaticEquilibrium.is_physical.html">model.HydrostaticEquilibrium.is_physical</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.HydrostaticEquilibrium.keys.html">model.HydrostaticEquilibrium.keys</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.HydrostaticEquilibrium.mass_in_radius.html">model.HydrostaticEquilibrium.mass_in_radius</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.HydrostaticEquilibrium.no_gas.html">model.HydrostaticEquilibrium.no_gas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.HydrostaticEquilibrium.plot.html">model.HydrostaticEquilibrium.plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.HydrostaticEquilibrium.rebuild_physical.html">model.HydrostaticEquilibrium.rebuild_physical</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.HydrostaticEquilibrium.set_field.html">model.HydrostaticEquilibrium.set_field</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.HydrostaticEquilibrium.set_magnetic_field_from_beta.html">model.HydrostaticEquilibrium.set_magnetic_field_from_beta</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.HydrostaticEquilibrium.set_magnetic_field_from_density.html">model.HydrostaticEquilibrium.set_magnetic_field_from_density</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.HydrostaticEquilibrium.set_rmax.html">model.HydrostaticEquilibrium.set_rmax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.HydrostaticEquilibrium.write_model_to_ascii.html">model.HydrostaticEquilibrium.write_model_to_ascii</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.HydrostaticEquilibrium.write_model_to_binary.html">model.HydrostaticEquilibrium.write_model_to_binary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.HydrostaticEquilibrium.write_model_to_h5.html">model.HydrostaticEquilibrium.write_model_to_h5</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.HydrostaticEquilibrium.default_fields.html">model.HydrostaticEquilibrium.default_fields</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.HydrostaticEquilibrium.dm_virial.html">model.HydrostaticEquilibrium.dm_virial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.HydrostaticEquilibrium.pot.html">model.HydrostaticEquilibrium.pot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.HydrostaticEquilibrium.star_virial.html">model.HydrostaticEquilibrium.star_virial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.HydrostaticEquilibrium.virialization_method.html">model.HydrostaticEquilibrium.virialization_method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.HydrostaticEquilibrium.fields.html">model.HydrostaticEquilibrium.fields</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.HydrostaticEquilibrium.num_elements.html">model.HydrostaticEquilibrium.num_elements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/model.HydrostaticEquilibrium.attrs.html">model.HydrostaticEquilibrium.attrs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="_as_gen/particles.html">particles</a><input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-18"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="_as_gen/particles.concat_clusters.html">particles.concat_clusters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_as_gen/particles.resample_clusters.html">particles.resample_clusters</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="_as_gen/particles.ClusterParticles.html">particles.ClusterParticles</a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-19"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/particles.ClusterParticles.__init__.html">particles.ClusterParticles.__init__</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/particles.ClusterParticles.add_black_hole.html">particles.ClusterParticles.add_black_hole</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/particles.ClusterParticles.add_offsets.html">particles.ClusterParticles.add_offsets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/particles.ClusterParticles.drop_ptypes.html">particles.ClusterParticles.drop_ptypes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/particles.ClusterParticles.from_file.html">particles.ClusterParticles.from_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/particles.ClusterParticles.from_gadget_file.html">particles.ClusterParticles.from_gadget_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/particles.ClusterParticles.from_h5_file.html">particles.ClusterParticles.from_h5_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/particles.ClusterParticles.keys.html">particles.ClusterParticles.keys</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/particles.ClusterParticles.make_radial_cut.html">particles.ClusterParticles.make_radial_cut</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/particles.ClusterParticles.set_field.html">particles.ClusterParticles.set_field</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/particles.ClusterParticles.to_yt_dataset.html">particles.ClusterParticles.to_yt_dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/particles.ClusterParticles.write_particles.html">particles.ClusterParticles.write_particles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/particles.ClusterParticles.write_particles_to_h5.html">particles.ClusterParticles.write_particles_to_h5</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/particles.ClusterParticles.write_to_gadget_file.html">particles.ClusterParticles.write_to_gadget_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/particles.ClusterParticles.num_passive_scalars.html">particles.ClusterParticles.num_passive_scalars</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/particles.ClusterParticles.particle_types.html">particles.ClusterParticles.particle_types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/particles.ClusterParticles.fields.html">particles.ClusterParticles.fields</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/particles.ClusterParticles.box_size.html">particles.ClusterParticles.box_size</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/particles.ClusterParticles.passive_scalars.html">particles.ClusterParticles.passive_scalars</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="_as_gen/relations.html">relations</a><input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-20"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="_as_gen/relations.convert_ne_to_density.html">relations.convert_ne_to_density</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_as_gen/relations.f_gas.html">relations.f_gas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_as_gen/relations.m_bcg.html">relations.m_bcg</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_as_gen/relations.m_sat.html">relations.m_sat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_as_gen/relations.r_bcg.html">relations.r_bcg</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="_as_gen/virial.html">virial</a><input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-21"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="_as_gen/virial.VirialEquilibrium.html">virial.VirialEquilibrium</a><input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-22"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/virial.VirialEquilibrium.__init__.html">virial.VirialEquilibrium.__init__</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/virial.VirialEquilibrium.check_virial.html">virial.VirialEquilibrium.check_virial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/virial.VirialEquilibrium.generate_particles.html">virial.VirialEquilibrium.generate_particles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/virial.VirialEquilibrium.df.html">virial.VirialEquilibrium.df</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/virial.VirialEquilibrium.ee.html">virial.VirialEquilibrium.ee</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/virial.VirialEquilibrium.ff.html">virial.VirialEquilibrium.ff</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/virial.VirialEquilibrium.sigma.html">virial.VirialEquilibrium.sigma</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/virial.VirialEquilibrium.num_elements.html">virial.VirialEquilibrium.num_elements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/virial.VirialEquilibrium.ptype.html">virial.VirialEquilibrium.ptype</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/virial.VirialEquilibrium.model.html">virial.VirialEquilibrium.model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/virial.VirialEquilibrium.type.html">virial.VirialEquilibrium.type</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="_as_gen/gravity.html">gravity</a><input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-23"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="_as_gen/gravity.AQUALGravity.html">gravity.AQUALGravity</a><input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-24"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/gravity.AQUALGravity.__init__.html">gravity.AQUALGravity.__init__</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/gravity.AQUALGravity.compute_mass.html">gravity.AQUALGravity.compute_mass</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/gravity.AQUALGravity.compute_potential.html">gravity.AQUALGravity.compute_potential</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/gravity.AQUALGravity.potential.html">gravity.AQUALGravity.potential</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/gravity.AQUALGravity.reset.html">gravity.AQUALGravity.reset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/gravity.AQUALGravity.is_calculated.html">gravity.AQUALGravity.is_calculated</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/gravity.AQUALGravity.model.html">gravity.AQUALGravity.model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/gravity.AQUALGravity.attrs.html">gravity.AQUALGravity.attrs</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="_as_gen/gravity.EMONDGravity.html">gravity.EMONDGravity</a><input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-25"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/gravity.EMONDGravity.__init__.html">gravity.EMONDGravity.__init__</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/gravity.EMONDGravity.compute_mass.html">gravity.EMONDGravity.compute_mass</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/gravity.EMONDGravity.compute_potential.html">gravity.EMONDGravity.compute_potential</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/gravity.EMONDGravity.potential.html">gravity.EMONDGravity.potential</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/gravity.EMONDGravity.reset.html">gravity.EMONDGravity.reset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/gravity.EMONDGravity.is_calculated.html">gravity.EMONDGravity.is_calculated</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/gravity.EMONDGravity.model.html">gravity.EMONDGravity.model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/gravity.EMONDGravity.attrs.html">gravity.EMONDGravity.attrs</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="_as_gen/gravity.Gravity.html">gravity.Gravity</a><input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-26"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/gravity.Gravity.__init__.html">gravity.Gravity.__init__</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/gravity.Gravity.reset.html">gravity.Gravity.reset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/gravity.Gravity.is_calculated.html">gravity.Gravity.is_calculated</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/gravity.Gravity.model.html">gravity.Gravity.model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/gravity.Gravity.attrs.html">gravity.Gravity.attrs</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="_as_gen/gravity.NewtonianGravity.html">gravity.NewtonianGravity</a><input class="toctree-checkbox" id="toctree-checkbox-27" name="toctree-checkbox-27" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-27"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/gravity.NewtonianGravity.__init__.html">gravity.NewtonianGravity.__init__</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/gravity.NewtonianGravity.compute_mass.html">gravity.NewtonianGravity.compute_mass</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/gravity.NewtonianGravity.compute_potential.html">gravity.NewtonianGravity.compute_potential</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/gravity.NewtonianGravity.potential.html">gravity.NewtonianGravity.potential</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/gravity.NewtonianGravity.reset.html">gravity.NewtonianGravity.reset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/gravity.NewtonianGravity.is_calculated.html">gravity.NewtonianGravity.is_calculated</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/gravity.NewtonianGravity.model.html">gravity.NewtonianGravity.model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/gravity.NewtonianGravity.attrs.html">gravity.NewtonianGravity.attrs</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="_as_gen/gravity.QUMONDGravity.html">gravity.QUMONDGravity</a><input class="toctree-checkbox" id="toctree-checkbox-28" name="toctree-checkbox-28" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-28"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/gravity.QUMONDGravity.__init__.html">gravity.QUMONDGravity.__init__</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/gravity.QUMONDGravity.compute_mass.html">gravity.QUMONDGravity.compute_mass</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/gravity.QUMONDGravity.compute_potential.html">gravity.QUMONDGravity.compute_potential</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/gravity.QUMONDGravity.potential.html">gravity.QUMONDGravity.potential</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/gravity.QUMONDGravity.reset.html">gravity.QUMONDGravity.reset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/gravity.QUMONDGravity.is_calculated.html">gravity.QUMONDGravity.is_calculated</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/gravity.QUMONDGravity.model.html">gravity.QUMONDGravity.model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_as_gen/gravity.QUMONDGravity.attrs.html">gravity.QUMONDGravity.attrs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="_as_gen/codes.html">codes</a><input class="toctree-checkbox" id="toctree-checkbox-29" name="toctree-checkbox-29" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-29"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="_as_gen/codes.setup_arepo_ics.html">codes.setup_arepo_ics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_as_gen/codes.setup_athena_ics.html">codes.setup_athena_ics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_as_gen/codes.setup_enzo_ics.html">codes.setup_enzo_ics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_as_gen/codes.setup_flash_ics.html">codes.setup_flash_ics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_as_gen/codes.setup_gamer_ics.html">codes.setup_gamer_ics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_as_gen/codes.setup_gizmo_ics.html">codes.setup_gizmo_ics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_as_gen/codes.setup_ramses_ics.html">codes.setup_ramses_ics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_as_gen/codes.write_amr_particles.html">codes.write_amr_particles</a></li>
 </ul>
 </li>
 </ul>
@@ -437,11 +731,48 @@ document.write(`
 <h1>API<a class="headerlink" href="#api" title="Permalink to this heading">#</a></h1>
 <table class="autosummary longtable table autosummary">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="_as_gen/radial_profiles.html#module-radial_profiles" title="radial_profiles"><code class="xref py py-obj docutils literal notranslate"><span class="pre">radial_profiles</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="_as_gen/utils.html#module-utils" title="utils"><code class="xref py py-obj docutils literal notranslate"><span class="pre">utils</span></code></a></p></td>
+<td><p>Utility functions for basic functionality of the py:module:<cite>cluster_generator</cite> package.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_as_gen/radial_profiles.html#module-radial_profiles" title="radial_profiles"><code class="xref py py-obj docutils literal notranslate"><span class="pre">radial_profiles</span></code></a></p></td>
 <td><p>Radial Profiles
 
 Radial profiles, as instantiated through the radial_profiles.RadialProfile class are wrappers for standard lambda functions
 which are used to provide additional structure for radial profiles of temperature, density, cumulative mass, and entropy in galaxy clusters.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_as_gen/fields.html#module-fields" title="fields"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fields</span></code></a></p></td>
+<td><p>3D fields for magnetic field initiation and other field based tasks.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_as_gen/ics.html#module-ics" title="ics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ics</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_as_gen/model.html#module-model" title="model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">model</span></code></a></p></td>
+<td><p>Galaxy Cluster Models
+
+Similar to the gravity.Potential class, the model.ClusterModel class is the cluster_generator code's
+base object for fully realized models of galaxy clusters. These objects contain fields (ClusterModel.fields) just as the gravity.Potential objects do;
+however, model.ClusterModel objects can be virialized, may have particles generated from them, and can have HSE checked.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_as_gen/particles.html#module-particles" title="particles"><code class="xref py py-obj docutils literal notranslate"><span class="pre">particles</span></code></a></p></td>
+<td><p>Module for management of particle initial conditions.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_as_gen/relations.html#module-relations" title="relations"><code class="xref py py-obj docutils literal notranslate"><span class="pre">relations</span></code></a></p></td>
+<td><p>Relations
+
+The functions in this module provide empirical relations between profile variables in a variety of cases.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_as_gen/virial.html#module-virial" title="virial"><code class="xref py py-obj docutils literal notranslate"><span class="pre">virial</span></code></a></p></td>
+<td><p>Virialization tools for the <code class="docutils literal notranslate"><span class="pre">cluster-generator</span></code> system.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_as_gen/gravity.html#module-gravity" title="gravity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gravity</span></code></a></p></td>
+<td><p>Gravity
+
+The gravity module contains the gravity.Gravity class, which essentially acts as a wrapper for
+solving the Poisson equation in each of the available gravitational theories. The various available gravitational theories are
+implemented in classes inheriting from the base gravity.Gravity class.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_as_gen/codes.html#module-codes" title="codes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">codes</span></code></a></p></td>
+<td><p>Code-specific utilities for the <code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code> library.</p></td>
 </tr>
 </tbody>
 </table>
@@ -468,11 +799,11 @@ which are used to provide additional structure for radial profiles of temperatur
       </div>
     </a>
     <a class="right-next"
-       href="_as_gen/radial_profiles.html"
+       href="_as_gen/utils.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">radial_profiles</p>
+        <p class="prev-next-title">utils</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
