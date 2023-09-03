@@ -49,7 +49,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Cluster Models" href="models.html" />
-    <link rel="prev" title="Radial Profiles" href="radial_profiles.html" />
+    <link rel="prev" title="Quickstart Guide: What About MOND?" href="notebooks/quick_notebooks/quickbook3.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -138,13 +138,6 @@
                     </li>
                 
 
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="radial_profiles.html">
-                        Radial Profiles
-                      </a>
-                    </li>
-                
-
                     <li class="nav-item current active">
                       <a class="nav-link nav-internal" href="#">
                         Gravity Theories
@@ -165,32 +158,6 @@
                       </a>
                     </li>
                 
-            <div class="nav-item dropdown">
-                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    More
-                </button>
-                <div class="dropdown-menu">
-                    
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="particles.html">
-                        Particles
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="initial_conditions.html">
-                        Initial Conditions Generation
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="codes.html">
-                        Setting Up Idealized Cluster Problems in Various Codes
-                      </a>
-                    </li>
-                
 
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="examples.html">
@@ -198,7 +165,12 @@
                       </a>
                     </li>
                 
-
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="api.html">
                         API
@@ -292,13 +264,6 @@ document.write(`
                     </li>
                 
 
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="radial_profiles.html">
-                        Radial Profiles
-                      </a>
-                    </li>
-                
-
                     <li class="nav-item current active">
                       <a class="nav-link nav-internal" href="#">
                         Gravity Theories
@@ -319,32 +284,6 @@ document.write(`
                       </a>
                     </li>
                 
-            <div class="nav-item dropdown">
-                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    More
-                </button>
-                <div class="dropdown-menu">
-                    
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="particles.html">
-                        Particles
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="initial_conditions.html">
-                        Initial Conditions Generation
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="codes.html">
-                        Setting Up Idealized Cluster Problems in Various Codes
-                      </a>
-                    </li>
-                
 
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="examples.html">
@@ -352,7 +291,12 @@ document.write(`
                       </a>
                     </li>
                 
-
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="api.html">
                         API
@@ -436,13 +380,87 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <section id="gravity-theories">
-<span id="gravity"></span><h1>Gravity Theories<a class="headerlink" href="#gravity-theories" title="Permalink to this heading">#</a></h1>
+<span id="gravity"></span><h1><a class="toc-backref" href="#id9" role="doc-backlink">Gravity Theories</a><a class="headerlink" href="#gravity-theories" title="Permalink to this heading">#</a></h1>
 <p>The <code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code> library allows users to build galaxy cluster models and initial conditions not only in Newtonian
-gravity, but also in a couple of additional gravitational theories. On this page, summaries of all of the gravity theories included are provided.</p>
-<hr style="height:10px;background-color:black"><section id="mondian-gravity">
-<h2>MONDian Gravity<a class="headerlink" href="#mondian-gravity" title="Permalink to this heading">#</a></h2>
+gravity, but also in a couple of additional gravitational theories. On this page, summaries of all of the gravity theories included are provided.
+Additional gravitational models can be easily written on the user side and a guide for doing so is also provided at the end.</p>
+<section id="available-gravity-theories">
+<h2><a class="toc-backref" href="#id10" role="doc-backlink">Available Gravity Theories</a><a class="headerlink" href="#available-gravity-theories" title="Permalink to this heading">#</a></h2>
+<div class="sd-sphinx-override sd-cards-carousel sd-card-cols-2 docutils">
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Type</strong>: Classical</p>
+</div>
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Newtonian Gravity</div>
+<p class="sd-card-text">Standard implementation of Newtonian gravity.</p>
+</div>
+<div class="sd-card-footer docutils">
+<div class="line-block">
+<div class="line"><strong>Class</strong>: <code class="xref py py-class docutils literal notranslate"><span class="pre">gravity.NewtonianGravity</span></code></div>
+</div>
+</div>
+</div>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Type</strong>: MONDian</p>
+</div>
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+AQUAL Gravity</div>
+<p class="sd-card-text">A classical MOND implementation with a non-linear aquadratic field lagrangian.</p>
+</div>
+<div class="sd-card-footer docutils">
+<div class="line-block">
+<div class="line"><strong>Source</strong>: <a class="reference external" href="https://ui.adsabs.harvard.edu/link_gateway/1984ApJ...286....7B/ADS_PDF">1984ApJ…286….7B</a></div>
+<div class="line"><strong>Class</strong>: <code class="xref py py-class docutils literal notranslate"><span class="pre">gravity.AQUALGravity</span></code></div>
+</div>
+</div>
+<a class="sd-stretched-link reference internal" href="#aqual"><span class="std std-ref"></span></a></div>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Type</strong>: MONDian</p>
+</div>
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+QUMOND Gravity</div>
+<p class="sd-card-text">A classical MOND implementation with 2 scalar fields and two linear (modified) poisson equations.</p>
+</div>
+<div class="sd-card-footer docutils">
+<div class="line-block">
+<div class="line"><strong>Source</strong>: <a class="reference external" href="https://ui.adsabs.harvard.edu/link_gateway/2010MNRAS.403..886M/EPRINT_PDF">2010MNRAS.403..886M</a></div>
+<div class="line"><strong>Class</strong>: <code class="xref py py-class docutils literal notranslate"><span class="pre">gravity.QUMONDGravity</span></code></div>
+</div>
+</div>
+<a class="sd-stretched-link reference internal" href="#qumond"><span class="std std-ref"></span></a></div>
+</div>
+<hr style="height:2px;background-color:black"><nav class="contents" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#gravity-theories" id="id9">Gravity Theories</a></p>
+<ul>
+<li><p><a class="reference internal" href="#available-gravity-theories" id="id10">Available Gravity Theories</a></p></li>
+<li><p><a class="reference internal" href="#mondian-gravity" id="id11">MONDian Gravity</a></p>
+<ul>
+<li><p><a class="reference internal" href="#aqual" id="id12">AQUAL</a></p>
+<ul>
+<li><p><a class="reference internal" href="#implementation" id="id13">Implementation</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#qumond" id="id14">QUMOND</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#references" id="id15">References</a></p></li>
+</ul>
+</li>
+</ul>
+</nav>
+<hr style="height:10px;background-color:black"></section>
+<section id="mondian-gravity">
+<span id="mond"></span><h2><a class="toc-backref" href="#id11" role="doc-backlink">MONDian Gravity</a><a class="headerlink" href="#mondian-gravity" title="Permalink to this heading">#</a></h2>
 <p>MOND (MOdified Newtonian Dynamics) is a set of gravitational theories which postulate a divergence from Newtonian gravity in
-regions of low acceleration. First proposed by Milgrom <a class="footnote-reference brackets" href="#id4" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>, MOND theories are universally held to 3 core-postulates:</p>
+regions of low acceleration. First proposed by M. Milgrom <a class="footnote-reference brackets" href="#id6" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> in 1983, MOND theories are universally held to 3 core-postulates:</p>
 <ol class="arabic simple">
 <li><p>At accelerations below some characteristic <span class="math notranslate nohighlight">\(a_0\)</span>, MOND gravity diverges from the Newtonian theory.</p></li>
 <li><p>In that asymptotic case,</p></li>
@@ -453,21 +471,48 @@ regions of low acceleration. First proposed by Milgrom <a class="footnote-refere
 <li><p>The transition between the Newtonian regime and the deep-MOND regime occurs over a range of acclerations around <span class="math notranslate nohighlight">\(a_0\)</span>.</p></li>
 </ol>
 <p>There are a variety of approaches by which to implement these postulates into a comprehensive classical field theory, several of which have been
-implemented in <code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code>.</p>
+implemented in <code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code>. Furthermore, many attempts are underway to establish self consistent covariant formulations of the
+theory; however, there remains no standout candidate for a complete MOND theory.</p>
 <section id="aqual">
-<h3>AQUAL<a class="headerlink" href="#aqual" title="Permalink to this heading">#</a></h3>
-<p>The AQUAL <a class="footnote-reference brackets" href="#id6" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a> (Aquadtratic Lagrangian) theory (<code class="docutils literal notranslate"><span class="pre">gravity</span> <span class="pre">=</span> <span class="pre">'AQUAL'</span></code>) is typically considered the quintessential MOND theory, and has a Lagrangian of the form</p>
+<span id="id2"></span><h3><a class="toc-backref" href="#id12" role="doc-backlink">AQUAL</a><a class="headerlink" href="#aqual" title="Permalink to this heading">#</a></h3>
+<p>The AQUAL <a class="footnote-reference brackets" href="#id8" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a> (Aquadtratic Lagrangian) theory (<code class="docutils literal notranslate"><span class="pre">gravity</span> <span class="pre">=</span> <span class="pre">'AQUAL'</span></code>) is typically considered the quintessential MOND theory, and has a Lagrangian of the form</p>
 <div class="math notranslate nohighlight">
 \[\mathcal{L} = \frac{1}{2}\rho v^2 -\rho \Phi - \frac{a_0^2}{8\pi G} \mathcal{F}\left(\frac{|\nabla \Phi|^2}{a_0^2}\right),\]</div>
 <p>which, upon variation over the field, yields a modified poisson equation</p>
 <div class="math notranslate nohighlight">
 \[4\pi G \rho = \nabla \cdot \left[\mu\left(\frac{|\nabla \Phi|}{a_0}\right)\nabla\Phi\right].\]</div>
-<p>Here <span class="math notranslate nohighlight">\(\mu(x) = d\mathcal{F}(z)/dz\)</span>, where <cite>z = x^2</cite>. To fulfill the postulates of the MOND paradigm, we require that
-<span class="math notranslate nohighlight">\(\mu(x) \to 1\)</span> as <span class="math notranslate nohighlight">\(x \to infty\)</span>, and <span class="math notranslate nohighlight">\(\mu(x) \to x\)</span> as <span class="math notranslate nohighlight">\(x\to 0\)</span>.</p>
+<p>Here <span class="math notranslate nohighlight">\(\mu(x) = d\mathcal{F}(z)/dz\)</span>, where <span class="math notranslate nohighlight">\(z = x^2\)</span>. To fulfill the postulates of the MOND paradigm, we require that
+<span class="math notranslate nohighlight">\(\mu(x) \to 1\)</span> as <span class="math notranslate nohighlight">\(x \to \infty\)</span>, and <span class="math notranslate nohighlight">\(\mu(x) \to x\)</span> as <span class="math notranslate nohighlight">\(x\to 0\)</span>.</p>
+<section id="implementation">
+<h4><a class="toc-backref" href="#id13" role="doc-backlink">Implementation</a><a class="headerlink" href="#implementation" title="Permalink to this heading">#</a></h4>
+<p>Cluster generator implements the AQUAL theory using the <code class="xref py py-class docutils literal notranslate"><span class="pre">gravity.AQUALGravity</span></code> class, which contains the relevant poisson solver. As with all of the
+spherically symmetric gravity theories implemented in this library, there are only two major alterations that have to be made: the potential and the dynamical mass.</p>
+<div class="line-block">
+<div class="line"><strong>Potential</strong>:</div>
+</div>
+<p>In spherical symmetry, the Poisson equation for AQUAL simplifies to</p>
+<div class="math notranslate nohighlight">
+\[\mu\left(\frac{|\nabla \Phi|}{a_0}\right)\nabla \Phi = \nabla \Psi,\]</div>
+<p>where <span class="math notranslate nohighlight">\(\Psi\)</span> is the Newtonian potential for the same system. Letting <span class="math notranslate nohighlight">\(\gamma = \nabla \Psi /a_0\)</span> and <span class="math notranslate nohighlight">\(\Gamma = \nabla \Phi / a_0\)</span>, this reduces to
+<span class="math notranslate nohighlight">\(\mu(|\Gamma|)\Gamma = \gamma\)</span>. As such, an implicit form of <span class="math notranslate nohighlight">\(\Gamma\)</span> can be solved for and then integrated. In the <code class="xref py py-meth docutils literal notranslate"><span class="pre">gravity.AQUALGravity.compute_potential()</span></code> method,
+we utilize a numerical solver to solve the implicit equation. To allow for optimal convergence, we first posit an approximate guess. To generate one, we assume <span class="math notranslate nohighlight">\(\mu(x) = x/(1+x)\)</span>, which
+is essentially the simplest interpolation function available. Then</p>
+<div class="math notranslate nohighlight">
+\[\frac{\mathrm{sign}(\gamma) \Gamma^2}{1+ \mathrm{sign}(\gamma) \Gamma} = \gamma,\]</div>
+<p>which leads to the guess</p>
+<div class="math notranslate nohighlight">
+\[\Gamma_{\mathrm{guess}} = \frac{1}{2}\left\{\gamma + \sqrt{\gamma^2 + 4\mathrm{sign}(\gamma)\gamma}\right\}\]</div>
+<p>We then integrate <span class="math notranslate nohighlight">\(\Gamma\)</span> to obtain the complete solution.</p>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>Because the deep-field behavior of MOND theories is to go as <span class="math notranslate nohighlight">\(1/r\)</span>, the potential may not be treated as zero at infinity and then integrated inwards.
+Instead, we enforce a zero point of the potential at the edge of the system being initialized.</p>
+</div>
+</section>
 </section>
 <section id="qumond">
-<h3>QUMOND<a class="headerlink" href="#qumond" title="Permalink to this heading">#</a></h3>
-<p>Unlike the AQUAL theory, QUMOND is a quasi-linear implementation of MOND <a class="footnote-reference brackets" href="#id5" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>. The Lagrangian takes the form</p>
+<span id="id4"></span><h3><a class="toc-backref" href="#id14" role="doc-backlink">QUMOND</a><a class="headerlink" href="#qumond" title="Permalink to this heading">#</a></h3>
+<p>Unlike the AQUAL theory, QUMOND is a quasi-linear implementation of MOND <a class="footnote-reference brackets" href="#id7" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>. The Lagrangian takes the form</p>
 <div class="math notranslate nohighlight">
 \[\mathcal{L} = \frac{1}{2}\rho v^2 - \rho \Phi - \frac{1}{8 \pi G}\left\{2\nabla \Phi \cdot \nabla \Psi -  a_0^2 \mathcal{Q}\left[\frac{|\nabla \Psi|^2}{a_0^2}\right]\right\}.\]</div>
 <p>Variation over <span class="math notranslate nohighlight">\(\Phi\)</span> yields the classical poisson equation:</p>
@@ -509,23 +554,23 @@ implemented in <code class="docutils literal notranslate"><span class="pre">clus
 </div>
 </section>
 </section>
-</section>
 <section id="references">
-<h1>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h1>
+<h2><a class="toc-backref" href="#id15" role="doc-backlink">References</a><a class="headerlink" href="#references" title="Permalink to this heading">#</a></h2>
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="id4" role="doc-footnote">
+<aside class="footnote brackets" id="id6" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
 <p>Milgrom, M. 1983ApJ…270..365M</p>
 </aside>
-<aside class="footnote brackets" id="id5" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">2</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id7" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">2</a><span class="fn-bracket">]</span></span>
 <p>Milgrom, M. 2010MNRAS.403..886M</p>
 </aside>
-<aside class="footnote brackets" id="id6" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">3</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id8" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">3</a><span class="fn-bracket">]</span></span>
 <p>Bekenstein, J. Milgrom, M. 1984ApJ…286….7B</p>
 </aside>
 </aside>
+</section>
 </section>
 
 
@@ -540,12 +585,12 @@ implemented in <code class="docutils literal notranslate"><span class="pre">clus
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="radial_profiles.html"
+       href="notebooks/quick_notebooks/quickbook3.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Radial Profiles</p>
+        <p class="prev-next-title">Quickstart Guide: What About MOND?</p>
       </div>
     </a>
     <a class="right-next"
@@ -575,17 +620,17 @@ implemented in <code class="docutils literal notranslate"><span class="pre">clus
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Gravity Theories</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#available-gravity-theories">Available Gravity Theories</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mondian-gravity">MONDian Gravity</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aqual">AQUAL</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aqual">AQUAL</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#implementation">Implementation</a></li>
+</ul>
+</li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qumond">QUMOND</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
-</ul>
-
   </nav></div>
 
   <div class="sidebar-secondary-item">

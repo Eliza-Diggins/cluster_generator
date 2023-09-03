@@ -46,8 +46,6 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'codes';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Examples" href="examples.html" />
-    <link rel="prev" title="Initial Conditions Generation" href="initial_conditions.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -137,13 +135,6 @@
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="radial_profiles.html">
-                        Radial Profiles
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
                       <a class="nav-link nav-internal" href="gravity.html">
                         Gravity Theories
                       </a>
@@ -163,32 +154,6 @@
                       </a>
                     </li>
                 
-            <div class="nav-item dropdown">
-                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    More
-                </button>
-                <div class="dropdown-menu">
-                    
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="particles.html">
-                        Particles
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="initial_conditions.html">
-                        Initial Conditions Generation
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item current active">
-                      <a class="nav-link nav-internal" href="#">
-                        Setting Up Idealized Cluster Problems in Various Codes
-                      </a>
-                    </li>
-                
 
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="examples.html">
@@ -196,7 +161,12 @@
                       </a>
                     </li>
                 
-
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="api.html">
                         API
@@ -291,13 +261,6 @@ document.write(`
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="radial_profiles.html">
-                        Radial Profiles
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
                       <a class="nav-link nav-internal" href="gravity.html">
                         Gravity Theories
                       </a>
@@ -317,32 +280,6 @@ document.write(`
                       </a>
                     </li>
                 
-            <div class="nav-item dropdown">
-                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    More
-                </button>
-                <div class="dropdown-menu">
-                    
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="particles.html">
-                        Particles
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="initial_conditions.html">
-                        Initial Conditions Generation
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item current active">
-                      <a class="nav-link nav-internal" href="#">
-                        Setting Up Idealized Cluster Problems in Various Codes
-                      </a>
-                    </li>
-                
 
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="examples.html">
@@ -350,7 +287,12 @@ document.write(`
                       </a>
                     </li>
                 
-
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="api.html">
                         API
@@ -488,8 +430,21 @@ options to be enabled in <code class="docutils literal notranslate"><span class=
 </section>
 <section id="ramses">
 <span id="id8"></span><h2>Ramses<a class="headerlink" href="#ramses" title="Permalink to this heading">#</a></h2>
-<p>Coming soon!</p>
+<p>RAMSES is an adaptive mesh refinement (AMR) code for hydrodynamical/N-body simulations. It is capable of running
+cosmological simulations, incorporating radiative cooling, AGN feedback, and a host of other features. RAMSES is also capable of performing
+simulations in MOND gravity using it’s RaYMOND patch. The following section will guide you through the ins and outs of generating
+RAMSES initial conditions.</p>
 </section>
+</section>
+<section id="generating-your-ics">
+<h1>Generating your ICs<a class="headerlink" href="#generating-your-ics" title="Permalink to this heading">#</a></h1>
+<p>The first step is to generate your initial conditions. This can be done in any number of ways</p>
+</section>
+<section id="configuring-ramses">
+<h1>Configuring RAMSES<a class="headerlink" href="#configuring-ramses" title="Permalink to this heading">#</a></h1>
+</section>
+<section id="running-the-simulation">
+<h1>Running the Simulation<a class="headerlink" href="#running-the-simulation" title="Permalink to this heading">#</a></h1>
 <section id="athena">
 <span id="id9"></span><h2>Athena++<a class="headerlink" href="#athena" title="Permalink to this heading">#</a></h2>
 <p>Coming soon!</p>
@@ -507,24 +462,6 @@ options to be enabled in <code class="docutils literal notranslate"><span class=
   
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="initial_conditions.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Initial Conditions Generation</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="examples.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Examples</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
 </div></div>
   
 </div>
@@ -543,14 +480,23 @@ options to be enabled in <code class="docutils literal notranslate"><span class=
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Setting Up Idealized Cluster Problems in Various Codes</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#flash"><code class="docutils literal notranslate"><span class="pre">FLASH</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gamer"><code class="docutils literal notranslate"><span class="pre">GAMER</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arepo">Arepo</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gizmo">GIZMO</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#enzo">Enzo</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ramses">Ramses</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#generating-your-ics">Generating your ICs</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#configuring-ramses">Configuring RAMSES</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#running-the-simulation">Running the Simulation</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#athena">Athena++</a></li>
 </ul>
+</li>
+</ul>
+
   </nav></div>
 
   <div class="sidebar-secondary-item">

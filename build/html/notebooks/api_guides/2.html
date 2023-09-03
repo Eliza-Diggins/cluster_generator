@@ -140,13 +140,6 @@
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../../radial_profiles.html">
-                        Radial Profiles
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
                       <a class="nav-link nav-internal" href="../../gravity.html">
                         Gravity Theories
                       </a>
@@ -166,32 +159,6 @@
                       </a>
                     </li>
                 
-            <div class="nav-item dropdown">
-                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    More
-                </button>
-                <div class="dropdown-menu">
-                    
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../../particles.html">
-                        Particles
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../../initial_conditions.html">
-                        Initial Conditions Generation
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../../codes.html">
-                        Setting Up Idealized Cluster Problems in Various Codes
-                      </a>
-                    </li>
-                
 
                     <li class="nav-item current active">
                       <a class="nav-link nav-internal" href="../../examples.html">
@@ -199,7 +166,12 @@
                       </a>
                     </li>
                 
-
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="../../api.html">
                         API
@@ -294,13 +266,6 @@ document.write(`
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../../radial_profiles.html">
-                        Radial Profiles
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
                       <a class="nav-link nav-internal" href="../../gravity.html">
                         Gravity Theories
                       </a>
@@ -320,32 +285,6 @@ document.write(`
                       </a>
                     </li>
                 
-            <div class="nav-item dropdown">
-                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    More
-                </button>
-                <div class="dropdown-menu">
-                    
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../../particles.html">
-                        Particles
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../../initial_conditions.html">
-                        Initial Conditions Generation
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../../codes.html">
-                        Setting Up Idealized Cluster Problems in Various Codes
-                      </a>
-                    </li>
-                
 
                     <li class="nav-item current active">
                       <a class="nav-link nav-internal" href="../../examples.html">
@@ -353,7 +292,12 @@ document.write(`
                       </a>
                     </li>
                 
-
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="../../api.html">
                         API
@@ -563,7 +507,7 @@ energy. To simplify the notation, we denote the <strong>relative potential</stro
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-cluster_generator : [INFO     ] 2023-08-28 08:41:36,600 Loading ClusterModel instance from profile_1.h5.
+cluster_generator : [INFO     ] 2023-09-02 16:30:27,458 Loading ClusterModel instance from profile_1.h5.
 </pre></div></div>
 </div>
 <p>So we’ve loaded in a <code class="docutils literal notranslate"><span class="pre">ClusterModel</span></code> object, to what whats going on with the virialization, we are interested in the <code class="docutils literal notranslate"><span class="pre">.&lt;ptype&gt;_virial</span></code> attributes:</p>
@@ -580,7 +524,7 @@ cluster_generator : [INFO     ] 2023-08-28 08:41:36,600 Loading ClusterModel ins
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-The dm_virial attribute is &lt;cluster_generator.virial.VirialEquilibrium object at 0x7f9c22a6bfa0&gt; which has type lma.
+The dm_virial attribute is &lt;cluster_generator.virial.VirialEquilibrium object at 0x7f5675f5d220&gt; which has type lma.
 </pre></div></div>
 </div>
 <p>So we see that there is already a <code class="docutils literal notranslate"><span class="pre">VirialEquilibrium</span></code> object with type <code class="docutils literal notranslate"><span class="pre">lma</span></code>, which indicates that Local Maxwellian Approximation was done.</p>
@@ -618,14 +562,14 @@ The dm_virial attribute is None
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "b949d7d3ce3c435ea38418541587d2ea"}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "5e4954d68f2b41ce85c708cfc46ac1d7"}</script></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-The dm_virial attribute is &lt;cluster_generator.virial.VirialEquilibrium object at 0x7f9c22aa0130&gt; which has type lma.
+The dm_virial attribute is &lt;cluster_generator.virial.VirialEquilibrium object at 0x7f5675f5d7f0&gt; which has type lma.
 </pre></div></div>
 </div>
 <p>Okay, so we’ve successfully computed the LMA particle dispersions (yipee!), what does that actually mean? Under the hood, <code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code> is accessing a script which computes the integral</p>
@@ -645,16 +589,16 @@ The dm_virial attribute is &lt;cluster_generator.virial.VirialEquilibrium object
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-cluster_generator : [INFO     ] 2023-08-28 08:43:06,504 We will be assigning 1000 dark_matter particles.
-cluster_generator : [INFO     ] 2023-08-28 08:43:06,507 Compute 1000 particle positions.
-cluster_generator : [INFO     ] 2023-08-28 08:43:06,510 Computing dark_matter velocities using lma method.
+cluster_generator : [INFO     ] 2023-09-02 16:32:01,615 We will be assigning 1000 dark_matter particles.
+cluster_generator : [INFO     ] 2023-09-02 16:32:01,617 Compute 1000 particle positions.
+cluster_generator : [INFO     ] 2023-09-02 16:32:01,628 Computing dark_matter velocities using lma method.
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "09f10d5a47e24412a1e4924039dc68b8"}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "d66fb150af7048aaacd8218d28a20823"}</script></div>
 </div>
 <p>At this stage, we’re referencing the underlying cython code where the PDF can be inverse cummulatively sampled many millions of times. This process is quite quick due to the static typing of cython. Let’s take a look at what things actually look like:</p>
 <div class="nbinput docutils container">
@@ -674,27 +618,27 @@ cluster_generator : [INFO     ] 2023-08-28 08:43:06,510 Computing dark_matter ve
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-cluster_generator : [INFO     ] 2023-08-28 08:43:06,542 We will be assigning 100000 dark_matter particles.
-cluster_generator : [INFO     ] 2023-08-28 08:43:06,545 Compute 100000 particle positions.
-cluster_generator : [INFO     ] 2023-08-28 08:43:06,576 Computing dark_matter velocities using lma method.
+cluster_generator : [INFO     ] 2023-09-02 16:32:01,661 We will be assigning 100000 dark_matter particles.
+cluster_generator : [INFO     ] 2023-09-02 16:32:01,664 Compute 100000 particle positions.
+cluster_generator : [INFO     ] 2023-09-02 16:32:01,706 Computing dark_matter velocities using lma method.
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "15a626dce2dd4eb583bdcacc8b08c201"}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "9b796c2f064e45b6b0b992c3cf6e5734"}</script></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-yt : [INFO     ] 2023-08-28 08:43:07,328 Parameters: current_time              = 0.0
-yt : [INFO     ] 2023-08-28 08:43:07,329 Parameters: domain_dimensions         = [1 1 1]
-yt : [INFO     ] 2023-08-28 08:43:07,331 Parameters: domain_left_edge          = [0. 0. 0.]
-yt : [INFO     ] 2023-08-28 08:43:07,332 Parameters: domain_right_edge         = [10000. 10000. 10000.]
-yt : [INFO     ] 2023-08-28 08:43:07,333 Parameters: cosmological_simulation   = 0
+yt : [INFO     ] 2023-09-02 16:32:03,056 Parameters: current_time              = 0.0
+yt : [INFO     ] 2023-09-02 16:32:03,057 Parameters: domain_dimensions         = [1 1 1]
+yt : [INFO     ] 2023-09-02 16:32:03,059 Parameters: domain_left_edge          = [0. 0. 0.]
+yt : [INFO     ] 2023-09-02 16:32:03,061 Parameters: domain_right_edge         = [10000. 10000. 10000.]
+yt : [INFO     ] 2023-09-02 16:32:03,062 Parameters: cosmological_simulation   = 0
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -713,7 +657,7 @@ yt : [INFO     ] 2023-08-28 08:43:07,333 Parameters: cosmological_simulation   =
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-yt : [INFO     ] 2023-08-28 08:43:07,339 Allocating for 1e+05 particles
+yt : [INFO     ] 2023-09-02 16:32:03,069 Allocating for 1e+05 particles
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
