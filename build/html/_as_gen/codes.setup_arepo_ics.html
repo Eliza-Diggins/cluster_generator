@@ -46,7 +46,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = '_as_gen/codes.setup_arepo_ics';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="codes.setup_athena_ics" href="codes.setup_athena_ics.html" />
+    <link rel="next" title="codes.setup_art_ics" href="codes.setup_art_ics.html" />
     <link rel="prev" title="codes" href="codes.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -563,6 +563,7 @@ document.write(`
 <li class="toctree-l3"><a class="reference internal" href="particles.ClusterParticles.add_black_hole.html">particles.ClusterParticles.add_black_hole</a></li>
 <li class="toctree-l3"><a class="reference internal" href="particles.ClusterParticles.add_offsets.html">particles.ClusterParticles.add_offsets</a></li>
 <li class="toctree-l3"><a class="reference internal" href="particles.ClusterParticles.drop_ptypes.html">particles.ClusterParticles.drop_ptypes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="particles.ClusterParticles.from_fields.html">particles.ClusterParticles.from_fields</a></li>
 <li class="toctree-l3"><a class="reference internal" href="particles.ClusterParticles.from_file.html">particles.ClusterParticles.from_file</a></li>
 <li class="toctree-l3"><a class="reference internal" href="particles.ClusterParticles.from_gadget_file.html">particles.ClusterParticles.from_gadget_file</a></li>
 <li class="toctree-l3"><a class="reference internal" href="particles.ClusterParticles.from_h5_file.html">particles.ClusterParticles.from_h5_file</a></li>
@@ -576,7 +577,6 @@ document.write(`
 <li class="toctree-l3"><a class="reference internal" href="particles.ClusterParticles.num_passive_scalars.html">particles.ClusterParticles.num_passive_scalars</a></li>
 <li class="toctree-l3"><a class="reference internal" href="particles.ClusterParticles.particle_types.html">particles.ClusterParticles.particle_types</a></li>
 <li class="toctree-l3"><a class="reference internal" href="particles.ClusterParticles.fields.html">particles.ClusterParticles.fields</a></li>
-<li class="toctree-l3"><a class="reference internal" href="particles.ClusterParticles.box_size.html">particles.ClusterParticles.box_size</a></li>
 <li class="toctree-l3"><a class="reference internal" href="particles.ClusterParticles.passive_scalars.html">particles.ClusterParticles.passive_scalars</a></li>
 </ul>
 </li>
@@ -664,6 +664,7 @@ document.write(`
 </li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="codes.html">codes</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-29" name="toctree-checkbox-29" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-29"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">codes.setup_arepo_ics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="codes.setup_art_ics.html">codes.setup_art_ics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="codes.setup_athena_ics.html">codes.setup_athena_ics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="codes.setup_enzo_ics.html">codes.setup_enzo_ics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="codes.setup_flash_ics.html">codes.setup_flash_ics</a></li>
@@ -737,7 +738,7 @@ document.write(`
 <h1>codes.setup_arepo_ics<a class="headerlink" href="#codes-setup-arepo-ics" title="Permalink to this heading">#</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="codes.setup_arepo_ics">
-<span class="sig-prename descclassname"><span class="pre">codes.</span></span><span class="sig-name descname"><span class="pre">setup_arepo_ics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ics</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/codes.html#setup_arepo_ics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#codes.setup_arepo_ics" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">codes.</span></span><span class="sig-name descname"><span class="pre">setup_arepo_ics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boxsize</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ic_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">regenerate_particles</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prng</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/codes.html#setup_arepo_ics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#codes.setup_arepo_ics" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 </section>
@@ -763,11 +764,11 @@ document.write(`
       </div>
     </a>
     <a class="right-next"
-       href="codes.setup_athena_ics.html"
+       href="codes.setup_art_ics.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">codes.setup_athena_ics</p>
+        <p class="prev-next-title">codes.setup_art_ics</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

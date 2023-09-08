@@ -13,6 +13,7 @@
 
    
       setup_arepo_ics
+      setup_art_ics
       setup_athena_ics
       setup_enzo_ics
       setup_flash_ics

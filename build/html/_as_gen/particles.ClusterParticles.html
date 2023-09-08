@@ -563,6 +563,7 @@ document.write(`
 <li class="toctree-l3"><a class="reference internal" href="particles.ClusterParticles.add_black_hole.html">particles.ClusterParticles.add_black_hole</a></li>
 <li class="toctree-l3"><a class="reference internal" href="particles.ClusterParticles.add_offsets.html">particles.ClusterParticles.add_offsets</a></li>
 <li class="toctree-l3"><a class="reference internal" href="particles.ClusterParticles.drop_ptypes.html">particles.ClusterParticles.drop_ptypes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="particles.ClusterParticles.from_fields.html">particles.ClusterParticles.from_fields</a></li>
 <li class="toctree-l3"><a class="reference internal" href="particles.ClusterParticles.from_file.html">particles.ClusterParticles.from_file</a></li>
 <li class="toctree-l3"><a class="reference internal" href="particles.ClusterParticles.from_gadget_file.html">particles.ClusterParticles.from_gadget_file</a></li>
 <li class="toctree-l3"><a class="reference internal" href="particles.ClusterParticles.from_h5_file.html">particles.ClusterParticles.from_h5_file</a></li>
@@ -576,7 +577,6 @@ document.write(`
 <li class="toctree-l3"><a class="reference internal" href="particles.ClusterParticles.num_passive_scalars.html">particles.ClusterParticles.num_passive_scalars</a></li>
 <li class="toctree-l3"><a class="reference internal" href="particles.ClusterParticles.particle_types.html">particles.ClusterParticles.particle_types</a></li>
 <li class="toctree-l3"><a class="reference internal" href="particles.ClusterParticles.fields.html">particles.ClusterParticles.fields</a></li>
-<li class="toctree-l3"><a class="reference internal" href="particles.ClusterParticles.box_size.html">particles.ClusterParticles.box_size</a></li>
 <li class="toctree-l3"><a class="reference internal" href="particles.ClusterParticles.passive_scalars.html">particles.ClusterParticles.passive_scalars</a></li>
 </ul>
 </li>
@@ -664,6 +664,7 @@ document.write(`
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="codes.html">codes</a><input class="toctree-checkbox" id="toctree-checkbox-29" name="toctree-checkbox-29" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-29"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="codes.setup_arepo_ics.html">codes.setup_arepo_ics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="codes.setup_art_ics.html">codes.setup_art_ics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="codes.setup_athena_ics.html">codes.setup_athena_ics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="codes.setup_enzo_ics.html">codes.setup_enzo_ics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="codes.setup_flash_ics.html">codes.setup_flash_ics</a></li>
@@ -737,7 +738,7 @@ document.write(`
 <h1>particles.ClusterParticles<a class="headerlink" href="#particles-clusterparticles" title="Permalink to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="particles.ClusterParticles">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">particles.</span></span><span class="sig-name descname"><span class="pre">ClusterParticles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">particle_types</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/particles.html#ClusterParticles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#particles.ClusterParticles" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">particles.</span></span><span class="sig-name descname"><span class="pre">ClusterParticles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">particle_types</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/particles.html#ClusterParticles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#particles.ClusterParticles" title="Permalink to this definition">#</a></dt>
 <dd><p>The <code class="docutils literal notranslate"><span class="pre">ClusterParticles</span></code> class provides an interface with a simulation’s particle distribution during the generation
 process.</p>
 <dl class="field-list simple">
@@ -765,7 +766,7 @@ number of particles implicitly from the length of the array.</p>
 <p class="rubric">Methods</p>
 <table class="autosummary longtable table autosummary">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="particles.ClusterParticles.__init__.html#particles.ClusterParticles.__init__" title="particles.ClusterParticles.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(particle_types, fields[, box_size])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="particles.ClusterParticles.__init__.html#particles.ClusterParticles.__init__" title="particles.ClusterParticles.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(particle_types, fields)</p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="particles.ClusterParticles.add_black_hole.html#particles.ClusterParticles.add_black_hole" title="particles.ClusterParticles.add_black_hole"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_black_hole</span></code></a>(bh_mass[, pos, vel, use_pot_min])</p></td>
@@ -777,34 +778,37 @@ number of particles implicitly from the length of the array.</p>
 <tr class="row-even"><td><p><a class="reference internal" href="particles.ClusterParticles.drop_ptypes.html#particles.ClusterParticles.drop_ptypes" title="particles.ClusterParticles.drop_ptypes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">drop_ptypes</span></code></a>(ptypes)</p></td>
 <td><p>Drop all of the particles with <code class="docutils literal notranslate"><span class="pre">ptype</span> <span class="pre">in</span> <span class="pre">ptypes</span></code>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="particles.ClusterParticles.from_file.html#particles.ClusterParticles.from_file" title="particles.ClusterParticles.from_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_file</span></code></a>(filename[, ptypes])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="particles.ClusterParticles.from_fields.html#particles.ClusterParticles.from_fields" title="particles.ClusterParticles.from_fields"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_fields</span></code></a>(fields)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="particles.ClusterParticles.from_file.html#particles.ClusterParticles.from_file" title="particles.ClusterParticles.from_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_file</span></code></a>(filename[, ptypes])</p></td>
 <td><p>Generate cluster particles from an HDF5 file.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="particles.ClusterParticles.from_gadget_file.html#particles.ClusterParticles.from_gadget_file" title="particles.ClusterParticles.from_gadget_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_gadget_file</span></code></a>(filename[, ptypes])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="particles.ClusterParticles.from_gadget_file.html#particles.ClusterParticles.from_gadget_file" title="particles.ClusterParticles.from_gadget_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_gadget_file</span></code></a>(filename[, ptypes])</p></td>
 <td><p>Read in particle data from a Gadget (or Arepo, GIZMO, etc.) snapshot</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="particles.ClusterParticles.from_h5_file.html#particles.ClusterParticles.from_h5_file" title="particles.ClusterParticles.from_h5_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_h5_file</span></code></a>(filename[, ptypes])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="particles.ClusterParticles.from_h5_file.html#particles.ClusterParticles.from_h5_file" title="particles.ClusterParticles.from_h5_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_h5_file</span></code></a>(filename[, ptypes])</p></td>
 <td><p>Equivalent to <code class="docutils literal notranslate"><span class="pre">cls.from_file</span></code>.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="particles.ClusterParticles.keys.html#particles.ClusterParticles.keys" title="particles.ClusterParticles.keys"><code class="xref py py-obj docutils literal notranslate"><span class="pre">keys</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="particles.ClusterParticles.keys.html#particles.ClusterParticles.keys" title="particles.ClusterParticles.keys"><code class="xref py py-obj docutils literal notranslate"><span class="pre">keys</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="particles.ClusterParticles.make_radial_cut.html#particles.ClusterParticles.make_radial_cut" title="particles.ClusterParticles.make_radial_cut"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_radial_cut</span></code></a>(r_max[, center, ptypes])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="particles.ClusterParticles.make_radial_cut.html#particles.ClusterParticles.make_radial_cut" title="particles.ClusterParticles.make_radial_cut"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_radial_cut</span></code></a>(r_max[, center, ptypes])</p></td>
 <td><p>Make a radial cut on particles.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="particles.ClusterParticles.set_field.html#particles.ClusterParticles.set_field" title="particles.ClusterParticles.set_field"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_field</span></code></a>(ptype, name, value[, units, add, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="particles.ClusterParticles.set_field.html#particles.ClusterParticles.set_field" title="particles.ClusterParticles.set_field"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_field</span></code></a>(ptype, name, value[, units, add, ...])</p></td>
 <td><p>Add or update a particle field using a unyt_array.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="particles.ClusterParticles.to_yt_dataset.html#particles.ClusterParticles.to_yt_dataset" title="particles.ClusterParticles.to_yt_dataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_yt_dataset</span></code></a>(box_size[, ptypes])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="particles.ClusterParticles.to_yt_dataset.html#particles.ClusterParticles.to_yt_dataset" title="particles.ClusterParticles.to_yt_dataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_yt_dataset</span></code></a>(box_size[, ptypes])</p></td>
 <td><p>Create an in-memory yt dataset for the particles.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="particles.ClusterParticles.write_particles.html#particles.ClusterParticles.write_particles" title="particles.ClusterParticles.write_particles"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_particles</span></code></a>(output_filename[, overwrite])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="particles.ClusterParticles.write_particles.html#particles.ClusterParticles.write_particles" title="particles.ClusterParticles.write_particles"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_particles</span></code></a>(output_filename[, overwrite])</p></td>
 <td><p>Write the particles to an HDF5 file.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="particles.ClusterParticles.write_particles_to_h5.html#particles.ClusterParticles.write_particles_to_h5" title="particles.ClusterParticles.write_particles_to_h5"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_particles_to_h5</span></code></a>(output_filename[, ...])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="particles.ClusterParticles.write_particles_to_h5.html#particles.ClusterParticles.write_particles_to_h5" title="particles.ClusterParticles.write_particles_to_h5"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_particles_to_h5</span></code></a>(output_filename[, ...])</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="particles.ClusterParticles.write_to_gadget_file.html#particles.ClusterParticles.write_to_gadget_file" title="particles.ClusterParticles.write_to_gadget_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_to_gadget_file</span></code></a>(ic_filename, box_size)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="particles.ClusterParticles.write_to_gadget_file.html#particles.ClusterParticles.write_to_gadget_file" title="particles.ClusterParticles.write_to_gadget_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_to_gadget_file</span></code></a>(ic_filename, box_size)</p></td>
 <td><p>Write the particles to a file in the HDF5 Gadget format which can be used as initial conditions for a simulation.</p></td>
 </tr>
 </tbody>
@@ -821,10 +825,7 @@ number of particles implicitly from the length of the array.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="particles.ClusterParticles.fields.html#particles.ClusterParticles.fields" title="particles.ClusterParticles.fields"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fields</span></code></a></p></td>
 <td><p>The available data fields related to the particles.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="particles.ClusterParticles.box_size.html#particles.ClusterParticles.box_size" title="particles.ClusterParticles.box_size"><code class="xref py py-obj docutils literal notranslate"><span class="pre">box_size</span></code></a></p></td>
-<td><p>the particle set's box size.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="particles.ClusterParticles.passive_scalars.html#particles.ClusterParticles.passive_scalars" title="particles.ClusterParticles.passive_scalars"><code class="xref py py-obj docutils literal notranslate"><span class="pre">passive_scalars</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="particles.ClusterParticles.passive_scalars.html#particles.ClusterParticles.passive_scalars" title="particles.ClusterParticles.passive_scalars"><code class="xref py py-obj docutils literal notranslate"><span class="pre">passive_scalars</span></code></a></p></td>
 <td><p>any passive scalars that are included.</p></td>
 </tr>
 </tbody>

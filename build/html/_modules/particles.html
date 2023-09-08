@@ -393,6 +393,7 @@ document.write(`
 <span class="kn">from</span> <span class="nn">cluster_generator.utils</span> <span class="kn">import</span> <span class="n">ensure_ytarray</span><span class="p">,</span> <span class="n">ensure_list</span><span class="p">,</span> \
     <span class="n">mylog</span><span class="p">,</span> <span class="n">truncate_spline</span>
 
+
 <span class="c1"># -------------------------------------------------------------------------------------------------------------------- #</span>
 <span class="c1"># Setup ============================================================================================================== #</span>
 <span class="c1"># -------------------------------------------------------------------------------------------------------------------- #</span>
@@ -401,6 +402,7 @@ document.write(`
     <span class="n">_gadget_setup_dict</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">gfile</span><span class="p">,</span> <span class="n">yaml</span><span class="o">.</span><span class="n">FullLoader</span><span class="p">)</span>
     <span class="n">gadget_fields</span><span class="p">,</span> <span class="n">gadget_field_map</span><span class="p">,</span> <span class="n">gadget_field_units</span> <span class="o">=</span> <span class="n">_gadget_setup_dict</span><span class="p">[</span><span class="s2">&quot;gadget_fields&quot;</span><span class="p">],</span> <span class="n">_gadget_setup_dict</span><span class="p">[</span>
         <span class="s2">&quot;gadget_field_map&quot;</span><span class="p">],</span> <span class="n">_gadget_setup_dict</span><span class="p">[</span><span class="s2">&quot;gadget_field_units&quot;</span><span class="p">]</span>
+
 
 <span class="n">ptype_map</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">([(</span><span class="s2">&quot;PartType0&quot;</span><span class="p">,</span> <span class="s2">&quot;gas&quot;</span><span class="p">),</span>
                          <span class="p">(</span><span class="s2">&quot;PartType1&quot;</span><span class="p">,</span> <span class="s2">&quot;dm&quot;</span><span class="p">),</span>
@@ -442,17 +444,17 @@ document.write(`
 <span class="sd">    - ``__getitem__`` and ``__setitem__`` index into ``self.fields``. Similarly, ``.keys()`` is an alias for ``self.fields.keys()``.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="ClusterParticles.__init__"><a class="viewcode-back" href="../_as_gen/particles.ClusterParticles.__init__.html#particles.ClusterParticles.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">particle_types</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span> <span class="n">box_size</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="ClusterParticles.__init__"><a class="viewcode-back" href="../_as_gen/particles.ClusterParticles.__init__.html#particles.ClusterParticles.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">particle_types</span><span class="p">,</span> <span class="n">fields</span><span class="p">):</span>
         <span class="c1">#: The associated particle types for this set of particles.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">particle_types</span> <span class="o">=</span> <span class="n">ensure_list</span><span class="p">(</span><span class="n">particle_types</span><span class="p">)</span>
         <span class="c1">#: The available data fields related to the particles.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fields</span> <span class="o">=</span> <span class="n">fields</span>
 
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_update_num_particles</span><span class="p">()</span>  <span class="c1"># --&gt; Keeps number of particles current</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_update_field_names</span><span class="p">()</span>  <span class="c1"># --&gt; Keeps field names current.</span>
 
-        <span class="c1">#: the particle set&#39;s box size.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">box_size</span> <span class="o">=</span> <span class="n">box_size</span>
+
         <span class="c1">#: any passive scalars that are included.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">passive_scalars</span> <span class="o">=</span> <span class="p">[]</span></div>
 
@@ -580,22 +582,22 @@ document.write(`
 <span class="sd">            position and velocity of the black hole particle. Default:</span>
 <span class="sd">            False</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">mass</span> <span class="o">=</span> <span class="n">unyt_quantity</span><span class="p">(</span><span class="n">bh_mass</span><span class="p">,</span> <span class="s2">&quot;Msun&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;black_hole&quot;</span><span class="p">,</span> <span class="s2">&quot;particle_mass&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="p">(</span>
-            <span class="p">[</span><span class="n">bh_mass</span><span class="p">],</span> <span class="s2">&quot;Msun&quot;</span><span class="p">)</span>
+        <span class="n">mass</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="p">([</span><span class="n">bh_mass</span><span class="p">],</span> <span class="s2">&quot;Msun&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">use_pot_min</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span><span class="s2">&quot;dm&quot;</span><span class="p">,</span> <span class="s2">&quot;potential_energy&quot;</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s2">&quot;(&#39;dm&#39;, &#39;potential_energy&#39;) is not available!&quot;</span><span class="p">)</span>
             <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;dm&quot;</span><span class="p">,</span> <span class="s2">&quot;potential_energy&quot;</span><span class="p">])</span>
             <span class="n">pos</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;dm&quot;</span><span class="p">,</span> <span class="s2">&quot;particle_position&quot;</span><span class="p">][</span><span class="n">idx</span><span class="p">]</span>
-                             <span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+                             <span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
             <span class="n">vel</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;dm&quot;</span><span class="p">,</span> <span class="s2">&quot;particle_velocity&quot;</span><span class="p">][</span><span class="n">idx</span><span class="p">]</span>
-                             <span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+                             <span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">pos</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">pos</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)),</span> <span class="s2">&quot;kpc&quot;</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">vel</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">vel</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)),</span> <span class="s2">&quot;kpc/Myr&quot;</span><span class="p">)</span>
-            <span class="n">pos</span> <span class="o">=</span> <span class="n">ensure_ytarray</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="s2">&quot;kpc&quot;</span><span class="p">)</span>
-            <span class="n">vel</span> <span class="o">=</span> <span class="n">ensure_ytarray</span><span class="p">(</span><span class="n">vel</span><span class="p">,</span> <span class="s2">&quot;kpc/Myr&quot;</span><span class="p">)</span>
+            <span class="n">pos</span> <span class="o">=</span> <span class="n">ensure_ytarray</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="s2">&quot;kpc&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+            <span class="n">vel</span> <span class="o">=</span> <span class="n">ensure_ytarray</span><span class="p">(</span><span class="n">vel</span><span class="p">,</span> <span class="s2">&quot;kpc/Myr&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
         <span class="k">if</span> <span class="s2">&quot;black_hole&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">particle_types</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">particle_types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;black_hole&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;black_hole&quot;</span><span class="p">,</span> <span class="s2">&quot;particle_position&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pos</span>
@@ -611,6 +613,22 @@ document.write(`
             <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;black_hole&quot;</span><span class="p">,</span> <span class="s2">&quot;particle_mass&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">uappend</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;black_hole&quot;</span><span class="p">,</span> <span class="s2">&quot;particle_mass&quot;</span><span class="p">],</span> <span class="n">mass</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_update_num_particles</span><span class="p">()</span></div>
+
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_fields</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">fields</span><span class="p">):</span>
+        <span class="n">particle_types</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">key</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">particle_types</span><span class="p">:</span>
+                <span class="n">particle_types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">cls</span><span class="p">(</span><span class="n">particle_types</span><span class="p">,</span> <span class="n">fields</span><span class="p">)</span>
+<div class="viewcode-block" id="ClusterParticles.from_fields"><a class="viewcode-back" href="../_as_gen/particles.ClusterParticles.from_fields.html#particles.ClusterParticles.from_fields">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_fields</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">fields</span><span class="p">):</span>
+        <span class="n">particle_types</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">key</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">particle_types</span><span class="p">:</span>
+                <span class="n">particle_types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">cls</span><span class="p">(</span><span class="n">particle_types</span><span class="p">,</span> <span class="n">fields</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ClusterParticles.from_file"><a class="viewcode-back" href="../_as_gen/particles.ClusterParticles.from_file.html#particles.ClusterParticles.from_file">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_file</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">ptypes</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -718,7 +736,7 @@ document.write(`
 <span class="sd">            Overwrite an existing file with the same name. Default False.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">Path</span><span class="p">(</span><span class="n">output_filename</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">overwrite</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s2">&quot;Cannot create </span><span class="si">%s</span><span class="s2">. It exists and overwrite=False.&quot;</span> <span class="o">%</span> <span class="n">output_filename</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cannot create </span><span class="si">{</span><span class="n">output_filename</span><span class="si">}</span><span class="s2">. It exists and overwrite=False.&quot;</span><span class="p">)</span>
 
         <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">output_filename</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">ptype</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">particle_types</span><span class="p">:</span>
@@ -785,8 +803,7 @@ document.write(`
             <span class="k">if</span> <span class="n">units</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="n">ptype</span><span class="p">,</span> <span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">convert_to_units</span><span class="p">(</span><span class="n">units</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The length of the array needs to be </span><span class="si">%d</span><span class="s2"> particles!&quot;</span>
-                             <span class="o">%</span> <span class="n">num_particles</span><span class="p">)</span></div>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The length of the array needs to be </span><span class="si">{</span><span class="n">num_particles</span><span class="si">}</span><span class="s2"> particles!&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ClusterParticles.add_offsets"><a class="viewcode-back" href="../_as_gen/particles.ClusterParticles.add_offsets.html#particles.ClusterParticles.add_offsets">[docs]</a>    <span class="k">def</span> <span class="nf">add_offsets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r_ctr</span><span class="p">,</span> <span class="n">v_ctr</span><span class="p">,</span> <span class="n">ptypes</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -922,9 +939,9 @@ document.write(`
             <span class="n">pos</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">pop</span><span class="p">((</span><span class="n">ptype</span><span class="p">,</span> <span class="s2">&quot;particle_position&quot;</span><span class="p">))</span>
             <span class="n">vel</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">pop</span><span class="p">((</span><span class="n">ptype</span><span class="p">,</span> <span class="s2">&quot;particle_velocity&quot;</span><span class="p">))</span>
             <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="s2">&quot;xyz&quot;</span><span class="p">):</span>
-                <span class="n">data</span><span class="p">[</span><span class="n">ptype</span><span class="p">,</span> <span class="s2">&quot;particle_position_</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">ax</span><span class="p">]</span> <span class="o">=</span> <span class="n">pos</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span>
-                <span class="n">data</span><span class="p">[</span><span class="n">ptype</span><span class="p">,</span> <span class="s2">&quot;particle_velocity_</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">ax</span><span class="p">]</span> <span class="o">=</span> <span class="n">vel</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">load_particles</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">length_unit</span><span class="o">=</span><span class="s2">&quot;kpc&quot;</span><span class="p">,</span> <span class="n">bbox</span><span class="o">=</span><span class="p">[[</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">box_size</span><span class="p">]]</span> <span class="o">*</span> <span class="mi">3</span><span class="p">,</span>
+                <span class="n">data</span><span class="p">[</span><span class="n">ptype</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;particle_position_</span><span class="si">{</span><span class="n">ax</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pos</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span>
+                <span class="n">data</span><span class="p">[</span><span class="n">ptype</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;particle_velocity_</span><span class="si">{</span><span class="n">ax</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vel</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">load_particles</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">length_unit</span><span class="o">=</span><span class="s2">&quot;kpc&quot;</span><span class="p">,</span> <span class="n">bbox</span><span class="o">=</span><span class="p">[[</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">box_size</span><span class="p">]]</span><span class="o">*</span><span class="mi">3</span><span class="p">,</span>
                               <span class="n">mass_unit</span><span class="o">=</span><span class="s2">&quot;Msun&quot;</span><span class="p">,</span> <span class="n">time_unit</span><span class="o">=</span><span class="s2">&quot;Myr&quot;</span><span class="p">)</span></div></div>
 
 

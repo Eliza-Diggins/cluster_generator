@@ -18,6 +18,7 @@ particles.ClusterParticles
       ~ClusterParticles.add_black_hole
       ~ClusterParticles.add_offsets
       ~ClusterParticles.drop_ptypes
+      ~ClusterParticles.from_fields
       ~ClusterParticles.from_file
       ~ClusterParticles.from_gadget_file
       ~ClusterParticles.from_h5_file
@@ -42,7 +43,6 @@ particles.ClusterParticles
       ~ClusterParticles.num_passive_scalars
       ~ClusterParticles.particle_types
       ~ClusterParticles.fields
-      ~ClusterParticles.box_size
       ~ClusterParticles.passive_scalars
    
    
