@@ -1,0 +1,40 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "source": [
+    "# Getting Funky: MONDian Gravity\n",
+    "\n",
+    "<div class=\"alert alert-block alert-warning\">\n",
+    "<p><b> &#10060; Uh Oh:</b></p> \n",
+    "This guide is not yet written! We are always trying to work on our documentation, so give us a little while and we'll get this guide done. If you feel up to writing it yourself, please contact us!\n",
+    "</div>\n"
+   ],
+   "metadata": {
+    "collapsed": false
+   },
+   "id": "1c2121988898ed6b"
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 2
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython2",
+   "version": "2.7.6"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}

@@ -49,8 +49,6 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/quick_notebooks/quickbook';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Quickstart Guide: Getting the most out of cluster_generator" href="quickbook2.html" />
-    <link rel="prev" title="Quickstart Guide" href="../../Getting_Started.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -132,7 +130,7 @@
   </p>
   <ul class="bd-navbar-elements navbar-nav">
     
-                    <li class="nav-item current active">
+                    <li class="nav-item">
                       <a class="nav-link nav-internal" href="../../Getting_Started.html">
                         Quickstart Guide
                       </a>
@@ -240,7 +238,7 @@ document.write(`
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
       
-      <div class="bd-sidebar-primary bd-sidebar">
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
         
 
   
@@ -258,7 +256,7 @@ document.write(`
   </p>
   <ul class="bd-navbar-elements navbar-nav">
     
-                    <li class="nav-item current active">
+                    <li class="nav-item">
                       <a class="nav-link nav-internal" href="../../Getting_Started.html">
                         Quickstart Guide
                       </a>
@@ -331,20 +329,6 @@ document.write(`
     
   </div>
   
-    <div class="sidebar-primary-items__start sidebar-primary__section">
-        <div class="sidebar-primary-item"><nav class="bd-docs-nav bd-links"
-     aria-label="Section Navigation">
-  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
-  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Quickstart Guides:</span></p>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Quickstart Guide: The Basics</a></li>
-<li class="toctree-l1"><a class="reference internal" href="quickbook2.html">Quickstart Guide: Getting the most out of <code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="quickbook3.html">Quickstart Guide: What About MOND?</a></li>
-</ul>
-</div>
-</nav></div>
-    </div>
-  
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
   </div>
@@ -377,9 +361,6 @@ document.write(`
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
-    
-    <li class="breadcrumb-item"><a href="../../Getting_Started.html" class="nav-link">Quickstart Guide</a></li>
-    
     <li class="breadcrumb-item active" aria-current="page">Quickstart Guide: The Basics</li>
   </ul>
 </nav>
@@ -400,27 +381,32 @@ document.write(`
   <section id="Quickstart-Guide:-The-Basics">
 <h1>Quickstart Guide: The Basics<a class="headerlink" href="#Quickstart-Guide:-The-Basics" title="Permalink to this heading">#</a></h1>
 <hr class="docutils" />
-<p>Okay, I’ve installed <code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code> and I want to start making clusters for my simulation project… How do I start?</p>
-<p>The first thing to decide on is what data we’re going to use to generate the galaxy cluster. There are a bunch of ways to make the <code class="docutils literal notranslate"><span class="pre">ClusterModel</span></code> class that underlies the <code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code> class, but each of the requires at least 1 radial profile representing certain components and variables of the cluster. Radial profiles in <code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code> are their own class (<code class="docutils literal notranslate"><span class="pre">RadialProfile</span></code>), and a large variety of them are built into the API. To start off, let’s create a basic density profile:</p>
-<section id="Profiles">
-<h2>Profiles<a class="headerlink" href="#Profiles" title="Permalink to this heading">#</a></h2>
+<p>Okay, I’ve installed <code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code> and I want to start making clusters for my simulation project… How do I start? This guide will show you the ropes as far as using <code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code> to build you galaxy cluster models!</p>
+<section id="Contents">
+<h2>Contents<a class="headerlink" href="#Contents" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="#Building-The-Foundation"><span class="std std-ref">Building the Foundation: Profiles</span></a></p></li>
+<li><p><a class="reference internal" href="#Raising-The-Frame"><span class="std std-ref">Raising the Frame: Cluster Models</span></a></p></li>
+<li><p><a class="reference internal" href="#Finishing-The-House"><span class="std std-ref">Finishing the House: Cluster ICs</span></a></p></li>
+</ul>
+</section>
+<section id="Building-The-Foundation">
+<h2>Building The Foundation<a class="headerlink" href="#Building-The-Foundation" title="Permalink to this heading">#</a></h2>
+<hr class="docutils" />
+<div class="alert alert-block alert-info"><p><p>💡 Big Ideas:</p>
+</p><p>Profiles are the underpinning of all of the systems you can build in cluster_generator. Before you can build a galaxy cluster, you have to select the profiles you’re going to provide in order to make the system.</p>
+</div><p>There are a variety of radial profiles available in cluster_generator, which you can find on the <a class="reference external" href="https://eliza-diggins.github.io/cluster_generator/build/html/radial_profiles.html#radial-profiles">Radial Profiles page</a> of the documentation. Each of these <code class="docutils literal notranslate"><span class="pre">RadialProfile</span></code> objects is really just a fancy wrapper for a simple function. Let’s see an example:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-
-<span class="c1"># imports #</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># -- Imports -- #</span>
 <span class="kn">import</span> <span class="nn">cluster_generator</span> <span class="k">as</span> <span class="nn">cg</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="c1"># - Constants - #</span>
-<span class="n">M0</span> <span class="o">=</span> <span class="mf">1e14</span> <span class="c1"># The scale mass in Msun</span>
-<span class="n">a</span> <span class="o">=</span> <span class="mf">1e3</span> <span class="c1"># scale length in kpc</span>
 
-<span class="c1"># creating the radial density profile #</span>
-<span class="n">density</span> <span class="o">=</span> <span class="n">cg</span><span class="o">.</span><span class="n">radial_profiles</span><span class="o">.</span><span class="n">hernquist_density_profile</span><span class="p">(</span><span class="n">M0</span><span class="p">,</span><span class="n">a</span><span class="p">)</span>
+<span class="c1"># -- building the profile -- #</span>
+<span class="n">example_profile</span> <span class="o">=</span> <span class="n">cg</span><span class="o">.</span><span class="n">radial_profiles</span><span class="o">.</span><span class="n">hernquist_density_profile</span><span class="p">(</span><span class="mf">1e10</span><span class="p">,</span><span class="mi">300</span><span class="p">)</span> <span class="c1"># Create a Hernquist Profile</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">density</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">example_profile</span><span class="p">,</span> <span class="n">example_profile</span><span class="p">(</span><span class="mi">100</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -429,131 +415,150 @@ document.write(`
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-RadialProfile; type=hernquist_density_profile.
+RadialProfile; type=hernquist_density_profile. 74.60387957432596
 </pre></div></div>
 </div>
-<p>Now, <code class="docutils literal notranslate"><span class="pre">RadialProfile</span></code> objects like our <code class="docutils literal notranslate"><span class="pre">density</span></code> profile are essentially fancy wrappers for simple lambda functions. We can call the function on values or on arrays:</p>
-<div class="nbinput docutils container">
+<p>Notice that the <code class="docutils literal notranslate"><span class="pre">example_profile</span></code> is its own type, but is also callable? The basic construction of <code class="docutils literal notranslate"><span class="pre">RadialProfile</span></code> objects is as a wrapper for simple lambda functions. In fact, you can make your own radial profiles by simply supplying a lambda function to the <code class="docutils literal notranslate"><span class="pre">RadialProfile</span></code> class.</p>
+<p>There really isn’t a whole lot to the <code class="docutils literal notranslate"><span class="pre">RadialProfiles</span></code>, but they’re really important. The important things to remember are as follows:</p>
+<div class="alert alert-block alert-warning"><p><p>💡 Things To Remember:</p>
+</p><ul><li><p>RadialProfiles are not unit-ed. This means you need to follow standard conventions for units (Myr, kpc, Solar Masses).</p>
+</li><li><p>RadialProfiles can be saved to a binary format (using the .to_binary method).</p>
+</li><li><p>RadialProfiles can have cores added or be truncated if needed (.cutoff and .add_core respectively).</p>
+</li><li><p>RadialProfiles can be plotted using the .plot method.</p>
+</li></ul></div><p>We won’t go into to much detail about <code class="docutils literal notranslate"><span class="pre">RadialProfile</span></code> objects here, if you’re interested in knowing more, see the <a class="reference external" href="http://localhost:63342/cluster_generator/docs/build/html/_as_gen/radial_profiles.html">api documentation</a>. For now, let’s start by defining the basic profiles we’re going to use to build our cluster:</p>
+<div class="alert alert-block alert-warning"><p><p>💡 Alert:</p>
+</p><p>You don’t need the colossus package to use cluster_generator; however, we will mention here that colossus has many utilities that are useful for generating well chosen radial profiles for your clusters.</p>
+</div><div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">geomspace</span><span class="p">(</span><span class="mf">1e-1</span><span class="p">,</span><span class="mf">1e4</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
-<span class="n">rho</span> <span class="o">=</span> <span class="n">density</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># -- building the cluster profiles -- #</span>
+<span class="kn">from</span> <span class="nn">colossus.halo</span> <span class="kn">import</span> <span class="n">concentration</span>
+<span class="kn">from</span> <span class="nn">colossus.cosmology</span> <span class="kn">import</span> <span class="n">cosmology</span>
+<span class="kn">from</span> <span class="nn">yt.utilities.cosmology</span> <span class="kn">import</span> <span class="n">Cosmology</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">rho</span><span class="p">)</span>
+<span class="c1"># -- Setting Cosmology Parameters (OPTIONAL) -- #</span>
+<span class="n">ccosmo</span> <span class="o">=</span> <span class="n">cosmology</span><span class="o">.</span><span class="n">setCosmology</span><span class="p">(</span><span class="s2">&quot;planck18&quot;</span><span class="p">)</span>
+<span class="n">cosmo</span> <span class="o">=</span> <span class="n">Cosmology</span><span class="p">(</span>
+    <span class="n">hubble_constant</span><span class="o">=</span><span class="n">ccosmo</span><span class="o">.</span><span class="n">h</span><span class="p">,</span> <span class="n">omega_matter</span><span class="o">=</span><span class="n">ccosmo</span><span class="o">.</span><span class="n">Om0</span><span class="p">,</span> <span class="n">omega_lambda</span><span class="o">=</span><span class="n">ccosmo</span><span class="o">.</span><span class="n">Ode0</span>
+<span class="p">)</span>
+<span class="n">z</span> <span class="o">=</span> <span class="mf">0.546</span> <span class="c1"># --&gt; set the redshift</span>
+
+<span class="c1"># -- Building the Cluster -- #</span>
+
+<span class="n">m200</span> <span class="o">=</span> <span class="mf">1.1e15</span><span class="o">*</span><span class="mf">1.23</span> <span class="c1"># --&gt; Set the mass</span>
+
+<span class="n">conc</span> <span class="o">=</span> <span class="n">concentration</span><span class="o">.</span><span class="n">modelDiemer19</span><span class="p">(</span><span class="n">m200</span><span class="o">/</span><span class="n">ccosmo</span><span class="o">.</span><span class="n">h</span><span class="p">,</span><span class="n">z</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># Uses the concentration - mass relation to find the right concentration parameter</span>
+<span class="n">r200</span> <span class="o">=</span> <span class="n">cg</span><span class="o">.</span><span class="n">find_overdensity_radius</span><span class="p">(</span><span class="n">m200</span><span class="p">,</span><span class="mf">200.0</span><span class="p">,</span><span class="n">z</span><span class="o">=</span><span class="n">z</span><span class="p">,</span><span class="n">cosmo</span><span class="o">=</span><span class="n">cosmo</span><span class="p">)</span>
+
+<span class="n">rs</span> <span class="o">=</span> <span class="n">r200</span><span class="o">/</span><span class="n">conc</span>
+<span class="n">rt</span> <span class="o">=</span> <span class="n">r200</span><span class="o">*</span><span class="mi">2</span>
+<span class="c1"># Building the profiles #</span>
+<span class="n">Mt</span> <span class="o">=</span> <span class="n">cg</span><span class="o">.</span><span class="n">tnfw_mass_profile</span><span class="p">(</span><span class="n">cg</span><span class="o">.</span><span class="n">nfw_scale_density</span><span class="p">(</span><span class="n">conc</span><span class="p">,</span><span class="n">z</span><span class="o">=</span><span class="n">z</span><span class="p">),</span> <span class="n">rs</span><span class="p">,</span> <span class="n">rt</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-[1.00000000e-01 3.59381366e-01 1.29154967e+00 4.64158883e+00
- 1.66810054e+01 5.99484250e+01 2.15443469e+02 7.74263683e+02
- 2.78255940e+03 1.00000000e+04] [1.59107206e+08 4.42380961e+07 1.22751658e+07 3.38158266e+06
- 9.07912050e+05 2.22940080e+05 4.11417258e+04 3.68024519e+03
- 1.05686232e+02 1.19575464e+00]
-</pre></div></div>
-</div>
-<p>You should always remember that <code class="docutils literal notranslate"><span class="pre">RadialProfile</span></code> objects don’t have implicit units. <strong>You need to use the standard unit system</strong> or your units may be non-standard.</p>
-<p>You can also plot <code class="docutils literal notranslate"><span class="pre">RadialProfile</span></code> objects:</p>
+<p>Let’s take a look at what we just made:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="n">density</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="mf">1e-1</span><span class="p">,</span><span class="mf">1e4</span><span class="p">,</span><span class="mi">1000</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">Mt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span><span class="mi">10000</span><span class="p">,</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Dynamical Mass / [$\mathrm{M_{\odot}}$]&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-(&lt;Figure size 1000x1000 with 1 Axes&gt;, &lt;Axes: xlabel=&#39;Radius (kpc)&#39;&gt;)
-</pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/notebooks_quick_notebooks_quickbook_5_1.png" src="../../_images/notebooks_quick_notebooks_quickbook_5_1.png" />
+<img alt="../../_images/notebooks_quick_notebooks_quickbook_5_0.png" src="../../_images/notebooks_quick_notebooks_quickbook_5_0.png" />
 </div>
 </div>
-</section>
-<section id="Creating-a-Galaxy-Cluster">
-<h2>Creating a Galaxy Cluster<a class="headerlink" href="#Creating-a-Galaxy-Cluster" title="Permalink to this heading">#</a></h2>
-<hr class="docutils" />
-<p>Now that we’ve figured out the radial profiles, its time to build an actual galaxy cluster. In <code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code>, galaxy clusters are represented by the <code class="docutils literal notranslate"><span class="pre">ClusterModel</span></code> class and can be initialized from a variety of different profiles. The ready to use options are <code class="docutils literal notranslate"><span class="pre">ClusterModel.from_dens_and_tden</span></code> which generates from gas density and total density, <code class="docutils literal notranslate"><span class="pre">ClusterModel.from_dens_and_temp</span></code> which generates from gas density and temperature, and <code class="docutils literal notranslate"><span class="pre">ClusterModel.from_dens_and_entr</span></code>, which generates
-from gas density and entropy. Check out the other quick start guides for a more in-depth description of what goes on under the hood, but for now, lets try to make a viable cluster from gas density and total density:</p>
+<p>For the next session, we are also going to need a gas-mass profile, so let’s see how to build that really quick!</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create the radial profiles #</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="n">z</span><span class="o">=</span> <span class="mf">0.1</span>
-<span class="n">M200</span> <span class="o">=</span> <span class="mf">1.5e15</span>
-<span class="n">conc</span> <span class="o">=</span> <span class="mf">4.0</span>
-<span class="n">r200</span> <span class="o">=</span> <span class="n">cg</span><span class="o">.</span><span class="n">radial_profiles</span><span class="o">.</span><span class="n">find_overdensity_radius</span><span class="p">(</span><span class="n">M200</span><span class="p">,</span> <span class="mf">200.0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="n">z</span><span class="p">)</span>
-<span class="n">a</span> <span class="o">=</span> <span class="n">r200</span> <span class="o">/</span> <span class="n">conc</span>
-<span class="n">M</span> <span class="o">=</span> <span class="n">cg</span><span class="o">.</span><span class="n">radial_profiles</span><span class="o">.</span><span class="n">snfw_total_mass</span><span class="p">(</span><span class="n">M200</span><span class="p">,</span> <span class="n">r200</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
-<span class="n">rhot</span> <span class="o">=</span> <span class="n">cg</span><span class="o">.</span><span class="n">radial_profiles</span><span class="o">.</span><span class="n">snfw_density_profile</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
-<span class="n">Mt</span> <span class="o">=</span> <span class="n">cg</span><span class="o">.</span><span class="n">radial_profiles</span><span class="o">.</span><span class="n">snfw_mass_profile</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
-<span class="n">r500</span><span class="p">,</span> <span class="n">M500</span> <span class="o">=</span> <span class="n">cg</span><span class="o">.</span><span class="n">radial_profiles</span><span class="o">.</span><span class="n">find_radius_mass</span><span class="p">(</span><span class="n">Mt</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="n">z</span><span class="p">,</span> <span class="n">delta</span><span class="o">=</span><span class="mf">500.0</span><span class="p">)</span>
-<span class="n">f_g</span> <span class="o">=</span> <span class="mf">0.12</span>
-<span class="n">rhog</span> <span class="o">=</span> <span class="n">cg</span><span class="o">.</span><span class="n">radial_profiles</span><span class="o">.</span><span class="n">vikhlinin_density_profile</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">100.0</span><span class="p">,</span> <span class="n">r200</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.67</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-<span class="n">rhog</span> <span class="o">=</span> <span class="n">cg</span><span class="o">.</span><span class="n">radial_profiles</span><span class="o">.</span><span class="n">rescale_profile_by_mass</span><span class="p">(</span><span class="n">rhog</span><span class="p">,</span> <span class="n">f_g</span> <span class="o">*</span> <span class="n">M500</span><span class="p">,</span> <span class="n">r500</span><span class="p">)</span>
-<span class="n">rhos</span> <span class="o">=</span> <span class="mf">0.02</span> <span class="o">*</span> <span class="n">rhot</span>
-<span class="n">rmin</span> <span class="o">=</span> <span class="mf">0.1</span>
-<span class="n">rmax</span> <span class="o">=</span> <span class="mf">10000.0</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># -- Constructing the density profiles for later -- #</span>
+<span class="n">f_g</span> <span class="o">=</span> <span class="mf">0.115</span> <span class="c1"># --&gt; this is the gas fraction</span>
 
+<span class="c1"># -- Build the total density -- #</span>
+<span class="n">rhot</span> <span class="o">=</span> <span class="n">cg</span><span class="o">.</span><span class="n">tnfw_density_profile</span><span class="p">(</span><span class="n">cg</span><span class="o">.</span><span class="n">nfw_scale_density</span><span class="p">(</span><span class="n">conc</span><span class="p">,</span><span class="n">z</span><span class="o">=</span><span class="n">z</span><span class="p">),</span> <span class="n">rs</span><span class="p">,</span> <span class="n">rt</span><span class="p">)</span> <span class="c1"># --&gt; converting the mass profile above to a density profile.</span>
 
-<span class="c1"># Creating the model</span>
-<span class="n">basic_model</span> <span class="o">=</span> <span class="n">cg</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">ClusterModel</span><span class="o">.</span><span class="n">from_dens_and_tden</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5000</span><span class="p">,</span><span class="n">rhog</span><span class="p">,</span><span class="n">rhot</span><span class="p">,</span><span class="n">stellar_density</span><span class="o">=</span><span class="n">rhos</span><span class="p">,</span><span class="n">num_points</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
-<br/></pre></div>
+<span class="c1"># -- Building the gas density -- #</span>
+<span class="n">r2500</span><span class="p">,</span><span class="n">_</span> <span class="o">=</span> <span class="n">cg</span><span class="o">.</span><span class="n">find_radius_mass</span><span class="p">(</span><span class="n">Mt</span><span class="p">,</span><span class="n">z</span><span class="o">=</span><span class="n">z</span><span class="p">,</span><span class="n">delta</span><span class="o">=</span><span class="mf">2500.0</span><span class="p">,</span><span class="n">cosmo</span><span class="o">=</span><span class="n">cosmo</span><span class="p">)</span> <span class="c1"># --&gt; Find r2500 for the total cluster.</span>
+<span class="n">rhog</span> <span class="o">=</span> <span class="n">cg</span><span class="o">.</span><span class="n">vikhlinin_density_profile</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">r2500</span><span class="p">,</span> <span class="mf">1.1</span> <span class="o">*</span> <span class="n">r200</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.67</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="c1"># --&gt; Use r2500 and r200 to build a profile.</span>
+<span class="n">rhog</span> <span class="o">=</span> <span class="n">cg</span><span class="o">.</span><span class="n">rescale_profile_by_mass</span><span class="p">(</span><span class="n">rhog</span><span class="p">,</span> <span class="n">f_g</span> <span class="o">*</span> <span class="n">m200</span><span class="p">,</span> <span class="n">r200</span><span class="p">)</span> <span class="c1"># --&gt; Rescale so that it has the right gas fraction.</span>
+
+<span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">rhot</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="mf">1e1</span><span class="p">,</span><span class="mf">1e4</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">rhog</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="mf">1e1</span><span class="p">,</span><span class="mf">1e4</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Density / $[\mathrm{M_{\odot} \; kpc^{-3}}]$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-cluster_generator : [INFO     ] 2023-08-25 09:06:58,474 Computing the profiles from density and total density. Gravity=Newtonian
-cluster_generator : [INFO     ] 2023-08-25 09:06:58,481 Integrating total mass profile.
-cluster_generator : [INFO     ] 2023-08-25 09:07:02,756 ClusterModel [ClusterModel object; gravity=Newtonian] has no virialization method. Setting to default = lma
-cluster_generator : [INFO     ] 2023-08-25 09:07:02,757 Computing gravitational potential of ClusterModel object; gravity=Newtonian. gravity=Newtonian.
-cluster_generator : [INFO     ] 2023-08-25 09:07:14,200 Computing gravitational potential of ClusterModel object; gravity=Newtonian. gravity=Newtonian.
-cluster_generator : [INFO     ] 2023-08-25 09:07:26,018 Integrating pressure profile.
-cluster_generator : [INFO     ] 2023-08-25 09:08:02,471 ClusterModel [ClusterModel object; gravity=Newtonian] has no virialization method. Setting to default = lma
-</pre></div></div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_quick_notebooks_quickbook_7_0.png" src="../../_images/notebooks_quick_notebooks_quickbook_7_0.png" />
 </div>
-<p>Now, this step can take a little while because the mathematics under the hood can be a bit hard to perform, but the end result is a <code class="docutils literal notranslate"><span class="pre">ClusterModel</span></code> instance which carries all of the data about our cluster. Data regarding the galaxy cluster is stored in what are called <code class="docutils literal notranslate"><span class="pre">fields</span></code>. The fields of the galaxy cluster can be seen by printing the keys of <code class="docutils literal notranslate"><span class="pre">model.fields</span></code>:</p>
+</div>
+</section>
+<section id="Raising-The-Frame">
+<h2>Raising The Frame<a class="headerlink" href="#Raising-The-Frame" title="Permalink to this heading">#</a></h2>
+<hr class="docutils" />
+<div class="alert alert-block alert-info"><p><p>💡 Big Ideas:</p>
+</p><p>While RadialProfiles represent the data from which we want to construct a self-consistent system, the ClusterModel class represents the realization of a fully constructed galaxy cluster.</p>
+</div><p>So far, we’ve seen how to make the RadialProfile objects that we want to use to build galaxy clusters. Now, we’re ready to pull it all together. In cluster_generator, the <a class="reference external" href="https://eliza-diggins.github.io/cluster_generator/build/html/models.html">ClusterModel</a> class is the realization of a complete galaxy cluster. All of these instances are predicated on hydrostatic equilibrium. There are a variety of ways to generate these objects directly from profiles; however, here we are going to use only
+the dynamical density and the gas density to produce our cluster.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">basic_model</span><span class="o">.</span><span class="n">fields</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Turning off spinners because Jupyter notebooks don&#39;t render them properly.</span>
+<span class="kn">from</span> <span class="nn">cluster_generator.utils</span> <span class="kn">import</span> <span class="n">cgparams</span>
+<span class="n">cgparams</span><span class="p">[</span><span class="s2">&quot;system&quot;</span><span class="p">][</span><span class="s2">&quot;text&quot;</span><span class="p">][</span><span class="s2">&quot;spinners&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">cg</span><span class="o">.</span><span class="n">ClusterModel</span><span class="o">.</span><span class="n">from_dens_and_tden</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">15000.0</span><span class="p">,</span> <span class="n">rhog</span><span class="p">,</span> <span class="n">rhot</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-odict_keys([&#39;radius&#39;, &#39;density&#39;, &#39;total_density&#39;, &#39;total_mass&#39;, &#39;gas_mass&#39;, &#39;stellar_density&#39;, &#39;gravitational_potential&#39;, &#39;gravitational_field&#39;, &#39;pressure&#39;, &#39;temperature&#39;, &#39;stellar_mass&#39;, &#39;dark_matter_density&#39;, &#39;dark_matter_mass&#39;, &#39;gas_fraction&#39;, &#39;electron_number_density&#39;, &#39;entropy&#39;])
+cluster_generator : [INFO     ] 2023-09-10 09:57:30,876 Computing the profiles from density and total density. Gravity=Newtonian
+cluster_generator : [INFO     ] 2023-09-10 09:57:30,878 Integrating total mass profile.
+cluster_generator : [INFO     ] 2023-09-10 09:57:31,101 ClusterModel [ClusterModel object; gravity=Newtonian] has no virialization method. Setting to default = eddington
+cluster_generator : [INFO     ] 2023-09-10 09:57:31,102 Computing gravitational potential of ClusterModel object; gravity=Newtonian. gravity=Newtonian.
+cluster_generator : [INFO     ] 2023-09-10 09:57:32,215 Integrating pressure profile.
+                [from_scratch]: Sun Sep 10 09:57:38 2023 Checking for missing mass / density fields...[DONE]
+                [from_scratch]: Sun Sep 10 09:57:38 2023 Determining the halo component...[DONE]
+                [from_scratch]: Sun Sep 10 09:57:38 2023 Computing additional fields...[DONE]
+                [from_scratch]: Sun Sep 10 09:57:38 2023 Initializing the ClusterModel...
 </pre></div></div>
 </div>
-<p>As you can see, there are a lot of fields that have been generated, not just the ones we originally input into the <code class="docutils literal notranslate"><span class="pre">ClusterModel</span></code>. All of these are prescribed by hydrostatic equilibrium. If we want to use the data they hold, we can just access the field by its name:</p>
+<p>Okay, so a lot of things appear to have happened! For a complete picture of what all of these logging calls mean, see the <a class="reference external" href="https://eliza-diggins.github.io/cluster_generator/build/html/notebooks/api_guides/1.html">data structures guide</a>. The important parts of this from the user’s perspective are as follows:</p>
+<ul class="simple">
+<li></li>
+<li></li>
+</ul>
+<p>For the most part, general usage won’t require the user paying much attention to these two options. Typically, <code class="docutils literal notranslate"><span class="pre">eddington</span></code> is the best option for virialization and <code class="docutils literal notranslate"><span class="pre">Newtonian</span></code> is the standard gravity. A more comprehensive account of the different gravities and virialization methods can be found in other, more complex, guides.</p>
+<p>Let’s look at what’s actually here:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="n">avg</span> <span class="o">=</span> <span class="mi">4</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">trapz</span><span class="p">(</span><span class="n">basic_model</span><span class="p">[</span><span class="s1">&#39;temperature&#39;</span><span class="p">]</span><span class="o">*</span><span class="n">basic_model</span><span class="p">[</span><span class="s2">&quot;density&quot;</span><span class="p">]</span><span class="o">*</span><span class="n">basic_model</span><span class="p">[</span><span class="s1">&#39;radius&#39;</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span><span class="n">basic_model</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">])</span><span class="o">/</span><span class="n">basic_model</span><span class="p">[</span><span class="s2">&quot;gas_mass&quot;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The average temperature (spatial) is </span><span class="si">{</span><span class="n">avg</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -562,122 +567,108 @@ odict_keys([&#39;radius&#39;, &#39;density&#39;, &#39;total_density&#39;, &#39;t
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-The average temperature (spatial) is 6.270685743725246 keV.
+ClusterModel object; gravity=Newtonian, fields=[&#39;radius&#39;, &#39;density&#39;, &#39;total_density&#39;, &#39;total_mass&#39;, &#39;gas_mass&#39;, &#39;stellar_density&#39;, &#39;gravitational_potential&#39;, &#39;gravitational_field&#39;, &#39;pressure&#39;, &#39;temperature&#39;, &#39;dark_matter_density&#39;, &#39;dark_matter_mass&#39;, &#39;gas_fraction&#39;, &#39;electron_number_density&#39;, &#39;entropy&#39;]
 </pre></div></div>
 </div>
-<p>Let’s get more serious about our cluster. What if we want to make sure its in hydrostatic equilibrium?</p>
+<p>So when we print the ClusterModel object, we see that it’s using Newtonian gravity and has a long list of fields.</p>
+<div class="alert alert-block alert-success"><p><p>💡 Fields:</p>
+</p><p>Many of the data structures in cluster_generator, and in similar projects like yt are focused around so called fields. Each field is essentially an array containing the pertinent data for that particular quantity. In this case, each field in a ClusterModel instances is just a 1D array containing the radial profile for that quantity. The big takeaway is that when a ClusterModel is generated, the behind-the-scenes machinery will use the profiles the user provided to build all of the other useful /
+interesting data.</p>
+</div><p>Let’s take a look at some of the features we can take advantage of with <code class="docutils literal notranslate"><span class="pre">ClusterModel</span></code> instances. The first thing to know is that we can plot any of the fields we’re interested in:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="n">hse_check</span> <span class="o">=</span> <span class="n">basic_model</span><span class="o">.</span><span class="n">check_hse</span><span class="p">()</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">basic_model</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">,</span><span class="n">hse_check</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s2">&quot;symlog&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s2">&quot;temperature&quot;</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mf">1e4</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s2">&quot;linear&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Temperature / [$\mathrm</span><span class="si">{keV}</span><span class="s2">$]&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-cluster_generator : [INFO     ] 2023-08-25 09:08:02,511 The maximum relative deviation of this profile from hydrostatic equilibrium is 4.33609e-07
-</pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/notebooks_quick_notebooks_quickbook_13_1.png" src="../../_images/notebooks_quick_notebooks_quickbook_13_1.png" />
+<img alt="../../_images/notebooks_quick_notebooks_quickbook_13_0.png" src="../../_images/notebooks_quick_notebooks_quickbook_13_0.png" />
 </div>
 </div>
-<p>Okay, so the cluster we generated is in hydrostatic equilibrium, everything looks great, now what if I want to plot some of the fields? We can either manually plot a field or use the <code class="docutils literal notranslate"><span class="pre">.plot</span></code> method to plot a field:</p>
+<p>There are two other extremely useful things you can get from the ClusterModel instance: the physicality, and the HSE quality. Let’s start by looking at HSE. Every galaxy cluster is assumed to follow HSE, and therefore it is a good check on the code to make sure that your cluster is actually equilibrated properly. To check this,</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Really simple example</span>
-<span class="n">basic_model</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s2">&quot;gravitational_potential&quot;</span><span class="p">)</span>
-
-<span class="c1"># More complex example #</span>
-<span class="n">fig</span><span class="p">,</span><span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">gridspec_kw</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;hspace&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s2">&quot;wspace&quot;</span><span class="p">:</span><span class="mf">0.4</span><span class="p">},</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">12</span><span class="p">))</span>
-
-<span class="n">_fields</span> <span class="o">=</span> <span class="p">[[</span><span class="s2">&quot;density&quot;</span><span class="p">,</span><span class="s2">&quot;total_density&quot;</span><span class="p">,</span><span class="s2">&quot;stellar_density&quot;</span><span class="p">,</span><span class="s2">&quot;dark_matter_density&quot;</span><span class="p">],[</span><span class="s2">&quot;gas_mass&quot;</span><span class="p">,</span><span class="s2">&quot;total_mass&quot;</span><span class="p">,</span><span class="s2">&quot;stellar_mass&quot;</span><span class="p">,</span><span class="s2">&quot;dark_matter_mass&quot;</span><span class="p">],[</span><span class="s2">&quot;temperature&quot;</span><span class="p">],[</span><span class="s2">&quot;gravitational_field&quot;</span><span class="p">]]</span>
-
-<span class="k">for</span> <span class="n">_field_group</span><span class="p">,</span><span class="n">ax</span><span class="p">,</span><span class="n">lab</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">_fields</span><span class="p">,</span><span class="n">axes</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),[</span><span class="s2">&quot;Densities&quot;</span><span class="p">,</span><span class="s2">&quot;Masses&quot;</span><span class="p">,</span><span class="s2">&quot;Temperature&quot;</span><span class="p">,</span><span class="s2">&quot;Acceleration&quot;</span><span class="p">]):</span>
-    <span class="k">for</span> <span class="n">_f</span> <span class="ow">in</span> <span class="n">_field_group</span><span class="p">:</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">basic_model</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">],</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">basic_model</span><span class="p">[</span><span class="n">_f</span><span class="p">]),</span><span class="n">label</span><span class="o">=</span><span class="n">_f</span><span class="p">)</span>
-
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">lab</span><span class="si">}</span><span class="s2"> / </span><span class="si">{</span><span class="n">basic_model</span><span class="p">[</span><span class="n">_f</span><span class="p">]</span><span class="o">.</span><span class="n">units</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">c</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">check_hse</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+cluster_generator : [INFO     ] 2023-09-10 09:57:38,545 The maximum relative deviation of this profile from hydrostatic equilibrium is 0.00110331
+</pre></div></div>
+</div>
+<p>So we see that the cluster is in hydrostatic equilibrium to 1 part in about 1000.</p>
+<div class="alert alert-block alert-info"><p><p>✅ Common Sense Test:</p>
+</p><p>This is a really easy check to always build into your initialization system. Clusters should always be in HSE unless your intention is specifically to prevent them from being in HSE.</p>
+</div><p>We can also check that the cluster is physically consistent (i.e. no negative densities, negative temperatures, etc.). To do so, we use the following</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">u</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">is_physical</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The model is physical? </span><span class="si">{</span><span class="n">u</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="output_area docutils container">
-<img alt="../../_images/notebooks_quick_notebooks_quickbook_15_0.png" src="../../_images/notebooks_quick_notebooks_quickbook_15_0.png" />
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+✔ cluster_generator : [INFO     ] Sun Sep 10 09:57:38 2023 Checking physicality ⠙ luster_generator : [INFO     ] Sun Sep 10 09:57:38 2023 Checking physicality o ClusterModel object; gravity=Newtonian is physical.
+
+</pre></div></div>
 </div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The model is physical? True
+</pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="output_area docutils container">
-<img alt="../../_images/notebooks_quick_notebooks_quickbook_15_1.png" src="../../_images/notebooks_quick_notebooks_quickbook_15_1.png" />
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+
+</pre></div></div>
 </div>
+<div class="alert alert-block alert-info"><p><p>❓ Why Physicality?</p>
+</p><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>While this cluster is intrinsically self-consistent, some clusters may be generated with profiles which are not actually self consistent over their domain. This can lead to non-physical behaviors in some of the derived fields.
+</pre></div>
 </div>
-</section>
-<section id="Creating-Initial-Conditions">
-<h2>Creating Initial Conditions<a class="headerlink" href="#Creating-Initial-Conditions" title="Permalink to this heading">#</a></h2>
+</div></section>
+<section id="Finishing-The-House">
+<h2>Finishing The House<a class="headerlink" href="#Finishing-The-House" title="Permalink to this heading">#</a></h2>
 <hr class="docutils" />
-<p>The final basic task is to actually create the initial conditions for your simulation. The <code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code> library contains the <code class="docutils literal notranslate"><span class="pre">ClusterICs</span></code> class, which wraps one or many of the user’s <code class="docutils literal notranslate"><span class="pre">ClusterModel</span></code> objects into a single data structure that can then be written to the correct formats for use. To use it, we first have to write our model to disk:</p>
+<p>Okay, we’ve seen how to make self-consistent galaxy clusters using cluster_generator, we’re ready to pull things all together. In this section, we’re going to see the <code class="docutils literal notranslate"><span class="pre">ClusterICs</span></code> class, which can contain one or more cluster models and is the class which joins the code-specific frontends with the base code of the cluster_generator library. Making one is simple:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="c1"># writing the model to disk</span>
-<span class="n">basic_model</span><span class="o">.</span><span class="n">write_model_to_h5</span><span class="p">(</span><span class="s2">&quot;basic_model.h5&quot;</span><span class="p">,</span><span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-Newtonian
-</pre></div></div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Basic model files: </span><span class="si">{</span><span class="p">[</span><span class="n">i</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">()</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="s1">&#39;basic_model&#39;</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-Basic model files: [&#39;basic_model.h5.pkl&#39;, &#39;basic_model.h5&#39;].
-</pre></div></div>
-</div>
-<p>Notice that there are two files: <code class="docutils literal notranslate"><span class="pre">name.h5.pkl</span></code> and <code class="docutils literal notranslate"><span class="pre">name.h5</span></code>. The first of these files contains meta data that is serialized into binary describing any complex data types contained in the <code class="docutils literal notranslate"><span class="pre">ClusterModel</span></code> object. The second file <code class="docutils literal notranslate"><span class="pre">name.h5</span></code> is an HDF5 file containing all of the raw array data (fields) for the object. Let’s make sure we can open it back up again:</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="n">reloaded_model</span> <span class="o">=</span> <span class="n">cg</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">ClusterModel</span><span class="o">.</span><span class="n">from_h5_file</span><span class="p">(</span><span class="s2">&quot;basic_model.h5&quot;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># -- Saving the model to file -- #</span>
+<span class="n">model</span><span class="o">.</span><span class="n">write_model_to_h5</span><span class="p">(</span><span class="s2">&quot;basic_model.h5&quot;</span><span class="p">,</span><span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">reloaded_model</span><span class="p">)</span>
+<span class="c1"># -- Building the IC -- #</span>
+<span class="n">ic</span> <span class="o">=</span> <span class="n">cg</span><span class="o">.</span><span class="n">ClusterICs</span><span class="p">(</span><span class="s2">&quot;ic_example&quot;</span><span class="p">,</span><span class="mi">1</span><span class="p">,[</span><span class="s2">&quot;basic_model.h5&quot;</span><span class="p">],[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]],[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]],{</span><span class="s2">&quot;dm&quot;</span><span class="p">:</span><span class="mi">100_000</span><span class="p">})</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">ic</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -686,92 +677,77 @@ Basic model files: [&#39;basic_model.h5.pkl&#39;, &#39;basic_model.h5&#39;].
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-cluster_generator : [INFO     ] 2023-08-25 09:10:19,769 Loading ClusterModel instance from basic_model.h5.
+cluster_generator : [INFO     ] 2023-09-10 09:57:38,695 Loading ClusterModel instance from basic_model.h5.
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;cluster_generator.ics.ClusterICs object at 0x7f90bef59fd0&gt;
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-ClusterModel object; gravity=Newtonian, fields=[&#39;dark_matter_density&#39;, &#39;dark_matter_mass&#39;, &#39;density&#39;, &#39;electron_number_density&#39;, &#39;entropy&#39;, &#39;gas_fraction&#39;, &#39;gas_mass&#39;, &#39;gravitational_field&#39;, &#39;gravitational_potential&#39;, &#39;pressure&#39;, &#39;radius&#39;, &#39;stellar_density&#39;, &#39;stellar_mass&#39;, &#39;temperature&#39;, &#39;total_density&#39;, &#39;total_mass&#39;]
+
 </pre></div></div>
 </div>
-<p>Let’s get down to business now: now we can create our initial conditions object.</p>
+<p>Okay, so we’ve successfully built the initial conditions object. It’s worth noting that these objects can accomodate an arbitrary number of clusters at once, which allows you to generate merger scenarios. In this guide, we’re really only interested in 2 functionalities of the initial conditions object. The first is that it can be converted into a yt dataset using the .create_dataset method. The second is that we can use these objects to interact directly with the front-end. For example, if we
+want to create RAMSES style initial conditions, we need only run</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Create the IC object ##</span>
-<span class="n">ics</span> <span class="o">=</span> <span class="n">cg</span><span class="o">.</span><span class="n">ics</span><span class="o">.</span><span class="n">ClusterICs</span><span class="p">(</span><span class="s2">&quot;test-ics&quot;</span><span class="p">,</span><span class="mi">1</span><span class="p">,[</span><span class="s2">&quot;basic_model.h5&quot;</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],{</span><span class="s2">&quot;dm&quot;</span><span class="p">:</span><span class="mi">100_000</span><span class="p">})</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">cluster_generator.codes</span> <span class="kn">import</span> <span class="n">setup_ramses_ics</span>
+<span class="n">setup_ramses_ics</span><span class="p">(</span><span class="n">ic</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+cluster_generator : [INFO     ] 2023-09-10 09:57:38,729 Loading ClusterModel instance from basic_model.h5.
+cluster_generator : [INFO     ] 2023-09-10 09:57:38,755 Loading ClusterModel instance from basic_model.h5.
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "23fc2f6e50ca4324995fa132bac1282a"}</script></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+cluster_generator : [INFO     ] 2023-09-10 09:57:39,915 We will be assigning 100000 dark_matter particles.
+cluster_generator : [INFO     ] 2023-09-10 09:57:39,916 Compute 100000 particle positions.
+cluster_generator : [INFO     ] 2023-09-10 09:57:39,944 Computing dark_matter velocities using eddington method.
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "b331781c5e294d7e830c02cc79c9a95d"}</script></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-cluster_generator : [INFO     ] 2023-08-25 09:08:05,726 Loading ClusterModel instance from basic_model.h5.
+cluster_generator : [INFO     ] 2023-09-10 09:57:42,778 Simulation setups saved to Merger_Config.txt.
+
 </pre></div></div>
 </div>
-<p>Anti-climactic right!? Let’s see what this object can do. We can generate initial conditions using</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="n">cg</span><span class="o">.</span><span class="n">codes</span><span class="o">.</span><span class="n">setup_ramses_ics</span><span class="p">(</span><span class="n">ics</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-cluster_generator : [INFO     ] 2023-08-25 09:08:05,778 Loading ClusterModel instance from basic_model.h5.
-cluster_generator : [INFO     ] 2023-08-25 09:08:05,810 Loading ClusterModel instance from basic_model.h5.
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "6ceaa7cf86d9496f8575cf596142be3c"}</script></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-cluster_generator : [INFO     ] 2023-08-25 09:09:29,009 We will be assigning 100000 dark_matter particles.
-cluster_generator : [INFO     ] 2023-08-25 09:09:29,011 Compute 100000 particle positions.
-cluster_generator : [INFO     ] 2023-08-25 09:09:29,063 Computing dark_matter velocities using lma method.
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "fb001486c8ef416897e0429b84d8eb46"}</script></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-Newtonian
-</pre></div></div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-cluster_generator : [INFO     ] 2023-08-25 09:09:29,659 Simulation setups saved to Merger_Config.txt.
-</pre></div></div>
-</div>
-<p>And you’re done! Now you can take your initial conditions to the simulation system of your choice and run it. For more information and additional tutorials, check out the other quickstart guides and the examples.</p>
+<p>And there you have it; your first initial conditions in cluster_generator!</p>
 </section>
 </section>
 
@@ -786,24 +762,6 @@ cluster_generator : [INFO     ] 2023-08-25 09:09:29,659 Simulation setups saved 
   
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="../../Getting_Started.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Quickstart Guide</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="quickbook2.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Quickstart Guide: Getting the most out of <code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code></p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
 </div></div>
   
 </div>
@@ -822,9 +780,10 @@ cluster_generator : [INFO     ] 2023-08-25 09:09:29,659 Simulation setups saved 
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Profiles">Profiles</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Creating-a-Galaxy-Cluster">Creating a Galaxy Cluster</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Creating-Initial-Conditions">Creating Initial Conditions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Contents">Contents</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Building-The-Foundation">Building The Foundation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Raising-The-Frame">Raising The Frame</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Finishing-The-House">Finishing The House</a></li>
 </ul>
   </nav></div>
 
