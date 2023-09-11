@@ -739,7 +739,7 @@ document.write(`
 <dl class="py class">
 <dt class="sig sig-object py" id="gravity.NewtonianGravity">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gravity.</span></span><span class="sig-name descname"><span class="pre">NewtonianGravity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gravity.html#NewtonianGravity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gravity.NewtonianGravity" title="Permalink to this definition">#</a></dt>
-<dd><p>Newtonian gravity implementation.</p>
+<dd><p><a class="reference internal" href="gravity.Gravity.html#gravity.Gravity" title="gravity.Gravity"><code class="xref py py-class docutils literal notranslate"><span class="pre">gravity.Gravity</span></code></a> implementation of Newtonian gravity. This class is the default gravity implementation.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference internal" href="gravity.Gravity.html#gravity.Gravity" title="gravity.Gravity"><code class="xref py py-class docutils literal notranslate"><span class="pre">gravity.Gravity</span></code></a>, <a class="reference internal" href="gravity.AQUALGravity.html#gravity.AQUALGravity" title="gravity.AQUALGravity"><code class="xref py py-class docutils literal notranslate"><span class="pre">gravity.AQUALGravity</span></code></a>, <a class="reference internal" href="gravity.QUMONDGravity.html#gravity.QUMONDGravity" title="gravity.QUMONDGravity"><code class="xref py py-class docutils literal notranslate"><span class="pre">gravity.QUMONDGravity</span></code></a>, <a class="reference internal" href="gravity.EMONDGravity.html#gravity.EMONDGravity" title="gravity.EMONDGravity"><code class="xref py py-class docutils literal notranslate"><span class="pre">gravity.EMONDGravity</span></code></a></p>
@@ -748,16 +748,16 @@ document.write(`
 <table class="autosummary longtable table autosummary">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="gravity.NewtonianGravity.__init__.html#gravity.NewtonianGravity.__init__" title="gravity.NewtonianGravity.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(model, **kwargs)</p></td>
-<td><p></p></td>
+<td><p>Initializes the <a class="reference internal" href="#gravity.NewtonianGravity" title="gravity.NewtonianGravity"><code class="xref py py-class docutils literal notranslate"><span class="pre">gravity.NewtonianGravity</span></code></a> instance.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="gravity.NewtonianGravity.compute_mass.html#gravity.NewtonianGravity.compute_mass" title="gravity.NewtonianGravity.compute_mass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_mass</span></code></a>(fields[, attrs])</p></td>
-<td><p>Computes the dynamical mass from the provided fields.</p></td>
+<td><p>Computes the dynamical mass associated with the provided fields.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="gravity.NewtonianGravity.compute_potential.html#gravity.NewtonianGravity.compute_potential" title="gravity.NewtonianGravity.compute_potential"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_potential</span></code></a>(fields[, attrs, spinner])</p></td>
 <td><p>Computes the gravitational potential of the system directly from the provided <code class="docutils literal notranslate"><span class="pre">fields</span></code>.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="gravity.NewtonianGravity.potential.html#gravity.NewtonianGravity.potential" title="gravity.NewtonianGravity.potential"><code class="xref py py-obj docutils literal notranslate"><span class="pre">potential</span></code></a>([force])</p></td>
-<td><p>Computes the gravitational potential of the object.</p></td>
+<td><p>Computes the gravitational potential of the <a class="reference internal" href="model.ClusterModel.html#model.ClusterModel" title="model.ClusterModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">model.ClusterModel</span></code></a> object that is connected to this instance.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="gravity.NewtonianGravity.reset.html#gravity.NewtonianGravity.reset" title="gravity.NewtonianGravity.reset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">reset</span></code></a>()</p></td>
 <td><p>Resets the <a class="reference internal" href="model.ClusterModel.html#model.ClusterModel" title="model.ClusterModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">model.ClusterModel</span></code></a> instance's <cite>gravitation_potential</cite> field to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></td>
@@ -768,7 +768,7 @@ document.write(`
 <table class="autosummary longtable table autosummary">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="gravity.NewtonianGravity.is_calculated.html#gravity.NewtonianGravity.is_calculated" title="gravity.NewtonianGravity.is_calculated"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_calculated</span></code></a></p></td>
-<td><p>Will return <code class="docutils literal notranslate"><span class="pre">True</span></code> if there is already a value for the gravitational potential in place.</p></td>
+<td><p>Determines if the associated <a class="reference internal" href="model.ClusterModel.html#model.ClusterModel" title="model.ClusterModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">model.ClusterModel</span></code></a> object has already had it's potential calculated.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="gravity.NewtonianGravity.model.html#gravity.NewtonianGravity.model" title="gravity.NewtonianGravity.model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">model</span></code></a></p></td>
 <td><p>The model attached to the gravity instance.</p></td>

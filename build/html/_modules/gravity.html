@@ -377,16 +377,7 @@ document.write(`
                   
   <h1>Source code for gravity</h1><div class="highlight"><pre>
 <span></span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Gravity</span>
-<span class="sd">=======</span>
-<span class="sd">The :py:mod:`gravity` module contains the :py:class:`gravity.Gravity` class, which essentially acts as a wrapper for</span>
-<span class="sd">solving the Poisson equation in each of the available gravitational theories. The various available gravitational theories are</span>
-<span class="sd">implemented in classes inheriting from the base :py:class:`gravity.Gravity` class.</span>
-
-<span class="sd">.. admonition:: Info</span>
-
-<span class="sd">    For more information on the underlying implementations, see :ref:`The Gravity Guide &lt;gravity&gt;`.</span>
-
+<span class="sd">Gravitational theories and their implementations in ``cluster_generator``.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 
@@ -397,7 +388,7 @@ document.write(`
 <span class="kn">from</span> <span class="nn">unyt</span> <span class="kn">import</span> <span class="n">unyt_array</span>
 
 <span class="kn">from</span> <span class="nn">cluster_generator.utils</span> <span class="kn">import</span> \
-    <span class="n">integrate</span><span class="p">,</span> <span class="n">mylog</span><span class="p">,</span> <span class="n">G</span><span class="p">,</span> <span class="n">log_string</span><span class="p">,</span> <span class="n">cgparams</span><span class="p">,</span> <span class="n">devLogger</span><span class="p">,</span><span class="n">truncate_spline</span>
+    <span class="n">integrate</span><span class="p">,</span> <span class="n">mylog</span><span class="p">,</span> <span class="n">G</span><span class="p">,</span> <span class="n">log_string</span><span class="p">,</span> <span class="n">cgparams</span><span class="p">,</span> <span class="n">devLogger</span>
 
 <span class="c1"># -------------------------------------------------------------------------------------------------------------------- #</span>
 <span class="c1"># Constants ========================================================================================================== #</span>
@@ -411,7 +402,7 @@ document.write(`
 <span class="c1"># -------------------------------------------------------------------------------------------------------------------- #</span>
 <div class="viewcode-block" id="Gravity"><a class="viewcode-back" href="../_as_gen/gravity.Gravity.html#gravity.Gravity">[docs]</a><span class="k">class</span> <span class="nc">Gravity</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    The :py:class:`~gravity.Gravity` is the base class for different gravity implementations in ``cluster_generator``.</span>
+<span class="sd">    The :py:class:`~gravity.Gravity` class is the base class for different gravity implementations in :py:mod:`cluster_generator`.</span>
 <span class="sd">    This should typically not be called directly. Instead, select one of the fully constructed gravity theories from this module.</span>
 
 <span class="sd">    Parameters</span>
@@ -420,7 +411,7 @@ document.write(`
 <span class="sd">        The model to attach the :py:class:`gravity.Gravity` instance to.</span>
 
 <span class="sd">    **kwargs</span>
-<span class="sd">        Additional parameters to pass to the instance. These are stored in the ``self.attrs`` attribute.</span>
+<span class="sd">        Additional parameters to pass to the instance. These are stored in the :py:attr:`~gravity.Gravity.attrs` attribute.</span>
 
 <span class="sd">    See Also</span>
 <span class="sd">    --------</span>
@@ -452,11 +443,17 @@ document.write(`
     <span class="c1"># ----------------------------------------------------------------------------------------------------------------- #</span>
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">is_calculated</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Will return ``True`` if there is already a value for the gravitational potential in place.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Determines if the associated :py:class:`model.ClusterModel` object has already had it&#39;s potential calculated.</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            ``True`` if the associated :py:class:`model.ClusterModel` object already has a ``&quot;gravitational_potential&quot;`` field populated. Otherwise, returns ``False``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="s2">&quot;gravitational_potential&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fields</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;gravitational_potential&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="kc">False</span>
+            <span class="k">return</span> <span class="kc">False</span>
 
     <span class="c1">#  Methods</span>
     <span class="c1"># ----------------------------------------------------------------------------------------------------------------- #</span>
@@ -474,7 +471,7 @@ document.write(`
 
 <div class="viewcode-block" id="NewtonianGravity"><a class="viewcode-back" href="../_as_gen/gravity.NewtonianGravity.html#gravity.NewtonianGravity">[docs]</a><span class="k">class</span> <span class="nc">NewtonianGravity</span><span class="p">(</span><span class="n">Gravity</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Newtonian gravity implementation.</span>
+<span class="sd">    :py:class:`gravity.Gravity` implementation of Newtonian gravity. This class is the default gravity implementation.</span>
 
 <span class="sd">    See Also</span>
 <span class="sd">    --------</span>
@@ -482,23 +479,39 @@ document.write(`
 <span class="sd">    :py:class:`gravity.AQUALGravity`</span>
 <span class="sd">    :py:class:`gravity.QUMONDGravity`</span>
 <span class="sd">    :py:class:`gravity.EMONDGravity`</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Configuring the classname #</span>
     <span class="n">_classname</span> <span class="o">=</span> <span class="s2">&quot;Newtonian&quot;</span>
 
 <div class="viewcode-block" id="NewtonianGravity.__init__"><a class="viewcode-back" href="../_as_gen/gravity.NewtonianGravity.__init__.html#gravity.NewtonianGravity.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="c1"># -- Providing the inherited structure -- #</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes the :py:class:`gravity.NewtonianGravity` instance.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        model: :py:class:`model.ClusterModel`</span>
+<span class="sd">            The model to attach this instance to.</span>
+
+<span class="sd">            .. note::</span>
+
+<span class="sd">                If you do not have a :py:class:`model.ClusterModel` object to which this class should be attached, there is probably</span>
+<span class="sd">                a static method or a class method which should serve your purpose without initialization.</span>
+
+<span class="sd">        kwargs: dict, optional</span>
+<span class="sd">            Additional keyword arguments to pass through the initialization process. These are transferred to the :py:attr:`gravity.Gravity.attrs` of the final object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
     <span class="c1">#  Methods</span>
     <span class="c1"># ---------------------------------------------------------------------------------------------------------------- #</span>
 <div class="viewcode-block" id="NewtonianGravity.potential"><a class="viewcode-back" href="../_as_gen/gravity.NewtonianGravity.potential.html#gravity.NewtonianGravity.potential">[docs]</a>    <span class="k">def</span> <span class="nf">potential</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Computes the gravitational potential of the object.</span>
+<span class="sd">        Computes the gravitational potential of the :py:class:`model.ClusterModel` object that is connected to this instance.</span>
 
 <span class="sd">        .. attention::</span>
 
-<span class="sd">            This method passes directly to the class method :py:meth:`~cluster_model.gravity.NewtonianGravity.compute_potential`. If you only</span>
+<span class="sd">            This method passes directly to the class method :py:meth:`~gravity.NewtonianGravity.compute_potential`. If you only</span>
 <span class="sd">            have fields and not a model, that is the better approach.</span>
 
 <span class="sd">        Parameters</span>
@@ -509,6 +522,12 @@ document.write(`
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        None</span>
+
+<span class="sd">        See Also</span>
+<span class="sd">        --------</span>
+<span class="sd">        :py:meth:`gravity.NewtonianGravity.compute_mass`</span>
+<span class="sd">        :py:meth:`gravity.NewtonianGravity.compute_potential`</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1">#  Logging</span>
         <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
@@ -530,13 +549,15 @@ document.write(`
 
 <div class="viewcode-block" id="NewtonianGravity.compute_mass"><a class="viewcode-back" href="../_as_gen/gravity.NewtonianGravity.compute_mass.html#gravity.NewtonianGravity.compute_mass">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">compute_mass</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Computes the dynamical mass from the provided fields.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Computes the dynamical mass associated with the provided fields.</span>
+
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        fields: dict</span>
-<span class="sd">            The model fields associated with the object being computed.</span>
+<span class="sd">        fields: dict of unyt_array</span>
+<span class="sd">            Data fields to pass into the mass computation. Any keys may be included, but ``radius`` and ``gravitational_field`` are</span>
+<span class="sd">            required keys.</span>
 <span class="sd">        attrs: dict</span>
 <span class="sd">            Additional attributes to use in computation.</span>
 
@@ -545,13 +566,21 @@ document.write(`
 <span class="sd">        unyt_array</span>
 <span class="sd">            Computation result</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        This function is implemented by simply computing</span>
 
+<span class="sd">        .. math::</span>
+
+<span class="sd">            M_{\mathrm{dyn}}(&lt;r) = -\frac{r^2 \nabla \Phi}{G}</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">del</span> <span class="n">attrs</span>
         <span class="k">return</span> <span class="o">-</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;gravitational_field&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">G</span></div>
 
 <div class="viewcode-block" id="NewtonianGravity.compute_potential"><a class="viewcode-back" href="../_as_gen/gravity.NewtonianGravity.compute_potential.html#gravity.NewtonianGravity.compute_potential">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">compute_potential</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">spinner</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Computes the gravitational potential of the system directly from the provided ``fields``.</span>
 
 <span class="sd">        .. attention::</span>
@@ -575,11 +604,36 @@ document.write(`
 <span class="sd">        -------</span>
 <span class="sd">        unyt_array</span>
 <span class="sd">            The computed gravitational potential of the system.</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+
+<span class="sd">        This computation exploits spherical symmetry by computing the gravitational potential in shells. Consider a</span>
+<span class="sd">        spherical distribution of mass with density :math:`\rho(r)`. Consider the behavior at :math:`r = r&#39;`. The gravitational potential from the mass</span>
+<span class="sd">        within the radius :math:`r&#39;` provides a potential</span>
+
+<span class="sd">        .. math::</span>
+
+<span class="sd">            \Phi_{in} = -\frac{4\pi G}{r}\int_0^{r} \xi^2 \rho(\xi) d\xi</span>
+
+<span class="sd">        At each shell outward, the acceleration of that shell is</span>
+
+<span class="sd">        .. math::</span>
+
+<span class="sd">            \nabla \Phi_{\mathrm{shell}} = -\frac{GM(&lt;r)}{r^2} = -4\pi G \rho(r) dr.</span>
+
+<span class="sd">        Thus</span>
+
+<span class="sd">        .. math::</span>
+
+<span class="sd">            \Phi(r) = 4\pi G \left[\frac{1}{r}\int_0^r \xi^2 \rho(\xi) d\xi + \int_r^\infty \xi \rho(\xi) d\xi \right]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1">#  Managing inputs</span>
         <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
         <span class="k">if</span> <span class="n">attrs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">attrs</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">del</span> <span class="n">attrs</span>
 
         <span class="c1">#  Computing the potential</span>
         <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
@@ -593,7 +647,7 @@ document.write(`
             <span class="n">tdens_func</span> <span class="o">=</span> <span class="n">InterpolatedUnivariateSpline</span><span class="p">(</span><span class="n">rr</span><span class="p">,</span> <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;total_density&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">)</span>
 
             <span class="c1"># - Computing - #</span>
-            <span class="n">gpot_profile</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="n">tdens_func</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">*</span> <span class="n">r</span>
+            <span class="n">gpot_profile</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">xi</span><span class="p">:</span> <span class="n">tdens_func</span><span class="p">(</span><span class="n">xi</span><span class="p">)</span> <span class="o">*</span> <span class="n">xi</span>
 
             <span class="n">gpot1</span> <span class="o">=</span> <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;total_mass&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span>
 
@@ -615,6 +669,7 @@ document.write(`
 
         <span class="c1"># -- Done -- #</span>
         <span class="k">return</span> <span class="n">potential</span></div></div>
+
 
 <span class="c1"># -------------------------------------------------------------------------------------------------------------------- #</span>
 <span class="c1"># MONDian Gravity Theories =====-===================================================================================== #</span>
@@ -779,15 +834,22 @@ document.write(`
             <span class="n">rr</span> <span class="o">=</span> <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span>
             <span class="n">tmass</span> <span class="o">=</span> <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;total_mass&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span>
 
+            <span class="c1"># -- Building computational arrays -- #</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">geomspace</span><span class="p">(</span><span class="n">rr</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">rr</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="mi">3</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">rr</span><span class="p">))</span>
+
+            <span class="n">tmass_funct</span> <span class="o">=</span> <span class="n">InterpolatedUnivariateSpline</span><span class="p">(</span><span class="n">rr</span><span class="p">,</span> <span class="n">tmass</span><span class="p">)</span>
+            <span class="n">t_mass_comp</span> <span class="o">=</span> <span class="n">tmass_funct</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+            <span class="n">t_mass_comp</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">rr</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])]</span> <span class="o">=</span> <span class="n">tmass</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
             <span class="c1"># -- Computing the gamma function (mu(Gamma)Gamma = gamma) -- gamma = newt_acceleration. -- #</span>
-            <span class="n">gamma_func</span> <span class="o">=</span> <span class="n">InterpolatedUnivariateSpline</span><span class="p">(</span><span class="n">rr</span><span class="p">,</span> <span class="n">G</span><span class="o">.</span><span class="n">d</span> <span class="o">*</span> <span class="n">tmass</span> <span class="o">/</span> <span class="p">(</span><span class="n">a_0</span> <span class="o">*</span> <span class="p">(</span><span class="n">rr</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)))</span>
+            <span class="n">gamma_func</span> <span class="o">=</span> <span class="n">InterpolatedUnivariateSpline</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">G</span><span class="o">.</span><span class="n">d</span> <span class="o">*</span> <span class="n">t_mass_comp</span> <span class="o">/</span> <span class="p">(</span><span class="n">a_0</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)))</span>
             <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;gamma&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="p">(</span><span class="n">gamma_func</span><span class="p">(</span><span class="n">rr</span><span class="p">))</span>
-            <span class="n">gamma</span> <span class="o">=</span> <span class="n">gamma_func</span><span class="p">(</span><span class="n">rr</span><span class="p">)</span>
+            <span class="n">gamma</span> <span class="o">=</span> <span class="n">gamma_func</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
             <span class="c1"># - generating guess solution - #</span>
             <span class="n">devLogger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[[Potential]] Creating AQUAL guess solution for implicit equation...&quot;</span><span class="p">)</span>
-            <span class="n">guess_function</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">gamma</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">gamma</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">gamma</span><span class="p">)</span> <span class="o">*</span> <span class="n">gamma</span><span class="p">))</span>
-            <span class="n">_guess</span> <span class="o">=</span> <span class="n">guess_function</span><span class="p">(</span><span class="n">rr</span><span class="p">)</span>
+            <span class="n">guess_function</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">y</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">gamma</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">gamma</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">gamma</span><span class="p">)</span> <span class="o">*</span> <span class="n">gamma</span><span class="p">))</span>
+            <span class="n">_guess</span> <span class="o">=</span> <span class="n">guess_function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
             <span class="c1"># - solving - #</span>
             <span class="n">mylog</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[[Potential]] Optimizing implicit solution...&quot;</span><span class="p">)</span>
@@ -798,11 +860,11 @@ document.write(`
             <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span><span class="n">_test_guess</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">cgparams</span><span class="p">[</span><span class="s2">&quot;numerical&quot;</span><span class="p">][</span><span class="s2">&quot;implicit&quot;</span><span class="p">][</span><span class="s2">&quot;check_tolerance&quot;</span><span class="p">]:</span>
                 <span class="n">_Gamma_solution</span> <span class="o">=</span> <span class="n">_guess</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">_Gamma_solution</span> <span class="o">=</span> <span class="n">fsolve</span><span class="p">(</span><span class="n">_fsolve_function</span><span class="p">,</span> <span class="n">x0</span><span class="o">=</span><span class="n">_guess</span><span class="p">,</span><span class="n">xtol</span><span class="o">=</span><span class="n">cgparams</span><span class="p">[</span><span class="s2">&quot;numerical&quot;</span><span class="p">][</span><span class="s2">&quot;implicit&quot;</span><span class="p">][</span><span class="s2">&quot;solve_tolerance&quot;</span><span class="p">])</span>
+                <span class="n">_Gamma_solution</span> <span class="o">=</span> <span class="n">fsolve</span><span class="p">(</span><span class="n">_fsolve_function</span><span class="p">,</span> <span class="n">x0</span><span class="o">=</span><span class="n">_guess</span><span class="p">,</span>
+                                         <span class="n">xtol</span><span class="o">=</span><span class="n">cgparams</span><span class="p">[</span><span class="s2">&quot;numerical&quot;</span><span class="p">][</span><span class="s2">&quot;implicit&quot;</span><span class="p">][</span><span class="s2">&quot;solve_tolerance&quot;</span><span class="p">])</span>
 
-            <span class="n">Gamma</span> <span class="o">=</span> <span class="n">InterpolatedUnivariateSpline</span><span class="p">(</span><span class="n">rr</span><span class="p">,</span> <span class="n">_Gamma_solution</span><span class="p">)</span>
-            <span class="n">Gamma</span> <span class="o">=</span> <span class="n">truncate_spline</span><span class="p">(</span><span class="n">Gamma</span><span class="p">,</span><span class="n">rr</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="mi">7</span><span class="p">)</span>
-            <span class="n">_v</span><span class="p">,</span> <span class="n">errs</span> <span class="o">=</span> <span class="n">integrate</span><span class="p">(</span><span class="n">Gamma</span><span class="p">,</span> <span class="n">rr</span><span class="p">,</span> <span class="n">rmax</span><span class="o">=</span><span class="mi">2</span><span class="o">*</span><span class="n">rr</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">Gamma</span> <span class="o">=</span> <span class="n">InterpolatedUnivariateSpline</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">_Gamma_solution</span><span class="p">)</span>
+            <span class="n">_v</span><span class="p">,</span> <span class="n">errs</span> <span class="o">=</span> <span class="n">integrate</span><span class="p">(</span><span class="n">Gamma</span><span class="p">,</span> <span class="n">rr</span><span class="p">,</span> <span class="n">rmax</span><span class="o">=</span><span class="mi">2</span> <span class="o">*</span> <span class="n">rr</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
             <span class="n">gpot2</span> <span class="o">=</span> <span class="n">a_0</span> <span class="o">*</span> <span class="n">unyt_array</span><span class="p">(</span><span class="n">_v</span><span class="p">,</span> <span class="s2">&quot;(kpc**2)/Myr**2&quot;</span><span class="p">)</span>
 
             <span class="c1"># - Finishing computation - #</span>
@@ -971,6 +1033,7 @@ document.write(`
 <span class="sd">        unyt_array</span>
 <span class="sd">            The computed gravitational potential of the system.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
         <span class="c1">#  Logging</span>
         <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
         <span class="n">devLogger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[[Potential]] Integrating gravitational potential profile. gravity=</span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">_classname</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
@@ -996,19 +1059,29 @@ document.write(`
         <span class="k">with</span> <span class="n">Halo</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">log_string</span><span class="p">(</span><span class="s2">&quot;Computing potential...&quot;</span><span class="p">),</span> <span class="n">stream</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span>
                   <span class="n">enabled</span><span class="o">=</span><span class="p">(</span><span class="n">cgparams</span><span class="p">[</span><span class="s2">&quot;system&quot;</span><span class="p">][</span><span class="s2">&quot;text&quot;</span><span class="p">][</span><span class="s2">&quot;spinners&quot;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">spinner</span><span class="p">))</span> <span class="k">as</span> <span class="n">h</span><span class="p">:</span>
 
-            <span class="c1"># -- grabbing arrays -- #</span>
+            <span class="c1">#  Building arrays</span>
+            <span class="c1"># -------------------------------------------------------------------------------------------------------- #</span>
             <span class="n">rr</span> <span class="o">=</span> <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;kpc&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">d</span>
+            <span class="n">r_extension</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">geomspace</span><span class="p">(</span><span class="n">rr</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">rr</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="mi">2</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">rr</span><span class="p">))[</span><span class="mi">1</span><span class="p">:]</span>
+            <span class="n">rc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">rr</span><span class="p">,</span> <span class="n">r_extension</span><span class="p">])</span>
 
-            <span class="c1"># -- Computing the newtonian potential first -- #</span>
-            <span class="n">newtonian_potential</span> <span class="o">=</span> <span class="n">NewtonianGravity</span><span class="o">.</span><span class="n">compute_potential</span><span class="p">(</span><span class="n">fields</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">spinner</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">cfields</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span>
 
-            <span class="c1"># -- determining the correct form of the proper potential -- #</span>
-            <span class="n">n_accel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">newtonian_potential</span><span class="o">.</span><span class="n">d</span><span class="p">,</span> <span class="n">rr</span><span class="p">)</span>
-            <span class="n">dphi</span> <span class="o">=</span> <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;interp_function&quot;</span><span class="p">](</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">n_accel</span><span class="p">)</span> <span class="o">/</span> <span class="n">a_0</span><span class="p">)</span> <span class="o">*</span> <span class="n">n_accel</span>
+            <span class="n">cfields</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="p">(</span><span class="n">rc</span><span class="p">,</span> <span class="s2">&quot;kpc&quot;</span><span class="p">)</span>
+            <span class="n">normal</span> <span class="o">=</span> <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;total_density&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">rr</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">**</span> <span class="mi">3</span>
+            <span class="n">cfields</span><span class="p">[</span><span class="s2">&quot;total_mass&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;total_mass&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">,</span>
+                                                               <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;total_mass&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">normal</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span>
+                                                                           <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">rr</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span>
+                                                                               <span class="mi">1</span> <span class="o">/</span> <span class="n">r_extension</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))]),</span>
+                                               <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;total_mass&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">units</span><span class="p">)</span>
 
-            <span class="n">dphi_func</span> <span class="o">=</span> <span class="n">InterpolatedUnivariateSpline</span><span class="p">(</span><span class="n">rr</span><span class="p">,</span> <span class="n">dphi</span><span class="p">)</span>
-            <span class="n">dphi_func</span> <span class="o">=</span> <span class="n">truncate_spline</span><span class="p">(</span><span class="n">dphi_func</span><span class="p">,</span><span class="n">rr</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="mi">7</span><span class="p">)</span>
-            <span class="n">_v</span><span class="p">,</span> <span class="n">errs</span> <span class="o">=</span> <span class="n">integrate</span><span class="p">(</span><span class="n">dphi_func</span><span class="p">,</span> <span class="n">rr</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">rr</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">n_accel</span> <span class="o">=</span> <span class="n">G</span> <span class="o">*</span> <span class="n">cfields</span><span class="p">[</span><span class="s2">&quot;total_mass&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">rc</span> <span class="o">**</span> <span class="mi">2</span>
+
+            <span class="n">dphi</span> <span class="o">=</span> <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;interp_function&quot;</span><span class="p">](</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">n_accel</span><span class="o">.</span><span class="n">d</span><span class="p">)</span> <span class="o">/</span> <span class="n">a_0</span><span class="p">)</span> <span class="o">*</span> <span class="n">n_accel</span><span class="o">.</span><span class="n">d</span>
+
+            <span class="n">dphi_func</span> <span class="o">=</span> <span class="n">InterpolatedUnivariateSpline</span><span class="p">(</span><span class="n">rc</span><span class="p">,</span> <span class="n">dphi</span><span class="p">)</span>
+
+            <span class="n">_v</span><span class="p">,</span> <span class="n">errs</span> <span class="o">=</span> <span class="n">integrate</span><span class="p">(</span><span class="n">dphi_func</span><span class="p">,</span> <span class="n">rr</span><span class="p">,</span> <span class="n">rmax</span><span class="o">=</span><span class="mi">2</span> <span class="o">*</span> <span class="n">rr</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
             <span class="n">gpot2</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="p">(</span><span class="n">_v</span><span class="p">,</span> <span class="s2">&quot;kpc**2/Myr**2&quot;</span><span class="p">)</span>
 
             <span class="c1"># - Finishing computation - #</span>
@@ -1031,6 +1104,7 @@ document.write(`
     <span class="k">def</span> <span class="nf">_interp</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_interpolation_function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
 
+
 <div class="viewcode-block" id="EMONDGravity"><a class="viewcode-back" href="../_as_gen/gravity.EMONDGravity.html#gravity.EMONDGravity">[docs]</a><span class="k">class</span> <span class="nc">EMONDGravity</span><span class="p">(</span><span class="n">Gravity</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Implementation of the Extended MOND formulation of MOND.</span>
@@ -1045,6 +1119,7 @@ document.write(`
     <span class="n">_classname</span> <span class="o">=</span> <span class="s2">&quot;EMOND&quot;</span>
     <span class="n">_interpolation_function</span> <span class="o">=</span> <span class="n">cgparams</span><span class="p">[</span><span class="s2">&quot;gravity&quot;</span><span class="p">][</span><span class="s2">&quot;AQUAL&quot;</span><span class="p">][</span><span class="s2">&quot;interpolation_function&quot;</span><span class="p">]</span>
     <span class="n">_base_a0</span> <span class="o">=</span> <span class="n">cgparams</span><span class="p">[</span><span class="s2">&quot;gravity&quot;</span><span class="p">][</span><span class="s2">&quot;EMOND&quot;</span><span class="p">][</span><span class="s2">&quot;a0_function&quot;</span><span class="p">]</span>
+
 <div class="viewcode-block" id="EMONDGravity.__init__"><a class="viewcode-back" href="../_as_gen/gravity.EMONDGravity.__init__.html#gravity.EMONDGravity.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="c1"># -- Providing the inherited structure -- #</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -1131,7 +1206,7 @@ document.write(`
             <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;gravitational_field&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;kpc/Myr**2&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">d</span><span class="p">)</span> <span class="o">/</span> <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;a_0&quot;</span><span class="p">](</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;gravitational_potential&quot;</span><span class="p">]))</span></div>
 
 <div class="viewcode-block" id="EMONDGravity.compute_potential"><a class="viewcode-back" href="../_as_gen/gravity.EMONDGravity.compute_potential.html#gravity.EMONDGravity.compute_potential">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">compute_potential</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">spinner</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">rmax</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">compute_potential</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">spinner</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">rmax</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Computes the gravitational potential of the system directly from the provided ``fields``.</span>
 
@@ -1175,7 +1250,6 @@ document.write(`
         <span class="c1"># - providing the interpolation function - #</span>
         <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;interp_function&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_interp</span>
 
-
         <span class="c1"># Carrying out computations</span>
         <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
         <span class="k">with</span> <span class="n">Halo</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">log_string</span><span class="p">(</span><span class="s2">&quot;Computing potential...&quot;</span><span class="p">),</span> <span class="n">stream</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span>
@@ -1192,22 +1266,24 @@ document.write(`
 
             <span class="c1"># -- Computing the gamma function (mu(Gamma)Gamma = gamma) -- gamma = newt_acceleration. -- #</span>
             <span class="n">gamma_func</span> <span class="o">=</span> <span class="n">InterpolatedUnivariateSpline</span><span class="p">(</span><span class="n">rr</span><span class="p">,</span> <span class="n">G</span><span class="o">.</span><span class="n">d</span> <span class="o">*</span> <span class="n">tmass</span> <span class="o">/</span> <span class="p">(</span><span class="n">rr</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
-            <span class="n">gamma_func</span> <span class="o">=</span> <span class="n">truncate_spline</span><span class="p">(</span><span class="n">gamma_func</span><span class="p">,</span><span class="n">rr</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="mi">7</span><span class="p">)</span>
+            <span class="n">gamma_func</span> <span class="o">=</span> <span class="n">truncate_spline</span><span class="p">(</span><span class="n">gamma_func</span><span class="p">,</span> <span class="n">rr</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="mi">7</span><span class="p">)</span>
 
-            <span class="n">gamma_f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">p</span><span class="p">:</span> <span class="n">gamma_func</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">/</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;a_0&quot;</span><span class="p">](</span><span class="n">p</span><span class="p">)</span>
+            <span class="n">gamma_f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="p">:</span> <span class="n">gamma_func</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">/</span> <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;a_0&quot;</span><span class="p">](</span><span class="n">p</span><span class="p">)</span>
 
             <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;newtonian_field&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="p">(</span><span class="n">gamma_func</span><span class="p">(</span><span class="n">rr</span><span class="p">))</span>
             <span class="n">gamma</span> <span class="o">=</span> <span class="n">gamma_func</span><span class="p">(</span><span class="n">rr</span><span class="p">)</span>
 
-
             <span class="c1"># -- setting up lambda functions -- #</span>
             <span class="n">devLogger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[[Potential]] Creating EMOND differential equation...&quot;</span><span class="p">)</span>
-            <span class="n">Gamma_function</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">p</span><span class="p">:</span> <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;a_0&quot;</span><span class="p">](</span><span class="n">p</span><span class="p">)</span><span class="o">*</span><span class="p">((</span><span class="mi">1</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">gamma_f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">p</span><span class="p">))</span><span class="o">/</span><span class="n">gamma_f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">p</span><span class="p">))</span><span class="o">**</span><span class="n">alpha</span><span class="p">))</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">alpha</span><span class="p">))</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">gamma_f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">p</span><span class="p">))</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">gamma_f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">p</span><span class="p">)))</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">alpha</span><span class="p">))</span>
+            <span class="n">Gamma_function</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="p">:</span> <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;a_0&quot;</span><span class="p">](</span><span class="n">p</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span>
+                        <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">4</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">gamma_f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="p">))</span> <span class="o">/</span> <span class="n">gamma_f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="p">))</span> <span class="o">**</span> <span class="n">alpha</span><span class="p">))</span> <span class="o">**</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">alpha</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span>
+                                                      <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">gamma_f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="p">))</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">gamma_f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="p">)))</span> <span class="o">/</span> <span class="p">(</span>
+                                                      <span class="mi">2</span> <span class="o">**</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">alpha</span><span class="p">))</span>
 
             <span class="n">devLogger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[[Potential]] Solving EMOND differential equation...&quot;</span><span class="p">)</span>
-            <span class="n">sol</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span><span class="n">Gamma_function</span><span class="p">,(</span><span class="n">rmax</span><span class="p">,</span><span class="n">rr</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span><span class="n">y0</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">t_eval</span><span class="o">=</span><span class="n">rr</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;DOP853&quot;</span><span class="p">)</span>
+            <span class="n">sol</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span><span class="n">Gamma_function</span><span class="p">,</span> <span class="p">(</span><span class="n">rmax</span><span class="p">,</span> <span class="n">rr</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">y0</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">t_eval</span><span class="o">=</span><span class="n">rr</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;DOP853&quot;</span><span class="p">)</span>
 
-            <span class="n">gpot2</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">,::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;(kpc**2)/Myr**2&quot;</span><span class="p">)</span>
+            <span class="n">gpot2</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;(kpc**2)/Myr**2&quot;</span><span class="p">)</span>
 
             <span class="c1"># - Finishing computation - #</span>
             <span class="n">potential</span> <span class="o">=</span> <span class="n">gpot2</span>
@@ -1220,6 +1296,7 @@ document.write(`
     <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">_interp</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_interpolation_function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
+
 
 <span class="c1"># -------------------------------------------------------------------------------------------------------------------- #</span>
 <span class="c1"># Catalog ============================================================================================================ #</span>

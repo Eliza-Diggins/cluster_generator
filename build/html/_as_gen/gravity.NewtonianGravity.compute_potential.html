@@ -43,6 +43,8 @@
     <script src="../_static/copybutton.js?v=f281be69"></script>
     <script src="../_static/design-tabs.js?v=36754332"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_as_gen/gravity.NewtonianGravity.compute_potential';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -768,6 +770,18 @@ instance of the class.</p></li>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">unyt_array</span></code></p>
 </dd>
 </dl>
+<p class="rubric">Notes</p>
+<p>This computation exploits spherical symmetry by computing the gravitational potential in shells. Consider a
+spherical distribution of mass with density <span class="math notranslate nohighlight">\(\rho(r)\)</span>. Consider the behavior at <span class="math notranslate nohighlight">\(r = r'\)</span>. The gravitational potential from the mass
+within the radius <span class="math notranslate nohighlight">\(r'\)</span> provides a potential</p>
+<div class="math notranslate nohighlight">
+\[\Phi_{in} = -\frac{4\pi G}{r}\int_0^{r} \xi^2 \rho(\xi) d\xi\]</div>
+<p>At each shell outward, the acceleration of that shell is</p>
+<div class="math notranslate nohighlight">
+\[\nabla \Phi_{\mathrm{shell}} = -\frac{GM(&lt;r)}{r^2} = -4\pi G \rho(r) dr.\]</div>
+<p>Thus</p>
+<div class="math notranslate nohighlight">
+\[\Phi(r) = 4\pi G \left[\frac{1}{r}\int_0^r \xi^2 \rho(\xi) d\xi + \int_r^\infty \xi \rho(\xi) d\xi \right]\]</div>
 </dd></dl>
 
 </section>

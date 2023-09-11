@@ -733,16 +733,7 @@ document.write(`
                   
   <section id="module-gravity">
 <span id="gravity"></span><h1>gravity<a class="headerlink" href="#module-gravity" title="Permalink to this heading">#</a></h1>
-<section id="id1">
-<h2>Gravity<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
-<p>The <a class="reference internal" href="#module-gravity" title="gravity"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gravity</span></code></a> module contains the <a class="reference internal" href="gravity.Gravity.html#gravity.Gravity" title="gravity.Gravity"><code class="xref py py-class docutils literal notranslate"><span class="pre">gravity.Gravity</span></code></a> class, which essentially acts as a wrapper for
-solving the Poisson equation in each of the available gravitational theories. The various available gravitational theories are
-implemented in classes inheriting from the base <a class="reference internal" href="gravity.Gravity.html#gravity.Gravity" title="gravity.Gravity"><code class="xref py py-class docutils literal notranslate"><span class="pre">gravity.Gravity</span></code></a> class.</p>
-<div class="admonition-info admonition">
-<p class="admonition-title">Info</p>
-<p>For more information on the underlying implementations, see <a class="reference internal" href="../gravity.html#gravity"><span class="std std-ref">The Gravity Guide</span></a>.</p>
-</div>
-</section>
+<p>Gravitational theories and their implementations in <code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code>.</p>
 <p class="rubric">Classes</p>
 <table class="autosummary longtable table autosummary">
 <tbody>
@@ -753,10 +744,10 @@ implemented in classes inheriting from the base <a class="reference internal" hr
 <td><p>Implementation of the Extended MOND formulation of MOND.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="gravity.Gravity.html#gravity.Gravity" title="gravity.Gravity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Gravity</span></code></a>(model, **kwargs)</p></td>
-<td><p>The <a class="reference internal" href="gravity.Gravity.html#gravity.Gravity" title="gravity.Gravity"><code class="xref py py-class docutils literal notranslate"><span class="pre">Gravity</span></code></a> is the base class for different gravity implementations in <code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code>.</p></td>
+<td><p>The <a class="reference internal" href="gravity.Gravity.html#gravity.Gravity" title="gravity.Gravity"><code class="xref py py-class docutils literal notranslate"><span class="pre">Gravity</span></code></a> class is the base class for different gravity implementations in <code class="xref py py-mod docutils literal notranslate"><span class="pre">cluster_generator</span></code>.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="gravity.NewtonianGravity.html#gravity.NewtonianGravity" title="gravity.NewtonianGravity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NewtonianGravity</span></code></a>(model, **kwargs)</p></td>
-<td><p>Newtonian gravity implementation.</p></td>
+<td><p><a class="reference internal" href="gravity.Gravity.html#gravity.Gravity" title="gravity.Gravity"><code class="xref py py-class docutils literal notranslate"><span class="pre">gravity.Gravity</span></code></a> implementation of Newtonian gravity.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="gravity.QUMONDGravity.html#gravity.QUMONDGravity" title="gravity.QUMONDGravity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">QUMONDGravity</span></code></a>(model, **kwargs)</p></td>
 <td><p>QUMOND implementation of <a class="reference internal" href="gravity.Gravity.html#gravity.Gravity" title="gravity.Gravity"><code class="xref py py-class docutils literal notranslate"><span class="pre">gravity.Gravity</span></code></a>.</p></td>
@@ -805,16 +796,6 @@ implemented in classes inheriting from the base <a class="reference internal" hr
             
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> On this page
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Gravity</a></li>
-</ul>
-  </nav></div>
 
   <div class="sidebar-secondary-item">
   <div class="tocsection sourcelink">
