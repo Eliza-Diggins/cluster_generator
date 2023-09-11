@@ -1238,6 +1238,52 @@ document.write(`
     <span class="n">p</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="n">rho_0</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">+</span> <span class="n">r</span> <span class="o">/</span> <span class="n">a_c</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">+</span> <span class="n">r</span> <span class="o">/</span> <span class="n">a_c</span> <span class="o">/</span> <span class="n">c</span><span class="p">)</span> <span class="o">**</span> <span class="n">alpha</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">+</span> <span class="n">r</span> <span class="o">/</span> <span class="n">a</span><span class="p">)</span> <span class="o">**</span> <span class="n">beta</span>
     <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">inspect</span><span class="o">.</span><span class="n">stack</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">])</span></div>
 
+<div class="viewcode-block" id="ad07_density_profile"><a class="viewcode-back" href="../_as_gen/radial_profiles.ad07_density_profile.html#radial_profiles.ad07_density_profile">[docs]</a><span class="k">def</span> <span class="nf">ad07_density_profile</span><span class="p">(</span><span class="n">T0</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">alpha</span><span class="p">,</span><span class="n">f</span><span class="p">,</span><span class="n">n</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span><span class="n">mu</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span><span class="n">omega_b</span><span class="o">=</span><span class="mf">0.048</span><span class="p">,</span><span class="n">omega_dm</span><span class="o">=</span><span class="mf">0.262</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Pseudo-polytropic gas density profile from Ascasibar &amp; Diego, 2008MNRAS.383..369A</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    T0: float</span>
+<span class="sd">        (keV) The core temperature of the gas distribution.</span>
+<span class="sd">    t: float</span>
+<span class="sd">        (Dimensionless) value representing the degree of cooling in the cluster core.</span>
+<span class="sd">    a: float</span>
+<span class="sd">        (kpc) Scale length of both the temperature and density profiles.</span>
+<span class="sd">    alpha: float</span>
+<span class="sd">        (dimensionless) Ratio of a_c/a, a_c is the cooling radius.</span>
+<span class="sd">    f: float</span>
+<span class="sd">        (dimensionless) The gas fraction.</span>
+<span class="sd">    n: int, optional</span>
+<span class="sd">        (dimensionless) the polytropic index. Default is 4.</span>
+<span class="sd">    mu: float, optional</span>
+<span class="sd">        (dimensionless) the mean molecular mass of the gas. Default is 0.6</span>
+<span class="sd">    omega_b: float, optional</span>
+<span class="sd">        (dimensionless) the cosmic baryon fraction parameter. Default is 0.048.</span>
+<span class="sd">    omega_dm: float, optional</span>
+<span class="sd">        (dimensionless) the cosmic dark matter fraction parameter. Default is 0.262</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    :py:class:`radial_profiles.RadialProfile`</span>
+<span class="sd">        The corresponding radial profile.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">unyt</span> <span class="kn">import</span> <span class="n">unyt_quantity</span>
+    <span class="kn">from</span> <span class="nn">unyt</span> <span class="kn">import</span> <span class="n">physical_constants</span> <span class="k">as</span> <span class="n">const</span>
+    <span class="c1">#  Computing the normalization</span>
+    <span class="c1"># ---------------------------------------------------------------------------------------------------------------- #</span>
+    <span class="c1">#- computing the mass norm -#</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="n">unyt_quantity</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="s2">&quot;kpc&quot;</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">unyt_quantity</span><span class="p">(</span><span class="n">T0</span><span class="p">,</span><span class="s2">&quot;keV&quot;</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">mu</span><span class="o">*</span><span class="n">const</span><span class="o">.</span><span class="n">mp</span><span class="o">*</span><span class="n">const</span><span class="o">.</span><span class="n">G</span><span class="p">)</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="n">M</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;Msun&quot;</span><span class="p">)</span>
+
+    <span class="c1">#- computing the density norm -#</span>
+    <span class="n">rho0</span> <span class="o">=</span> <span class="n">f</span><span class="o">*</span><span class="p">(</span><span class="n">omega_b</span><span class="o">/</span><span class="n">omega_dm</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">M</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">unyt_quantity</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="s2">&quot;kpc&quot;</span><span class="p">)</span><span class="o">**</span><span class="mi">3</span><span class="p">))</span>
+    <span class="n">rho0</span> <span class="o">=</span> <span class="n">rho0</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;Msun/kpc**3&quot;</span><span class="p">)</span>
+
+    <span class="c1">#  Producting the profile</span>
+    <span class="c1"># ---------------------------------------------------------------------------------------------------------------- #</span>
+    <span class="n">function</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">,</span><span class="n">A</span><span class="o">=</span><span class="n">a</span><span class="p">,</span><span class="n">T</span><span class="o">=</span><span class="n">t</span><span class="p">,</span><span class="n">ALPHA</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span><span class="n">N</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span><span class="n">RHO</span><span class="o">=</span><span class="n">rho0</span><span class="o">.</span><span class="n">d</span><span class="p">:</span> <span class="n">RHO</span><span class="o">*</span><span class="p">((</span><span class="mi">1</span><span class="o">+</span><span class="p">(</span><span class="n">r</span><span class="o">/</span><span class="n">A</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="n">T</span><span class="o">*</span><span class="n">ALPHA</span> <span class="o">+</span> <span class="p">(</span><span class="n">r</span><span class="o">/</span><span class="n">A</span><span class="p">)))</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="p">((</span><span class="n">ALPHA</span><span class="o">-</span><span class="n">T</span><span class="o">*</span><span class="n">ALPHA</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">T</span><span class="o">*</span><span class="n">ALPHA</span><span class="p">))</span><span class="o">*</span><span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="n">ALPHA</span><span class="o">+</span><span class="p">(</span><span class="n">r</span><span class="o">/</span><span class="n">A</span><span class="p">))</span><span class="o">/</span><span class="p">((</span><span class="mi">1</span><span class="o">+</span><span class="p">(</span><span class="n">r</span><span class="o">/</span><span class="n">A</span><span class="p">))</span><span class="o">**</span><span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">function</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="n">inspect</span><span class="o">.</span><span class="n">stack</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">])</span></div>
+
 
 <div class="viewcode-block" id="vikhlinin_density_profile"><a class="viewcode-back" href="../_as_gen/radial_profiles.vikhlinin_density_profile.html#radial_profiles.vikhlinin_density_profile">[docs]</a><span class="k">def</span> <span class="nf">vikhlinin_density_profile</span><span class="p">(</span><span class="n">rho_0</span><span class="p">,</span> <span class="n">r_c</span><span class="p">,</span> <span class="n">r_s</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span>
                               <span class="n">epsilon</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -1276,6 +1322,28 @@ document.write(`
                         <span class="p">(</span><span class="mf">1.</span> <span class="o">+</span> <span class="p">(</span><span class="n">r</span> <span class="o">/</span> <span class="n">r_s</span><span class="p">)</span> <span class="o">**</span> <span class="n">gamma</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">epsilon</span> <span class="o">/</span> <span class="n">gamma</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">inspect</span><span class="o">.</span><span class="n">stack</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">])</span></div>
 
+<div class="viewcode-block" id="ad07_temperature_profile"><a class="viewcode-back" href="../_as_gen/radial_profiles.ad07_temperature_profile.html#radial_profiles.ad07_temperature_profile">[docs]</a><span class="k">def</span> <span class="nf">ad07_temperature_profile</span><span class="p">(</span><span class="n">T0</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">alpha</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Pseudo-polytropic gas temperature profile from Ascasibar &amp; Diego, 2008MNRAS.383..369A</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    T0: float</span>
+<span class="sd">        (keV) The core temperature of the gas distribution.</span>
+<span class="sd">    t: float</span>
+<span class="sd">        (Dimensionless) value representing the degree of cooling in the cluster core.</span>
+<span class="sd">    a: float</span>
+<span class="sd">        (kpc) Scale length of both the temperature and density profiles.</span>
+<span class="sd">    alpha: float</span>
+<span class="sd">        (dimensionless) a_c/a</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    :py:class:`radial_profiles.RadialProfile`</span>
+<span class="sd">        The corresponding radial profile.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">function</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">,</span><span class="n">A</span><span class="o">=</span><span class="n">a</span><span class="p">,</span><span class="n">ALPHA</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span><span class="n">T</span><span class="o">=</span><span class="n">t</span><span class="p">,</span><span class="n">TEMP0</span><span class="o">=</span><span class="n">T0</span><span class="p">:</span> <span class="p">(</span><span class="n">TEMP0</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="p">(</span><span class="n">r</span><span class="o">/</span><span class="n">A</span><span class="p">)))</span><span class="o">*</span><span class="p">((</span><span class="n">T</span><span class="o">+</span><span class="p">(</span><span class="n">r</span><span class="o">/</span><span class="p">(</span><span class="n">ALPHA</span><span class="o">*</span><span class="n">A</span><span class="p">)))</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="p">(</span><span class="n">r</span><span class="o">/</span><span class="p">(</span><span class="n">ALPHA</span><span class="o">*</span><span class="n">A</span><span class="p">))))</span>
+    <span class="k">return</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">function</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="n">inspect</span><span class="o">.</span><span class="n">stack</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">])</span></div>
 
 <div class="viewcode-block" id="vikhlinin_temperature_profile"><a class="viewcode-back" href="../_as_gen/radial_profiles.vikhlinin_temperature_profile.html#radial_profiles.vikhlinin_temperature_profile">[docs]</a><span class="k">def</span> <span class="nf">vikhlinin_temperature_profile</span><span class="p">(</span><span class="n">T_0</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">r_t</span><span class="p">,</span> <span class="n">T_min</span><span class="p">,</span>
                                   <span class="n">r_cool</span><span class="p">,</span> <span class="n">a_cool</span><span class="p">):</span>

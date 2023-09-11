@@ -12,6 +12,8 @@
       :recursive:
 
    
+      ad07_density_profile
+      ad07_temperature_profile
       am06_density_profile
       am06_temperature_profile
       baseline_entropy_profile

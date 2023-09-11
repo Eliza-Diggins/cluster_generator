@@ -378,16 +378,102 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <section id="collections">
-<h1>Collections<a class="headerlink" href="#collections" title="Permalink to this heading">#</a></h1>
-<p>To facilitate rapid implementation of various reasonable cluster scenarios, the <code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code> package includes
-several “collections” composed of best fit profiles to various real-world clusters. In this guide, we will discuss how
-to use these collections and also how to add custom collections and help us to develop yet more of these collections.</p>
-<section id="developer-s-guide">
-<h2>Developer’s Guide<a class="headerlink" href="#developer-s-guide" title="Permalink to this heading">#</a></h2>
-<p>We’ve finishing covering the basics of actually accessing the built-in collection objects, but what about adding collections?</p>
+<h1><a class="toc-backref" href="#id1" role="doc-backlink">Collections</a><a class="headerlink" href="#collections" title="Permalink to this heading">#</a></h1>
+<p>To help facilitate productive science, the <code class="xref py py-mod docutils literal notranslate"><span class="pre">cluster_generator</span></code> library provides sets of documented galaxy clusters and
+their fits to known profiles. These profiles are stored in a class called <a class="reference internal" href="_as_gen/collection.ClusterCollection.html#collection.ClusterCollection" title="collection.ClusterCollection"><code class="xref py py-class docutils literal notranslate"><span class="pre">collection.ClusterCollection</span></code></a>, which allows the user
+to interact with the stored profile data to generate known clusters directly from their observed behaviors.</p>
+<hr style="color:black"><nav class="contents" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#collections" id="id1">Collections</a></p>
+<ul>
+<li><p><a class="reference internal" href="#available-datasets" id="id2">Available Datasets</a></p></li>
+<li><p><a class="reference internal" href="#accessing-collections" id="id3">Accessing Collections</a></p>
+<ul>
+<li><p><a class="reference internal" href="#built-in-collections" id="id4">Built-In Collections</a></p></li>
+<li><p><a class="reference internal" href="#custom-collections" id="id5">Custom Collections</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+<hr style="height:10px;background-color:black"><section id="available-datasets">
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Available Datasets</a><a class="headerlink" href="#available-datasets" title="Permalink to this heading">#</a></h2>
+<div class="sd-sphinx-override sd-cards-carousel sd-card-cols-2 docutils">
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Methodology</strong>: CHANDRA X-ray Observations</p>
+</div>
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+<a class="reference internal" href="_as_gen/collection.Vikhlinin06.html#collection.Vikhlinin06" title="collection.Vikhlinin06"><code class="xref py py-class docutils literal notranslate"><span class="pre">collection.Vikhlinin06</span></code></a></div>
+<p class="sd-card-text">Phenomenological models of the Vikhlinin et. al. 2006 clusters using Hernquist profiles for the total mass and a 5 parameter fitting procedure.</p>
+</div>
+<div class="sd-card-footer docutils">
+<div class="line-block">
+<div class="line"><strong>Publication</strong>: <a class="reference external" href="https://ui.adsabs.harvard.edu/abs/2008MNRAS.383..369A/abstract">Ascasibar, Y.; Diego, J. M. 2008MNRAS.383..369A</a></div>
+</div>
+</div>
+</div>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Methodology</strong>: CHANDRA X-ray Observations</p>
+</div>
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+<code class="xref py py-class docutils literal notranslate"><span class="pre">collection.Ascasibar08</span></code></div>
+<p class="sd-card-text">Gas temperature and gas density profiles for a set of 13 low-redshift, relaxed clusters with temperatures between 0.7-9 keV.</p>
+</div>
+<div class="sd-card-footer docutils">
+<div class="line-block">
+<div class="line"><strong>Publication</strong>: <a class="reference external" href="https://ui.adsabs.harvard.edu/abs/2006ApJ...640..691V/abstract">Vikhlinin, A. et. al. 2006ApJ…640..691V</a></div>
+</div>
+</div>
+</div>
+</div>
+<hr style="height:2px;background-color:black"></section>
+<section id="accessing-collections">
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Accessing Collections</a><a class="headerlink" href="#accessing-collections" title="Permalink to this heading">#</a></h2>
+<section id="built-in-collections">
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">Built-In Collections</a><a class="headerlink" href="#built-in-collections" title="Permalink to this heading">#</a></h3>
+<p>For most purposes, built-in collections are the easiest way to go. There are several available in the library, the complete list can be seen in the <a class="reference internal" href="_as_gen/collection.html#module-collection" title="collection"><code class="xref py py-mod docutils literal notranslate"><span class="pre">collection</span></code></a> documentation.
+To load a built-in collection, one simply needs to call the <code class="docutils literal notranslate"><span class="pre">.load</span></code> method on the corresponding class. For example</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">u</span> <span class="o">=</span> <span class="n">Vikhlinin06</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This will then provide you with access to the fully realized class. You can see the available clusters using the <a class="reference internal" href="_as_gen/collection.ClusterCollection.names.html#collection.ClusterCollection.names" title="collection.ClusterCollection.names"><code class="xref py py-attr docutils literal notranslate"><span class="pre">collection.ClusterCollection.names</span></code></a> attribute.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">names</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">[</span><span class="s1">&#39;A133&#39;</span><span class="p">,</span> <span class="s1">&#39;A262&#39;</span><span class="p">,</span> <span class="s1">&#39;A383&#39;</span><span class="p">,</span> <span class="s1">&#39;A478&#39;</span><span class="p">,</span> <span class="s1">&#39;A907&#39;</span><span class="p">,</span> <span class="s1">&#39;A1413&#39;</span><span class="p">,</span> <span class="s1">&#39;A1795&#39;</span><span class="p">,</span> <span class="s1">&#39;A1991&#39;</span><span class="p">,</span> <span class="s1">&#39;A2029&#39;</span><span class="p">,</span> <span class="s1">&#39;A2390&#39;</span><span class="p">,</span> <span class="s1">&#39;RX J1159+5531&#39;</span><span class="p">,</span> <span class="s1">&#39;MKW 4&#39;</span><span class="p">,</span> <span class="s1">&#39;USGC S152&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>If you want to load one of these as a <a class="reference internal" href="_as_gen/model.ClusterModel.html#model.ClusterModel" title="model.ClusterModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">model.ClusterModel</span></code></a> instance, simply use the following:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt; model = u.load_model(&quot;A133&quot;)
+... cluster_generator : [INFO     ] 2023-09-11 08:40:53,510 Loaded Vikhlinin et. al. 2006.
+... cluster_generator : [INFO     ] 2023-09-11 08:40:53,519 Constructing ClusterModel. Method=&#39;from_dens_and_temp&#39;, gravity=Newtonian.
+...                 [from_dens_and_temp]: Mon Sep 11 08:40:53 2023 Computing r, rho_g, T from profiles...[DONE]
+...                 [from_dens_and_temp]: Mon Sep 11 08:40:53 2023 Computing calculating the pressure...[DONE]
+...                 [from_dens_and_temp]: Mon Sep 11 08:40:53 2023 Computing the field...[DONE]
+...                 [from_dens_and_temp]: Mon Sep 11 08:40:53 2023 Computing the mass and density fields...[DONE]
+... cluster_generator : [WARNING  ] 2023-09-11 08:40:53,917 The model being generated has non-physical attributes.
+...                 [from_dens_and_temp]: Mon Sep 11 08:40:53 2023 Passing to `from_scratch`...
+...                 [from_scratch]: Mon Sep 11 08:40:53 2023 Checking for missing mass / density fields...[DONE]
+...                 [from_scratch]: Mon Sep 11 08:40:53 2023 Determining the halo component...[DONE]
+...                 [from_scratch]: Mon Sep 11 08:40:53 2023 Computing additional fields...[DONE]
+...                 [from_scratch]: Mon Sep 11 08:40:53 2023 Initializing the ClusterModel...
+... cluster_generator : [INFO     ] 2023-09-11 08:40:53,923 ClusterModel [ClusterModel object; gravity=Newtonian] has no virialization method. Setting to default = eddington
+... cluster_generator : [INFO     ] 2023-09-11 08:40:53,923 Computing gravitational potential of ClusterModel object; gravity=Newtonian. gravity=Newtonian.
+... ✔ cluster_generator : [INFO     ] Mon Sep 11 08:40:55 2023 Computed potential.
+</pre></div>
+</div>
+<p>And there you go, you’ve got you <a class="reference internal" href="_as_gen/model.ClusterModel.html#model.ClusterModel" title="model.ClusterModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">model.ClusterModel</span></code></a> instance ready to go!</p>
+</section>
+<section id="custom-collections">
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Custom Collections</a><a class="headerlink" href="#custom-collections" title="Permalink to this heading">#</a></h3>
+<p>If you’re looking to make your own collections, the process is a bit more intricate, but still manageable.</p>
 <p>Every collection is housed in a custom class bearing its name. For example, the Vikhlinin 2006 fits are housed in the
-<code class="xref py py-class docutils literal notranslate"><span class="pre">collections.Vikhlinin06</span></code> class. All of these custom classes inherit from one common class; the <code class="xref py py-class docutils literal notranslate"><span class="pre">collections.ClusterCollection</span></code> class.</p>
-<p>The <code class="xref py py-class docutils literal notranslate"><span class="pre">collections.ClusterCollection</span></code> class is largely just a wrapper for IO interaction. It is initialized with a single argument: <code class="docutils literal notranslate"><span class="pre">path</span></code>,
+<code class="xref py py-class docutils literal notranslate"><span class="pre">collections.Vikhlinin06</span></code> class. All of these custom classes inherit from one common class; the <a class="reference internal" href="_as_gen/collection.ClusterCollection.html#collection.ClusterCollection" title="collection.ClusterCollection"><code class="xref py py-class docutils literal notranslate"><span class="pre">collection.ClusterCollection</span></code></a> class.</p>
+<p>The <a class="reference internal" href="_as_gen/collection.ClusterCollection.html#collection.ClusterCollection" title="collection.ClusterCollection"><code class="xref py py-class docutils literal notranslate"><span class="pre">collection.ClusterCollection</span></code></a> class is largely just a wrapper for IO interaction. It is initialized with a single argument: <code class="docutils literal notranslate"><span class="pre">path</span></code>,
 which is the path to the <code class="docutils literal notranslate"><span class="pre">.yaml</span></code> file containing the actual collection data. All that the <code class="xref py py-class docutils literal notranslate"><span class="pre">collections.ClusterCollection</span></code> instance does
 is read in the data contained in the <code class="docutils literal notranslate"><span class="pre">.yaml</span></code> for user interaction.</p>
 <p>Let’s begin by looking at a basic template for a collection:</p>
@@ -477,6 +563,7 @@ is read in the data contained in the <code class="docutils literal notranslate">
 </div>
 </section>
 </section>
+</section>
 
 
                 </article>
@@ -525,7 +612,12 @@ is read in the data contained in the <code class="docutils literal notranslate">
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#developer-s-guide">Developer’s Guide</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#available-datasets">Available Datasets</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#accessing-collections">Accessing Collections</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#built-in-collections">Built-In Collections</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#custom-collections">Custom Collections</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
