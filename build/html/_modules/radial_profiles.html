@@ -1527,16 +1527,6 @@ document.write(`
     <span class="k">return</span> <span class="n">r_delta</span><span class="p">,</span> <span class="n">m_r</span><span class="p">(</span><span class="n">r_delta</span><span class="p">)</span></div>
 
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="nb">globals</span><span class="p">()</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-    <span class="n">u</span> <span class="o">=</span> <span class="n">power_law_profile</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-    <span class="n">u</span><span class="o">.</span><span class="n">to_binary</span><span class="p">(</span><span class="s2">&quot;test.rp&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">u</span><span class="p">(</span><span class="mi">5000</span><span class="p">))</span>
-    <span class="k">del</span> <span class="n">u</span>
-
-    <span class="n">u</span> <span class="o">=</span> <span class="n">RadialProfile</span><span class="o">.</span><span class="n">from_binary</span><span class="p">(</span><span class="s2">&quot;test.rp&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">u</span><span class="p">(</span><span class="mi">5000</span><span class="p">))</span>
 </pre></div>
 
                 </article>

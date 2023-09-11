@@ -644,6 +644,23 @@ document.write(`
         <span class="k">return</span> <span class="n">m</span></div>
 
 <div class="viewcode-block" id="ClusterCollection.plot_summary"><a class="viewcode-back" href="../_as_gen/collection.ClusterCollection.plot_summary.html#collection.ClusterCollection.plot_summary">[docs]</a>    <span class="k">def</span> <span class="nf">plot_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">rmin</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span><span class="n">rmax</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span><span class="n">npoints</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates a plot gallery of all of the constituent profiles.</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        rmin: float</span>
+<span class="sd">            The minimum radius to plot.</span>
+<span class="sd">        rmax: float</span>
+<span class="sd">            The maximum radius to plot.</span>
+<span class="sd">        npoints: int</span>
+<span class="sd">            The number of points to include.</span>
+<span class="sd">        kwargs: dict, optional</span>
+<span class="sd">            Additional key word arguments to pass through the function.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1">#  Setting up the arrays</span>
         <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
         <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
@@ -792,6 +809,27 @@ document.write(`
 
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="n">model_name</span><span class="p">,</span> <span class="n">r_min</span><span class="p">,</span> <span class="n">r_max</span><span class="p">,</span> <span class="n">num_points</span><span class="o">=</span><span class="n">num_points</span><span class="p">,</span> <span class="n">gravity</span><span class="o">=</span><span class="n">gravity</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div></div>
 
+<div class="viewcode-block" id="Sanderson10"><a class="viewcode-back" href="../_as_gen/collection.Sanderson10.html#collection.Sanderson10">[docs]</a><span class="k">class</span> <span class="nc">Sanderson10</span><span class="p">(</span><span class="n">ClusterCollection</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    :py:class:`collection.ClusterCollection` instance representing the dataset from `A.J.R.Sanderson and T.J.Ponman 2010MNRAS.402...65S &lt;https://ui.adsabs.harvard.edu/abs/2010MNRAS.402...65S/abstract&gt;`_.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1">#  Dunder methods</span>
+    <span class="c1"># ---------------------------------------------------------------------------------------------------------------- #</span>
+<div class="viewcode-block" id="Sanderson10.__init__"><a class="viewcode-back" href="../_as_gen/collection.Sanderson10.__init__.html#collection.Sanderson10.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes the instance.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">collections_directory</span><span class="p">,</span> <span class="s2">&quot;Sanderson10.yaml&quot;</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Sanderson10.load"><a class="viewcode-back" href="../_as_gen/collection.Sanderson10.load.html#collection.Sanderson10.load">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">load</span><span class="p">():</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Same as :py:meth:`collection.Vikhlinin10.__init__`, but as a static method.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Sanderson10</span><span class="p">()</span></div></div>
+
+
+
 <span class="k">class</span> <span class="nc">CollectionsError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Exception class for errors during dataset loading.</span>
@@ -828,8 +866,7 @@ document.write(`
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-    <span class="n">u</span> <span class="o">=</span> <span class="n">Vikhlinin06</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">geomspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mi">1000</span><span class="p">)</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">Sanderson10</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
     <span class="n">u</span><span class="o">.</span><span class="n">plot_summary</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="mi">5000</span><span class="p">,</span><span class="n">c</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
 
 </pre></div>
