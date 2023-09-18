@@ -386,7 +386,7 @@ document.write(`
 <span class="kn">from</span> <span class="nn">cluster_generator.particles</span> <span class="kn">import</span> \
     <span class="n">ClusterParticles</span><span class="p">,</span> <span class="n">concat_clusters</span><span class="p">,</span> <span class="n">resample_clusters</span>
 <span class="kn">from</span> <span class="nn">cluster_generator.utils</span> <span class="kn">import</span> <span class="n">ensure_ytarray</span><span class="p">,</span> <span class="n">ensure_list</span><span class="p">,</span> \
-    <span class="n">parse_prng</span>
+    <span class="n">parse_prng</span><span class="p">,</span> <span class="n">mylog</span><span class="p">,</span> <span class="n">devLogger</span>
 
 
 <div class="viewcode-block" id="compute_centers_for_binary"><a class="viewcode-back" href="../_as_gen/ics.compute_centers_for_binary.html#ics.compute_centers_for_binary">[docs]</a><span class="k">def</span> <span class="nf">compute_centers_for_binary</span><span class="p">(</span><span class="n">center</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
@@ -487,6 +487,7 @@ document.write(`
 
         <span class="c1">#  Checking for pre-provided particle files</span>
         <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gravity</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_determine_num_particles</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">particle_files</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="mi">3</span>
         <span class="k">if</span> <span class="n">particle_files</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -506,6 +507,14 @@ document.write(`
         <span class="k">for</span> <span class="n">pf</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">profiles</span><span class="p">:</span>
             <span class="c1"># Loading the cluster model object #</span>
             <span class="n">p</span> <span class="o">=</span> <span class="n">ClusterModel</span><span class="o">.</span><span class="n">from_h5_file</span><span class="p">(</span><span class="n">pf</span><span class="p">)</span>
+
+            <span class="c1"># -- Managing the gravity -- #</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">gravity</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">gravity</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">gravity</span><span class="o">.</span><span class="n">_classname</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">gravity</span> <span class="o">!=</span> <span class="n">p</span><span class="o">.</span><span class="n">gravity</span><span class="o">.</span><span class="n">_classname</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Gravity theories for profiles are not consistent in </span><span class="si">{</span><span class="bp">self</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
             <span class="n">idxs</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">r_max</span>  <span class="c1"># These are the valid radii for our use.</span>
 
             <span class="c1"># Determining allowable number.</span>
@@ -829,20 +838,117 @@ document.write(`
 
         <span class="k">return</span> <span class="n">load_uniform_grid</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">domain_dimensions</span><span class="p">,</span> <span class="n">length_unit</span><span class="o">=</span><span class="s2">&quot;kpc&quot;</span><span class="p">,</span>
                                  <span class="n">bbox</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">bbox</span><span class="p">),</span> <span class="n">mass_unit</span><span class="o">=</span><span class="s2">&quot;Msun&quot;</span><span class="p">,</span> <span class="n">time_unit</span><span class="o">=</span><span class="s2">&quot;Myr&quot;</span><span class="p">,</span>
-                                 <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div></div>
+                                 <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ClusterICs.compute_orbits"><a class="viewcode-back" href="../_as_gen/ics.ClusterICs.compute_orbits.html#ics.ClusterICs.compute_orbits">[docs]</a>    <span class="k">def</span> <span class="nf">compute_orbits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">t_max</span><span class="p">,</span><span class="n">max_step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">dx_max</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">n_iter</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span><span class="n">softening_length</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span><span class="n">collision_distance</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Computes the point-mass orbital behavior of the systems to give an approximate idea of the</span>
+<span class="sd">        resulting dynamics when simulated.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        t_max: float</span>
+<span class="sd">            The maximum computed time of the orbit [Myr].</span>
+<span class="sd">        max_step: float, optional</span>
+<span class="sd">            The maximum allowed timestep of the orbit [Myr]. Default is 1 Myr.</span>
+<span class="sd">        dx_max: float, optional</span>
+<span class="sd">            The maximum distance change per timestep. Used to reduce loss of accuracy when bodies pass close to one</span>
+<span class="sd">            another. Default is 1 kpc.</span>
+<span class="sd">        n_iter: int, optional</span>
+<span class="sd">            The number of iterations to allow. Default is 10000.</span>
+<span class="sd">        softening_length: float, optional</span>
+<span class="sd">            The gravitational softening length. Default is 0.1 kpc.</span>
+<span class="sd">        collision_distance: float, optional</span>
+<span class="sd">            The distance between any two halos at which to stop the calculation and return data indicating a collision</span>
+<span class="sd">            has occurred.</span>
 
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
 
-    <span class="n">test</span> <span class="o">=</span> <span class="n">ClusterICs</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s2">&quot;testic.h5&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
-    <span class="n">ds</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">([</span><span class="mi">200</span><span class="p">,</span><span class="mi">200</span><span class="p">,</span><span class="mi">200</span><span class="p">],</span> <span class="mi">10000</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mi">5000</span><span class="p">,</span> <span class="o">-</span><span class="mi">5000</span><span class="p">,</span> <span class="o">-</span><span class="mi">5000</span><span class="p">])</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        SimpleNamespace:</span>
+<span class="sd">            t: np.ndarray</span>
+<span class="sd">                The output times in Myrs.</span>
+<span class="sd">            x: np.ndarray</span>
+<span class="sd">                The output locations. Has shape ``(halo, time_index)``.</span>
+<span class="sd">            y: np.ndarray</span>
+<span class="sd">                The output locations. Has shape ``(halo, time_index)``.</span>
+<span class="sd">            z: np.ndarray</span>
+<span class="sd">                The output locations. Has shape ``(halo, time_index)``.</span>
+<span class="sd">            dx: np.ndarray</span>
+<span class="sd">                The output velocity. Has shape ``(halo, time_index)``.</span>
+<span class="sd">            dy: np.ndarray</span>
+<span class="sd">                The output velocity. Has shape ``(halo, time_index)``.</span>
+<span class="sd">            dz: np.ndarray</span>
+<span class="sd">                The output velocity. Has shape ``(halo, time_index)``.</span>
+<span class="sd">            ddx: np.ndarray</span>
+<span class="sd">                The output acceleration. Has shape ``(halo, time_index)``.</span>
+<span class="sd">            ddy: np.ndarray</span>
+<span class="sd">                The output acceleration. Has shape ``(halo, time_index)``.</span>
+<span class="sd">            ddz: np.ndarray</span>
+<span class="sd">                The output acceleration. Has shape ``(halo, time_index)``.</span>
+<span class="sd">            return_code: int</span>
+<span class="sd">                The exit code from the cython module. Exit code 0 is passing.</span>
+<span class="sd">            errs: list</span>
+<span class="sd">                A list of any exceptions or warnings called during the execution.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#  Setup</span>
+        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+        <span class="n">mylog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Preparing to computing point-mass orbits for </span><span class="si">{</span><span class="bp">self</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
 
+        <span class="c1"># -- Loading the halo&#39;s -- #</span>
+        <span class="n">xs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;kpc&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">d</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+        <span class="n">dxs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;kpc/Myr&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">d</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+        <span class="n">masses</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">model_path</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profiles</span><span class="p">):</span>
+            <span class="n">m</span> <span class="o">=</span> <span class="n">ClusterModel</span><span class="o">.</span><span class="n">from_h5_file</span><span class="p">(</span><span class="n">model_path</span><span class="p">)</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="n">ds</span><span class="p">)</span>
-    <span class="kn">import</span> <span class="nn">yt</span>
-    <span class="n">p</span> <span class="o">=</span> <span class="n">yt</span><span class="o">.</span><span class="n">SlicePlot</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span><span class="s2">&quot;z&quot;</span><span class="p">,(</span><span class="s2">&quot;gas&quot;</span><span class="p">,</span><span class="s2">&quot;temperature&quot;</span><span class="p">),</span><span class="n">width</span><span class="o">=</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span><span class="s2">&quot;kpc&quot;</span><span class="p">))</span>
-    <span class="n">p</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+            <span class="k">assert</span> <span class="n">m</span><span class="o">.</span><span class="n">gravity</span><span class="o">.</span><span class="n">_classname</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">gravity</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Model </span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2"> and </span><span class="si">{</span><span class="bp">self</span><span class="si">}</span><span class="s2"> have inconsistent gravity theories.&quot;</span>
+
+            <span class="c1"># Fetching the mass data</span>
+            <span class="n">masses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="s2">&quot;total_mass&quot;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;Msun&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">d</span><span class="p">))</span>
+
+        <span class="n">mylog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Successfully loaded </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">masses</span><span class="p">)</span><span class="si">}</span><span class="s2"> halos for orbit analysis. Dispatching...&quot;</span><span class="p">)</span>
+
+        <span class="c1">#  Beginning Computations </span>
+        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+        <span class="kn">import</span> <span class="nn">cluster_generator.orbits</span> <span class="k">as</span> <span class="nn">orbs</span>
+        <span class="kn">import</span> <span class="nn">warnings</span>
+        <span class="kn">from</span> <span class="nn">types</span> <span class="kn">import</span> <span class="n">SimpleNamespace</span>
+
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">orbs</span><span class="p">,</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">gravity</span><span class="si">}</span><span class="s2">_orbits&quot;</span><span class="o">.</span><span class="n">lower</span><span class="p">()):</span>
+            <span class="n">mylog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Dispatch complete. Computing orbits using cluster_generator.orbits.</span><span class="si">%s</span><span class="s2">.&quot;</span><span class="o">%</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">gravity</span><span class="si">}</span><span class="s2">_orbits&quot;</span><span class="o">.</span><span class="n">lower</span><span class="p">()))</span>
+
+            <span class="c1">#  Calling the orbit</span>
+            <span class="c1"># -------------------------------------------------------------------------------------------------------- #</span>
+            <span class="c1"># CALL SIGNATURE: x0, dx0, masses, nhalos, tmax, dtmax, lmax, Nmax, epsilon, additional arguments.</span>
+            <span class="c1">#</span>
+            <span class="c1">#</span>
+            <span class="k">with</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">(</span><span class="n">record</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">w</span><span class="p">:</span>
+                <span class="n">_out</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">orbs</span><span class="p">,</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">gravity</span><span class="si">}</span><span class="s2">_orbits&quot;</span><span class="o">.</span><span class="n">lower</span><span class="p">())(</span><span class="n">xs</span><span class="p">,</span><span class="n">dxs</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">masses</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float64&quot;</span><span class="p">),</span><span class="nb">len</span><span class="p">(</span><span class="n">masses</span><span class="p">),</span><span class="n">t_max</span><span class="p">,</span><span class="n">max_step</span><span class="p">,</span><span class="n">dx_max</span><span class="p">,</span><span class="n">n_iter</span><span class="p">,</span><span class="n">softening_length</span><span class="p">,</span><span class="n">collision_distance</span><span class="p">)</span>
+
+                <span class="n">errs</span> <span class="o">=</span> <span class="n">w</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The gravity </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">gravity</span><span class="si">}</span><span class="s2"> doesn&#39;t have an orbit computation.&quot;</span><span class="p">)</span>
+
+        <span class="c1">#  Building the output object</span>
+        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">SimpleNamespace</span><span class="p">(</span>
+            <span class="n">t</span> <span class="o">=</span> <span class="n">_out</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">_out</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">,:,:],</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">_out</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">,:,:],</span>
+            <span class="n">z</span> <span class="o">=</span> <span class="n">_out</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">,:,:],</span>
+            <span class="n">dx</span> <span class="o">=</span> <span class="n">_out</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">,:,:],</span>
+            <span class="n">dy</span> <span class="o">=</span> <span class="n">_out</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">,:,:],</span>
+            <span class="n">dz</span> <span class="o">=</span> <span class="n">_out</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">,:,:],</span>
+            <span class="n">ddx</span> <span class="o">=</span> <span class="n">_out</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">0</span><span class="p">,:,:],</span>
+            <span class="n">ddy</span> <span class="o">=</span> <span class="n">_out</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">1</span><span class="p">,:,:],</span>
+            <span class="n">ddz</span> <span class="o">=</span> <span class="n">_out</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">2</span><span class="p">,:,:],</span>
+            <span class="n">return_code</span> <span class="o">=</span> <span class="n">_out</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span>
+            <span class="n">errs</span> <span class="o">=</span> <span class="n">errs</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">output</span></div></div>
 </pre></div>
 
                 </article>

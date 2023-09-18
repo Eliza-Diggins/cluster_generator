@@ -461,6 +461,7 @@ document.write(`
 <li class="toctree-l2"><a class="reference internal" href="ics.compute_centers_for_binary.html">ics.compute_centers_for_binary</a></li>
 <li class="toctree-l2 current active has-children"><a class="current reference internal" href="#">ics.ClusterICs</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-14"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="ics.ClusterICs.__init__.html">ics.ClusterICs.__init__</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ics.ClusterICs.compute_orbits.html">ics.ClusterICs.compute_orbits</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ics.ClusterICs.create_dataset.html">ics.ClusterICs.create_dataset</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ics.ClusterICs.from_file.html">ics.ClusterICs.from_file</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ics.ClusterICs.resample_particle_ics.html">ics.ClusterICs.resample_particle_ics</a></li>
@@ -822,19 +823,22 @@ document.write(`
 <tr class="row-odd"><td><p><a class="reference internal" href="ics.ClusterICs.__init__.html#ics.ClusterICs.__init__" title="ics.ClusterICs.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(basename, num_halos, profiles, ...)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="ics.ClusterICs.create_dataset.html#ics.ClusterICs.create_dataset" title="ics.ClusterICs.create_dataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_dataset</span></code></a>(domain_dimensions, box_size)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="ics.ClusterICs.compute_orbits.html#ics.ClusterICs.compute_orbits" title="ics.ClusterICs.compute_orbits"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_orbits</span></code></a>(t_max[, max_step, dx_max, ...])</p></td>
+<td><p>Computes the point-mass orbital behavior of the systems to give an approximate idea of the resulting dynamics when simulated.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ics.ClusterICs.create_dataset.html#ics.ClusterICs.create_dataset" title="ics.ClusterICs.create_dataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_dataset</span></code></a>(domain_dimensions, box_size)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="ics.ClusterICs.from_file.html#ics.ClusterICs.from_file" title="ics.ClusterICs.from_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_file</span></code></a>(filename)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="ics.ClusterICs.from_file.html#ics.ClusterICs.from_file" title="ics.ClusterICs.from_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_file</span></code></a>(filename)</p></td>
 <td><p>Read the initial conditions information from a YAML-formatted <cite>filename</cite>.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="ics.ClusterICs.resample_particle_ics.html#ics.ClusterICs.resample_particle_ics" title="ics.ClusterICs.resample_particle_ics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">resample_particle_ics</span></code></a>(parts[, passive_scalars])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="ics.ClusterICs.resample_particle_ics.html#ics.ClusterICs.resample_particle_ics" title="ics.ClusterICs.resample_particle_ics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">resample_particle_ics</span></code></a>(parts[, passive_scalars])</p></td>
 <td><p>Given a Gadget-HDF5-like initial conditions file which has been output from some type of relaxation process (such as making a glass or using MESHRELAX in the case of Arepo), resample the density, thermal energy, and velocity fields onto the gas particles/cells from the initial hydrostatic profiles.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="ics.ClusterICs.setup_particle_ics.html#ics.ClusterICs.setup_particle_ics" title="ics.ClusterICs.setup_particle_ics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_particle_ics</span></code></a>([regenerate_particles, prng])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="ics.ClusterICs.setup_particle_ics.html#ics.ClusterICs.setup_particle_ics" title="ics.ClusterICs.setup_particle_ics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_particle_ics</span></code></a>([regenerate_particles, prng])</p></td>
 <td><p>From a set of cluster models and their relative positions and velocities, set up initial conditions for use with SPH codes.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="ics.ClusterICs.to_file.html#ics.ClusterICs.to_file" title="ics.ClusterICs.to_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_file</span></code></a>(filename[, overwrite])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="ics.ClusterICs.to_file.html#ics.ClusterICs.to_file" title="ics.ClusterICs.to_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_file</span></code></a>(filename[, overwrite])</p></td>
 <td><p>Write the initial conditions information to a file.</p></td>
 </tr>
 </tbody>

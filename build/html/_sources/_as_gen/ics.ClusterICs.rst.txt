@@ -15,6 +15,7 @@ ics.ClusterICs
       :recursive:
    
       ~ClusterICs.__init__
+      ~ClusterICs.compute_orbits
       ~ClusterICs.create_dataset
       ~ClusterICs.from_file
       ~ClusterICs.resample_particle_ics
