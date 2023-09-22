@@ -29,19 +29,34 @@
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fd506691" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster.custom.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster.bundle.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster-sideTip-shadow.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster-sideTip-punk.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster-sideTip-noir.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster-sideTip-light.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster-sideTip-borderless.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/micromodal.css" />
     <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
+    <script src="../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=ccbe24c1"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/js/hoverxref.js"></script>
+    <script src="../_static/js/tooltipster.bundle.min.js"></script>
+    <script src="../_static/js/micromodal.min.js"></script>
     <script src="../_static/design-tabs.js?v=36754332"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="https://unpkg.com/mermaid@10.2.0/dist/mermaid.min.js"></script>
     <script>mermaid.initialize({startOnLoad:true});</script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/gravity';</script>
@@ -390,16 +405,12 @@ document.write(`
 <span class="kn">from</span> <span class="nn">cluster_generator.utils</span> <span class="kn">import</span> \
     <span class="n">integrate</span><span class="p">,</span> <span class="n">mylog</span><span class="p">,</span> <span class="n">G</span><span class="p">,</span> <span class="n">log_string</span><span class="p">,</span> <span class="n">cgparams</span><span class="p">,</span> <span class="n">devLogger</span>
 
-<span class="c1"># -------------------------------------------------------------------------------------------------------------------- #</span>
-<span class="c1"># Constants ========================================================================================================== #</span>
-<span class="c1"># -------------------------------------------------------------------------------------------------------------------- #</span>
+
 <span class="c1">#: The MOND gravitational acceleration constant.</span>
 <span class="n">a0</span> <span class="o">=</span> <span class="n">cgparams</span><span class="p">[</span><span class="s2">&quot;gravity&quot;</span><span class="p">][</span><span class="s2">&quot;general&quot;</span><span class="p">][</span><span class="s2">&quot;mond&quot;</span><span class="p">][</span><span class="s2">&quot;a0&quot;</span><span class="p">]</span>
 
 
-<span class="c1"># -------------------------------------------------------------------------------------------------------------------- #</span>
-<span class="c1"># Classes ============================================================================================================ #</span>
-<span class="c1"># -------------------------------------------------------------------------------------------------------------------- #</span>
+
 <div class="viewcode-block" id="Gravity"><a class="viewcode-back" href="../_as_gen/gravity.Gravity.html#gravity.Gravity">[docs]</a><span class="k">class</span> <span class="nc">Gravity</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The :py:class:`~gravity.Gravity` class is the base class for different gravity implementations in :py:mod:`cluster_generator`.</span>
@@ -422,8 +433,6 @@ document.write(`
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">_classname</span> <span class="o">=</span> <span class="s2">&quot;BaseGravity&quot;</span>
 
-    <span class="c1">#  DUNDER METHODS</span>
-    <span class="c1"># ----------------------------------------------------------------------------------------------------------------- #</span>
 <div class="viewcode-block" id="Gravity.__init__"><a class="viewcode-back" href="../_as_gen/gravity.Gravity.__init__.html#gravity.Gravity.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="c1">#: The model attached to the gravity instance.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
@@ -439,8 +448,6 @@ document.write(`
     <span class="k">def</span> <span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fields</span>
 
-    <span class="c1">#  Properties</span>
-    <span class="c1"># ----------------------------------------------------------------------------------------------------------------- #</span>
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">is_calculated</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -455,8 +462,6 @@ document.write(`
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
 
-    <span class="c1">#  Methods</span>
-    <span class="c1"># ----------------------------------------------------------------------------------------------------------------- #</span>
 <div class="viewcode-block" id="Gravity.reset"><a class="viewcode-back" href="../_as_gen/gravity.Gravity.reset.html#gravity.Gravity.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Resets the :py:class:`model.ClusterModel` instance&#39;s `gravitation_potential` field to ``None``.</span>
@@ -503,8 +508,6 @@ document.write(`
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
-    <span class="c1">#  Methods</span>
-    <span class="c1"># ---------------------------------------------------------------------------------------------------------------- #</span>
 <div class="viewcode-block" id="NewtonianGravity.potential"><a class="viewcode-back" href="../_as_gen/gravity.NewtonianGravity.potential.html#gravity.NewtonianGravity.potential">[docs]</a>    <span class="k">def</span> <span class="nf">potential</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Computes the gravitational potential of the :py:class:`model.ClusterModel` object that is connected to this instance.</span>
@@ -529,12 +532,9 @@ document.write(`
 <span class="sd">        :py:meth:`gravity.NewtonianGravity.compute_potential`</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1">#  Logging</span>
-        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+
         <span class="n">mylog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Computing gravitational potential of </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span><span class="si">}</span><span class="s2">. gravity=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_classname</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
 
-        <span class="c1">#  Sanity Check</span>
-        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">force</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_calculated</span><span class="p">:</span>
             <span class="n">mylog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
                 <span class="s2">&quot;There is already a calculated potential for this model. To force recomputation, use force=True.&quot;</span><span class="p">)</span>
@@ -542,8 +542,6 @@ document.write(`
         <span class="k">else</span><span class="p">:</span>
             <span class="k">pass</span>
 
-        <span class="c1">#  Computing</span>
-        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
         <span class="c1"># - Pulling arrays</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;gravitational_potential&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_potential</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fields</span><span class="p">,</span> <span class="n">spinner</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
@@ -628,15 +626,12 @@ document.write(`
 
 <span class="sd">            \Phi(r) = 4\pi G \left[\frac{1}{r}\int_0^r \xi^2 \rho(\xi) d\xi + \int_r^\infty \xi \rho(\xi) d\xi \right]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1">#  Managing inputs</span>
-        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+
         <span class="k">if</span> <span class="n">attrs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">attrs</span> <span class="o">=</span> <span class="p">{}</span>
 
         <span class="k">del</span> <span class="n">attrs</span>
 
-        <span class="c1">#  Computing the potential</span>
-        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
         <span class="n">devLogger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Computing gravitational potential from </span><span class="si">{</span><span class="n">fields</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span><span class="si">}</span><span class="s2">. gravity=</span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">_classname</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
         <span class="k">with</span> <span class="n">Halo</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">log_string</span><span class="p">(</span><span class="s2">&quot;Computing potential...&quot;</span><span class="p">),</span> <span class="n">stream</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span>
                   <span class="n">enabled</span><span class="o">=</span><span class="p">(</span><span class="n">cgparams</span><span class="p">[</span><span class="s2">&quot;system&quot;</span><span class="p">][</span><span class="s2">&quot;text&quot;</span><span class="p">][</span><span class="s2">&quot;spinners&quot;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">spinner</span><span class="p">))</span> <span class="k">as</span> <span class="n">h</span><span class="p">:</span>
@@ -659,8 +654,6 @@ document.write(`
             <span class="n">potential</span><span class="o">.</span><span class="n">convert_to_units</span><span class="p">(</span><span class="s2">&quot;kpc**2/Myr**2&quot;</span><span class="p">)</span>
             <span class="n">h</span><span class="o">.</span><span class="n">succeed</span><span class="p">(</span><span class="n">log_string</span><span class="p">(</span><span class="s2">&quot;Computed potential.&quot;</span><span class="p">))</span>
 
-        <span class="c1">#  Managing warnings</span>
-        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">errs</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">mylog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Detected </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">errs</span><span class="p">)</span><span class="si">}</span><span class="s2"> warnings from integration. Likely due to physicality issues.&quot;</span><span class="p">)</span>
 
@@ -671,9 +664,7 @@ document.write(`
         <span class="k">return</span> <span class="n">potential</span></div></div>
 
 
-<span class="c1"># -------------------------------------------------------------------------------------------------------------------- #</span>
-<span class="c1"># MONDian Gravity Theories =====-===================================================================================== #</span>
-<span class="c1"># -------------------------------------------------------------------------------------------------------------------- #</span>
+
 <div class="viewcode-block" id="AQUALGravity"><a class="viewcode-back" href="../_as_gen/gravity.AQUALGravity.html#gravity.AQUALGravity">[docs]</a><span class="k">class</span> <span class="nc">AQUALGravity</span><span class="p">(</span><span class="n">Gravity</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Implementation of the AQUAL (Aquadratic Lagrangian) formulation of MOND.</span>
@@ -701,8 +692,6 @@ document.write(`
             <span class="n">mylog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Gravity </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_classname</span><span class="si">}</span><span class="s2"> requires kwarg `a_0`. Setting to default...&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;a_0&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">a0</span></div>
 
-    <span class="c1">#  Methods</span>
-    <span class="c1"># ---------------------------------------------------------------------------------------------------------------- #</span>
 <div class="viewcode-block" id="AQUALGravity.potential"><a class="viewcode-back" href="../_as_gen/gravity.AQUALGravity.potential.html#gravity.AQUALGravity.potential">[docs]</a>    <span class="k">def</span> <span class="nf">potential</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Computes the gravitational potential of the object.</span>
@@ -721,12 +710,9 @@ document.write(`
 <span class="sd">        -------</span>
 <span class="sd">        None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1">#  Logging</span>
-        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+
         <span class="n">mylog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Computing gravitational potential of </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span><span class="si">}</span><span class="s2">. gravity=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_classname</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
 
-        <span class="c1">#  Sanity Check</span>
-        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">force</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_calculated</span><span class="p">:</span>
             <span class="n">mylog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
                 <span class="s2">&quot;There is already a calculated potential for this model. To force recomputation, use force=True.&quot;</span><span class="p">)</span>
@@ -734,8 +720,6 @@ document.write(`
         <span class="k">else</span><span class="p">:</span>
             <span class="k">pass</span>
 
-        <span class="c1">#  Computing</span>
-        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;gravitational_potential&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_potential</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fields</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">attrs</span><span class="p">,</span>
                                                                               <span class="n">spinner</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
@@ -757,8 +741,7 @@ document.write(`
 <span class="sd">            Computation result</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1">#  Managing attributes</span>
-        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+
         <span class="k">with</span> <span class="n">Halo</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">log_string</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dyn. Mass comp; </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">_classname</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">),</span> <span class="n">stream</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span> <span class="k">as</span> <span class="n">h</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">attrs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">attrs</span> <span class="o">=</span> <span class="p">{}</span>
@@ -771,8 +754,6 @@ document.write(`
                 <span class="n">mylog</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Gravity </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">_classname</span><span class="si">}</span><span class="s2"> requires kwarg `a_0`. Setting to default...&quot;</span><span class="p">)</span>
                 <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;a_0&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">a0</span>
 
-            <span class="c1">#  Returning output</span>
-            <span class="c1"># -------------------------------------------------------------------------------------------------------- #</span>
             <span class="n">h</span><span class="o">.</span><span class="n">succeed</span><span class="p">(</span><span class="n">log_string</span><span class="p">(</span><span class="s2">&quot;Dyn. Mass comp: [DONE] &quot;</span><span class="p">))</span>
 
         <span class="k">return</span> <span class="p">(</span><span class="o">-</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;gravitational_field&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">G</span><span class="p">)</span> <span class="o">*</span> <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;interp_function&quot;</span><span class="p">](</span>
@@ -805,12 +786,9 @@ document.write(`
 <span class="sd">        unyt_array</span>
 <span class="sd">            The computed gravitational potential of the system.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1">#  Logging and array construction</span>
-        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+
         <span class="n">devLogger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[[Potential]] Integrating gravitational potential profile. gravity=</span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">_classname</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
 
-        <span class="c1">#  Managing required attributes</span>
-        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
         <span class="c1"># - providing a_0 - #</span>
         <span class="k">if</span> <span class="n">attrs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="s2">&quot;a_0&quot;</span> <span class="ow">in</span> <span class="n">attrs</span><span class="p">:</span>
             <span class="n">a_0</span> <span class="o">=</span> <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;a_0&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;kpc/Myr**2&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">d</span>
@@ -825,8 +803,6 @@ document.write(`
                 <span class="n">attrs</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;interp_function&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_interp</span>
 
-        <span class="c1"># Carrying out computations</span>
-        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
         <span class="k">with</span> <span class="n">Halo</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">log_string</span><span class="p">(</span><span class="s2">&quot;Computing potential...&quot;</span><span class="p">),</span> <span class="n">stream</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span>
                   <span class="n">enabled</span><span class="o">=</span><span class="p">(</span><span class="n">cgparams</span><span class="p">[</span><span class="s2">&quot;system&quot;</span><span class="p">][</span><span class="s2">&quot;text&quot;</span><span class="p">][</span><span class="s2">&quot;spinners&quot;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">spinner</span><span class="p">))</span> <span class="k">as</span> <span class="n">h</span><span class="p">:</span>
 
@@ -872,8 +848,6 @@ document.write(`
             <span class="n">potential</span><span class="o">.</span><span class="n">convert_to_units</span><span class="p">(</span><span class="s2">&quot;kpc**2/Myr**2&quot;</span><span class="p">)</span>
             <span class="n">h</span><span class="o">.</span><span class="n">succeed</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">log_string</span><span class="p">(</span><span class="s2">&quot;Computed potential...&quot;</span><span class="p">))</span>
 
-        <span class="c1">#  Managing warnings</span>
-        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">errs</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">mylog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Detected </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">errs</span><span class="p">)</span><span class="si">}</span><span class="s2"> warnings from integration. Likely due to physicality issues.&quot;</span><span class="p">)</span>
 
@@ -917,8 +891,6 @@ document.write(`
             <span class="n">mylog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Gravity </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_classname</span><span class="si">}</span><span class="s2"> requires kwarg `a_0`. Setting to default...&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;a_0&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">a0</span></div>
 
-    <span class="c1">#  Methods</span>
-    <span class="c1"># ---------------------------------------------------------------------------------------------------------------- #</span>
 <div class="viewcode-block" id="QUMONDGravity.potential"><a class="viewcode-back" href="../_as_gen/gravity.QUMONDGravity.potential.html#gravity.QUMONDGravity.potential">[docs]</a>    <span class="k">def</span> <span class="nf">potential</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Computes the potential array for the model to which this instance is attached.</span>
@@ -934,12 +906,9 @@ document.write(`
 <span class="sd">            The relevant solution to the Poisson equation.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1">#  Logging</span>
-        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+
         <span class="n">mylog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Computing gravitational potential of </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span><span class="si">}</span><span class="s2">. gravity=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_classname</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
 
-        <span class="c1">#  Sanity Check</span>
-        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">force</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_calculated</span><span class="p">:</span>
             <span class="n">mylog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
                 <span class="s2">&quot;There is already a calculated potential for this model. To force recomputation, use force=True.&quot;</span><span class="p">)</span>
@@ -947,13 +916,10 @@ document.write(`
         <span class="k">else</span><span class="p">:</span>
             <span class="k">pass</span>
 
-        <span class="c1">#  Computing</span>
-        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
         <span class="c1"># ------------------------#                                                                                #</span>
         <span class="c1"># In the far field, the acceleration in QUMOND goes as 1/r, which is not integrable. As such, our scheme   #</span>
         <span class="c1"># is to set the gauge at 2*rmax and then integrate out to it. Because we only need the potential out to rr #</span>
-        <span class="c1"># its fine to not have an entirely integrated curve.                                                       #</span>
-        <span class="c1"># -------------------------------------------------------------------------------------------------------- #</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;gravitational_potential&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_potential</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fields</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">attrs</span><span class="p">,</span>
                                                                               <span class="n">spinner</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
@@ -1034,12 +1000,9 @@ document.write(`
 <span class="sd">            The computed gravitational potential of the system.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
-        <span class="c1">#  Logging</span>
-        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+
         <span class="n">devLogger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[[Potential]] Integrating gravitational potential profile. gravity=</span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">_classname</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
 
-        <span class="c1">#  Managing Attributes</span>
-        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
         <span class="c1"># - providing a_0 - #</span>
         <span class="k">if</span> <span class="n">attrs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="s2">&quot;a_0&quot;</span> <span class="ow">in</span> <span class="n">attrs</span><span class="p">:</span>
             <span class="n">a_0</span> <span class="o">=</span> <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;a_0&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;kpc/Myr**2&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">d</span>
@@ -1054,13 +1017,9 @@ document.write(`
                 <span class="n">attrs</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;interp_function&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_interp</span>
 
-        <span class="c1">#  Computing</span>
-        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
         <span class="k">with</span> <span class="n">Halo</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">log_string</span><span class="p">(</span><span class="s2">&quot;Computing potential...&quot;</span><span class="p">),</span> <span class="n">stream</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span>
                   <span class="n">enabled</span><span class="o">=</span><span class="p">(</span><span class="n">cgparams</span><span class="p">[</span><span class="s2">&quot;system&quot;</span><span class="p">][</span><span class="s2">&quot;text&quot;</span><span class="p">][</span><span class="s2">&quot;spinners&quot;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">spinner</span><span class="p">))</span> <span class="k">as</span> <span class="n">h</span><span class="p">:</span>
 
-            <span class="c1">#  Building arrays</span>
-            <span class="c1"># -------------------------------------------------------------------------------------------------------- #</span>
             <span class="n">rr</span> <span class="o">=</span> <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;kpc&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">d</span>
             <span class="n">r_extension</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">geomspace</span><span class="p">(</span><span class="n">rr</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">rr</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="mi">2</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">rr</span><span class="p">))[</span><span class="mi">1</span><span class="p">:]</span>
             <span class="n">rc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">rr</span><span class="p">,</span> <span class="n">r_extension</span><span class="p">])</span>
@@ -1089,8 +1048,6 @@ document.write(`
             <span class="n">potential</span><span class="o">.</span><span class="n">convert_to_units</span><span class="p">(</span><span class="s2">&quot;kpc**2/Myr**2&quot;</span><span class="p">)</span>
             <span class="n">h</span><span class="o">.</span><span class="n">succeed</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">log_string</span><span class="p">(</span><span class="s2">&quot;Computed potential...&quot;</span><span class="p">))</span>
 
-        <span class="c1">#  Managing warnings</span>
-        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">errs</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">mylog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Detected </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">errs</span><span class="p">)</span><span class="si">}</span><span class="s2"> warnings from integration. Likely due to physicality issues.&quot;</span><span class="p">)</span>
 
@@ -1128,8 +1085,6 @@ document.write(`
             <span class="n">mylog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Gravity </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_classname</span><span class="si">}</span><span class="s2"> requires kwarg `a_0`. Setting to default...&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;a_0&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_a0</span></div>
 
-    <span class="c1">#  Methods</span>
-    <span class="c1"># ---------------------------------------------------------------------------------------------------------------- #</span>
 <div class="viewcode-block" id="EMONDGravity.potential"><a class="viewcode-back" href="../_as_gen/gravity.EMONDGravity.potential.html#gravity.EMONDGravity.potential">[docs]</a>    <span class="k">def</span> <span class="nf">potential</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Computes the gravitational potential of the object.</span>
@@ -1148,12 +1103,9 @@ document.write(`
 <span class="sd">        -------</span>
 <span class="sd">        None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1">#  Logging</span>
-        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+
         <span class="n">mylog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Computing gravitational potential of </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span><span class="si">}</span><span class="s2">. gravity=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_classname</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
 
-        <span class="c1">#  Sanity Check</span>
-        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">force</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_calculated</span><span class="p">:</span>
             <span class="n">mylog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
                 <span class="s2">&quot;There is already a calculated potential for this model. To force recomputation, use force=True.&quot;</span><span class="p">)</span>
@@ -1161,8 +1113,6 @@ document.write(`
         <span class="k">else</span><span class="p">:</span>
             <span class="k">pass</span>
 
-        <span class="c1">#  Computing</span>
-        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;gravitational_potential&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_potential</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fields</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">attrs</span><span class="p">,</span>
                                                                               <span class="n">spinner</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
@@ -1184,8 +1134,7 @@ document.write(`
 <span class="sd">            Computation result</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1">#  Managing attributes</span>
-        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+
         <span class="k">with</span> <span class="n">Halo</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">log_string</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dyn. Mass comp; </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">_classname</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">),</span> <span class="n">stream</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span> <span class="k">as</span> <span class="n">h</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">attrs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">attrs</span> <span class="o">=</span> <span class="p">{}</span>
@@ -1198,8 +1147,6 @@ document.write(`
                 <span class="n">mylog</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Gravity </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">_classname</span><span class="si">}</span><span class="s2"> requires kwarg `a_0`. Setting to default...&quot;</span><span class="p">)</span>
                 <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;a_0&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_base_a0</span>
 
-            <span class="c1">#  Returning output</span>
-            <span class="c1"># -------------------------------------------------------------------------------------------------------- #</span>
             <span class="n">h</span><span class="o">.</span><span class="n">succeed</span><span class="p">(</span><span class="n">log_string</span><span class="p">(</span><span class="s2">&quot;Dyn. Mass comp: [DONE] &quot;</span><span class="p">))</span>
 
         <span class="k">return</span> <span class="p">(</span><span class="o">-</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;gravitational_field&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">G</span><span class="p">)</span> <span class="o">*</span> <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;interp_function&quot;</span><span class="p">](</span>
@@ -1232,14 +1179,11 @@ document.write(`
 <span class="sd">        unyt_array</span>
 <span class="sd">            The computed gravitational potential of the system.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1">#  Logging and array construction</span>
-        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+
         <span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">solve_ivp</span>
         <span class="kn">from</span> <span class="nn">cluster_generator.utils</span> <span class="kn">import</span> <span class="n">truncate_spline</span>
         <span class="n">devLogger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[[Potential]] Integrating gravitational potential profile. gravity=</span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">_classname</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
 
-        <span class="c1">#  Managing required attributes</span>
-        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
         <span class="c1"># - providing a_0 - #</span>
         <span class="k">if</span> <span class="n">attrs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">attrs</span> <span class="o">=</span> <span class="p">{}</span>
@@ -1250,8 +1194,6 @@ document.write(`
         <span class="c1"># - providing the interpolation function - #</span>
         <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;interp_function&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_interp</span>
 
-        <span class="c1"># Carrying out computations</span>
-        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
         <span class="k">with</span> <span class="n">Halo</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">log_string</span><span class="p">(</span><span class="s2">&quot;Computing potential...&quot;</span><span class="p">),</span> <span class="n">stream</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span>
                   <span class="n">enabled</span><span class="o">=</span><span class="p">(</span><span class="n">cgparams</span><span class="p">[</span><span class="s2">&quot;system&quot;</span><span class="p">][</span><span class="s2">&quot;text&quot;</span><span class="p">][</span><span class="s2">&quot;spinners&quot;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">spinner</span><span class="p">))</span> <span class="k">as</span> <span class="n">h</span><span class="p">:</span>
 
@@ -1298,9 +1240,7 @@ document.write(`
         <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_interpolation_function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
 
 
-<span class="c1"># -------------------------------------------------------------------------------------------------------------------- #</span>
-<span class="c1"># Catalog ============================================================================================================ #</span>
-<span class="c1"># -------------------------------------------------------------------------------------------------------------------- #</span>
+
 <span class="c1"># -- gravity catalog -- #</span>
 <span class="n">available_gravities</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;Newtonian&quot;</span><span class="p">:</span> <span class="n">NewtonianGravity</span><span class="p">,</span>

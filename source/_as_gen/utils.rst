@@ -12,6 +12,7 @@
       :recursive:
 
    
+      build_yt_dataset_fields
       ensure_list
       ensure_ytarray
       ensure_ytquantity

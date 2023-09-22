@@ -18,6 +18,7 @@ model.HydrostaticEquilibrium
       ~HydrostaticEquilibrium.check_dm_virial
       ~HydrostaticEquilibrium.check_hse
       ~HydrostaticEquilibrium.check_star_virial
+      ~HydrostaticEquilibrium.create_dataset
       ~HydrostaticEquilibrium.find_field_at_radius
       ~HydrostaticEquilibrium.from_arrays
       ~HydrostaticEquilibrium.from_dens_and_entr

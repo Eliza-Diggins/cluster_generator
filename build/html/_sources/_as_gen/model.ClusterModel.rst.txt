@@ -18,6 +18,7 @@ model.ClusterModel
       ~ClusterModel.check_dm_virial
       ~ClusterModel.check_hse
       ~ClusterModel.check_star_virial
+      ~ClusterModel.create_dataset
       ~ClusterModel.find_field_at_radius
       ~ClusterModel.from_arrays
       ~ClusterModel.from_dens_and_entr

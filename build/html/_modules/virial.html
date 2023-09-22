@@ -29,19 +29,34 @@
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fd506691" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster.custom.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster.bundle.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster-sideTip-shadow.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster-sideTip-punk.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster-sideTip-noir.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster-sideTip-light.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster-sideTip-borderless.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/micromodal.css" />
     <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
+    <script src="../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=ccbe24c1"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/js/hoverxref.js"></script>
+    <script src="../_static/js/tooltipster.bundle.min.js"></script>
+    <script src="../_static/js/micromodal.min.js"></script>
     <script src="../_static/design-tabs.js?v=36754332"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="https://unpkg.com/mermaid@10.2.0/dist/mermaid.min.js"></script>
     <script>mermaid.initialize({startOnLoad:true});</script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/virial';</script>
@@ -488,11 +503,8 @@ document.write(`
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c1">#  Dunder Methods</span>
-    <span class="c1"># ----------------------------------------------------------------------------------------------------------------- #</span>
 <div class="viewcode-block" id="VirialEquilibrium.__init__"><a class="viewcode-back" href="../_as_gen/virial.VirialEquilibrium.__init__.html#virial.VirialEquilibrium.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">ptype</span><span class="o">=</span><span class="s1">&#39;dark_matter&#39;</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sigma2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;eddington&quot;</span><span class="p">):</span>
-        <span class="c1">#  Assigning basic attributes</span>
-        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+
         <span class="c1">#: The number of elements in the model&#39;s field samples. (Inherited)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">num_elements</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">num_elements</span>
         <span class="c1">#: the particle type (``dark_matter`` or ``stellar``).</span>
@@ -522,8 +534,6 @@ document.write(`
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The equilibrium type </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2"> is not valid.&quot;</span><span class="p">)</span></div>
 
-    <span class="c1"># Properties</span>
-    <span class="c1"># ----------------------------------------------------------------------------------------------------------------- #</span>
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">df</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;eddington&quot;</span><span class="p">:</span>
@@ -579,8 +589,6 @@ document.write(`
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Reverse direction of ``self.df`` as a numpy array. &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_df</span><span class="o">.</span><span class="n">d</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 
-    <span class="c1">#  Private Functions</span>
-    <span class="c1"># ----------------------------------------------------------------------------------------------------------------- #</span>
     <span class="k">def</span> <span class="nf">_generate_df</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generates the distribution function :math:`DF(\textbf{x},\textbf{v}` for the given cluster.</span>
@@ -589,13 +597,11 @@ document.write(`
 <span class="sd">        -------</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1">#  Sanity Check</span>
-        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">!=</span> <span class="s2">&quot;eddington&quot;</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;The method _generate_df is not available to VirialEquilibrium models with type </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="c1">#  Pulling necessary field data out of the model.</span>
-        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+
         <span class="c1"># --- Particle density --- #</span>
         <span class="c1"># ? Grabs the particle densities and then constructs a density spline as a function of the</span>
         <span class="c1"># ? relative potential (self.ee)</span>
@@ -626,8 +632,7 @@ document.write(`
 <span class="sd">        Returns</span>
 <span class="sd">        ------</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1">#  Sanity Check</span>
-        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+
         <span class="c1"># - Checking type - #</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">!=</span> <span class="s2">&quot;lma&quot;</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
@@ -637,8 +642,6 @@ document.write(`
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="s2">&quot;gravitational_potential&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">pot</span>  <span class="c1"># Generates the potential from the inherited model.</span>
 
-        <span class="c1">#  Constructing splines for estimation</span>
-        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
         <span class="c1"># ! DENSITY SPLINE: truncation approach to force asymptotic behavior at large radii.</span>
         <span class="c1">#</span>
         <span class="c1"># - Generating the cutoff radius - #</span>
@@ -665,8 +668,6 @@ document.write(`
         <span class="n">integrand</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">density_spline</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">potential_spline</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="n">inf_integrand</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">_density_spline</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">_dp_func</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
-        <span class="c1">#  Performing the integration</span>
-        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
         <span class="n">sig</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_elements</span><span class="p">)</span>
         <span class="n">pbar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">leave</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">total</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_elements</span><span class="p">,</span>
                     <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Computing particle dispersions (LMA) &quot;</span><span class="p">)</span>
@@ -738,8 +739,7 @@ document.write(`
 <span class="sd">            [1] Binney, J., &amp; Tremaine, S. (2011). Galactic dynamics (Vol. 20). Princeton university press.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">with</span> <span class="n">Halo</span><span class="p">(</span><span class="n">log_string</span><span class="p">(</span><span class="s2">&quot;Checking virialization...&quot;</span><span class="p">),</span><span class="n">stream</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span> <span class="k">as</span> <span class="n">halo</span><span class="p">:</span>
-            <span class="c1">#  Preparing arrays and pulling data</span>
-            <span class="c1"># -------------------------------------------------------------------------------------------------------- #</span>
+
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">!=</span> <span class="s2">&quot;eddington&quot;</span><span class="p">:</span>
                 <span class="n">halo</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Invalid virialization type.&quot;</span><span class="p">)</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The model does not use a form of virialization that can use this function.&quot;</span><span class="p">)</span>
@@ -803,8 +803,7 @@ document.write(`
 <span class="sd">        particles : :class:`~cluster_generator.particles.ClusterParticles`</span>
 <span class="sd">            A set of dark matter or star particles.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1">#  Setup</span>
-        <span class="c1"># ----------------------------------------------------------------------------------------------------------------- #</span>
+
         <span class="kn">from</span> <span class="nn">cluster_generator.utils</span> <span class="kn">import</span> <span class="n">parse_prng</span>
 
         <span class="n">num_particles_sub</span> <span class="o">=</span> <span class="n">num_particles</span> <span class="o">//</span> <span class="n">sub_sample</span>  <span class="c1"># number of particles for which to generate.</span>
@@ -814,8 +813,6 @@ document.write(`
         <span class="n">density</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ptype</span><span class="si">}</span><span class="s2">_density&quot;</span>
         <span class="n">mass</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ptype</span><span class="si">}</span><span class="s2">_mass&quot;</span>
 
-        <span class="c1">#  Constructing the particle positions</span>
-        <span class="c1"># ----------------------------------------------------------------------------------------------------------------- #</span>
         <span class="n">prng</span> <span class="o">=</span> <span class="n">parse_prng</span><span class="p">(</span><span class="n">prng</span><span class="p">)</span>
 
         <span class="n">mylog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;We will be assigning </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2"> particles.&quot;</span><span class="p">,</span>
@@ -845,13 +842,9 @@ document.write(`
             <span class="p">[</span><span class="n">radius</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">phi</span><span class="p">),</span> <span class="n">radius</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi</span><span class="p">),</span>
              <span class="n">radius</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)],</span> <span class="s2">&quot;kpc&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
 
-        <span class="c1"># Computing necessary velocities</span>
-        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;eddington&quot;</span><span class="p">:</span>
             <span class="n">mylog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Computing </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ptype</span><span class="si">}</span><span class="s2"> velocities using </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2"> method.&quot;</span><span class="p">)</span>
 
-            <span class="c1">#  Solving Via the Eddington Formula</span>
-            <span class="c1"># -------------------------------------------------------------------------------------------------------- #</span>
 
             <span class="c1"># --- Pulling the necessary fields --- #</span>
             <span class="n">energy_spline</span> <span class="o">=</span> <span class="n">InterpolatedUnivariateSpline</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">,</span>
@@ -870,8 +863,6 @@ document.write(`
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;lma&quot;</span><span class="p">:</span>
             <span class="n">mylog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Computing </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ptype</span><span class="si">}</span><span class="s2"> velocities using </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2"> method.&quot;</span><span class="p">)</span>
 
-            <span class="c1">#  Solving via the local maxwellian approximation</span>
-            <span class="c1"># -------------------------------------------------------------------------------------------------------- #</span>
 
             <span class="c1"># --- Generating the dispersion spline --- #</span>
             <span class="n">dispersion_spline</span> <span class="o">=</span> <span class="n">InterpolatedUnivariateSpline</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span><span class="p">)</span>
@@ -903,8 +894,6 @@ document.write(`
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The virialization method </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2"> was not recognized.&quot;</span><span class="p">)</span>
 
-        <span class="c1">#  Cleanup</span>
-        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
 
         <span class="k">if</span> <span class="n">sub_sample</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">velocity</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">velocity_sub</span><span class="p">,</span> <span class="n">sub_sample</span><span class="p">)[:</span><span class="n">num_particles</span><span class="p">]</span>

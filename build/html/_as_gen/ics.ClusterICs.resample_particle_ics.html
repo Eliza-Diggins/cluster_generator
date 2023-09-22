@@ -30,19 +30,34 @@
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fd506691" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster.custom.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster.bundle.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster-sideTip-shadow.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster-sideTip-punk.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster-sideTip-noir.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster-sideTip-light.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster-sideTip-borderless.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/micromodal.css" />
     <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
+    <script src="../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=ccbe24c1"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/js/hoverxref.js"></script>
+    <script src="../_static/js/tooltipster.bundle.min.js"></script>
+    <script src="../_static/js/micromodal.min.js"></script>
     <script src="../_static/design-tabs.js?v=36754332"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_as_gen/ics.ClusterICs.resample_particle_ics';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -334,6 +349,7 @@ document.write(`
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1 has-children"><a class="reference internal" href="utils.html">utils</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="utils.build_yt_dataset_fields.html">utils.build_yt_dataset_fields</a></li>
 <li class="toctree-l2"><a class="reference internal" href="utils.ensure_list.html">utils.ensure_list</a></li>
 <li class="toctree-l2"><a class="reference internal" href="utils.ensure_ytarray.html">utils.ensure_ytarray</a></li>
 <li class="toctree-l2"><a class="reference internal" href="utils.ensure_ytquantity.html">utils.ensure_ytquantity</a></li>
@@ -485,6 +501,7 @@ document.write(`
 <li class="toctree-l3"><a class="reference internal" href="model.ClusterModel.check_dm_virial.html">model.ClusterModel.check_dm_virial</a></li>
 <li class="toctree-l3"><a class="reference internal" href="model.ClusterModel.check_hse.html">model.ClusterModel.check_hse</a></li>
 <li class="toctree-l3"><a class="reference internal" href="model.ClusterModel.check_star_virial.html">model.ClusterModel.check_star_virial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="model.ClusterModel.create_dataset.html">model.ClusterModel.create_dataset</a></li>
 <li class="toctree-l3"><a class="reference internal" href="model.ClusterModel.find_field_at_radius.html">model.ClusterModel.find_field_at_radius</a></li>
 <li class="toctree-l3"><a class="reference internal" href="model.ClusterModel.from_arrays.html">model.ClusterModel.from_arrays</a></li>
 <li class="toctree-l3"><a class="reference internal" href="model.ClusterModel.from_dens_and_entr.html">model.ClusterModel.from_dens_and_entr</a></li>
@@ -523,6 +540,7 @@ document.write(`
 <li class="toctree-l3"><a class="reference internal" href="model.HydrostaticEquilibrium.check_dm_virial.html">model.HydrostaticEquilibrium.check_dm_virial</a></li>
 <li class="toctree-l3"><a class="reference internal" href="model.HydrostaticEquilibrium.check_hse.html">model.HydrostaticEquilibrium.check_hse</a></li>
 <li class="toctree-l3"><a class="reference internal" href="model.HydrostaticEquilibrium.check_star_virial.html">model.HydrostaticEquilibrium.check_star_virial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="model.HydrostaticEquilibrium.create_dataset.html">model.HydrostaticEquilibrium.create_dataset</a></li>
 <li class="toctree-l3"><a class="reference internal" href="model.HydrostaticEquilibrium.find_field_at_radius.html">model.HydrostaticEquilibrium.find_field_at_radius</a></li>
 <li class="toctree-l3"><a class="reference internal" href="model.HydrostaticEquilibrium.from_arrays.html">model.HydrostaticEquilibrium.from_arrays</a></li>
 <li class="toctree-l3"><a class="reference internal" href="model.HydrostaticEquilibrium.from_dens_and_entr.html">model.HydrostaticEquilibrium.from_dens_and_entr</a></li>

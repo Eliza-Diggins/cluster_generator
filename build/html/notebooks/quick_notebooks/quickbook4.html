@@ -30,17 +30,31 @@
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fd506691" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster.custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster.bundle.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster-sideTip-shadow.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster-sideTip-punk.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster-sideTip-noir.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster-sideTip-light.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster-sideTip-borderless.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/micromodal.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
+    <script src="../../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=ccbe24c1"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/hoverxref.js"></script>
+    <script src="../../_static/js/tooltipster.bundle.min.js"></script>
+    <script src="../../_static/js/micromodal.min.js"></script>
     <script src="../../_static/design-tabs.js?v=36754332"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
@@ -379,9 +393,222 @@ document.write(`
                   
   <section id="Getting-Funky:-MONDian-Gravity">
 <h1>Getting Funky: MONDian Gravity<a class="headerlink" href="#Getting-Funky:-MONDian-Gravity" title="Permalink to this heading">#</a></h1>
-<div class="alert alert-block alert-warning"><p><p>❌ Uh Oh:</p>
-</p><p>This guide is not yet written! We are always trying to work on our documentation, so give us a little while and we’ll get this guide done. If you feel up to writing it yourself, please contact us!</p>
+<p>One of the awesome things about cluster_generator is that you can use non-Newtonian gravities. We’ve implemented several MOND based theories for you to use and explore, but other can be constructed with relative ease. In this guide, we’re going to walk you through all of the things you need to know about using non-Newtonian dynamics.</p>
+<hr class="docutils" />
+<section id="Contents">
+<h2>Contents<a class="headerlink" href="#Contents" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="#Important-Note"><span class="std std-ref">Important Notes for Users</span></a></p></li>
+<li><p><a class="reference internal" href="#Getting-Started-With-Gravity"><span class="std std-ref">Getting Started With Gravity</span></a></p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="Important-Note">
+<h2>Important Note<a class="headerlink" href="#Important-Note" title="Permalink to this heading">#</a></h2>
+<p>cluster_generator is written in a modular style to facilitate further development both by the development team or by the user. We’ve made it really easy to implement new gravity theories; <strong>however</strong>, it should be noted that very few simulation softwares actually support non-Newtonian gravity options. In this guide, we will be setting up initial conditions for use in RAMSES because their is a patch, called <a class="reference external" href="https://github.com/graemecan/raymond_qumond">RaYMOND</a>, which implements a MOND solver
+in RAMSES. For other, more arcane gravity theories, the user may need to write a simulation package for themselves (hard work!) or utilize the other available workflows that are available from cluster_generator (simulated X-ray observations, analytical work, etc.) to probe the science problem of interest.</p>
+</section>
+<section id="Getting-Started-With-Gravity">
+<h2>Getting Started With Gravity<a class="headerlink" href="#Getting-Started-With-Gravity" title="Permalink to this heading">#</a></h2>
+<p>Now that we’ve talked about the limitations, we can start getting into the fun stuff. All of the gravitational theories available in the cluster_generator library are found in the <a class="reference external" href="../../_as_gen/gravity.html">gravity</a> module. The gravity module contains classes representing each of the available gravitational theories. For each of the gravitational theories, two methods are defined, one which computes the potential, and another which computes the dynamical mass from hydrostatic equilibrium.</p>
+<p>For the most part, you really shouldn’t need to interact directly with any of these modules. Instead, you can specify your preferred gravitational theory using the <code class="docutils literal notranslate"><span class="pre">gravity=</span></code> keyword when generating <code class="docutils literal notranslate"><span class="pre">ClusterModel</span></code>’s. Let’s see this in action! We’ll start by just building a reference model in Newtonian gravity.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># -- Imports -- #</span>
+<span class="kn">import</span> <span class="nn">cluster_generator</span> <span class="k">as</span> <span class="nn">cg</span>
+<span class="kn">from</span> <span class="nn">cluster_generator.utils</span> <span class="kn">import</span> <span class="n">cgparams</span>
+
+<span class="n">cgparams</span><span class="p">[</span><span class="s2">&quot;system&quot;</span><span class="p">][</span><span class="s2">&quot;text&quot;</span><span class="p">][</span><span class="s2">&quot;spinners&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span> <span class="c1"># --&gt; Turn off spinners so they look okay in documentation.</span>
+
+<span class="c1"># Redshift for cluster</span>
+<span class="n">z</span> <span class="o">=</span> <span class="mf">0.546</span>
+
+
+<span class="c1"># masses for primary cluster</span>
+<span class="n">M500</span> <span class="o">=</span> <span class="mf">1.1e15</span>
+<span class="n">M200</span> <span class="o">=</span> <span class="n">M500</span> <span class="o">*</span> <span class="mf">1.23</span>
+
+<span class="c1"># This helps us find r200 for the two clusters</span>
+<span class="n">r200_1</span> <span class="o">=</span> <span class="n">cg</span><span class="o">.</span><span class="n">find_overdensity_radius</span><span class="p">(</span><span class="n">M200</span><span class="p">,</span> <span class="mf">200.0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="n">z</span><span class="p">)</span>
+
+<span class="c1"># Compute parameters for truncated NFW profile</span>
+<span class="n">r_s1</span> <span class="o">=</span> <span class="n">r200_1</span> <span class="o">/</span> <span class="mi">2</span>
+<span class="n">rho_s1</span> <span class="o">=</span> <span class="n">cg</span><span class="o">.</span><span class="n">nfw_scale_density</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="n">z</span><span class="p">)</span>
+<span class="n">r_t1</span> <span class="o">=</span> <span class="n">r200_1</span> <span class="o">*</span> <span class="mf">2.0</span>
+
+
+<span class="c1"># This creates truncated NFW mass profile objects</span>
+<span class="c1"># these are like functions, you can call them, e.g. Mt_1(r)</span>
+<span class="n">Mt_1</span> <span class="o">=</span> <span class="n">cg</span><span class="o">.</span><span class="n">tnfw_mass_profile</span><span class="p">(</span><span class="n">rho_s1</span><span class="p">,</span> <span class="n">r_s1</span><span class="p">,</span> <span class="n">r_t1</span><span class="p">)</span>
+
+<span class="c1"># This finds true radii and masses based on the profile</span>
+<span class="n">r500_1</span><span class="p">,</span> <span class="n">M500_1</span> <span class="o">=</span> <span class="n">cg</span><span class="o">.</span><span class="n">find_radius_mass</span><span class="p">(</span><span class="n">Mt_1</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="n">z</span><span class="p">,</span> <span class="n">delta</span><span class="o">=</span><span class="mf">500.0</span><span class="p">)</span>
+<span class="n">r2500_1</span><span class="p">,</span> <span class="n">M2500_1</span> <span class="o">=</span> <span class="n">cg</span><span class="o">.</span><span class="n">find_radius_mass</span><span class="p">(</span><span class="n">Mt_1</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="n">z</span><span class="p">,</span> <span class="n">delta</span><span class="o">=</span><span class="mf">2500.0</span><span class="p">)</span>
+
+<span class="n">rhot_1</span> <span class="o">=</span> <span class="n">cg</span><span class="o">.</span><span class="n">tnfw_density_profile</span><span class="p">(</span><span class="n">rho_s1</span><span class="p">,</span> <span class="n">r_s1</span><span class="p">,</span> <span class="n">r_t1</span><span class="p">)</span>
+
+<span class="n">f_g</span> <span class="o">=</span> <span class="mf">0.115</span>
+<span class="n">rhog_1</span> <span class="o">=</span> <span class="n">cg</span><span class="o">.</span><span class="n">vikhlinin_density_profile</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">r2500_1</span><span class="p">,</span> <span class="mf">1.1</span> <span class="o">*</span> <span class="n">r200_1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.67</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">rhog_1</span> <span class="o">=</span> <span class="n">cg</span><span class="o">.</span><span class="n">rescale_profile_by_mass</span><span class="p">(</span><span class="n">rhog_1</span><span class="p">,</span> <span class="n">f_g</span> <span class="o">*</span> <span class="n">M500_1</span><span class="p">,</span> <span class="n">r500_1</span><span class="p">)</span>
+
+<span class="n">model_Newtonian</span> <span class="o">=</span> <span class="n">cg</span><span class="o">.</span><span class="n">HydrostaticEquilibrium</span><span class="o">.</span><span class="n">from_dens_and_tden</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">15000.0</span><span class="p">,</span> <span class="n">rhog_1</span><span class="p">,</span> <span class="n">rhot_1</span><span class="p">)</span>
+<br/><br/></pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+cluster_generator : [INFO     ] 2023-09-20 07:49:34,398 Computing the profiles from density and total density. Gravity=Newtonian
+cluster_generator : [INFO     ] 2023-09-20 07:49:34,403 Integrating total mass profile.
+cluster_generator : [INFO     ] 2023-09-20 07:49:34,703 ClusterModel [ClusterModel object; gravity=Newtonian] has no virialization method. Setting to default = eddington
+cluster_generator : [INFO     ] 2023-09-20 07:49:34,704 Computing gravitational potential of ClusterModel object; gravity=Newtonian. gravity=Newtonian.
+cluster_generator : [INFO     ] 2023-09-20 07:49:35,843 Integrating pressure profile.
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">TypeError</span>                                 Traceback (most recent call last)
+Cell <span class="ansi-green-fg">In[1], line 38</span>
+<span class="ansi-green-intense-fg ansi-bold">     35</span> rhog_1 <span style="color: rgb(98,98,98)">=</span> cg<span style="color: rgb(98,98,98)">.</span>vikhlinin_density_profile(<span style="color: rgb(98,98,98)">1.0</span>, <span style="color: rgb(98,98,98)">0.5</span> <span style="color: rgb(98,98,98)">*</span> r2500_1, <span style="color: rgb(98,98,98)">1.1</span> <span style="color: rgb(98,98,98)">*</span> r200_1, <span style="color: rgb(98,98,98)">0.1</span>, <span style="color: rgb(98,98,98)">0.67</span>, <span style="color: rgb(98,98,98)">3</span>)
+<span class="ansi-green-intense-fg ansi-bold">     36</span> rhog_1 <span style="color: rgb(98,98,98)">=</span> cg<span style="color: rgb(98,98,98)">.</span>rescale_profile_by_mass(rhog_1, f_g <span style="color: rgb(98,98,98)">*</span> M500_1, r500_1)
+<span class="ansi-green-fg">---&gt; 38</span> model_Newtonian <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">cg</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">HydrostaticEquilibrium</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">from_dens_and_tden</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">0.1</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">15000.0</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">rhog_1</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">rhot_1</span><span class="ansi-yellow-bg">)</span>
+
+File <span class="ansi-green-fg">~/cluster_generator/cluster_generator/model.py:612</span>, in <span class="ansi-cyan-fg">ClusterModel.from_dens_and_tden</span><span class="ansi-blue-fg">(cls, rmin, rmax, density, total_density, stellar_density, num_points, gravity, **kwargs)</span>
+<span class="ansi-green-intense-fg ansi-bold">    609</span> fields[<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">temperature</span><span style="color: rgb(175,0,0)">&#34;</span>] <span style="color: rgb(98,98,98)">=</span> fields[<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">pressure</span><span style="color: rgb(175,0,0)">&#34;</span>] <span style="color: rgb(98,98,98)">*</span> mu <span style="color: rgb(98,98,98)">*</span> mp <span style="color: rgb(98,98,98)">/</span> fields[<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">density</span><span style="color: rgb(175,0,0)">&#34;</span>]
+<span class="ansi-green-intense-fg ansi-bold">    610</span> fields[<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">temperature</span><span style="color: rgb(175,0,0)">&#34;</span>]<span style="color: rgb(98,98,98)">.</span>convert_to_units(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">keV</span><span style="color: rgb(175,0,0)">&#34;</span>)
+<span class="ansi-green-fg">--&gt; 612</span> <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> <span style="color: rgb(0,135,0)">cls</span><span style="color: rgb(98,98,98)">.</span>_from_scratch(fields, stellar_density<span style="color: rgb(98,98,98)">=</span>stellar_density, gravity<span style="color: rgb(98,98,98)">=</span>gravity, <span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span>obj<span style="color: rgb(98,98,98)">.</span>attrs,
+<span class="ansi-green-intense-fg ansi-bold">    613</span>                          profiles<span style="color: rgb(98,98,98)">=</span>{<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">density</span><span style="color: rgb(175,0,0)">&#34;</span>        : density,
+<span class="ansi-green-intense-fg ansi-bold">    614</span>                                    <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">total_density</span><span style="color: rgb(175,0,0)">&#34;</span>  : total_density,
+<span class="ansi-green-intense-fg ansi-bold">    615</span>                                    <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">stellar_density</span><span style="color: rgb(175,0,0)">&#34;</span>: stellar_density,
+<span class="ansi-green-intense-fg ansi-bold">    616</span>                                    })
+
+<span class="ansi-red-fg">TypeError</span>: _from_scratch() got multiple values for keyword argument &#39;stellar_density&#39;
+</pre></div></div>
+</div>
+<p>Now, we can do the exact same thing (with a little less code) to make our MOND cluster. The only thing that get’s changed is the <code class="docutils literal notranslate"><span class="pre">gravity=&quot;QUMOND&quot;</span></code> keyword argument when we generate the model:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_mond</span> <span class="o">=</span> <span class="n">cg</span><span class="o">.</span><span class="n">HydrostaticEquilibrium</span><span class="o">.</span><span class="n">from_dens_and_tden</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">15000.0</span><span class="p">,</span><span class="n">rhog_1</span><span class="p">,</span><span class="n">rhot_1</span><span class="p">,</span><span class="n">gravity</span><span class="o">=</span><span class="s2">&quot;QUMOND&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="alert alert-block alert-info" style="background-color: white; border: 2px solid; padding: 10px"><p><p>❔ What in the Log!?</p>
+</p><p>If you look closely, there are some clear differences in the logging output from these two generation methods. The most glaring are the warnings about the “interp_function” and “a_0”.</p>
+<p>These should be expected and are only there to alert the user that they didn’t specify these gravity theory specific parameters directly. If you want to specify one or both of these parameters, specify it directly in the kwargs of the model generating method.</p>
+</div><p>You notice that the output from the log has changed somewhat, but things went more or less the same. We can start comparing our two clusters now by generating plots of different fields:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">figure</span><span class="p">,</span><span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span><span class="n">gridspec_kw</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;wspace&quot;</span><span class="p">:</span><span class="mf">0.7</span><span class="p">,</span><span class="s2">&quot;hspace&quot;</span><span class="p">:</span><span class="mf">0.4</span><span class="p">})</span>
+
+<span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;temperature&quot;</span><span class="p">,</span><span class="s2">&quot;density&quot;</span><span class="p">,</span><span class="s2">&quot;dark_matter_density&quot;</span><span class="p">,</span><span class="s2">&quot;total_density&quot;</span><span class="p">]</span>
+<span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="sa">r</span><span class="s2">&quot;Temperature&quot;</span><span class="p">,</span><span class="sa">r</span><span class="s2">&quot;$\rho_g$&quot;</span><span class="p">,</span><span class="sa">r</span><span class="s2">&quot;$\rho_</span><span class="si">{dm}</span><span class="s2">$&quot;</span><span class="p">,</span><span class="sa">r</span><span class="s2">&quot;$\rho_</span><span class="si">{dyn}</span><span class="s2">$&quot;</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">f</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">n</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">fields</span><span class="p">,</span><span class="n">axes</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span><span class="n">names</span><span class="p">):</span>
+    <span class="n">model_mond</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">fig</span><span class="o">=</span><span class="n">figure</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">a</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;darkblue&quot;</span><span class="p">)</span>
+    <span class="n">model_Newtonian</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">fig</span><span class="o">=</span><span class="n">figure</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">a</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;forestgreen&quot;</span><span class="p">)</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;radius, [kpc]&quot;</span><span class="p">)</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">model_mond</span><span class="p">[</span><span class="n">f</span><span class="p">]</span><span class="o">.</span><span class="n">units</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s2">&quot;linear&quot;</span><span class="p">)</span>
+
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>As you can see, the <span class="math notranslate nohighlight">\(\rho_{dm}\)</span>, <span class="math notranslate nohighlight">\(\rho_{dyn}\)</span> and <span class="math notranslate nohighlight">\(\rho_{gas}\)</span> are the same in both systems (because we initialized the clusters from the same profiles), but the temperatures are dramatically different. This is due to the gravitational differences.</p>
+<div class="alert alert-block alert-info" style="background-color: white; border: 2px solid; padding: 10px"><p><p>❔ How Does it Work?</p>
+</p><p>Like all of the models in cluster_generator, these profiles are determined by enforcing hydrostatic equilibrium in the clusters. In MOND, the gravitational acceleration in the outer regions of the cluster is larger than in the Newtonian equivalent and therefore increases the necessary pressure to maintain HSE and therefore also increases the temperature.</p>
+</div><p>Now, we should probably check that both of our models are without any physicality issues:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">q</span> <span class="o">=</span> <span class="n">model_Newtonian</span><span class="o">.</span><span class="n">is_physical</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">q</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">q</span> <span class="o">=</span> <span class="n">model_mond</span><span class="o">.</span><span class="n">is_physical</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">q</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<br/></pre></div>
+</div>
+</div>
+<p>Awesome! Both of these clusters are physically realizable!</p>
+<div class="alert alert-block alert-warning" style="background-color: white; border: 2px solid; padding: 10px"><p><p>🚧 Important Note:</p>
+</p><p>Unlike in Newtonian gravity, many of the profiles we provide are not specifically designed for MOND. This means that cluster models generated in MOND gravity will often have non-physical behaviors at large radii.</p>
+<p>Always check your clusters</p>
 </div></section>
+<section id="Making-Initial-Conditions">
+<h2>Making Initial Conditions<a class="headerlink" href="#Making-Initial-Conditions" title="Permalink to this heading">#</a></h2>
+<hr class="docutils" />
+<p>Now that we’ve built our cluster, there’s very little left to show. You can procede as usual to generate the initial conditions and the rest. Here, we’ll create some particle initial conditions so that we can look at the differences in the two clusters. First, we’ll have to save our clusters to file.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_mond</span><span class="o">.</span><span class="n">write_model_to_h5</span><span class="p">(</span><span class="s2">&quot;mond_model.h5&quot;</span><span class="p">,</span><span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">model_Newtonian</span><span class="o">.</span><span class="n">write_model_to_h5</span><span class="p">(</span><span class="s2">&quot;newtonian_model.h5&quot;</span><span class="p">,</span><span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Now we can start building the initial conditions:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mond_ics</span> <span class="o">=</span> <span class="n">cg</span><span class="o">.</span><span class="n">ClusterICs</span><span class="p">(</span><span class="s2">&quot;mond_ics&quot;</span><span class="p">,</span><span class="mi">1</span><span class="p">,[</span><span class="s2">&quot;mond_model.h5&quot;</span><span class="p">],[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]],[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]],</span><span class="n">num_particles</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;dm&quot;</span><span class="p">:</span><span class="mi">1_000_000</span><span class="p">},</span><span class="n">r_max</span><span class="o">=</span><span class="mi">5000</span><span class="p">)</span>
+<span class="n">newt_ics</span> <span class="o">=</span> <span class="n">cg</span><span class="o">.</span><span class="n">ClusterICs</span><span class="p">(</span><span class="s2">&quot;newt_ics&quot;</span><span class="p">,</span><span class="mi">1</span><span class="p">,[</span><span class="s2">&quot;newtonian_model.h5&quot;</span><span class="p">],[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]],[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]],</span><span class="n">num_particles</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;dm&quot;</span><span class="p">:</span><span class="mi">1_000_000</span><span class="p">},</span><span class="n">r_max</span><span class="o">=</span><span class="mi">5000</span><span class="p">)</span>
+
+<span class="n">mond_parts</span> <span class="o">=</span> <span class="n">mond_ics</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">([</span><span class="mi">256</span><span class="p">,</span><span class="mi">256</span><span class="p">,</span><span class="mi">256</span><span class="p">],</span><span class="mi">10000</span><span class="p">,</span><span class="n">left_edge</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">5000</span><span class="p">,</span><span class="o">-</span><span class="mi">5000</span><span class="p">,</span><span class="o">-</span><span class="mi">5000</span><span class="p">])</span>
+<span class="n">newt_parts</span> <span class="o">=</span> <span class="n">newt_ics</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">([</span><span class="mi">256</span><span class="p">,</span><span class="mi">256</span><span class="p">,</span><span class="mi">256</span><span class="p">],</span><span class="mi">10000</span><span class="p">,</span><span class="n">left_edge</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">5000</span><span class="p">,</span><span class="o">-</span><span class="mi">5000</span><span class="p">,</span><span class="o">-</span><span class="mi">5000</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">yt</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">yt</span><span class="o">.</span><span class="n">SlicePlot</span><span class="p">(</span><span class="n">mond_parts</span><span class="p">,</span><span class="s2">&quot;z&quot;</span><span class="p">,(</span><span class="s2">&quot;gas&quot;</span><span class="p">,</span><span class="s2">&quot;kT&quot;</span><span class="p">),</span><span class="n">width</span><span class="o">=</span><span class="p">(</span><span class="mi">5000</span><span class="p">,</span><span class="s2">&quot;kpc&quot;</span><span class="p">))</span>
+<span class="n">p</span><span class="o">.</span><span class="n">set_log</span><span class="p">((</span><span class="s2">&quot;gas&quot;</span><span class="p">,</span><span class="s2">&quot;kT&quot;</span><span class="p">),</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">set_cmap</span><span class="p">((</span><span class="s2">&quot;gas&quot;</span><span class="p">,</span><span class="s1">&#39;kT&#39;</span><span class="p">),</span><span class="s2">&quot;hot&quot;</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">yt</span><span class="o">.</span><span class="n">SlicePlot</span><span class="p">(</span><span class="n">newt_parts</span><span class="p">,</span><span class="s2">&quot;z&quot;</span><span class="p">,(</span><span class="s2">&quot;gas&quot;</span><span class="p">,</span><span class="s2">&quot;kT&quot;</span><span class="p">),</span><span class="n">width</span><span class="o">=</span><span class="p">(</span><span class="mi">5000</span><span class="p">,</span><span class="s2">&quot;kpc&quot;</span><span class="p">))</span>
+<span class="n">p</span><span class="o">.</span><span class="n">set_log</span><span class="p">((</span><span class="s2">&quot;gas&quot;</span><span class="p">,</span><span class="s2">&quot;kT&quot;</span><span class="p">),</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">set_cmap</span><span class="p">((</span><span class="s2">&quot;gas&quot;</span><span class="p">,</span><span class="s1">&#39;kT&#39;</span><span class="p">),</span><span class="s2">&quot;hot&quot;</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
 
 
                 </article>
@@ -405,6 +632,19 @@ document.write(`
             
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Contents">Contents</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Important-Note">Important Note</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Getting-Started-With-Gravity">Getting Started With Gravity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Making-Initial-Conditions">Making Initial Conditions</a></li>
+</ul>
+  </nav></div>
 
   <div class="sidebar-secondary-item">
   <div class="tocsection sourcelink">

@@ -29,19 +29,34 @@
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fd506691" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster.custom.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster.bundle.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster-sideTip-shadow.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster-sideTip-punk.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster-sideTip-noir.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster-sideTip-light.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster-sideTip-borderless.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/micromodal.css" />
     <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
+    <script src="../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=ccbe24c1"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/js/hoverxref.js"></script>
+    <script src="../_static/js/tooltipster.bundle.min.js"></script>
+    <script src="../_static/js/micromodal.min.js"></script>
     <script src="../_static/design-tabs.js?v=36754332"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="https://unpkg.com/mermaid@10.2.0/dist/mermaid.min.js"></script>
     <script>mermaid.initialize({startOnLoad:true});</script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/ics';</script>
@@ -376,9 +391,11 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <h1>Source code for ics</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">os</span>
-
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Initial Conditions management for simulation setups.</span>
+<span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">unyt.exceptions</span>
 <span class="kn">from</span> <span class="nn">ruamel.yaml</span> <span class="kn">import</span> <span class="n">YAML</span>
 <span class="kn">from</span> <span class="nn">unyt</span> <span class="kn">import</span> <span class="n">unyt_array</span><span class="p">,</span> <span class="n">Unit</span>
 
@@ -386,7 +403,7 @@ document.write(`
 <span class="kn">from</span> <span class="nn">cluster_generator.particles</span> <span class="kn">import</span> \
     <span class="n">ClusterParticles</span><span class="p">,</span> <span class="n">concat_clusters</span><span class="p">,</span> <span class="n">resample_clusters</span>
 <span class="kn">from</span> <span class="nn">cluster_generator.utils</span> <span class="kn">import</span> <span class="n">ensure_ytarray</span><span class="p">,</span> <span class="n">ensure_list</span><span class="p">,</span> \
-    <span class="n">parse_prng</span><span class="p">,</span> <span class="n">mylog</span><span class="p">,</span> <span class="n">devLogger</span>
+    <span class="n">parse_prng</span><span class="p">,</span> <span class="n">mylog</span>
 
 
 <div class="viewcode-block" id="compute_centers_for_binary"><a class="viewcode-back" href="../_as_gen/ics.compute_centers_for_binary.html#ics.compute_centers_for_binary">[docs]</a><span class="k">def</span> <span class="nf">compute_centers_for_binary</span><span class="p">(</span><span class="n">center</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
@@ -457,8 +474,7 @@ document.write(`
 <div class="viewcode-block" id="ClusterICs.__init__"><a class="viewcode-back" href="../_as_gen/ics.ClusterICs.__init__.html#ics.ClusterICs.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">basename</span><span class="p">,</span> <span class="n">num_halos</span><span class="p">,</span> <span class="n">profiles</span><span class="p">,</span> <span class="n">center</span><span class="p">,</span>
                  <span class="n">velocity</span><span class="p">,</span> <span class="n">num_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mag_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">particle_files</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">r_max</span><span class="o">=</span><span class="mf">20000.0</span><span class="p">):</span>
-        <span class="c1">#  Managing parameters</span>
-        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+
         <span class="c1">#: The name of the cluster initial conditions</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">basename</span> <span class="o">=</span> <span class="n">basename</span>
         <span class="c1">#: the number of halos included.</span>
@@ -485,25 +501,26 @@ document.write(`
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">tot_np</span> <span class="o">=</span> <span class="n">num_particles</span>
 
-        <span class="c1">#  Checking for pre-provided particle files</span>
-        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">gravity</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_determine_num_particles</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">particle_files</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="mi">3</span>
         <span class="k">if</span> <span class="n">particle_files</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">particle_files</span><span class="p">[:</span><span class="n">num_halos</span><span class="p">]</span> <span class="o">=</span> <span class="n">particle_files</span><span class="p">[:]</span></div>
 
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&lt;ClusterIC - </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">basename</span><span class="si">}</span><span class="s2">&gt;&quot;</span>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&lt;ClusterIC - </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">basename</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">num_halos</span><span class="si">}</span><span class="s2"> halos&gt;&quot;</span>
+
     <span class="k">def</span> <span class="nf">_determine_num_particles</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Computes the number of particles and their allocations.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
-        <span class="c1"># - Pre-allocation of arrays -------------------------------#</span>
         <span class="n">dm_masses</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">gas_masses</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">star_masses</span> <span class="o">=</span> <span class="p">[]</span>
 
-        <span class="c1"># - Analyzing models ---------------------------------------#</span>
         <span class="k">for</span> <span class="n">pf</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">profiles</span><span class="p">:</span>
             <span class="c1"># Loading the cluster model object #</span>
             <span class="n">p</span> <span class="o">=</span> <span class="n">ClusterModel</span><span class="o">.</span><span class="n">from_h5_file</span><span class="p">(</span><span class="n">pf</span><span class="p">)</span>
@@ -531,8 +548,7 @@ document.write(`
         <span class="n">tot_gas_mass</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">gas_masses</span><span class="p">)</span>
         <span class="n">tot_star_mass</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">star_masses</span><span class="p">)</span>
 
-        <span class="c1"># Determining the necessary particles / halo distribution.</span>
-        <span class="c1"># ----------------------------------------------------------------------------------------------------------------- #</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">num_particles</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_halos</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">ptype</span><span class="p">,</span> <span class="n">pmasses</span><span class="p">,</span> <span class="n">ptmass</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">([</span><span class="s2">&quot;dm&quot;</span><span class="p">,</span> <span class="s2">&quot;gas&quot;</span><span class="p">,</span> <span class="s2">&quot;star&quot;</span><span class="p">],</span>
@@ -546,7 +562,7 @@ document.write(`
 
     <span class="k">def</span> <span class="nf">_generate_particles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">regenerate_particles</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">prng</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Generates the particles for the ``ClusterIC`` object.</span>
+<span class="sd">        Generates the particles for the :py:class:`ics.ClusterICs` object.</span>
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        regenerate_particles: bool</span>
@@ -557,8 +573,6 @@ document.write(`
 <span class="sd">        ClusterParticles</span>
 <span class="sd">            The returned set of particles after sampling.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1">#  Setup</span>
-        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
         <span class="n">prng</span> <span class="o">=</span> <span class="n">parse_prng</span><span class="p">(</span><span class="n">prng</span><span class="p">)</span>
         <span class="n">parts</span> <span class="o">=</span> <span class="p">[]</span>
 
@@ -616,13 +630,11 @@ document.write(`
             <span class="s2">&quot;r_max&quot;</span>             <span class="p">:</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">r_max</span><span class="p">,</span> <span class="s2">&quot;Maximal Radius&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
         <span class="p">}</span>
 
-        <span class="c1">#  Existence Check</span>
-        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">overwrite</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2"> exists and overwrite=False!&quot;</span><span class="p">)</span>
 
-        <span class="c1">#  Setup</span>
-        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+
         <span class="n">out</span> <span class="o">=</span> <span class="n">CommentedMap</span><span class="p">()</span>
 
         <span class="c1"># -- Writing basic data -- #</span>
@@ -645,8 +657,7 @@ document.write(`
                 <span class="n">out</span><span class="o">.</span><span class="n">yaml_add_eol_comment</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;particle file for cluster </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
 
                                          <span class="n">key</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;particle_file</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-        <span class="c1">#  Writing to file</span>
-        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+
         <span class="n">yaml</span> <span class="o">=</span> <span class="n">YAML</span><span class="p">()</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="n">yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span></div>
@@ -722,12 +733,14 @@ document.write(`
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        .. warning::</span>
 
-<span class="sd">            This function is currently non-functional. We are working on fixing the issue.</span>
+<span class="sd">            This method can be memory intensive. We suggest being conservative in your choice of domain size to</span>
+<span class="sd">            begin in order to avoid OOM issues. For reference, a domain dimension of ``[500,500,500]`` will take appox.</span>
+<span class="sd">            3Gb / field.</span>
 
 <span class="sd">        Create an in-memory, uniformly gridded dataset in 3D using yt by</span>
 <span class="sd">        placing the clusters into a box. When adding multiple clusters,</span>
 <span class="sd">        per-volume quantities from each cluster such as density and</span>
-<span class="sd">        pressure are added, whereas per-mass quantites such as temperature</span>
+<span class="sd">        pressure are added, whereas per-mass quantities such as temperature</span>
 <span class="sd">        and velocity are mass-weighted.</span>
 
 <span class="sd">        Parameters</span>
@@ -743,11 +756,10 @@ document.write(`
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="kn">from</span> <span class="nn">yt.loaders</span> <span class="kn">import</span> <span class="n">load_uniform_grid</span>
         <span class="kn">from</span> <span class="nn">scipy.interpolate</span> <span class="kn">import</span> <span class="n">InterpolatedUnivariateSpline</span>
-        <span class="kn">from</span> <span class="nn">cluster_generator.utils</span> <span class="kn">import</span> <span class="n">mylog</span>
+        <span class="kn">from</span> <span class="nn">cluster_generator.utils</span> <span class="kn">import</span> <span class="n">mylog</span><span class="p">,</span> <span class="n">build_yt_dataset_fields</span>
 
         <span class="n">mylog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loading yt dataset of </span><span class="si">{</span><span class="bp">self</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
-        <span class="c1">#  Managing Domain configuration issues</span>
-        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+
         <span class="c1"># Dealing with the left edge of the domain.</span>
         <span class="k">if</span> <span class="n">left_edge</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">left_edge</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
@@ -763,84 +775,20 @@ document.write(`
         <span class="c1"># Creating the underlying meshgrid</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mgrid</span><span class="p">[</span>
-                  <span class="n">bbox</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span><span class="n">bbox</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]:</span><span class="n">domain_dimensions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span><span class="p">,</span>
-                  <span class="n">bbox</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span><span class="n">bbox</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]:</span><span class="n">domain_dimensions</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span><span class="p">,</span>
-                  <span class="n">bbox</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span><span class="n">bbox</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">]:</span><span class="n">domain_dimensions</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span><span class="p">,</span>
-                  <span class="p">]</span>
+                      <span class="n">bbox</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span><span class="n">bbox</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]:</span><span class="n">domain_dimensions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span><span class="p">,</span>
+                      <span class="n">bbox</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span><span class="n">bbox</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]:</span><span class="n">domain_dimensions</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span><span class="p">,</span>
+                      <span class="n">bbox</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span><span class="n">bbox</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">]:</span><span class="n">domain_dimensions</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span><span class="p">,</span>
+                      <span class="p">]</span>
         <span class="k">except</span> <span class="ne">MemoryError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">MemoryError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to allocate memory for the grid. Error msg = </span><span class="si">{</span><span class="n">err</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
 
-
-        <span class="c1">#  Building the fields</span>
-        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
-        <span class="c1"># -- Segmenting the fields by type -- #</span>
-        <span class="n">fields1</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;density&quot;</span><span class="p">,</span> <span class="s2">&quot;pressure&quot;</span><span class="p">,</span> <span class="s2">&quot;dark_matter_density&quot;</span>
-                                          <span class="s2">&quot;stellar_density&quot;</span><span class="p">,</span> <span class="s2">&quot;gravitational_potential&quot;</span><span class="p">]</span>
-        <span class="n">fields2</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;temperature&quot;</span><span class="p">]</span>
-        <span class="n">fields3</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;velocity_x&quot;</span><span class="p">,</span> <span class="s2">&quot;velocity_y&quot;</span><span class="p">,</span> <span class="s2">&quot;velocity_z&quot;</span><span class="p">]</span>
-        <span class="n">units</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;density&quot;</span>                <span class="p">:</span> <span class="s2">&quot;Msun/kpc**3&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;pressure&quot;</span>               <span class="p">:</span> <span class="s2">&quot;Msun/kpc/Myr**2&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;dark_matter_density&quot;</span>    <span class="p">:</span> <span class="s2">&quot;Msun/kpc**3&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;stellar_density&quot;</span>        <span class="p">:</span> <span class="s2">&quot;Msun/kpc**3&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;temperature&quot;</span>            <span class="p">:</span> <span class="s2">&quot;K&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;gravitational_potential&quot;</span><span class="p">:</span> <span class="s2">&quot;kpc**2/Myr**2&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;velocity_x&quot;</span>             <span class="p">:</span> <span class="s2">&quot;kpc/Myr&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;velocity_y&quot;</span>             <span class="p">:</span> <span class="s2">&quot;kpc/Myr&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;velocity_z&quot;</span>             <span class="p">:</span> <span class="s2">&quot;kpc/Myr&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;magnetic_field_strength&quot;</span><span class="p">:</span> <span class="s2">&quot;G&quot;</span>
-        <span class="p">}</span>
-
-        <span class="c1"># -- Building the fields for each of the profiles -- #</span>
-        <span class="n">fields</span> <span class="o">=</span> <span class="n">fields1</span> <span class="o">+</span> <span class="n">fields2</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">profile</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profiles</span><span class="p">):</span>
-            <span class="c1"># -- Loading the profile, pulling density and positions -- #</span>
-            <span class="n">p</span> <span class="o">=</span> <span class="n">ClusterModel</span><span class="o">.</span><span class="n">from_h5_file</span><span class="p">(</span><span class="n">profile</span><span class="p">)</span>
-            <span class="n">xx</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="o">.</span><span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-            <span class="n">yy</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="o">.</span><span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
-            <span class="n">zz</span> <span class="o">=</span> <span class="n">z</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="o">.</span><span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
-            <span class="n">rr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">xx</span> <span class="o">*</span> <span class="n">xx</span> <span class="o">+</span> <span class="n">yy</span> <span class="o">*</span> <span class="n">yy</span> <span class="o">+</span> <span class="n">zz</span> <span class="o">*</span> <span class="n">zz</span><span class="p">)</span>
-            <span class="n">fd</span> <span class="o">=</span> <span class="n">InterpolatedUnivariateSpline</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">,</span>
-                                              <span class="n">p</span><span class="p">[</span><span class="s2">&quot;density&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">)</span>
-
-            <span class="c1"># -- Managing constituent fields -- #</span>
-            <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">field</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">p</span><span class="p">:</span> <span class="c1"># We don&#39;t have this data, don&#39;t do anything.</span>
-                    <span class="k">continue</span>
-                <span class="k">if</span> <span class="n">field</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span> <span class="c1"># This data needs to be initialized in the data object.</span>
-                    <span class="n">data</span><span class="p">[</span><span class="n">field</span><span class="p">]</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="p">(</span>
-                        <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">domain_dimensions</span><span class="p">),</span> <span class="n">units</span><span class="p">[</span><span class="n">field</span><span class="p">]</span>
-                    <span class="p">)</span>
-
-                <span class="c1">#-- creating interpolation of the data to sample --#</span>
-                <span class="n">f</span> <span class="o">=</span> <span class="n">InterpolatedUnivariateSpline</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">,</span>
-                                                 <span class="n">p</span><span class="p">[</span><span class="n">field</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">)</span>
-
-                <span class="k">if</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">fields1</span><span class="p">:</span>
-                    <span class="n">data</span><span class="p">[</span><span class="n">field</span><span class="p">]</span> <span class="o">+=</span> <span class="n">unyt_array</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">rr</span><span class="p">),</span> <span class="n">units</span><span class="p">[</span><span class="n">field</span><span class="p">])</span> <span class="c1"># Just add the values</span>
-                <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">fields2</span><span class="p">:</span>
-                    <span class="n">data</span><span class="p">[</span><span class="n">field</span><span class="p">]</span> <span class="o">+=</span> <span class="n">unyt_array</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">rr</span><span class="p">)</span> <span class="o">*</span> <span class="n">fd</span><span class="p">(</span><span class="n">rr</span><span class="p">),</span> <span class="n">Unit</span><span class="p">(</span><span class="n">units</span><span class="p">[</span><span class="n">field</span><span class="p">]))</span> <span class="c1"># Density weighted values</span>
-
-            <span class="c1"># -- Managing Velocities -- #</span>
-            <span class="k">for</span> <span class="n">j</span><span class="p">,</span><span class="n">field</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">fields3</span><span class="p">):</span>
-                <span class="k">if</span> <span class="n">field</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
-                    <span class="n">data</span><span class="p">[</span><span class="n">field</span><span class="p">]</span> <span class="o">=</span> <span class="n">unyt_array</span><span class="p">(</span>
-                        <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">domain_dimensions</span><span class="p">),</span> <span class="n">units</span><span class="p">[</span><span class="n">field</span><span class="p">]</span>
-                    <span class="p">)</span>
-
-                <span class="c1"># We do need to add it #</span>
-                <span class="n">data</span><span class="p">[</span><span class="n">field</span><span class="p">]</span> <span class="o">+=</span> <span class="n">unyt_array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">*</span> <span class="n">fd</span><span class="p">(</span><span class="n">rr</span><span class="p">),</span> <span class="n">Unit</span><span class="p">(</span><span class="n">units</span><span class="p">[</span><span class="n">field</span><span class="p">]))</span>
-
-        <span class="k">if</span> <span class="s2">&quot;density&quot;</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">fields2</span> <span class="o">+</span> <span class="n">fields3</span><span class="p">:</span>
-                <span class="n">data</span><span class="p">[</span><span class="n">field</span><span class="p">]</span> <span class="o">/=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;density&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">build_yt_dataset_fields</span><span class="p">([</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">profiles</span><span class="p">,</span><span class="n">domain_dimensions</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">load_uniform_grid</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">domain_dimensions</span><span class="p">,</span> <span class="n">length_unit</span><span class="o">=</span><span class="s2">&quot;kpc&quot;</span><span class="p">,</span>
                                  <span class="n">bbox</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">bbox</span><span class="p">),</span> <span class="n">mass_unit</span><span class="o">=</span><span class="s2">&quot;Msun&quot;</span><span class="p">,</span> <span class="n">time_unit</span><span class="o">=</span><span class="s2">&quot;Myr&quot;</span><span class="p">,</span>
                                  <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ClusterICs.compute_orbits"><a class="viewcode-back" href="../_as_gen/ics.ClusterICs.compute_orbits.html#ics.ClusterICs.compute_orbits">[docs]</a>    <span class="k">def</span> <span class="nf">compute_orbits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">t_max</span><span class="p">,</span><span class="n">max_step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">dx_max</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">n_iter</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span><span class="n">softening_length</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span><span class="n">collision_distance</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+<div class="viewcode-block" id="ClusterICs.compute_orbits"><a class="viewcode-back" href="../_as_gen/ics.ClusterICs.compute_orbits.html#ics.ClusterICs.compute_orbits">[docs]</a>    <span class="k">def</span> <span class="nf">compute_orbits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t_max</span><span class="p">,</span> <span class="n">max_step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">dx_max</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">softening_length</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">collision_distance</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Computes the point-mass orbital behavior of the systems to give an approximate idea of the</span>
 <span class="sd">        resulting dynamics when simulated.</span>
@@ -892,15 +840,14 @@ document.write(`
 <span class="sd">            errs: list</span>
 <span class="sd">                A list of any exceptions or warnings called during the execution.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1">#  Setup</span>
-        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
+
         <span class="n">mylog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Preparing to computing point-mass orbits for </span><span class="si">{</span><span class="bp">self</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
 
         <span class="c1"># -- Loading the halo&#39;s -- #</span>
         <span class="n">xs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;kpc&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">d</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
         <span class="n">dxs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;kpc/Myr&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">d</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
         <span class="n">masses</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">model_path</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profiles</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">model_path</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profiles</span><span class="p">):</span>
             <span class="n">m</span> <span class="o">=</span> <span class="n">ClusterModel</span><span class="o">.</span><span class="n">from_h5_file</span><span class="p">(</span><span class="n">model_path</span><span class="p">)</span>
 
             <span class="k">assert</span> <span class="n">m</span><span class="o">.</span><span class="n">gravity</span><span class="o">.</span><span class="n">_classname</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">gravity</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Model </span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2"> and </span><span class="si">{</span><span class="bp">self</span><span class="si">}</span><span class="s2"> have inconsistent gravity theories.&quot;</span>
@@ -910,42 +857,39 @@ document.write(`
 
         <span class="n">mylog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Successfully loaded </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">masses</span><span class="p">)</span><span class="si">}</span><span class="s2"> halos for orbit analysis. Dispatching...&quot;</span><span class="p">)</span>
 
-        <span class="c1">#  Beginning Computations </span>
-        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
         <span class="kn">import</span> <span class="nn">cluster_generator.orbits</span> <span class="k">as</span> <span class="nn">orbs</span>
         <span class="kn">import</span> <span class="nn">warnings</span>
         <span class="kn">from</span> <span class="nn">types</span> <span class="kn">import</span> <span class="n">SimpleNamespace</span>
 
-        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">orbs</span><span class="p">,</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">gravity</span><span class="si">}</span><span class="s2">_orbits&quot;</span><span class="o">.</span><span class="n">lower</span><span class="p">()):</span>
-            <span class="n">mylog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Dispatch complete. Computing orbits using cluster_generator.orbits.</span><span class="si">%s</span><span class="s2">.&quot;</span><span class="o">%</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">gravity</span><span class="si">}</span><span class="s2">_orbits&quot;</span><span class="o">.</span><span class="n">lower</span><span class="p">()))</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">orbs</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">gravity</span><span class="si">}</span><span class="s2">_orbits&quot;</span><span class="o">.</span><span class="n">lower</span><span class="p">()):</span>
+            <span class="n">mylog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Dispatch complete. Computing orbits using cluster_generator.orbits.</span><span class="si">%s</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">gravity</span><span class="si">}</span><span class="s2">_orbits&quot;</span><span class="o">.</span><span class="n">lower</span><span class="p">()))</span>
 
-            <span class="c1">#  Calling the orbit</span>
-            <span class="c1"># -------------------------------------------------------------------------------------------------------- #</span>
             <span class="c1"># CALL SIGNATURE: x0, dx0, masses, nhalos, tmax, dtmax, lmax, Nmax, epsilon, additional arguments.</span>
             <span class="c1">#</span>
             <span class="c1">#</span>
             <span class="k">with</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">(</span><span class="n">record</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">w</span><span class="p">:</span>
-                <span class="n">_out</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">orbs</span><span class="p">,</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">gravity</span><span class="si">}</span><span class="s2">_orbits&quot;</span><span class="o">.</span><span class="n">lower</span><span class="p">())(</span><span class="n">xs</span><span class="p">,</span><span class="n">dxs</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">masses</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float64&quot;</span><span class="p">),</span><span class="nb">len</span><span class="p">(</span><span class="n">masses</span><span class="p">),</span><span class="n">t_max</span><span class="p">,</span><span class="n">max_step</span><span class="p">,</span><span class="n">dx_max</span><span class="p">,</span><span class="n">n_iter</span><span class="p">,</span><span class="n">softening_length</span><span class="p">,</span><span class="n">collision_distance</span><span class="p">)</span>
+                <span class="n">_out</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">orbs</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">gravity</span><span class="si">}</span><span class="s2">_orbits&quot;</span><span class="o">.</span><span class="n">lower</span><span class="p">())(</span><span class="n">xs</span><span class="p">,</span> <span class="n">dxs</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">masses</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float64&quot;</span><span class="p">),</span>
+                                                                       <span class="nb">len</span><span class="p">(</span><span class="n">masses</span><span class="p">),</span> <span class="n">t_max</span><span class="p">,</span> <span class="n">max_step</span><span class="p">,</span> <span class="n">dx_max</span><span class="p">,</span> <span class="n">n_iter</span><span class="p">,</span>
+                                                                       <span class="n">softening_length</span><span class="p">,</span> <span class="n">collision_distance</span><span class="p">)</span>
 
                 <span class="n">errs</span> <span class="o">=</span> <span class="n">w</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The gravity </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">gravity</span><span class="si">}</span><span class="s2"> doesn&#39;t have an orbit computation.&quot;</span><span class="p">)</span>
 
-        <span class="c1">#  Building the output object</span>
-        <span class="c1"># ------------------------------------------------------------------------------------------------------------ #</span>
         <span class="n">output</span> <span class="o">=</span> <span class="n">SimpleNamespace</span><span class="p">(</span>
-            <span class="n">t</span> <span class="o">=</span> <span class="n">_out</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-            <span class="n">x</span> <span class="o">=</span> <span class="n">_out</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">,:,:],</span>
-            <span class="n">y</span> <span class="o">=</span> <span class="n">_out</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">,:,:],</span>
-            <span class="n">z</span> <span class="o">=</span> <span class="n">_out</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">,:,:],</span>
-            <span class="n">dx</span> <span class="o">=</span> <span class="n">_out</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">,:,:],</span>
-            <span class="n">dy</span> <span class="o">=</span> <span class="n">_out</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">,:,:],</span>
-            <span class="n">dz</span> <span class="o">=</span> <span class="n">_out</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">,:,:],</span>
-            <span class="n">ddx</span> <span class="o">=</span> <span class="n">_out</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">0</span><span class="p">,:,:],</span>
-            <span class="n">ddy</span> <span class="o">=</span> <span class="n">_out</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">1</span><span class="p">,:,:],</span>
-            <span class="n">ddz</span> <span class="o">=</span> <span class="n">_out</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">2</span><span class="p">,:,:],</span>
-            <span class="n">return_code</span> <span class="o">=</span> <span class="n">_out</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span>
-            <span class="n">errs</span> <span class="o">=</span> <span class="n">errs</span>
+            <span class="n">t</span><span class="o">=</span><span class="n">_out</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+            <span class="n">x</span><span class="o">=</span><span class="n">_out</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:],</span>
+            <span class="n">y</span><span class="o">=</span><span class="n">_out</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:],</span>
+            <span class="n">z</span><span class="o">=</span><span class="n">_out</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:],</span>
+            <span class="n">dx</span><span class="o">=</span><span class="n">_out</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:],</span>
+            <span class="n">dy</span><span class="o">=</span><span class="n">_out</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:],</span>
+            <span class="n">dz</span><span class="o">=</span><span class="n">_out</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:],</span>
+            <span class="n">ddx</span><span class="o">=</span><span class="n">_out</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:],</span>
+            <span class="n">ddy</span><span class="o">=</span><span class="n">_out</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">1</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:],</span>
+            <span class="n">ddz</span><span class="o">=</span><span class="n">_out</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">2</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:],</span>
+            <span class="n">return_code</span><span class="o">=</span><span class="n">_out</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span>
+            <span class="n">errs</span><span class="o">=</span><span class="n">errs</span>
         <span class="p">)</span>
 
         <span class="k">return</span> <span class="n">output</span></div></div>

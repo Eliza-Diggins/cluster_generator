@@ -30,19 +30,34 @@
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fd506691" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster.custom.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster.bundle.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster-sideTip-shadow.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster-sideTip-punk.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster-sideTip-noir.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster-sideTip-light.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster-sideTip-borderless.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/micromodal.css" />
     <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
+    <script src="../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=ccbe24c1"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/js/hoverxref.js"></script>
+    <script src="../_static/js/tooltipster.bundle.min.js"></script>
+    <script src="../_static/js/micromodal.min.js"></script>
     <script src="../_static/design-tabs.js?v=36754332"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_as_gen/model.HydrostaticEquilibrium';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -334,6 +349,7 @@ document.write(`
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1 has-children"><a class="reference internal" href="utils.html">utils</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="utils.build_yt_dataset_fields.html">utils.build_yt_dataset_fields</a></li>
 <li class="toctree-l2"><a class="reference internal" href="utils.ensure_list.html">utils.ensure_list</a></li>
 <li class="toctree-l2"><a class="reference internal" href="utils.ensure_ytarray.html">utils.ensure_ytarray</a></li>
 <li class="toctree-l2"><a class="reference internal" href="utils.ensure_ytquantity.html">utils.ensure_ytquantity</a></li>
@@ -485,6 +501,7 @@ document.write(`
 <li class="toctree-l3"><a class="reference internal" href="model.ClusterModel.check_dm_virial.html">model.ClusterModel.check_dm_virial</a></li>
 <li class="toctree-l3"><a class="reference internal" href="model.ClusterModel.check_hse.html">model.ClusterModel.check_hse</a></li>
 <li class="toctree-l3"><a class="reference internal" href="model.ClusterModel.check_star_virial.html">model.ClusterModel.check_star_virial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="model.ClusterModel.create_dataset.html">model.ClusterModel.create_dataset</a></li>
 <li class="toctree-l3"><a class="reference internal" href="model.ClusterModel.find_field_at_radius.html">model.ClusterModel.find_field_at_radius</a></li>
 <li class="toctree-l3"><a class="reference internal" href="model.ClusterModel.from_arrays.html">model.ClusterModel.from_arrays</a></li>
 <li class="toctree-l3"><a class="reference internal" href="model.ClusterModel.from_dens_and_entr.html">model.ClusterModel.from_dens_and_entr</a></li>
@@ -523,6 +540,7 @@ document.write(`
 <li class="toctree-l3"><a class="reference internal" href="model.HydrostaticEquilibrium.check_dm_virial.html">model.HydrostaticEquilibrium.check_dm_virial</a></li>
 <li class="toctree-l3"><a class="reference internal" href="model.HydrostaticEquilibrium.check_hse.html">model.HydrostaticEquilibrium.check_hse</a></li>
 <li class="toctree-l3"><a class="reference internal" href="model.HydrostaticEquilibrium.check_star_virial.html">model.HydrostaticEquilibrium.check_star_virial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="model.HydrostaticEquilibrium.create_dataset.html">model.HydrostaticEquilibrium.create_dataset</a></li>
 <li class="toctree-l3"><a class="reference internal" href="model.HydrostaticEquilibrium.find_field_at_radius.html">model.HydrostaticEquilibrium.find_field_at_radius</a></li>
 <li class="toctree-l3"><a class="reference internal" href="model.HydrostaticEquilibrium.from_arrays.html">model.HydrostaticEquilibrium.from_arrays</a></li>
 <li class="toctree-l3"><a class="reference internal" href="model.HydrostaticEquilibrium.from_dens_and_entr.html">model.HydrostaticEquilibrium.from_dens_and_entr</a></li>
@@ -816,73 +834,76 @@ document.write(`
 <tr class="row-even"><td><p><a class="reference internal" href="model.HydrostaticEquilibrium.check_star_virial.html#model.HydrostaticEquilibrium.check_star_virial" title="model.HydrostaticEquilibrium.check_star_virial"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_star_virial</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="model.HydrostaticEquilibrium.find_field_at_radius.html#model.HydrostaticEquilibrium.find_field_at_radius" title="model.HydrostaticEquilibrium.find_field_at_radius"><code class="xref py py-obj docutils literal notranslate"><span class="pre">find_field_at_radius</span></code></a>(field, r)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="model.HydrostaticEquilibrium.create_dataset.html#model.HydrostaticEquilibrium.create_dataset" title="model.HydrostaticEquilibrium.create_dataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_dataset</span></code></a>(domain_dimensions[, ...])</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="model.HydrostaticEquilibrium.find_field_at_radius.html#model.HydrostaticEquilibrium.find_field_at_radius" title="model.HydrostaticEquilibrium.find_field_at_radius"><code class="xref py py-obj docutils literal notranslate"><span class="pre">find_field_at_radius</span></code></a>(field, r)</p></td>
 <td><p>Find the value of a <em>field</em> in the profiles at radius <em>r</em>.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="model.HydrostaticEquilibrium.from_arrays.html#model.HydrostaticEquilibrium.from_arrays" title="model.HydrostaticEquilibrium.from_arrays"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_arrays</span></code></a>(fields, **kwargs)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="model.HydrostaticEquilibrium.from_arrays.html#model.HydrostaticEquilibrium.from_arrays" title="model.HydrostaticEquilibrium.from_arrays"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_arrays</span></code></a>(fields, **kwargs)</p></td>
 <td><p>Initialize the <a class="reference internal" href="model.ClusterModel.html#model.ClusterModel" title="model.ClusterModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">model.ClusterModel</span></code></a> from <code class="docutils literal notranslate"><span class="pre">fields</span></code> alone.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="model.HydrostaticEquilibrium.from_dens_and_entr.html#model.HydrostaticEquilibrium.from_dens_and_entr" title="model.HydrostaticEquilibrium.from_dens_and_entr"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dens_and_entr</span></code></a>(rmin, rmax, density, ...)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="model.HydrostaticEquilibrium.from_dens_and_entr.html#model.HydrostaticEquilibrium.from_dens_and_entr" title="model.HydrostaticEquilibrium.from_dens_and_entr"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dens_and_entr</span></code></a>(rmin, rmax, density, ...)</p></td>
 <td><p>Construct the model from density and entropy.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="model.HydrostaticEquilibrium.from_dens_and_tden.html#model.HydrostaticEquilibrium.from_dens_and_tden" title="model.HydrostaticEquilibrium.from_dens_and_tden"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dens_and_tden</span></code></a>(rmin, rmax, density, ...)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="model.HydrostaticEquilibrium.from_dens_and_tden.html#model.HydrostaticEquilibrium.from_dens_and_tden" title="model.HydrostaticEquilibrium.from_dens_and_tden"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dens_and_tden</span></code></a>(rmin, rmax, density, ...)</p></td>
 <td><p>Construct a hydrostatic equilibrium model using gas density and total density profiles</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="model.HydrostaticEquilibrium.from_dens_and_temp.html#model.HydrostaticEquilibrium.from_dens_and_temp" title="model.HydrostaticEquilibrium.from_dens_and_temp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dens_and_temp</span></code></a>(rmin, rmax, density, ...)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="model.HydrostaticEquilibrium.from_dens_and_temp.html#model.HydrostaticEquilibrium.from_dens_and_temp" title="model.HydrostaticEquilibrium.from_dens_and_temp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dens_and_temp</span></code></a>(rmin, rmax, density, ...)</p></td>
 <td><p>Computes the <a class="reference internal" href="model.ClusterModel.html#model.ClusterModel" title="model.ClusterModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">model.ClusterModel</span></code></a> from gas density and temperature.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="model.HydrostaticEquilibrium.from_h5_file.html#model.HydrostaticEquilibrium.from_h5_file" title="model.HydrostaticEquilibrium.from_h5_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_h5_file</span></code></a>(filename[, r_min, r_max])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="model.HydrostaticEquilibrium.from_h5_file.html#model.HydrostaticEquilibrium.from_h5_file" title="model.HydrostaticEquilibrium.from_h5_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_h5_file</span></code></a>(filename[, r_min, r_max])</p></td>
 <td><p>Initializes a <a class="reference internal" href="model.ClusterModel.html#model.ClusterModel" title="model.ClusterModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">model.ClusterModel</span></code></a> instance from HDF5 file.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="model.HydrostaticEquilibrium.generate_dm_particles.html#model.HydrostaticEquilibrium.generate_dm_particles" title="model.HydrostaticEquilibrium.generate_dm_particles"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_dm_particles</span></code></a>(num_particles[, ...])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="model.HydrostaticEquilibrium.generate_dm_particles.html#model.HydrostaticEquilibrium.generate_dm_particles" title="model.HydrostaticEquilibrium.generate_dm_particles"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_dm_particles</span></code></a>(num_particles[, ...])</p></td>
 <td><p>Generate a set of dark matter particles in virial equilibrium.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="model.HydrostaticEquilibrium.generate_gas_particles.html#model.HydrostaticEquilibrium.generate_gas_particles" title="model.HydrostaticEquilibrium.generate_gas_particles"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_gas_particles</span></code></a>(num_particles[, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="model.HydrostaticEquilibrium.generate_gas_particles.html#model.HydrostaticEquilibrium.generate_gas_particles" title="model.HydrostaticEquilibrium.generate_gas_particles"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_gas_particles</span></code></a>(num_particles[, ...])</p></td>
 <td><p>Generate a set of gas particles in hydrostatic equilibrium.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="model.HydrostaticEquilibrium.generate_star_particles.html#model.HydrostaticEquilibrium.generate_star_particles" title="model.HydrostaticEquilibrium.generate_star_particles"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_star_particles</span></code></a>(num_particles[, ...])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="model.HydrostaticEquilibrium.generate_star_particles.html#model.HydrostaticEquilibrium.generate_star_particles" title="model.HydrostaticEquilibrium.generate_star_particles"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_star_particles</span></code></a>(num_particles[, ...])</p></td>
 <td><p>Generate a set of star particles in virial equilibrium.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="model.HydrostaticEquilibrium.generate_tracer_particles.html#model.HydrostaticEquilibrium.generate_tracer_particles" title="model.HydrostaticEquilibrium.generate_tracer_particles"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_tracer_particles</span></code></a>(num_particles[, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="model.HydrostaticEquilibrium.generate_tracer_particles.html#model.HydrostaticEquilibrium.generate_tracer_particles" title="model.HydrostaticEquilibrium.generate_tracer_particles"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_tracer_particles</span></code></a>(num_particles[, ...])</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="model.HydrostaticEquilibrium.is_physical.html#model.HydrostaticEquilibrium.is_physical" title="model.HydrostaticEquilibrium.is_physical"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_physical</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="model.HydrostaticEquilibrium.is_physical.html#model.HydrostaticEquilibrium.is_physical" title="model.HydrostaticEquilibrium.is_physical"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_physical</span></code></a>()</p></td>
 <td><p>Checks if the <a class="reference internal" href="model.ClusterModel.html#model.ClusterModel" title="model.ClusterModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">model.ClusterModel</span></code></a> instance is physically viable.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="model.HydrostaticEquilibrium.keys.html#model.HydrostaticEquilibrium.keys" title="model.HydrostaticEquilibrium.keys"><code class="xref py py-obj docutils literal notranslate"><span class="pre">keys</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="model.HydrostaticEquilibrium.keys.html#model.HydrostaticEquilibrium.keys" title="model.HydrostaticEquilibrium.keys"><code class="xref py py-obj docutils literal notranslate"><span class="pre">keys</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="model.HydrostaticEquilibrium.mass_in_radius.html#model.HydrostaticEquilibrium.mass_in_radius" title="model.HydrostaticEquilibrium.mass_in_radius"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mass_in_radius</span></code></a>(radius)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="model.HydrostaticEquilibrium.mass_in_radius.html#model.HydrostaticEquilibrium.mass_in_radius" title="model.HydrostaticEquilibrium.mass_in_radius"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mass_in_radius</span></code></a>(radius)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="model.HydrostaticEquilibrium.no_gas.html#model.HydrostaticEquilibrium.no_gas" title="model.HydrostaticEquilibrium.no_gas"><code class="xref py py-obj docutils literal notranslate"><span class="pre">no_gas</span></code></a>(rmin, rmax, total_density[, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="model.HydrostaticEquilibrium.no_gas.html#model.HydrostaticEquilibrium.no_gas" title="model.HydrostaticEquilibrium.no_gas"><code class="xref py py-obj docutils literal notranslate"><span class="pre">no_gas</span></code></a>(rmin, rmax, total_density[, ...])</p></td>
 <td><p>Generates the cluster without gas.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="model.HydrostaticEquilibrium.plot.html#model.HydrostaticEquilibrium.plot" title="model.HydrostaticEquilibrium.plot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot</span></code></a>(field[, rmin, rmax, fig, ax])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="model.HydrostaticEquilibrium.plot.html#model.HydrostaticEquilibrium.plot" title="model.HydrostaticEquilibrium.plot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot</span></code></a>(field[, rmin, rmax, fig, ax])</p></td>
 <td><p>Plot a field vs radius from this model using Matplotlib.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="model.HydrostaticEquilibrium.rebuild_physical.html#model.HydrostaticEquilibrium.rebuild_physical" title="model.HydrostaticEquilibrium.rebuild_physical"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rebuild_physical</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="model.HydrostaticEquilibrium.rebuild_physical.html#model.HydrostaticEquilibrium.rebuild_physical" title="model.HydrostaticEquilibrium.rebuild_physical"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rebuild_physical</span></code></a>()</p></td>
 <td><p>The <a class="reference internal" href="model.ClusterModel.rebuild_physical.html#model.ClusterModel.rebuild_physical" title="model.ClusterModel.rebuild_physical"><code class="xref py py-meth docutils literal notranslate"><span class="pre">model.ClusterModel.rebuild_physical()</span></code></a> method can be used to convert the instance calling the method into a physically well constrained version of itself.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="model.HydrostaticEquilibrium.set_field.html#model.HydrostaticEquilibrium.set_field" title="model.HydrostaticEquilibrium.set_field"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_field</span></code></a>(name, value)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="model.HydrostaticEquilibrium.set_field.html#model.HydrostaticEquilibrium.set_field" title="model.HydrostaticEquilibrium.set_field"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_field</span></code></a>(name, value)</p></td>
 <td><p>Set a field with name <cite>name</cite> to value <cite>value</cite>, which is an <cite>unyt_array</cite>.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="model.HydrostaticEquilibrium.set_magnetic_field_from_beta.html#model.HydrostaticEquilibrium.set_magnetic_field_from_beta" title="model.HydrostaticEquilibrium.set_magnetic_field_from_beta"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_magnetic_field_from_beta</span></code></a>(beta[, gaussian])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="model.HydrostaticEquilibrium.set_magnetic_field_from_beta.html#model.HydrostaticEquilibrium.set_magnetic_field_from_beta" title="model.HydrostaticEquilibrium.set_magnetic_field_from_beta"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_magnetic_field_from_beta</span></code></a>(beta[, gaussian])</p></td>
 <td><p>Set a magnetic field radial profile from a plasma beta parameter, assuming beta = p_th/p_B.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="model.HydrostaticEquilibrium.set_magnetic_field_from_density.html#model.HydrostaticEquilibrium.set_magnetic_field_from_density" title="model.HydrostaticEquilibrium.set_magnetic_field_from_density"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_magnetic_field_from_density</span></code></a>(B0[, eta, ...])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="model.HydrostaticEquilibrium.set_magnetic_field_from_density.html#model.HydrostaticEquilibrium.set_magnetic_field_from_density" title="model.HydrostaticEquilibrium.set_magnetic_field_from_density"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_magnetic_field_from_density</span></code></a>(B0[, eta, ...])</p></td>
 <td><p>Set a magnetic field radial profile assuming it is proportional to some power of the density, usually 2/3.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="model.HydrostaticEquilibrium.set_rmax.html#model.HydrostaticEquilibrium.set_rmax" title="model.HydrostaticEquilibrium.set_rmax"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_rmax</span></code></a>(r_max)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="model.HydrostaticEquilibrium.set_rmax.html#model.HydrostaticEquilibrium.set_rmax" title="model.HydrostaticEquilibrium.set_rmax"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_rmax</span></code></a>(r_max)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="model.HydrostaticEquilibrium.write_model_to_ascii.html#model.HydrostaticEquilibrium.write_model_to_ascii" title="model.HydrostaticEquilibrium.write_model_to_ascii"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_model_to_ascii</span></code></a>(output_filename[, ...])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="model.HydrostaticEquilibrium.write_model_to_ascii.html#model.HydrostaticEquilibrium.write_model_to_ascii" title="model.HydrostaticEquilibrium.write_model_to_ascii"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_model_to_ascii</span></code></a>(output_filename[, ...])</p></td>
 <td><p>Write the equilibrium model to an ascii text file.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="model.HydrostaticEquilibrium.write_model_to_binary.html#model.HydrostaticEquilibrium.write_model_to_binary" title="model.HydrostaticEquilibrium.write_model_to_binary"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_model_to_binary</span></code></a>(output_filename[, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="model.HydrostaticEquilibrium.write_model_to_binary.html#model.HydrostaticEquilibrium.write_model_to_binary" title="model.HydrostaticEquilibrium.write_model_to_binary"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_model_to_binary</span></code></a>(output_filename[, ...])</p></td>
 <td><p>writes the model to unformatted Fortran binary.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="model.HydrostaticEquilibrium.write_model_to_h5.html#model.HydrostaticEquilibrium.write_model_to_h5" title="model.HydrostaticEquilibrium.write_model_to_h5"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_model_to_h5</span></code></a>(output_filename[, in_cgs, ...])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="model.HydrostaticEquilibrium.write_model_to_h5.html#model.HydrostaticEquilibrium.write_model_to_h5" title="model.HydrostaticEquilibrium.write_model_to_h5"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_model_to_h5</span></code></a>(output_filename[, in_cgs, ...])</p></td>
 <td><p>Write the equilibrium model to an HDF5 file.</p></td>
 </tr>
 </tbody>

@@ -29,19 +29,34 @@
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fd506691" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster.custom.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster.bundle.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster-sideTip-shadow.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster-sideTip-punk.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster-sideTip-noir.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster-sideTip-light.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster-sideTip-borderless.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/micromodal.css" />
     <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
+    <script src="../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=ccbe24c1"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/js/hoverxref.js"></script>
+    <script src="../_static/js/tooltipster.bundle.min.js"></script>
+    <script src="../_static/js/micromodal.min.js"></script>
     <script src="../_static/design-tabs.js?v=36754332"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="https://unpkg.com/mermaid@10.2.0/dist/mermaid.min.js"></script>
     <script>mermaid.initialize({startOnLoad:true});</script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/particles';</script>
@@ -394,9 +409,7 @@ document.write(`
     <span class="n">mylog</span><span class="p">,</span> <span class="n">truncate_spline</span>
 
 
-<span class="c1"># -------------------------------------------------------------------------------------------------------------------- #</span>
-<span class="c1"># Setup ============================================================================================================== #</span>
-<span class="c1"># -------------------------------------------------------------------------------------------------------------------- #</span>
+
 <span class="c1"># - Loading the yaml file</span>
 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pt</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parents</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;bin&quot;</span><span class="p">,</span> <span class="s2">&quot;resources&quot;</span><span class="p">,</span> <span class="s2">&quot;particle_fields.yaml&quot;</span><span class="p">))</span> <span class="k">as</span> <span class="n">gfile</span><span class="p">:</span>
     <span class="n">_gadget_setup_dict</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">gfile</span><span class="p">,</span> <span class="n">yaml</span><span class="o">.</span><span class="n">FullLoader</span><span class="p">)</span>
@@ -412,9 +425,7 @@ document.write(`
 <span class="n">rptype_map</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">([(</span><span class="n">v</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">ptype_map</span><span class="o">.</span><span class="n">items</span><span class="p">()])</span>
 
 
-<span class="c1"># -------------------------------------------------------------------------------------------------------------------- #</span>
-<span class="c1"># Classes ============================================================================================================ #</span>
-<span class="c1"># -------------------------------------------------------------------------------------------------------------------- #</span>
+
 
 <div class="viewcode-block" id="ClusterParticles"><a class="viewcode-back" href="../_as_gen/particles.ClusterParticles.html#particles.ClusterParticles">[docs]</a><span class="k">class</span> <span class="nc">ClusterParticles</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -973,21 +984,16 @@ document.write(`
 <span class="sd">    -------</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1">#  Determining basic criteria for sampling</span>
-    <span class="c1"># ---------------------------------------------------------------------------------------------------------------- #</span>
+
     <span class="n">num_halos</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">hses</span><span class="p">)</span>
     <span class="n">center</span> <span class="o">=</span> <span class="p">[</span><span class="n">ensure_ytarray</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="s2">&quot;kpc&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">center</span><span class="p">]</span>
     <span class="n">velocity</span> <span class="o">=</span> <span class="p">[</span><span class="n">ensure_ytarray</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="s2">&quot;kpc/Myr&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">velocity</span><span class="p">]</span>
 
-    <span class="c1">#  Computing the correct relative locations of the different gas particles from center of each halo.</span>
-    <span class="c1"># ---------------------------------------------------------------------------------------------------------------- #</span>
     <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_halos</span><span class="p">,</span> <span class="n">particles</span><span class="o">.</span><span class="n">num_particles</span><span class="p">[</span><span class="s2">&quot;gas&quot;</span><span class="p">]))</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">center</span><span class="p">):</span>
         <span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="p">((</span><span class="n">particles</span><span class="p">[</span><span class="s2">&quot;gas&quot;</span><span class="p">,</span> <span class="s2">&quot;particle_position&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">c</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">d</span>
     <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
 
-    <span class="c1">#  Generating the desired sampling radii</span>
-    <span class="c1"># ---------------------------------------------------------------------------------------------------------------- #</span>
     <span class="k">if</span> <span class="n">radii</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="c1"># We just take all of the possible radii</span>
         <span class="n">idxs</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
@@ -995,8 +1001,6 @@ document.write(`
         <span class="n">radii</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">radii</span><span class="p">)</span>
         <span class="n">idxs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">r</span> <span class="o">&lt;=</span> <span class="n">radii</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
-    <span class="c1">#  Computing the full resample</span>
-    <span class="c1"># ---------------------------------------------------------------------------------------------------------------- #</span>
     <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_halos</span><span class="p">,</span> <span class="n">particles</span><span class="o">.</span><span class="n">num_particles</span><span class="p">[</span><span class="s2">&quot;gas&quot;</span><span class="p">]))</span>
     <span class="n">e</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_halos</span><span class="p">,</span> <span class="n">particles</span><span class="o">.</span><span class="n">num_particles</span><span class="p">[</span><span class="s2">&quot;gas&quot;</span><span class="p">]))</span>
     <span class="n">m</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_halos</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">particles</span><span class="o">.</span><span class="n">num_particles</span><span class="p">[</span><span class="s2">&quot;gas&quot;</span><span class="p">]))</span>
@@ -1037,8 +1041,6 @@ document.write(`
     <span class="k">if</span> <span class="n">num_scalars</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">ps</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">/</span> <span class="n">dens</span>
 
-    <span class="c1"># Recomputing</span>
-    <span class="c1"># ----------------------------------------------------------------------------------------------------------------- #</span>
     <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">e</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
         <span class="n">rs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">e</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)]</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)))</span>
@@ -1079,14 +1081,10 @@ document.write(`
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">mylog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Concatenating </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">particles</span><span class="p">)</span><span class="si">}</span><span class="s2"> clusters.&quot;</span><span class="p">)</span>
 
-    <span class="c1">#  Sanity Check</span>
-    <span class="c1"># ---------------------------------------------------------------------------------------------------------------- #</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">centers</span><span class="p">):</span>
         <span class="n">centers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">ensure_ytarray</span><span class="p">(</span><span class="n">centers</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="s2">&quot;kpc&quot;</span><span class="p">)</span>
         <span class="n">velocities</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">ensure_ytarray</span><span class="p">(</span><span class="n">velocities</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="s2">&quot;kpc/Myr&quot;</span><span class="p">)</span>
 
-    <span class="c1">#  Adding necessary velocity and space offsets</span>
-    <span class="c1"># ---------------------------------------------------------------------------------------------------------------- #</span>
     <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">particle_set</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">particles</span><span class="p">):</span>
         <span class="n">particle_set</span><span class="o">.</span><span class="n">add_offsets</span><span class="p">(</span><span class="n">centers</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">velocities</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
 
