@@ -31,6 +31,7 @@ gravity.EMONDGravity
       :recursive:
    
       ~EMONDGravity.is_calculated
+      ~EMONDGravity.potential_methods
       ~EMONDGravity.model
       ~EMONDGravity.attrs
    

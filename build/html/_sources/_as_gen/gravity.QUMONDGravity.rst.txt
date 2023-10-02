@@ -31,6 +31,7 @@ gravity.QUMONDGravity
       :recursive:
    
       ~QUMONDGravity.is_calculated
+      ~QUMONDGravity.potential_methods
       ~QUMONDGravity.model
       ~QUMONDGravity.attrs
    

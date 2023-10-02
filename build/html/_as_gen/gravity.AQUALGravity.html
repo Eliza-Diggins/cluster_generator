@@ -361,6 +361,7 @@ document.write(`
 <li class="toctree-l2"><a class="reference internal" href="utils.log_string.html">utils.log_string</a></li>
 <li class="toctree-l2"><a class="reference internal" href="utils.moving_average.html">utils.moving_average</a></li>
 <li class="toctree-l2"><a class="reference internal" href="utils.parse_prng.html">utils.parse_prng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.time_limit.html">utils.time_limit</a></li>
 <li class="toctree-l2"><a class="reference internal" href="utils.truncate_spline.html">utils.truncate_spline</a></li>
 </ul>
 </li>
@@ -636,6 +637,7 @@ document.write(`
 <li class="toctree-l3"><a class="reference internal" href="gravity.AQUALGravity.potential.html">gravity.AQUALGravity.potential</a></li>
 <li class="toctree-l3"><a class="reference internal" href="gravity.AQUALGravity.reset.html">gravity.AQUALGravity.reset</a></li>
 <li class="toctree-l3"><a class="reference internal" href="gravity.AQUALGravity.is_calculated.html">gravity.AQUALGravity.is_calculated</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gravity.AQUALGravity.potential_methods.html">gravity.AQUALGravity.potential_methods</a></li>
 <li class="toctree-l3"><a class="reference internal" href="gravity.AQUALGravity.model.html">gravity.AQUALGravity.model</a></li>
 <li class="toctree-l3"><a class="reference internal" href="gravity.AQUALGravity.attrs.html">gravity.AQUALGravity.attrs</a></li>
 </ul>
@@ -647,6 +649,7 @@ document.write(`
 <li class="toctree-l3"><a class="reference internal" href="gravity.EMONDGravity.potential.html">gravity.EMONDGravity.potential</a></li>
 <li class="toctree-l3"><a class="reference internal" href="gravity.EMONDGravity.reset.html">gravity.EMONDGravity.reset</a></li>
 <li class="toctree-l3"><a class="reference internal" href="gravity.EMONDGravity.is_calculated.html">gravity.EMONDGravity.is_calculated</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gravity.EMONDGravity.potential_methods.html">gravity.EMONDGravity.potential_methods</a></li>
 <li class="toctree-l3"><a class="reference internal" href="gravity.EMONDGravity.model.html">gravity.EMONDGravity.model</a></li>
 <li class="toctree-l3"><a class="reference internal" href="gravity.EMONDGravity.attrs.html">gravity.EMONDGravity.attrs</a></li>
 </ul>
@@ -655,6 +658,7 @@ document.write(`
 <li class="toctree-l3"><a class="reference internal" href="gravity.Gravity.__init__.html">gravity.Gravity.__init__</a></li>
 <li class="toctree-l3"><a class="reference internal" href="gravity.Gravity.reset.html">gravity.Gravity.reset</a></li>
 <li class="toctree-l3"><a class="reference internal" href="gravity.Gravity.is_calculated.html">gravity.Gravity.is_calculated</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gravity.Gravity.potential_methods.html">gravity.Gravity.potential_methods</a></li>
 <li class="toctree-l3"><a class="reference internal" href="gravity.Gravity.model.html">gravity.Gravity.model</a></li>
 <li class="toctree-l3"><a class="reference internal" href="gravity.Gravity.attrs.html">gravity.Gravity.attrs</a></li>
 </ul>
@@ -666,6 +670,7 @@ document.write(`
 <li class="toctree-l3"><a class="reference internal" href="gravity.NewtonianGravity.potential.html">gravity.NewtonianGravity.potential</a></li>
 <li class="toctree-l3"><a class="reference internal" href="gravity.NewtonianGravity.reset.html">gravity.NewtonianGravity.reset</a></li>
 <li class="toctree-l3"><a class="reference internal" href="gravity.NewtonianGravity.is_calculated.html">gravity.NewtonianGravity.is_calculated</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gravity.NewtonianGravity.potential_methods.html">gravity.NewtonianGravity.potential_methods</a></li>
 <li class="toctree-l3"><a class="reference internal" href="gravity.NewtonianGravity.model.html">gravity.NewtonianGravity.model</a></li>
 <li class="toctree-l3"><a class="reference internal" href="gravity.NewtonianGravity.attrs.html">gravity.NewtonianGravity.attrs</a></li>
 </ul>
@@ -677,6 +682,7 @@ document.write(`
 <li class="toctree-l3"><a class="reference internal" href="gravity.QUMONDGravity.potential.html">gravity.QUMONDGravity.potential</a></li>
 <li class="toctree-l3"><a class="reference internal" href="gravity.QUMONDGravity.reset.html">gravity.QUMONDGravity.reset</a></li>
 <li class="toctree-l3"><a class="reference internal" href="gravity.QUMONDGravity.is_calculated.html">gravity.QUMONDGravity.is_calculated</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gravity.QUMONDGravity.potential_methods.html">gravity.QUMONDGravity.potential_methods</a></li>
 <li class="toctree-l3"><a class="reference internal" href="gravity.QUMONDGravity.model.html">gravity.QUMONDGravity.model</a></li>
 <li class="toctree-l3"><a class="reference internal" href="gravity.QUMONDGravity.attrs.html">gravity.QUMONDGravity.attrs</a></li>
 </ul>
@@ -833,7 +839,7 @@ document.write(`
 <tr class="row-even"><td><p><a class="reference internal" href="gravity.AQUALGravity.compute_mass.html#gravity.AQUALGravity.compute_mass" title="gravity.AQUALGravity.compute_mass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_mass</span></code></a>(fields[, attrs])</p></td>
 <td><p>Computes the dynamical mass from the provided fields.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="gravity.AQUALGravity.compute_potential.html#gravity.AQUALGravity.compute_potential" title="gravity.AQUALGravity.compute_potential"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_potential</span></code></a>(fields[, attrs, spinner])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="gravity.AQUALGravity.compute_potential.html#gravity.AQUALGravity.compute_potential" title="gravity.AQUALGravity.compute_potential"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_potential</span></code></a>(fields[, attrs, spinner, ...])</p></td>
 <td><p>Computes the gravitational potential of the system directly from the provided <code class="docutils literal notranslate"><span class="pre">fields</span></code>.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="gravity.AQUALGravity.potential.html#gravity.AQUALGravity.potential" title="gravity.AQUALGravity.potential"><code class="xref py py-obj docutils literal notranslate"><span class="pre">potential</span></code></a>([force])</p></td>
@@ -850,10 +856,13 @@ document.write(`
 <tr class="row-odd"><td><p><a class="reference internal" href="gravity.AQUALGravity.is_calculated.html#gravity.AQUALGravity.is_calculated" title="gravity.AQUALGravity.is_calculated"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_calculated</span></code></a></p></td>
 <td><p>Determines if the associated <a class="reference internal" href="model.ClusterModel.html#model.ClusterModel" title="model.ClusterModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">model.ClusterModel</span></code></a> object has already had it's potential calculated.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="gravity.AQUALGravity.model.html#gravity.AQUALGravity.model" title="gravity.AQUALGravity.model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">model</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="gravity.AQUALGravity.potential_methods.html#gravity.AQUALGravity.potential_methods" title="gravity.AQUALGravity.potential_methods"><code class="xref py py-obj docutils literal notranslate"><span class="pre">potential_methods</span></code></a></p></td>
+<td><p>The available built-in potential solving methods.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="gravity.AQUALGravity.model.html#gravity.AQUALGravity.model" title="gravity.AQUALGravity.model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">model</span></code></a></p></td>
 <td><p>The model attached to the gravity instance.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="gravity.AQUALGravity.attrs.html#gravity.AQUALGravity.attrs" title="gravity.AQUALGravity.attrs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">attrs</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="gravity.AQUALGravity.attrs.html#gravity.AQUALGravity.attrs" title="gravity.AQUALGravity.attrs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">attrs</span></code></a></p></td>
 <td><p>additional attributes attached to the instance</p></td>
 </tr>
 </tbody>

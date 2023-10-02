@@ -31,6 +31,7 @@ gravity.AQUALGravity
       :recursive:
    
       ~AQUALGravity.is_calculated
+      ~AQUALGravity.potential_methods
       ~AQUALGravity.model
       ~AQUALGravity.attrs
    

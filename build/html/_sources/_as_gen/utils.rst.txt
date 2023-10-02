@@ -24,6 +24,7 @@
       log_string
       moving_average
       parse_prng
+      time_limit
       truncate_spline
    
    
@@ -37,5 +38,11 @@
    
 
    
+   
+   .. rubric:: Exceptions
+
+   .. autosummary::
+   
+      TimeoutException
    
    

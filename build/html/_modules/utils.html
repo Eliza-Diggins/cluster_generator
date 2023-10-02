@@ -395,7 +395,7 @@ document.write(`
 <span class="sd">Utility functions for basic functionality of the py:module:`cluster_generator` package.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">multiprocessing</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
 
@@ -409,6 +409,8 @@ document.write(`
 <span class="kn">import</span> <span class="nn">yaml</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">pathlib</span> <span class="k">as</span> <span class="nn">pt</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
 
 <span class="c1"># -- configuration directory -- #</span>
 <span class="n">_config_directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pt</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parents</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="s2">&quot;bin&quot;</span><span class="p">,</span><span class="s2">&quot;config.yaml&quot;</span><span class="p">)</span>
@@ -443,8 +445,11 @@ document.write(`
 
 
 <span class="c1"># warnings.filterwarnings(&quot;ignore&quot;)</span>
+<span class="n">stream</span> <span class="o">=</span> <span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="k">if</span> <span class="n">cgparams</span><span class="p">[</span><span class="s2">&quot;system&quot;</span><span class="p">][</span><span class="s2">&quot;logging&quot;</span><span class="p">][</span><span class="s2">&quot;stream&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;STDOUT&quot;</span><span class="p">,</span><span class="s2">&quot;stdout&quot;</span><span class="p">]</span> <span class="k">else</span> <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
 <span class="n">cgLogger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;cluster_generator&quot;</span><span class="p">)</span>
-<span class="n">cg_sh</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">()</span>
+
+<span class="n">cg_sh</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">(</span><span class="n">stream</span><span class="o">=</span><span class="n">stream</span><span class="p">)</span>
+
 <span class="c1"># create formatter and add it to the handlers</span>
 <span class="n">formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="n">cgparams</span><span class="p">[</span><span class="s2">&quot;system&quot;</span><span class="p">][</span><span class="s2">&quot;logging&quot;</span><span class="p">][</span><span class="s2">&quot;ufstring&quot;</span><span class="p">])</span>
 <span class="n">cg_sh</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">formatter</span><span class="p">)</span>
@@ -481,15 +486,15 @@ document.write(`
 
 
 <div class="viewcode-block" id="log_string"><a class="viewcode-back" href="../_as_gen/utils.log_string.html#utils.log_string">[docs]</a><span class="k">def</span> <span class="nf">log_string</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">cgparams</span><span class="p">[</span><span class="s2">&quot;system&quot;</span><span class="p">][</span><span class="s2">&quot;logging&quot;</span><span class="p">][</span><span class="s2">&quot;ufstring&quot;</span><span class="p">]</span> <span class="o">%</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;cluster_generator&quot;</span><span class="p">,</span> <span class="s2">&quot;asctime&quot;</span><span class="p">:</span> <span class="n">time</span><span class="o">.</span><span class="n">asctime</span><span class="p">(),</span> <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="n">message</span><span class="p">,</span> <span class="s2">&quot;levelname&quot;</span><span class="p">:</span> <span class="s2">&quot;INFO&quot;</span><span class="p">}</span></div>
+    <span class="k">return</span> <span class="n">cgparams</span><span class="p">[</span><span class="s2">&quot;system&quot;</span><span class="p">][</span><span class="s2">&quot;logging&quot;</span><span class="p">][</span><span class="s2">&quot;ufstring&quot;</span><span class="p">]</span> <span class="o">%</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;cluster_generator&quot;</span><span class="p">,</span> <span class="s2">&quot;asctime&quot;</span><span class="p">:</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-</span><span class="si">%d</span><span class="s2">-%b %H:%M:%S&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">()),</span> <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="n">message</span><span class="p">,</span> <span class="s2">&quot;levelname&quot;</span><span class="p">:</span> <span class="s2">&quot;INFO&quot;</span><span class="p">}</span></div>
 
 <div class="viewcode-block" id="eprint"><a class="viewcode-back" href="../_as_gen/utils.eprint.html#utils.eprint">[docs]</a><span class="k">def</span> <span class="nf">eprint</span><span class="p">(</span><span class="n">message</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">location</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">frmt</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">cgparams</span><span class="p">[</span><span class="s2">&quot;system&quot;</span><span class="p">][</span><span class="s2">&quot;logging&quot;</span><span class="p">][</span><span class="s2">&quot;level&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;INFO&quot;</span><span class="p">,</span><span class="s2">&quot;WARNING&quot;</span><span class="p">,</span><span class="s2">&quot;ERROR&quot;</span><span class="p">,</span><span class="s2">&quot;CRITICAL&quot;</span><span class="p">]:</span>
         <span class="k">if</span> <span class="n">frmt</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%(tabs)s</span><span class="s2">[</span><span class="si">%(location)s</span><span class="s2">]: </span><span class="si">%(asctime)s</span><span class="s2"> </span><span class="si">%(message)s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">{</span><span class="s2">&quot;location&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">location</span> <span class="k">if</span> <span class="n">location</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;-&quot;</span><span class="p">),</span> <span class="s2">&quot;asctime&quot;</span><span class="p">:</span> <span class="n">time</span><span class="o">.</span><span class="n">asctime</span><span class="p">(),</span> <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="n">message</span><span class="p">,</span> <span class="s2">&quot;tabs&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="o">*</span><span class="n">n</span><span class="p">},</span>
-              <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%(tabs)s</span><span class="s2">[</span><span class="si">%(location)s</span><span class="s2">]: </span><span class="si">%(asctime)s</span><span class="s2"> </span><span class="si">%(message)s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">{</span><span class="s2">&quot;location&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">location</span> <span class="k">if</span> <span class="n">location</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;-&quot;</span><span class="p">),</span> <span class="s2">&quot;asctime&quot;</span><span class="p">:</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-</span><span class="si">%d</span><span class="s2">-%b %H:%M:%S&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">()),</span> <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="n">message</span><span class="p">,</span> <span class="s2">&quot;tabs&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="o">*</span><span class="n">n</span><span class="p">},</span>
+              <span class="n">file</span><span class="o">=</span><span class="n">stream</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">,</span><span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+            <span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">,</span><span class="n">file</span><span class="o">=</span><span class="n">stream</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 
 <span class="c1">#: Proton Mass in ``Msun``.</span>
@@ -510,6 +515,64 @@ document.write(`
 
 <span class="c1"># -- Utility functions -- #</span>
 <span class="n">_truncator_function</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="n">x</span> <span class="o">/</span> <span class="n">r</span><span class="p">)</span> <span class="o">**</span> <span class="n">a</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">TimeoutException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span><span class="n">func</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">max_time</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">msg</span><span class="si">}</span><span class="s2"> -- </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">func</span><span class="p">)</span><span class="si">}</span><span class="s2"> -- max_time=</span><span class="si">{</span><span class="n">max_time</span><span class="si">}</span><span class="s2"> s&quot;</span>
+
+<span class="k">def</span> <span class="nf">_daemon_process_runner</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="c1"># Runs the function specified in the kwargs in a daemon process #</span>
+
+    <span class="n">send_end</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;__send_end&quot;</span><span class="p">)</span>
+    <span class="n">function</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;__function&quot;</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">function</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">send_end</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="n">send_end</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+<div class="viewcode-block" id="time_limit"><a class="viewcode-back" href="../_as_gen/utils.time_limit.html#utils.time_limit">[docs]</a><span class="k">def</span> <span class="nf">time_limit</span><span class="p">(</span><span class="n">function</span><span class="p">,</span><span class="n">max_execution_time</span><span class="p">,</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="kn">import</span> <span class="nn">time</span>
+    <span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+
+    <span class="n">recv_end</span><span class="p">,</span> <span class="n">send_end</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Pipe</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;__send_end&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">send_end</span>
+    <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;__function&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">function</span>
+
+    <span class="n">tqdm_kwargs</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;desc&quot;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="n">tqdm_kwargs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+
+    <span class="n">N</span> <span class="o">=</span> <span class="mi">1000</span>
+
+    <span class="n">p</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">_daemon_process_runner</span><span class="p">,</span><span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span><span class="n">kwargs</span><span class="o">=</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">),</span><span class="o">**</span><span class="n">tqdm_kwargs</span><span class="p">,</span><span class="n">bar_format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{desc}</span><span class="s1">: </span><span class="si">{percentage:3.0f}</span><span class="s1">%|</span><span class="si">{bar}</span><span class="s1">| [</span><span class="si">{elapsed}</span><span class="s1">&lt;</span><span class="si">{remaining}</span><span class="s1"> - </span><span class="si">{postfix}</span><span class="s1">]&#39;</span><span class="p">,</span><span class="n">colour</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">,</span><span class="n">leave</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">max_execution_time</span><span class="o">/</span><span class="mi">1000</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">p</span><span class="o">.</span><span class="n">is_alive</span><span class="p">():</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">recv_end</span><span class="o">.</span><span class="n">recv</span><span class="p">()</span>
+            <span class="k">break</span>
+
+    <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">is_alive</span><span class="p">():</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">terminate</span><span class="p">()</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+        <span class="k">raise</span> <span class="n">TimeoutException</span><span class="p">(</span><span class="s2">&quot;Failed to complete process within time limit.&quot;</span><span class="p">,</span><span class="n">func</span><span class="o">=</span><span class="n">function</span><span class="p">,</span><span class="n">max_time</span><span class="o">=</span><span class="n">max_execution_time</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">recv_end</span><span class="o">.</span><span class="n">recv</span><span class="p">()</span>
+
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span><span class="ne">Exception</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">result</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">result</span></div>
 
 
 
@@ -833,10 +896,13 @@ document.write(`
     <span class="k">return</span> <span class="n">data</span></div>
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">cgparams</span><span class="p">[</span><span class="s2">&quot;gravity&quot;</span><span class="p">][</span><span class="s2">&quot;AQUAL&quot;</span><span class="p">][</span><span class="s2">&quot;interpolation_function&quot;</span><span class="p">](</span><span class="mi">3</span><span class="p">))</span>
-    <span class="n">mylog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;sdfds&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">devLogger</span><span class="p">)</span>
-    <span class="n">devLogger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;SDfdsdfsdfSDFDFSDF&quot;</span><span class="p">)</span>
+    <span class="kn">import</span> <span class="nn">time</span>
+
+    <span class="k">def</span> <span class="nf">waiter</span><span class="p">(</span><span class="n">sec</span><span class="p">):</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">sec</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">1</span>
+
+    <span class="n">time_limit</span><span class="p">(</span><span class="n">waiter</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Execution Time&quot;</span><span class="p">)</span>
 </pre></div>
 
                 </article>

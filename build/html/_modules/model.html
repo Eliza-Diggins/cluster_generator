@@ -1091,6 +1091,7 @@ document.write(`
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="kn">from</span> <span class="nn">yt.loaders</span> <span class="kn">import</span> <span class="n">load_uniform_grid</span>
         <span class="kn">from</span> <span class="nn">cluster_generator.utils</span> <span class="kn">import</span> <span class="n">mylog</span><span class="p">,</span> <span class="n">build_yt_dataset_fields</span>
+        <span class="kn">import</span> <span class="nn">gc</span>
 
         <span class="n">mylog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loading yt dataset of </span><span class="si">{</span><span class="bp">self</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
 
@@ -1119,8 +1120,11 @@ document.write(`
         <span class="k">except</span> <span class="ne">MemoryError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">MemoryError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to allocate memory for the grid. Error msg = </span><span class="si">{</span><span class="n">err</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
 
+        <span class="n">gc</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+
         <span class="n">data</span> <span class="o">=</span> <span class="n">build_yt_dataset_fields</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">],</span> <span class="p">[</span><span class="bp">self</span><span class="p">],</span> <span class="n">domain_dimensions</span><span class="p">,</span> <span class="n">unyt_array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]],</span><span class="s2">&quot;kpc&quot;</span><span class="p">),</span> <span class="n">velocity</span> <span class="k">if</span> <span class="n">velocity</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">unyt_array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]],</span><span class="s2">&quot;kpc/Myr&quot;</span><span class="p">)</span> <span class="p">)</span>
 
+        <span class="n">gc</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">load_uniform_grid</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">domain_dimensions</span><span class="p">,</span> <span class="n">length_unit</span><span class="o">=</span><span class="s2">&quot;kpc&quot;</span><span class="p">,</span>
                                  <span class="n">bbox</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">bbox</span><span class="p">),</span> <span class="n">mass_unit</span><span class="o">=</span><span class="s2">&quot;Msun&quot;</span><span class="p">,</span> <span class="n">time_unit</span><span class="o">=</span><span class="s2">&quot;Myr&quot;</span><span class="p">,</span>
                                  <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
@@ -1434,7 +1438,8 @@ document.write(`
 
         <span class="k">with</span> <span class="n">Halo</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">log_string</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Rebuilding </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span><span class="si">}</span><span class="s2"> for physicality...&quot;</span><span class="p">),</span> <span class="n">spinner</span><span class="o">=</span><span class="s2">&quot;dots&quot;</span><span class="p">,</span>
                   <span class="n">stream</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span>
-                  <span class="n">animation</span><span class="o">=</span><span class="s2">&quot;marquee&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">h</span><span class="p">:</span>
+                  <span class="n">animation</span><span class="o">=</span><span class="s2">&quot;marquee&quot;</span><span class="p">,</span>
+                  <span class="n">enabled</span><span class="o">=</span><span class="p">(</span><span class="n">cgparams</span><span class="p">[</span><span class="s2">&quot;system&quot;</span><span class="p">][</span><span class="s2">&quot;text&quot;</span><span class="p">][</span><span class="s2">&quot;spinners&quot;</span><span class="p">]))</span> <span class="k">as</span> <span class="n">h</span><span class="p">:</span>
 
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_physical</span><span class="p">()[</span><span class="mi">0</span><span class="p">]:</span>
                 <span class="n">h</span><span class="o">.</span><span class="n">succeed</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span><span class="si">}</span><span class="s2">] is already physical.&quot;</span><span class="p">)</span>
@@ -1858,13 +1863,26 @@ document.write(`
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">cluster_generator.tests.utils</span> <span class="kn">import</span> <span class="n">generate_model_dens_temp</span>
-    <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+    <span class="kn">import</span> <span class="nn">yt</span>
+    <span class="kn">import</span> <span class="nn">pyxsim</span>
+    <span class="kn">import</span> <span class="nn">soxs</span>
+    <span class="kn">import</span> <span class="nn">cluster_generator</span> <span class="k">as</span> <span class="nn">cg</span>
+    <span class="kn">from</span> <span class="nn">cluster_generator.utils</span> <span class="kn">import</span> <span class="n">cgparams</span>
+    <span class="kn">import</span> <span class="nn">cluster_generator.collection</span> <span class="k">as</span> <span class="nn">col</span>
+    <span class="kn">from</span> <span class="nn">unyt</span> <span class="kn">import</span> <span class="n">unyt_array</span>
+    <span class="kn">import</span> <span class="nn">gc</span>
 
-    <span class="c1"># for logger in [logging.getLogger(name) for name in logging.root.manager.loggerDict]:</span>
-    <span class="c1">#    logger.setLevel(&quot;DEBUG&quot;)</span>
+    <span class="n">cgparams</span><span class="p">[</span><span class="s2">&quot;system&quot;</span><span class="p">][</span><span class="s2">&quot;text&quot;</span><span class="p">][</span><span class="s2">&quot;spinners&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
 
-    <span class="n">model</span> <span class="o">=</span> <span class="n">generate_model_dens_temp</span><span class="p">(</span><span class="n">gravity</span><span class="o">=</span><span class="s2">&quot;QUMOND&quot;</span><span class="p">)</span>
+    <span class="c1"># Loading the Vikhlinin group</span>
+    <span class="n">v_models</span> <span class="o">=</span> <span class="n">col</span><span class="o">.</span><span class="n">Vikhlinin06</span><span class="p">()</span>
+
+    <span class="c1"># Printing available models</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">v_models</span><span class="o">.</span><span class="n">names</span><span class="p">)</span>
+    <span class="c1"># Creating the relevant model</span>
+
+    <span class="n">m_m</span> <span class="o">=</span>  <span class="n">v_models</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span>
+        <span class="s2">&quot;A133&quot;</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mi">5000</span><span class="p">,</span> <span class="n">num_points</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="n">gravity</span><span class="o">=</span><span class="s2">&quot;Newtonian&quot;</span><span class="p">)</span>
 </pre></div>
 
                 </article>

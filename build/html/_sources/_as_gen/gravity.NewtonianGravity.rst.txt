@@ -31,6 +31,7 @@ gravity.NewtonianGravity
       :recursive:
    
       ~NewtonianGravity.is_calculated
+      ~NewtonianGravity.potential_methods
       ~NewtonianGravity.model
       ~NewtonianGravity.attrs
    

@@ -28,6 +28,7 @@ gravity.Gravity
       :recursive:
    
       ~Gravity.is_calculated
+      ~Gravity.potential_methods
       ~Gravity.model
       ~Gravity.attrs
    
