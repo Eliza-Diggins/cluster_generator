@@ -359,6 +359,7 @@ document.write(`
 <li class="toctree-l2"><a class="reference internal" href="utils.integrate_mass.html">utils.integrate_mass</a></li>
 <li class="toctree-l2"><a class="reference internal" href="utils.integrate_toinf.html">utils.integrate_toinf</a></li>
 <li class="toctree-l2"><a class="reference internal" href="utils.log_string.html">utils.log_string</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.monotone_interpolation.html">utils.monotone_interpolation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="utils.moving_average.html">utils.moving_average</a></li>
 <li class="toctree-l2"><a class="reference internal" href="utils.parse_prng.html">utils.parse_prng</a></li>
 <li class="toctree-l2"><a class="reference internal" href="utils.time_limit.html">utils.time_limit</a></li>
@@ -853,16 +854,19 @@ document.write(`
 <tr class="row-even"><td><p><a class="reference internal" href="utils.log_string.html#utils.log_string" title="utils.log_string"><code class="xref py py-obj docutils literal notranslate"><span class="pre">log_string</span></code></a>(message)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="utils.moving_average.html#utils.moving_average" title="utils.moving_average"><code class="xref py py-obj docutils literal notranslate"><span class="pre">moving_average</span></code></a>(array, n)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="utils.monotone_interpolation.html#utils.monotone_interpolation" title="utils.monotone_interpolation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">monotone_interpolation</span></code></a>(x, y[, buffer, rtol])</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="utils.parse_prng.html#utils.parse_prng" title="utils.parse_prng"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse_prng</span></code></a>(prng)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="utils.moving_average.html#utils.moving_average" title="utils.moving_average"><code class="xref py py-obj docutils literal notranslate"><span class="pre">moving_average</span></code></a>(array, n)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="utils.time_limit.html#utils.time_limit" title="utils.time_limit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">time_limit</span></code></a>(function, max_execution_time, ...)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="utils.parse_prng.html#utils.parse_prng" title="utils.parse_prng"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse_prng</span></code></a>(prng)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="utils.truncate_spline.html#utils.truncate_spline" title="utils.truncate_spline"><code class="xref py py-obj docutils literal notranslate"><span class="pre">truncate_spline</span></code></a>(f, r_t, a)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="utils.time_limit.html#utils.time_limit" title="utils.time_limit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">time_limit</span></code></a>(function, max_execution_time, ...)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="utils.truncate_spline.html#utils.truncate_spline" title="utils.truncate_spline"><code class="xref py py-obj docutils literal notranslate"><span class="pre">truncate_spline</span></code></a>(f, r_t, a)</p></td>
 <td><p>Takes the function <code class="docutils literal notranslate"><span class="pre">f</span></code> and returns a truncated equivalent of it, which becomes</p></td>
 </tr>
 </tbody>

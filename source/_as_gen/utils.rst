@@ -22,6 +22,7 @@
       integrate_mass
       integrate_toinf
       log_string
+      monotone_interpolation
       moving_average
       parse_prng
       time_limit
