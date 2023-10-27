@@ -16,14 +16,10 @@
       ensure_list
       ensure_ytarray
       ensure_ytquantity
-      eprint
       generate_particle_radii
       integrate
       integrate_mass
       integrate_toinf
-      log_string
-      monotone_interpolation
-      moving_average
       parse_prng
       time_limit
       truncate_spline
@@ -35,6 +31,15 @@
    
 
    
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+      :toctree:
+      :template: class.rst
+      :recursive:
+   
+      LogMute
    
    
 

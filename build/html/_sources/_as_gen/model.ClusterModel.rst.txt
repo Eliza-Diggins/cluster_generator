@@ -20,6 +20,7 @@ model.ClusterModel
       ~ClusterModel.check_star_virial
       ~ClusterModel.create_dataset
       ~ClusterModel.find_field_at_radius
+      ~ClusterModel.find_radius_for_density
       ~ClusterModel.from_arrays
       ~ClusterModel.from_dens_and_entr
       ~ClusterModel.from_dens_and_tden
@@ -29,16 +30,17 @@ model.ClusterModel
       ~ClusterModel.generate_gas_particles
       ~ClusterModel.generate_star_particles
       ~ClusterModel.generate_tracer_particles
-      ~ClusterModel.is_physical
+      ~ClusterModel.items
       ~ClusterModel.keys
       ~ClusterModel.mass_in_radius
       ~ClusterModel.no_gas
+      ~ClusterModel.panel_plot
       ~ClusterModel.plot
-      ~ClusterModel.rebuild_physical
       ~ClusterModel.set_field
       ~ClusterModel.set_magnetic_field_from_beta
       ~ClusterModel.set_magnetic_field_from_density
       ~ClusterModel.set_rmax
+      ~ClusterModel.values
       ~ClusterModel.write_model_to_ascii
       ~ClusterModel.write_model_to_binary
       ~ClusterModel.write_model_to_h5
@@ -55,11 +57,9 @@ model.ClusterModel
    
       ~ClusterModel.default_fields
       ~ClusterModel.dm_virial
-      ~ClusterModel.pot
+      ~ClusterModel.properties
       ~ClusterModel.star_virial
-      ~ClusterModel.virialization_method
       ~ClusterModel.fields
       ~ClusterModel.num_elements
-      ~ClusterModel.attrs
    
    

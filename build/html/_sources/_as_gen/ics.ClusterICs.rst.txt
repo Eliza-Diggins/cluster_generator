@@ -15,7 +15,6 @@ ics.ClusterICs
       :recursive:
    
       ~ClusterICs.__init__
-      ~ClusterICs.compute_orbits
       ~ClusterICs.create_dataset
       ~ClusterICs.from_file
       ~ClusterICs.resample_particle_ics
@@ -25,20 +24,5 @@ ics.ClusterICs
    
 
    
-   
-   .. rubric:: Attributes
-
-   .. autosummary::
-      :toctree:
-      :recursive:
-   
-      ~ClusterICs.basename
-      ~ClusterICs.num_halos
-      ~ClusterICs.profiles
-      ~ClusterICs.center
-      ~ClusterICs.velocity
-      ~ClusterICs.mag_file
-      ~ClusterICs.r_max
-      ~ClusterICs.tot_np
    
    

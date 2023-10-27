@@ -1,0 +1,755 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Quickstart Guide &#8212; cluster_generator  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=c5ced968eda925caa686" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=c5ced968eda925caa686" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=c5ced968eda925caa686" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=c5ced968eda925caa686" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=eafc0fe6" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/css/tooltipster.custom.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/tooltipster.bundle.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/tooltipster-sideTip-shadow.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/tooltipster-sideTip-punk.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/tooltipster-sideTip-noir.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/tooltipster-sideTip-light.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/tooltipster-sideTip-borderless.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/micromodal.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=c5ced968eda925caa686" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=c5ced968eda925caa686" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=c5ced968eda925caa686"></script>
+
+    <script src="_static/jquery.js?v=5d32c60e"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+    <script src="_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/js/hoverxref.js"></script>
+    <script src="_static/js/tooltipster.bundle.min.js"></script>
+    <script src="_static/js/micromodal.min.js"></script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'getting_started';</script>
+    <link rel="icon" href="_static/cluster_generator_logo.png"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Examples" href="examples.html" />
+    <link rel="prev" title="The Cluster Generator Project" href="index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/cluster_generator_logo.png" class="logo__image only-light" alt="cluster_generator  documentation - Home"/>
+    <script>document.write(`<img src="_static/cluster_generator_logo.png" class="logo__image only-dark" alt="cluster_generator  documentation - Home"/>`);</script>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="#">
+                        Quickstart Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="examples.html">
+                        Examples
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="models.html">
+                        Cluster Models
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="codes.html">
+                        Simulation Software
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="api.html">
+                        API
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+        </div>
+      
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+    </div>
+  
+
+  
+    <label class="sidebar-toggle secondary-toggle" for="__secondary" tabindex="0">
+      <span class="fa-solid fa-outdent"></span>
+    </label>
+  
+</div>
+
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="#">
+                        Quickstart Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="examples.html">
+                        Examples
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="models.html">
+                        Cluster Models
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="codes.html">
+                        Simulation Software
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="api.html">
+                        API
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">Quickstart Guide</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section id="quickstart-guide">
+<span id="getting-started"></span><h1><a class="toc-backref" href="#id5" role="doc-backlink">Quickstart Guide</a><a class="headerlink" href="#quickstart-guide" title="Link to this heading">#</a></h1>
+<hr style="color:black"><nav class="contents" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#quickstart-guide" id="id5">Quickstart Guide</a></p>
+<ul>
+<li><p><a class="reference internal" href="#introduction" id="id6">Introduction</a></p></li>
+<li><p><a class="reference internal" href="#installing-the-package" id="id7">Installing the Package</a></p>
+<ul>
+<li><p><a class="reference internal" href="#dependencies" id="id8">Dependencies</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id1" id="id9">Getting Started</a></p>
+<ul>
+<li><p><a class="reference internal" href="#quickstart-guides" id="id10">Quickstart Guides</a></p></li>
+<li><p><a class="reference internal" href="#units" id="id11">Units</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+<hr style="height:10px;background-color:black"><section id="introduction">
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Introduction</a><a class="headerlink" href="#introduction" title="Link to this heading">#</a></h2>
+<p>Galaxy clusters are the largest gravitationally bound objects in the universe
+and the current endpoints of the process of cosmological structure formation.
+Clusters are made of dark matter (DM), the hot, magnetized, and X-ray-emitting
+gas known as the intracluster medium (ICM), and their constituent galaxies.</p>
+<p>For many applications, especially those focusing on the properties of the DM
+and ICM, clusters can be approximated as roughly spherically symmetric objects.
+This is often done using standard radial profiles for the various physical
+properties of the cluster, as well as assuming hydrostatic and virial equilibrium.</p>
+<p>These models are especially useful for semi-analytic studies and idealized
+N-body / (magneto)hydrodynamic simulations of clusters, whether of single objects
+or mergers between two or more. This is the purpose of the <code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code>
+package, which generates equilibrium cluster models from radial profile inputs.
+These models can be used to produce distributions of gas, DM, and star particles
+in hydrostatic and virial equilibrium for input into simulations. There is also
+the ability to create magnetic or velocity fields in three dimensions based on
+the properties of the cluster(s) which are modeled. Finally, <code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code>
+can be used to set up initial conditions for single-cluster or merger simulations
+for a number of N-body/hydrodynamic codes used in the astrophysics community.</p>
+</section>
+<section id="installing-the-package">
+<span id="installation"></span><h2><a class="toc-backref" href="#id7" role="doc-backlink">Installing the Package</a><a class="headerlink" href="#installing-the-package" title="Link to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code> package can be obtained for python versions 3.8 and up. The first step towards working with the CGP is
+obtaining the package. There are a few ways to do this, we encourage you to choose the best option from those below and follow their
+instructions to obtain the package:</p>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="raw-html">&#127760;</span> From PyPI<div class="sd-summary-down docutils">
+<svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-down" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 8.72a.75.75 0 000 1.06l6.25 6.25a.75.75 0 001.06 0l6.25-6.25a.75.75 0 00-1.06-1.06L12 14.44 6.28 8.72a.75.75 0 00-1.06 0z"></path></svg></div>
+<div class="sd-summary-up docutils">
+<svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-up" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M18.78 15.28a.75.75 0 000-1.06l-6.25-6.25a.75.75 0 00-1.06 0l-6.25 6.25a.75.75 0 101.06 1.06L12 9.56l5.72 5.72a.75.75 0 001.06 0z"></path></svg></div>
+</summary><div class="sd-summary-content sd-card-body docutils">
+<div class="admonition-not-yet-implemented admonition">
+<p class="admonition-title">Not Yet Implemented</p>
+<p class="sd-card-text">Pardon our dust, we’ve not quite finished implementing this feature. We will update this page once this feature
+is finished.</p>
+</div>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="raw-html">&#128225;</span> From PIP<div class="sd-summary-down docutils">
+<svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-down" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 8.72a.75.75 0 000 1.06l6.25 6.25a.75.75 0 001.06 0l6.25-6.25a.75.75 0 00-1.06-1.06L12 14.44 6.28 8.72a.75.75 0 00-1.06 0z"></path></svg></div>
+<div class="sd-summary-up docutils">
+<svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-up" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M18.78 15.28a.75.75 0 000-1.06l-6.25-6.25a.75.75 0 00-1.06 0l-6.25 6.25a.75.75 0 101.06 1.06L12 9.56l5.72 5.72a.75.75 0 001.06 0z"></path></svg></div>
+</summary><div class="sd-summary-content sd-card-body docutils">
+<div class="admonition-not-yet-implemented admonition">
+<p class="admonition-title">Not Yet Implemented</p>
+<p class="sd-card-text">Pardon our dust, we’ve not quite finished implementing this feature. We will update this page once this feature
+is finished.</p>
+</div>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="raw-html">&#128013;</span> From CONDA<div class="sd-summary-down docutils">
+<svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-down" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 8.72a.75.75 0 000 1.06l6.25 6.25a.75.75 0 001.06 0l6.25-6.25a.75.75 0 00-1.06-1.06L12 14.44 6.28 8.72a.75.75 0 00-1.06 0z"></path></svg></div>
+<div class="sd-summary-up docutils">
+<svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-up" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M18.78 15.28a.75.75 0 000-1.06l-6.25-6.25a.75.75 0 00-1.06 0l-6.25 6.25a.75.75 0 101.06 1.06L12 9.56l5.72 5.72a.75.75 0 001.06 0z"></path></svg></div>
+</summary><div class="sd-summary-content sd-card-body docutils">
+<div class="admonition-not-yet-implemented admonition">
+<p class="admonition-title">Not Yet Implemented</p>
+<p class="sd-card-text">Pardon our dust, we’ve not quite finished implementing this feature. We will update this page once this feature
+is finished.</p>
+</div>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="raw-html">&#128195;</span> From Source [Recommended]<div class="sd-summary-down docutils">
+<svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-down" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 8.72a.75.75 0 000 1.06l6.25 6.25a.75.75 0 001.06 0l6.25-6.25a.75.75 0 00-1.06-1.06L12 14.44 6.28 8.72a.75.75 0 00-1.06 0z"></path></svg></div>
+<div class="sd-summary-up docutils">
+<svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-up" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M18.78 15.28a.75.75 0 000-1.06l-6.25-6.25a.75.75 0 00-1.06 0l-6.25 6.25a.75.75 0 101.06 1.06L12 9.56l5.72 5.72a.75.75 0 001.06 0z"></path></svg></div>
+</summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Installing the library directly from the source code is surprisingly easy! To get started, navigate to the directory
+in which you would like to place the raw source code and use the following git command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>git+https://www.github.com/jzuhone/cluster_generator
+</pre></div>
+</div>
+<p class="sd-card-text">This will generate a clone of the code in your local directory and install the software all at the same time.</p>
+</div>
+</details><section id="dependencies">
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">Dependencies</a><a class="headerlink" href="#dependencies" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code> is compatible with Python 3.8+, and requires the following
+Python packages:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="http://unyt.readthedocs.org">unyt</a> [Units and quantity manipulations]</p></li>
+<li><p><a class="reference external" href="http://www.numpy.org">numpy</a> [Numerical operations]</p></li>
+<li><p><a class="reference external" href="http://www.scipy.org">scipy</a> [Interpolation and curve fitting]</p></li>
+<li><p><a class="reference external" href="http://www.h5py.org">h5py</a> [h5 file interaction]</p></li>
+<li><p><a class="reference external" href="https://tqdm.github.io">tqdm</a> [Progress bars]</p></li>
+<li><p><a class="reference external" href="https://yaml.readthedocs.io">ruamel.yaml</a> [yaml support]</p></li>
+<li><p><a class="reference external" href="https://github.com/uqfoundation/dill">dill</a> [Serialization]</p></li>
+<li><p><a class="reference external" href="https://github.com/manrajgrover/halo">halo</a> [Progress Spinners]</p></li>
+<li><p><a class="reference external" href="https://github.com/pandas-dev/pandas">pandas</a> [Dataset Manipulations]</p></li>
+</ul>
+<p>These will be installed automatically if you use <code class="docutils literal notranslate"><span class="pre">pip</span></code> or <code class="docutils literal notranslate"><span class="pre">conda</span></code> as detailed below.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>There are a variety of additional libraries which provide very useful interfacing utilities for the CGP. Though not required,
+we do recommend installing the following libraries to maximize the utility of the package:</p>
+<ul class="simple">
+<li><p>[<a class="reference external" href="https://yt-project.org">yt project</a>]: Used to generate in-memory, 3D-grid datasets for the models and ICs generated in
+cluster generator. This can be used to generate plots, measure profiles and complete other useful pre-simulation tasks.</p></li>
+<li><p>[<a class="reference external" href="http://hea-www.cfa.harvard.edu/~jzuhone/pyxsim/index.html">PyXSIM</a>]: PyXSIM can be used to generate simulated photon lists
+from yt datasets which can then be analyzed to get spectra and which can be passed to an instrumentation simulator for mock observation.</p></li>
+<li><p>[<a class="reference external" href="https://www.lynxobservatory.com/soxs">SOXS</a>]: Complementing PyXSIM, SOXS is an instrument simulator which allows users to convert photon lists from PyXSIM into
+mock observations to be studied.</p></li>
+</ul>
+</div>
+<hr style="height:10px;background-color:black"></section>
+</section>
+<section id="id1">
+<h2><a class="toc-backref" href="#id9" role="doc-backlink">Getting Started</a><a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<p>To begin using <code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code>, first install the library by following the instructions in the <a class="reference internal" href="#installation"><span class="std std-ref">Installing the Package</span></a> section.</p>
+<p>Once you’ve installed the package, have a look at the note on unit conventions (<a class="reference internal" href="#units"><span class="std std-ref">here</span></a>). Once you’re familiar with the units,
+we recommend you begin on this page by reading through our quickstart guide to get your feet wet.</p>
+<hr style="height:2px;background-color:black"><section id="quickstart-guides">
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">Quickstart Guides</a><a class="headerlink" href="#quickstart-guides" title="Link to this heading">#</a></h3>
+<div class="sd-sphinx-override sd-cards-carousel sd-card-cols-3 docutils">
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Your First Journey with CGP</div>
+<p class="sd-card-text">Learn the basics of the CGP while taking a model of galaxy cluster Abell 133
+all the way from literature to RAMSES simulation. This guide will show you
+the basic pipeline from analytical profiles to actually running a simulation.</p>
+</div>
+<div class="sd-card-footer docutils">
+<p class="sd-card-text"><img alt="beginner" src="https://img.shields.io/badge/Difficulty-Beginner-green" /> <img alt="20min" src="https://img.shields.io/badge/20min-blue" /></p>
+</div>
+<span class="sd-stretched-link"></span></div>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+The Gravitational Wonderland</div>
+<p class="sd-card-text">Learn the is and outs of the CGP’s non-Newtonian gravitational theories in this
+step by step guide for producing MONDian simulations.</p>
+</div>
+<div class="sd-card-footer docutils">
+<p class="sd-card-text"><img alt="beginner" src="https://img.shields.io/badge/Difficulty-Beginner-green" /> <img alt="20min" src="https://img.shields.io/badge/20min-blue" /> <img alt="feature" src="https://img.shields.io/badge/Feature-purple" /> <img alt="nyi" src="https://img.shields.io/badge/NotYetImplemented-red" /></p>
+</div>
+</div>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Collections</div>
+<p class="sd-card-text">Learn how to pull cluster models directly from literature using the
+<code class="xref py py-mod docutils literal notranslate"><span class="pre">collection</span></code> module.</p>
+</div>
+<div class="sd-card-footer docutils">
+<p class="sd-card-text"><img alt="beginner" src="https://img.shields.io/badge/Difficulty-Beginner-green" /> <img alt="10min" src="https://img.shields.io/badge/10min-blue" /> <img alt="feature" src="https://img.shields.io/badge/Feature-purple" /> <img alt="nyi" src="https://img.shields.io/badge/NotYetImplemented-red" /></p>
+</div>
+</div>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Virialization Methods</div>
+<p class="sd-card-text">Learn about the ins and outs of virialization in the CGP’s initial conditions.</p>
+</div>
+<div class="sd-card-footer docutils">
+<p class="sd-card-text"><img alt="intermediate" src="https://img.shields.io/badge/Difficulty-Intermediate-blue" /> <img alt="20min" src="https://img.shields.io/badge/20min-blue" /> <img alt="nyi" src="https://img.shields.io/badge/NotYetImplemented-red" /></p>
+</div>
+</div>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Correcting Non-Physical Behaviors</div>
+<p class="sd-card-text">In this guide, we consider the cluster A133 and its analytical model, which is
+non-physical in certain radii. We show the tools available for correcting these
+issues.</p>
+</div>
+<div class="sd-card-footer docutils">
+<p class="sd-card-text"><img alt="beginner" src="https://img.shields.io/badge/Difficulty-Beginner-green" /> <img alt="20min" src="https://img.shields.io/badge/20min-blue" /> <img alt="nyi" src="https://img.shields.io/badge/NotYetImplemented-red" /></p>
+</div>
+</div>
+</div>
+<p>If you’re already somewhat familiar with
+the code and you’re looking for something a little more in depth, the following sections may provide a more concrete introduction to
+many of the core aspects of the code:</p>
+<p>The best place to start is <a class="reference internal" href="radial_profiles.html#radial-profiles"><span class="std std-ref">Radial Profiles</span></a>, to see which analytical radial profile models for gas, DM,
+and star properties can be used to create equilibrium models, which are discussed
+in the <a class="reference internal" href="models.html#cluster-models"><span class="std std-ref">Cluster Models</span></a> section. This section begins with some helpful mathematical
+background in <a class="reference internal" href="models.html#math-overview-models"><span class="std std-ref">Cluster Models: Mathematical Overview</span></a>. For some, this may be all you need.</p>
+<p>However, if you want to use these models to generate particles for simulations or
+other analysis, check out the <a class="reference internal" href="particles.html#particles"><span class="std std-ref">Particles</span></a> section. For setting up DM and/or
+star particles in virial equilibrium, <a class="reference internal" href="particles.html#math-overview-particles"><span class="std std-ref">Virial Equilibria: Mathematical Overview</span></a> provides a
+mathematical overview.</p>
+<p>If you want to create 3-dimensional magnetic or velocity fields based on the
+cluster properties, check out <a class="reference internal" href="fields.html#fields"><span class="std std-ref">Generating 3D Cluster Fields</span></a>.</p>
+<p>Finally, though one can follow all of the steps individually to create initial
+conditions for simulations, <code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code> provides some handy tools and
+documentation to create initial conditions for a number of popular codes in the
+<a class="reference internal" href="initial_conditions.html#initial-conditions"><span class="std std-ref">Initial Conditions Generation</span></a> and <a class="reference internal" href="codes.html#codes"><span class="std std-ref">Simulation Software</span></a> sections.</p>
+<p>Code examples are given throughout the text, but some fully-worked examples of
+generating models from start to finish are given in the <a class="reference internal" href="examples.html#examples"><span class="std std-ref">Examples</span></a> section.</p>
+</section>
+<section id="units">
+<span id="id2"></span><h3><a class="toc-backref" href="#id11" role="doc-backlink">Units</a><a class="headerlink" href="#units" title="Link to this heading">#</a></h3>
+<p>The unit system assumed in <code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code> is designed to use units
+appropriate for cluster scales:</p>
+<ul class="simple">
+<li><p>Length: <span class="math notranslate nohighlight">\({\rm kpc}\)</span></p></li>
+<li><p>Time: <span class="math notranslate nohighlight">\({\rm Myr}\)</span></p></li>
+<li><p>Mass: <span class="math notranslate nohighlight">\({\rm M_\odot}\)</span></p></li>
+</ul>
+<p>From these three, the units for other quantities, such as density, pressure,
+specific energy, gravitational potential, etc. are straighforwardly derived.
+These are the units which will be assumed for all inputs (whether arrays or
+scalars) to the functions in <code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code>, unless otherwise specified
+in the documentation and/or docstrings. What this means in practice is that if
+one supplies an input without units, it is assumed to be in the above units
+depending on the type of input (e.g., position, velocity, etc.). If you supply
+an input with units attached from <a class="reference external" href="https://yt-project.org">yt</a> or
+<a class="reference external" href="http://unyt.readthedocs.org">unyt</a>, it will be converted to the above units
+internally before performing any calculations.</p>
+<p>Some examples:</p>
+<p>Most quantities which are returned as outputs of <code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code> functions
+have units attached, using <a class="reference external" href="http://unyt.readthedocs.org">unyt</a>. These are usually in the above unit system.
+For some output quantities, these units are sometimes used:</p>
+<ul class="simple">
+<li><p>Number density: <span class="math notranslate nohighlight">\({\rm cm^{-3}}\)</span></p></li>
+<li><p>Temperature: <span class="math notranslate nohighlight">\({\rm keV}\)</span></p></li>
+<li><p>Entropy: <span class="math notranslate nohighlight">\({\rm keV~cm^2}\)</span></p></li>
+</ul>
+<hr style="height:10px;background-color:black"></section>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">The Cluster Generator Project</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="examples.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Examples</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installing-the-package">Installing the Package</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dependencies">Dependencies</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Getting Started</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quickstart-guides">Quickstart Guides</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#units">Units</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div class="tocsection sourcelink">
+    <a href="_sources/getting_started.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=c5ced968eda925caa686"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=c5ced968eda925caa686"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+  <p class="copyright">
+    
+      © Copyright 2020, John ZuHone.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.14.2.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

@@ -34,5 +34,6 @@ radial_profiles.RadialProfile
       :recursive:
    
       ~RadialProfile.builtin
+      ~RadialProfile.name
    
    

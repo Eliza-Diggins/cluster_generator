@@ -17,17 +17,18 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=c5ced968eda925caa686" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=c5ced968eda925caa686" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=c5ced968eda925caa686" rel="stylesheet" />
 
   
-  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=c5ced968eda925caa686" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fd506691" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/css/tooltipster.custom.css" />
     <link rel="stylesheet" type="text/css" href="_static/css/tooltipster.bundle.min.css" />
@@ -40,14 +41,15 @@
     <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=c5ced968eda925caa686" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=c5ced968eda925caa686" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=c5ced968eda925caa686"></script>
 
     <script src="_static/jquery.js?v=5d32c60e"></script>
     <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=ccbe24c1"></script>
+    <script src="_static/documentation_options.js?v=5929fcd5"></script>
     <script src="_static/doctools.js?v=888ff710"></script>
-    <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="_static/copybutton.js?v=f281be69"></script>
     <script src="_static/js/hoverxref.js"></script>
@@ -60,6 +62,7 @@
     <script src="https://unpkg.com/mermaid@10.2.0/dist/mermaid.min.js"></script>
     <script>mermaid.initialize({startOnLoad:true});</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'genindex';</script>
+    <link rel="icon" href="_static/cluster_generator_logo.png"/>
     <link rel="index" title="Index" href="#" />
     <link rel="search" title="Search" href="search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -72,6 +75,15 @@
   
   
   <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
   
   <input type="checkbox"
           class="sidebar-toggle"
@@ -112,7 +124,8 @@
     <span class="fa-solid fa-bars"></span>
   </label>
   
-  <div class="navbar-header-items__start">
+  
+  <div class="col-lg-3 navbar-header-items__start">
     
       <div class="navbar-item">
   
@@ -123,12 +136,18 @@
   
   
   
-    <p class="title logo__title">cluster_generator  documentation</p>
+    
+    
+      
+    
+    
+    <img src="_static/cluster_generator_logo.png" class="logo__image only-light" alt="cluster_generator  documentation - Home"/>
+    <script>document.write(`<img src="_static/cluster_generator_logo.png" class="logo__image only-dark" alt="cluster_generator  documentation - Home"/>`);</script>
+  
   
 </a></div>
     
   </div>
-  
   
   <div class="col-lg-9 navbar-header-items">
     
@@ -144,15 +163,15 @@
   <ul class="bd-navbar-elements navbar-nav">
     
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="Getting_Started.html">
+                      <a class="nav-link nav-internal" href="getting_started.html">
                         Quickstart Guide
                       </a>
                     </li>
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="gravity.html">
-                        Gravity Theories
+                      <a class="nav-link nav-internal" href="examples.html">
+                        Examples
                       </a>
                     </li>
                 
@@ -165,33 +184,18 @@
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="collections.html">
-                        Collections
+                      <a class="nav-link nav-internal" href="codes.html">
+                        Simulation Software
                       </a>
                     </li>
                 
 
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="examples.html">
-                        Examples
-                      </a>
-                    </li>
-                
-            <div class="nav-item dropdown">
-                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    More
-                </button>
-                <div class="dropdown-menu">
-                    
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="api.html">
                         API
                       </a>
                     </li>
                 
-                </div>
-            </div>
-            
   </ul>
 </nav></div>
       
@@ -202,23 +206,25 @@
       
         <div class="navbar-item navbar-persistent--container">
           
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass"></i>
-  </button>
-`);
-</script>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
         </div>
       
       
         <div class="navbar-item">
 <script>
 document.write(`
-  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
 `);
 </script></div>
@@ -229,13 +235,15 @@ document.write(`
   
   
     <div class="navbar-persistent--mobile">
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass"></i>
-  </button>
-`);
-</script>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
     </div>
   
 
@@ -266,15 +274,15 @@ document.write(`
   <ul class="bd-navbar-elements navbar-nav">
     
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="Getting_Started.html">
+                      <a class="nav-link nav-internal" href="getting_started.html">
                         Quickstart Guide
                       </a>
                     </li>
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="gravity.html">
-                        Gravity Theories
+                      <a class="nav-link nav-internal" href="examples.html">
+                        Examples
                       </a>
                     </li>
                 
@@ -287,33 +295,18 @@ document.write(`
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="collections.html">
-                        Collections
+                      <a class="nav-link nav-internal" href="codes.html">
+                        Simulation Software
                       </a>
                     </li>
                 
 
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="examples.html">
-                        Examples
-                      </a>
-                    </li>
-                
-            <div class="nav-item dropdown">
-                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    More
-                </button>
-                <div class="dropdown-menu">
-                    
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="api.html">
                         API
                       </a>
                     </li>
                 
-                </div>
-            </div>
-            
   </ul>
 </nav></div>
         
@@ -326,10 +319,10 @@ document.write(`
           <div class="navbar-item">
 <script>
 document.write(`
-  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
 `);
 </script></div>
@@ -379,8 +372,8 @@ document.write(`
  | <a href="#L"><strong>L</strong></a>
  | <a href="#M"><strong>M</strong></a>
  | <a href="#N"><strong>N</strong></a>
+ | <a href="#O"><strong>O</strong></a>
  | <a href="#P"><strong>P</strong></a>
- | <a href="#Q"><strong>Q</strong></a>
  | <a href="#R"><strong>R</strong></a>
  | <a href="#S"><strong>S</strong></a>
  | <a href="#T"><strong>T</strong></a>
@@ -392,14 +385,20 @@ document.write(`
 <h2 id="_">_</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="_as_gen/collection.Ascasibar07.__init__.html#collection.Ascasibar07.__init__">__init__() (collection.Ascasibar07 method)</a>
+      <li><a href="_as_gen/correction.NonPhysicalRegion.__init__.html#correction.NonPhysicalRegion.__init__">__init__() (correction.NonPhysicalRegion method)</a>
 
       <ul>
-        <li><a href="_as_gen/collection.ClusterCollection.__init__.html#collection.ClusterCollection.__init__">(collection.ClusterCollection method)</a>
+        <li><a href="_as_gen/correction.Type0aNPR.__init__.html#correction.Type0aNPR.__init__">(correction.Type0aNPR method)</a>
 </li>
-        <li><a href="_as_gen/collection.Sanderson10.__init__.html#collection.Sanderson10.__init__">(collection.Sanderson10 method)</a>
+        <li><a href="_as_gen/correction.Type0bNPR.__init__.html#correction.Type0bNPR.__init__">(correction.Type0bNPR method)</a>
 </li>
-        <li><a href="_as_gen/collection.Vikhlinin06.__init__.html#collection.Vikhlinin06.__init__">(collection.Vikhlinin06 method)</a>
+        <li><a href="_as_gen/correction.Type0cNPR.__init__.html#correction.Type0cNPR.__init__">(correction.Type0cNPR method)</a>
+</li>
+        <li><a href="_as_gen/correction.Type0NPR.__init__.html#correction.Type0NPR.__init__">(correction.Type0NPR method)</a>
+</li>
+        <li><a href="_as_gen/correction.Type1aNPR.__init__.html#correction.Type1aNPR.__init__">(correction.Type1aNPR method)</a>
+</li>
+        <li><a href="_as_gen/correction.Type1NPR.__init__.html#correction.Type1NPR.__init__">(correction.Type1NPR method)</a>
 </li>
         <li><a href="_as_gen/fields.ClusterField.__init__.html#fields.ClusterField.__init__">(fields.ClusterField method)</a>
 </li>
@@ -417,16 +416,6 @@ document.write(`
 </li>
         <li><a href="_as_gen/fields.RandomVelocityField.__init__.html#fields.RandomVelocityField.__init__">(fields.RandomVelocityField method)</a>
 </li>
-        <li><a href="_as_gen/gravity.AQUALGravity.__init__.html#gravity.AQUALGravity.__init__">(gravity.AQUALGravity method)</a>
-</li>
-        <li><a href="_as_gen/gravity.EMONDGravity.__init__.html#gravity.EMONDGravity.__init__">(gravity.EMONDGravity method)</a>
-</li>
-        <li><a href="_as_gen/gravity.Gravity.__init__.html#gravity.Gravity.__init__">(gravity.Gravity method)</a>
-</li>
-        <li><a href="_as_gen/gravity.NewtonianGravity.__init__.html#gravity.NewtonianGravity.__init__">(gravity.NewtonianGravity method)</a>
-</li>
-        <li><a href="_as_gen/gravity.QUMONDGravity.__init__.html#gravity.QUMONDGravity.__init__">(gravity.QUMONDGravity method)</a>
-</li>
         <li><a href="_as_gen/ics.ClusterICs.__init__.html#ics.ClusterICs.__init__">(ics.ClusterICs method)</a>
 </li>
         <li><a href="_as_gen/model.ClusterModel.__init__.html#model.ClusterModel.__init__">(model.ClusterModel method)</a>
@@ -436,6 +425,8 @@ document.write(`
         <li><a href="_as_gen/particles.ClusterParticles.__init__.html#particles.ClusterParticles.__init__">(particles.ClusterParticles method)</a>
 </li>
         <li><a href="_as_gen/radial_profiles.RadialProfile.__init__.html#radial_profiles.RadialProfile.__init__">(radial_profiles.RadialProfile method)</a>
+</li>
+        <li><a href="_as_gen/utils.LogMute.__init__.html#utils.LogMute.__init__">(utils.LogMute method)</a>
 </li>
         <li><a href="_as_gen/virial.VirialEquilibrium.__init__.html#virial.VirialEquilibrium.__init__">(virial.VirialEquilibrium method)</a>
 </li>
@@ -452,6 +443,8 @@ document.write(`
 </li>
       <li><a href="_as_gen/particles.ClusterParticles.add_black_hole.html#particles.ClusterParticles.add_black_hole">add_black_hole() (particles.ClusterParticles method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_as_gen/radial_profiles.RadialProfile.add_core.html#radial_profiles.RadialProfile.add_core">add_core() (radial_profiles.RadialProfile method)</a>
 </li>
       <li><a href="_as_gen/particles.ClusterParticles.add_offsets.html#particles.ClusterParticles.add_offsets">add_offsets() (particles.ClusterParticles method)</a>
@@ -460,28 +453,6 @@ document.write(`
 </li>
       <li><a href="_as_gen/radial_profiles.am06_temperature_profile.html#radial_profiles.am06_temperature_profile">am06_temperature_profile() (in module radial_profiles)</a>
 </li>
-      <li><a href="_as_gen/gravity.AQUALGravity.html#gravity.AQUALGravity">AQUALGravity (class in gravity)</a>
-</li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="_as_gen/collection.Ascasibar07.html#collection.Ascasibar07">Ascasibar07 (class in collection)</a>
-</li>
-      <li><a href="_as_gen/gravity.AQUALGravity.attrs.html#gravity.AQUALGravity.attrs">attrs (gravity.AQUALGravity attribute)</a>
-
-      <ul>
-        <li><a href="_as_gen/gravity.EMONDGravity.attrs.html#gravity.EMONDGravity.attrs">(gravity.EMONDGravity attribute)</a>
-</li>
-        <li><a href="_as_gen/gravity.Gravity.attrs.html#gravity.Gravity.attrs">(gravity.Gravity attribute)</a>
-</li>
-        <li><a href="_as_gen/gravity.NewtonianGravity.attrs.html#gravity.NewtonianGravity.attrs">(gravity.NewtonianGravity attribute)</a>
-</li>
-        <li><a href="_as_gen/gravity.QUMONDGravity.attrs.html#gravity.QUMONDGravity.attrs">(gravity.QUMONDGravity attribute)</a>
-</li>
-        <li><a href="_as_gen/model.ClusterModel.attrs.html#model.ClusterModel.attrs">(model.ClusterModel attribute)</a>
-</li>
-        <li><a href="_as_gen/model.HydrostaticEquilibrium.attrs.html#model.HydrostaticEquilibrium.attrs">(model.HydrostaticEquilibrium attribute)</a>
-</li>
-      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -490,14 +461,12 @@ document.write(`
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_as_gen/radial_profiles.baseline_entropy_profile.html#radial_profiles.baseline_entropy_profile">baseline_entropy_profile() (in module radial_profiles)</a>
 </li>
-      <li><a href="_as_gen/ics.ClusterICs.basename.html#ics.ClusterICs.basename">basename (ics.ClusterICs attribute)</a>
-</li>
       <li><a href="_as_gen/radial_profiles.beta_model_profile.html#radial_profiles.beta_model_profile">beta_model_profile() (in module radial_profiles)</a>
+</li>
+      <li><a href="_as_gen/radial_profiles.broken_entropy_profile.html#radial_profiles.broken_entropy_profile">broken_entropy_profile() (in module radial_profiles)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="_as_gen/radial_profiles.broken_entropy_profile.html#radial_profiles.broken_entropy_profile">broken_entropy_profile() (in module radial_profiles)</a>
-</li>
       <li><a href="_as_gen/utils.build_yt_dataset_fields.html#utils.build_yt_dataset_fields">build_yt_dataset_fields() (in module utils)</a>
 </li>
       <li><a href="_as_gen/radial_profiles.RadialProfile.built_in.html#radial_profiles.RadialProfile.built_in">built_in() (radial_profiles.RadialProfile class method)</a>
@@ -510,8 +479,6 @@ document.write(`
 <h2 id="C">C</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="_as_gen/ics.ClusterICs.center.html#ics.ClusterICs.center">center (ics.ClusterICs attribute)</a>
-</li>
       <li><a href="_as_gen/model.ClusterModel.check_dm_virial.html#model.ClusterModel.check_dm_virial">check_dm_virial() (model.ClusterModel method)</a>
 
       <ul>
@@ -532,8 +499,6 @@ document.write(`
       </ul></li>
       <li><a href="_as_gen/virial.VirialEquilibrium.check_virial.html#virial.VirialEquilibrium.check_virial">check_virial() (virial.VirialEquilibrium method)</a>
 </li>
-      <li><a href="_as_gen/collection.ClusterCollection.html#collection.ClusterCollection">ClusterCollection (class in collection)</a>
-</li>
       <li><a href="_as_gen/fields.ClusterField.html#fields.ClusterField">ClusterField (class in fields)</a>
 </li>
       <li><a href="_as_gen/ics.ClusterICs.html#ics.ClusterICs">ClusterICs (class in ics)</a>
@@ -549,40 +514,11 @@ document.write(`
         <li><a href="_as_gen/codes.html#module-codes">module</a>
 </li>
       </ul></li>
-      <li>
-    collection
-
-      <ul>
-        <li><a href="_as_gen/collection.html#module-collection">module</a>
+      <li><a href="_as_gen/particles.combine_three_clusters.html#particles.combine_three_clusters">combine_three_clusters() (in module particles)</a>
 </li>
-      </ul></li>
+      <li><a href="_as_gen/particles.combine_two_clusters.html#particles.combine_two_clusters">combine_two_clusters() (in module particles)</a>
+</li>
       <li><a href="_as_gen/ics.compute_centers_for_binary.html#ics.compute_centers_for_binary">compute_centers_for_binary() (in module ics)</a>
-</li>
-      <li><a href="_as_gen/gravity.AQUALGravity.compute_mass.html#gravity.AQUALGravity.compute_mass">compute_mass() (gravity.AQUALGravity class method)</a>
-
-      <ul>
-        <li><a href="_as_gen/gravity.EMONDGravity.compute_mass.html#gravity.EMONDGravity.compute_mass">(gravity.EMONDGravity class method)</a>
-</li>
-        <li><a href="_as_gen/gravity.NewtonianGravity.compute_mass.html#gravity.NewtonianGravity.compute_mass">(gravity.NewtonianGravity class method)</a>
-</li>
-        <li><a href="_as_gen/gravity.QUMONDGravity.compute_mass.html#gravity.QUMONDGravity.compute_mass">(gravity.QUMONDGravity class method)</a>
-</li>
-      </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="_as_gen/ics.ClusterICs.compute_orbits.html#ics.ClusterICs.compute_orbits">compute_orbits() (ics.ClusterICs method)</a>
-</li>
-      <li><a href="_as_gen/gravity.AQUALGravity.compute_potential.html#gravity.AQUALGravity.compute_potential">compute_potential() (gravity.AQUALGravity class method)</a>
-
-      <ul>
-        <li><a href="_as_gen/gravity.EMONDGravity.compute_potential.html#gravity.EMONDGravity.compute_potential">(gravity.EMONDGravity class method)</a>
-</li>
-        <li><a href="_as_gen/gravity.NewtonianGravity.compute_potential.html#gravity.NewtonianGravity.compute_potential">(gravity.NewtonianGravity class method)</a>
-</li>
-        <li><a href="_as_gen/gravity.QUMONDGravity.compute_potential.html#gravity.QUMONDGravity.compute_potential">(gravity.QUMONDGravity class method)</a>
-</li>
-      </ul></li>
-      <li><a href="_as_gen/particles.concat_clusters.html#particles.concat_clusters">concat_clusters() (in module particles)</a>
 </li>
       <li><a href="_as_gen/radial_profiles.constant_profile.html#radial_profiles.constant_profile">constant_profile() (in module radial_profiles)</a>
 </li>
@@ -594,10 +530,51 @@ document.write(`
 </li>
       <li><a href="_as_gen/radial_profiles.cored_snfw_density_profile.html#radial_profiles.cored_snfw_density_profile">cored_snfw_density_profile() (in module radial_profiles)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_as_gen/radial_profiles.cored_snfw_mass_profile.html#radial_profiles.cored_snfw_mass_profile">cored_snfw_mass_profile() (in module radial_profiles)</a>
 </li>
       <li><a href="_as_gen/radial_profiles.cored_snfw_total_mass.html#radial_profiles.cored_snfw_total_mass">cored_snfw_total_mass() (in module radial_profiles)</a>
 </li>
+      <li><a href="_as_gen/correction.NonPhysicalRegion.correct.html#correction.NonPhysicalRegion.correct">correct() (correction.NonPhysicalRegion class method)</a>
+
+      <ul>
+        <li><a href="_as_gen/correction.Type0aNPR.correct.html#correction.Type0aNPR.correct">(correction.Type0aNPR class method)</a>
+</li>
+        <li><a href="_as_gen/correction.Type0bNPR.correct.html#correction.Type0bNPR.correct">(correction.Type0bNPR class method)</a>
+</li>
+        <li><a href="_as_gen/correction.Type0cNPR.correct.html#correction.Type0cNPR.correct">(correction.Type0cNPR class method)</a>
+</li>
+        <li><a href="_as_gen/correction.Type0NPR.correct.html#correction.Type0NPR.correct">(correction.Type0NPR class method)</a>
+</li>
+        <li><a href="_as_gen/correction.Type1aNPR.correct.html#correction.Type1aNPR.correct">(correction.Type1aNPR class method)</a>
+</li>
+        <li><a href="_as_gen/correction.Type1NPR.correct.html#correction.Type1NPR.correct">(correction.Type1NPR class method)</a>
+</li>
+      </ul></li>
+      <li><a href="_as_gen/correction.NonPhysicalRegion.correctable.html#correction.NonPhysicalRegion.correctable">correctable (correction.NonPhysicalRegion attribute)</a>
+
+      <ul>
+        <li><a href="_as_gen/correction.Type0aNPR.correctable.html#correction.Type0aNPR.correctable">(correction.Type0aNPR attribute)</a>
+</li>
+        <li><a href="_as_gen/correction.Type0bNPR.correctable.html#correction.Type0bNPR.correctable">(correction.Type0bNPR attribute)</a>
+</li>
+        <li><a href="_as_gen/correction.Type0cNPR.correctable.html#correction.Type0cNPR.correctable">(correction.Type0cNPR attribute)</a>
+</li>
+        <li><a href="_as_gen/correction.Type0NPR.correctable.html#correction.Type0NPR.correctable">(correction.Type0NPR attribute)</a>
+</li>
+        <li><a href="_as_gen/correction.Type1aNPR.correctable.html#correction.Type1aNPR.correctable">(correction.Type1aNPR attribute)</a>
+</li>
+        <li><a href="_as_gen/correction.Type1NPR.correctable.html#correction.Type1NPR.correctable">(correction.Type1NPR attribute)</a>
+</li>
+      </ul></li>
+      <li>
+    correction
+
+      <ul>
+        <li><a href="_as_gen/correction.html#module-correction">module</a>
+</li>
+      </ul></li>
       <li><a href="_as_gen/ics.ClusterICs.create_dataset.html#ics.ClusterICs.create_dataset">create_dataset() (ics.ClusterICs method)</a>
 
       <ul>
@@ -620,20 +597,8 @@ document.write(`
         <li><a href="_as_gen/model.HydrostaticEquilibrium.default_fields.html#model.HydrostaticEquilibrium.default_fields">(model.HydrostaticEquilibrium attribute)</a>
 </li>
       </ul></li>
-      <li><a href="_as_gen/collection.Ascasibar07.description.html#collection.Ascasibar07.description">description (collection.Ascasibar07 attribute)</a>
-
-      <ul>
-        <li><a href="_as_gen/collection.ClusterCollection.description.html#collection.ClusterCollection.description">(collection.ClusterCollection attribute)</a>
-</li>
-        <li><a href="_as_gen/collection.Sanderson10.description.html#collection.Sanderson10.description">(collection.Sanderson10 attribute)</a>
-</li>
-        <li><a href="_as_gen/collection.Vikhlinin06.description.html#collection.Vikhlinin06.description">(collection.Vikhlinin06 attribute)</a>
-</li>
-      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="_as_gen/virial.VirialEquilibrium.df.html#virial.VirialEquilibrium.df">df (virial.VirialEquilibrium property)</a>
-</li>
       <li><a href="_as_gen/model.ClusterModel.dm_virial.html#model.ClusterModel.dm_virial">dm_virial (model.ClusterModel property)</a>
 
       <ul>
@@ -654,8 +619,6 @@ document.write(`
 </li>
       <li><a href="_as_gen/radial_profiles.einasto_mass_profile.html#radial_profiles.einasto_mass_profile">einasto_mass_profile() (in module radial_profiles)</a>
 </li>
-      <li><a href="_as_gen/gravity.EMONDGravity.html#gravity.EMONDGravity">EMONDGravity (class in gravity)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_as_gen/utils.ensure_list.html#utils.ensure_list">ensure_list() (in module utils)</a>
@@ -663,8 +626,6 @@ document.write(`
       <li><a href="_as_gen/utils.ensure_ytarray.html#utils.ensure_ytarray">ensure_ytarray() (in module utils)</a>
 </li>
       <li><a href="_as_gen/utils.ensure_ytquantity.html#utils.ensure_ytquantity">ensure_ytquantity() (in module utils)</a>
-</li>
-      <li><a href="_as_gen/utils.eprint.html#utils.eprint">eprint() (in module utils)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -688,8 +649,6 @@ document.write(`
       <ul>
         <li><a href="_as_gen/model.HydrostaticEquilibrium.fields.html#model.HydrostaticEquilibrium.fields">(model.HydrostaticEquilibrium attribute)</a>
 </li>
-        <li><a href="_as_gen/particles.ClusterParticles.fields.html#particles.ClusterParticles.fields">(particles.ClusterParticles attribute)</a>
-</li>
       </ul></li>
       <li><a href="_as_gen/model.ClusterModel.find_field_at_radius.html#model.ClusterModel.find_field_at_radius">find_field_at_radius() (model.ClusterModel method)</a>
 
@@ -697,8 +656,16 @@ document.write(`
         <li><a href="_as_gen/model.HydrostaticEquilibrium.find_field_at_radius.html#model.HydrostaticEquilibrium.find_field_at_radius">(model.HydrostaticEquilibrium method)</a>
 </li>
       </ul></li>
+      <li><a href="_as_gen/numalgs.find_holes.html#numalgs.find_holes">find_holes() (in module numalgs)</a>
+</li>
       <li><a href="_as_gen/radial_profiles.find_overdensity_radius.html#radial_profiles.find_overdensity_radius">find_overdensity_radius() (in module radial_profiles)</a>
 </li>
+      <li><a href="_as_gen/model.ClusterModel.find_radius_for_density.html#model.ClusterModel.find_radius_for_density">find_radius_for_density() (model.ClusterModel method)</a>
+
+      <ul>
+        <li><a href="_as_gen/model.HydrostaticEquilibrium.find_radius_for_density.html#model.HydrostaticEquilibrium.find_radius_for_density">(model.HydrostaticEquilibrium method)</a>
+</li>
+      </ul></li>
       <li><a href="_as_gen/radial_profiles.find_radius_mass.html#radial_profiles.find_radius_mass">find_radius_mass() (in module radial_profiles)</a>
 </li>
       <li><a href="_as_gen/radial_profiles.RadialProfile.from_array.html#radial_profiles.RadialProfile.from_array">from_array() (radial_profiles.RadialProfile class method)</a>
@@ -769,12 +736,12 @@ document.write(`
         <li><a href="_as_gen/model.HydrostaticEquilibrium.generate_gas_particles.html#model.HydrostaticEquilibrium.generate_gas_particles">(model.HydrostaticEquilibrium method)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_as_gen/utils.generate_particle_radii.html#utils.generate_particle_radii">generate_particle_radii() (in module utils)</a>
 </li>
       <li><a href="_as_gen/virial.VirialEquilibrium.generate_particles.html#virial.VirialEquilibrium.generate_particles">generate_particles() (virial.VirialEquilibrium method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_as_gen/model.ClusterModel.generate_star_particles.html#model.ClusterModel.generate_star_particles">generate_star_particles() (model.ClusterModel method)</a>
 
       <ul>
@@ -787,17 +754,6 @@ document.write(`
         <li><a href="_as_gen/model.HydrostaticEquilibrium.generate_tracer_particles.html#model.HydrostaticEquilibrium.generate_tracer_particles">(model.HydrostaticEquilibrium method)</a>
 </li>
       </ul></li>
-      <li><a href="_as_gen/collection.get_collections.html#collection.get_collections">get_collections() (in module collection)</a>
-</li>
-      <li>
-    gravity
-
-      <ul>
-        <li><a href="_as_gen/gravity.html#module-gravity">module</a>
-</li>
-      </ul></li>
-      <li><a href="_as_gen/gravity.Gravity.html#gravity.Gravity">Gravity (class in gravity)</a>
-</li>
   </ul></td>
 </tr></table>
 
@@ -825,30 +781,52 @@ document.write(`
         <li><a href="_as_gen/ics.html#module-ics">module</a>
 </li>
       </ul></li>
+      <li><a href="_as_gen/correction.NonPhysicalRegion.identify.html#correction.NonPhysicalRegion.identify">identify() (correction.NonPhysicalRegion class method)</a>
+
+      <ul>
+        <li><a href="_as_gen/correction.Type0aNPR.identify.html#correction.Type0aNPR.identify">(correction.Type0aNPR class method)</a>
+</li>
+        <li><a href="_as_gen/correction.Type0bNPR.identify.html#correction.Type0bNPR.identify">(correction.Type0bNPR class method)</a>
+</li>
+        <li><a href="_as_gen/correction.Type0cNPR.identify.html#correction.Type0cNPR.identify">(correction.Type0cNPR class method)</a>
+</li>
+        <li><a href="_as_gen/correction.Type0NPR.identify.html#correction.Type0NPR.identify">(correction.Type0NPR class method)</a>
+</li>
+        <li><a href="_as_gen/correction.Type1aNPR.identify.html#correction.Type1aNPR.identify">(correction.Type1aNPR class method)</a>
+</li>
+        <li><a href="_as_gen/correction.Type1NPR.identify.html#correction.Type1NPR.identify">(correction.Type1NPR class method)</a>
+</li>
+      </ul></li>
+      <li><a href="_as_gen/numalgs.identify_domain_borders.html#numalgs.identify_domain_borders">identify_domain_borders() (in module numalgs)</a>
+</li>
       <li><a href="_as_gen/utils.integrate.html#utils.integrate">integrate() (in module utils)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_as_gen/utils.integrate_mass.html#utils.integrate_mass">integrate_mass() (in module utils)</a>
 </li>
       <li><a href="_as_gen/utils.integrate_toinf.html#utils.integrate_toinf">integrate_toinf() (in module utils)</a>
 </li>
-      <li><a href="_as_gen/gravity.AQUALGravity.is_calculated.html#gravity.AQUALGravity.is_calculated">is_calculated (gravity.AQUALGravity property)</a>
+      <li><a href="_as_gen/correction.NonPhysicalRegion.is_close.html#correction.NonPhysicalRegion.is_close">is_close() (correction.NonPhysicalRegion method)</a>
 
       <ul>
-        <li><a href="_as_gen/gravity.EMONDGravity.is_calculated.html#gravity.EMONDGravity.is_calculated">(gravity.EMONDGravity property)</a>
+        <li><a href="_as_gen/correction.Type0aNPR.is_close.html#correction.Type0aNPR.is_close">(correction.Type0aNPR method)</a>
 </li>
-        <li><a href="_as_gen/gravity.Gravity.is_calculated.html#gravity.Gravity.is_calculated">(gravity.Gravity property)</a>
+        <li><a href="_as_gen/correction.Type0bNPR.is_close.html#correction.Type0bNPR.is_close">(correction.Type0bNPR method)</a>
 </li>
-        <li><a href="_as_gen/gravity.NewtonianGravity.is_calculated.html#gravity.NewtonianGravity.is_calculated">(gravity.NewtonianGravity property)</a>
+        <li><a href="_as_gen/correction.Type0cNPR.is_close.html#correction.Type0cNPR.is_close">(correction.Type0cNPR method)</a>
 </li>
-        <li><a href="_as_gen/gravity.QUMONDGravity.is_calculated.html#gravity.QUMONDGravity.is_calculated">(gravity.QUMONDGravity property)</a>
+        <li><a href="_as_gen/correction.Type0NPR.is_close.html#correction.Type0NPR.is_close">(correction.Type0NPR method)</a>
+</li>
+        <li><a href="_as_gen/correction.Type1aNPR.is_close.html#correction.Type1aNPR.is_close">(correction.Type1aNPR method)</a>
+</li>
+        <li><a href="_as_gen/correction.Type1NPR.is_close.html#correction.Type1NPR.is_close">(correction.Type1NPR method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="_as_gen/model.ClusterModel.is_physical.html#model.ClusterModel.is_physical">is_physical() (model.ClusterModel method)</a>
+      <li><a href="_as_gen/model.ClusterModel.items.html#model.ClusterModel.items">items() (model.ClusterModel method)</a>
 
       <ul>
-        <li><a href="_as_gen/model.HydrostaticEquilibrium.is_physical.html#model.HydrostaticEquilibrium.is_physical">(model.HydrostaticEquilibrium method)</a>
+        <li><a href="_as_gen/model.HydrostaticEquilibrium.items.html#model.HydrostaticEquilibrium.items">(model.HydrostaticEquilibrium method)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -871,37 +849,7 @@ document.write(`
 <h2 id="L">L</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="_as_gen/collection.Ascasibar07.load.html#collection.Ascasibar07.load">load() (collection.Ascasibar07 static method)</a>
-
-      <ul>
-        <li><a href="_as_gen/collection.Sanderson10.load.html#collection.Sanderson10.load">(collection.Sanderson10 static method)</a>
-</li>
-        <li><a href="_as_gen/collection.Vikhlinin06.load.html#collection.Vikhlinin06.load">(collection.Vikhlinin06 static method)</a>
-</li>
-      </ul></li>
-      <li><a href="_as_gen/collection.Ascasibar07.load_method.html#collection.Ascasibar07.load_method">load_method (collection.Ascasibar07 attribute)</a>
-
-      <ul>
-        <li><a href="_as_gen/collection.ClusterCollection.load_method.html#collection.ClusterCollection.load_method">(collection.ClusterCollection attribute)</a>
-</li>
-        <li><a href="_as_gen/collection.Sanderson10.load_method.html#collection.Sanderson10.load_method">(collection.Sanderson10 attribute)</a>
-</li>
-        <li><a href="_as_gen/collection.Vikhlinin06.load_method.html#collection.Vikhlinin06.load_method">(collection.Vikhlinin06 attribute)</a>
-</li>
-      </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="_as_gen/collection.Ascasibar07.load_model.html#collection.Ascasibar07.load_model">load_model() (collection.Ascasibar07 method)</a>
-
-      <ul>
-        <li><a href="_as_gen/collection.ClusterCollection.load_model.html#collection.ClusterCollection.load_model">(collection.ClusterCollection method)</a>
-</li>
-        <li><a href="_as_gen/collection.Sanderson10.load_model.html#collection.Sanderson10.load_model">(collection.Sanderson10 method)</a>
-</li>
-        <li><a href="_as_gen/collection.Vikhlinin06.load_model.html#collection.Vikhlinin06.load_model">(collection.Vikhlinin06 method)</a>
-</li>
-      </ul></li>
-      <li><a href="_as_gen/utils.log_string.html#utils.log_string">log_string() (in module utils)</a>
+      <li><a href="_as_gen/utils.LogMute.html#utils.LogMute">LogMute (class in utils)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -912,8 +860,6 @@ document.write(`
       <li><a href="_as_gen/relations.m_bcg.html#relations.m_bcg">m_bcg() (in module relations)</a>
 </li>
       <li><a href="_as_gen/relations.m_sat.html#relations.m_sat">m_sat() (in module relations)</a>
-</li>
-      <li><a href="_as_gen/ics.ClusterICs.mag_file.html#ics.ClusterICs.mag_file">mag_file (ics.ClusterICs attribute)</a>
 </li>
       <li><a href="_as_gen/particles.ClusterParticles.make_radial_cut.html#particles.ClusterParticles.make_radial_cut">make_radial_cut() (particles.ClusterParticles method)</a>
 </li>
@@ -941,6 +887,24 @@ document.write(`
         <li><a href="_as_gen/model.HydrostaticEquilibrium.mass_in_radius.html#model.HydrostaticEquilibrium.mass_in_radius">(model.HydrostaticEquilibrium method)</a>
 </li>
       </ul></li>
+      <li><a href="_as_gen/correction.NonPhysicalRegion.message.html#correction.NonPhysicalRegion.message">message() (correction.NonPhysicalRegion method)</a>
+
+      <ul>
+        <li><a href="_as_gen/correction.Type0aNPR.message.html#correction.Type0aNPR.message">(correction.Type0aNPR method)</a>
+</li>
+        <li><a href="_as_gen/correction.Type0bNPR.message.html#correction.Type0bNPR.message">(correction.Type0bNPR method)</a>
+</li>
+        <li><a href="_as_gen/correction.Type0cNPR.message.html#correction.Type0cNPR.message">(correction.Type0cNPR method)</a>
+</li>
+        <li><a href="_as_gen/correction.Type0NPR.message.html#correction.Type0NPR.message">(correction.Type0NPR method)</a>
+</li>
+        <li><a href="_as_gen/correction.Type1aNPR.message.html#correction.Type1aNPR.message">(correction.Type1aNPR method)</a>
+</li>
+        <li><a href="_as_gen/correction.Type1NPR.message.html#correction.Type1NPR.message">(correction.Type1NPR method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     model
 
@@ -948,37 +912,21 @@ document.write(`
         <li><a href="_as_gen/model.html#module-model">module</a>
 </li>
       </ul></li>
-      <li><a href="_as_gen/gravity.AQUALGravity.model.html#gravity.AQUALGravity.model">model (gravity.AQUALGravity attribute)</a>
-
-      <ul>
-        <li><a href="_as_gen/gravity.EMONDGravity.model.html#gravity.EMONDGravity.model">(gravity.EMONDGravity attribute)</a>
-</li>
-        <li><a href="_as_gen/gravity.Gravity.model.html#gravity.Gravity.model">(gravity.Gravity attribute)</a>
-</li>
-        <li><a href="_as_gen/gravity.NewtonianGravity.model.html#gravity.NewtonianGravity.model">(gravity.NewtonianGravity attribute)</a>
-</li>
-        <li><a href="_as_gen/gravity.QUMONDGravity.model.html#gravity.QUMONDGravity.model">(gravity.QUMONDGravity attribute)</a>
-</li>
-        <li><a href="_as_gen/virial.VirialEquilibrium.model.html#virial.VirialEquilibrium.model">(virial.VirialEquilibrium attribute)</a>
-</li>
-      </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     module
 
       <ul>
         <li><a href="_as_gen/codes.html#module-codes">codes</a>
 </li>
-        <li><a href="_as_gen/collection.html#module-collection">collection</a>
+        <li><a href="_as_gen/correction.html#module-correction">correction</a>
 </li>
         <li><a href="_as_gen/fields.html#module-fields">fields</a>
-</li>
-        <li><a href="_as_gen/gravity.html#module-gravity">gravity</a>
 </li>
         <li><a href="_as_gen/ics.html#module-ics">ics</a>
 </li>
         <li><a href="_as_gen/model.html#module-model">model</a>
+</li>
+        <li><a href="_as_gen/numalgs.html#module-numalgs">numalgs</a>
 </li>
         <li><a href="_as_gen/particles.html#module-particles">particles</a>
 </li>
@@ -991,9 +939,7 @@ document.write(`
         <li><a href="_as_gen/virial.html#module-virial">virial</a>
 </li>
       </ul></li>
-      <li><a href="_as_gen/utils.monotone_interpolation.html#utils.monotone_interpolation">monotone_interpolation() (in module utils)</a>
-</li>
-      <li><a href="_as_gen/utils.moving_average.html#utils.moving_average">moving_average() (in module utils)</a>
+      <li><a href="_as_gen/numalgs.monotone_interpolation.html#numalgs.monotone_interpolation">monotone_interpolation() (in module numalgs)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -1001,30 +947,8 @@ document.write(`
 <h2 id="N">N</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="_as_gen/collection.Ascasibar07.name.html#collection.Ascasibar07.name">name (collection.Ascasibar07 attribute)</a>
-
-      <ul>
-        <li><a href="_as_gen/collection.ClusterCollection.name.html#collection.ClusterCollection.name">(collection.ClusterCollection attribute)</a>
+      <li><a href="_as_gen/radial_profiles.RadialProfile.name.html#radial_profiles.RadialProfile.name">name (radial_profiles.RadialProfile attribute)</a>
 </li>
-        <li><a href="_as_gen/collection.Sanderson10.name.html#collection.Sanderson10.name">(collection.Sanderson10 attribute)</a>
-</li>
-        <li><a href="_as_gen/collection.Vikhlinin06.name.html#collection.Vikhlinin06.name">(collection.Vikhlinin06 attribute)</a>
-</li>
-      </ul></li>
-      <li><a href="_as_gen/collection.Ascasibar07.names.html#collection.Ascasibar07.names">names (collection.Ascasibar07 property)</a>
-
-      <ul>
-        <li><a href="_as_gen/collection.ClusterCollection.names.html#collection.ClusterCollection.names">(collection.ClusterCollection property)</a>
-</li>
-        <li><a href="_as_gen/collection.Sanderson10.names.html#collection.Sanderson10.names">(collection.Sanderson10 property)</a>
-</li>
-        <li><a href="_as_gen/collection.Vikhlinin06.names.html#collection.Vikhlinin06.names">(collection.Vikhlinin06 property)</a>
-</li>
-      </ul></li>
-      <li><a href="_as_gen/gravity.NewtonianGravity.html#gravity.NewtonianGravity">NewtonianGravity (class in gravity)</a>
-</li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_as_gen/radial_profiles.nfw_density_profile.html#radial_profiles.nfw_density_profile">nfw_density_profile() (in module radial_profiles)</a>
 </li>
       <li><a href="_as_gen/radial_profiles.nfw_mass_profile.html#radial_profiles.nfw_mass_profile">nfw_mass_profile() (in module radial_profiles)</a>
@@ -1037,39 +961,62 @@ document.write(`
         <li><a href="_as_gen/model.HydrostaticEquilibrium.no_gas.html#model.HydrostaticEquilibrium.no_gas">(model.HydrostaticEquilibrium class method)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_as_gen/correction.NonPhysicalRegion.html#correction.NonPhysicalRegion">NonPhysicalRegion (class in correction)</a>
+</li>
       <li><a href="_as_gen/model.ClusterModel.num_elements.html#model.ClusterModel.num_elements">num_elements (model.ClusterModel attribute)</a>
 
       <ul>
         <li><a href="_as_gen/model.HydrostaticEquilibrium.num_elements.html#model.HydrostaticEquilibrium.num_elements">(model.HydrostaticEquilibrium attribute)</a>
 </li>
-        <li><a href="_as_gen/virial.VirialEquilibrium.num_elements.html#virial.VirialEquilibrium.num_elements">(virial.VirialEquilibrium attribute)</a>
-</li>
       </ul></li>
-      <li><a href="_as_gen/ics.ClusterICs.num_halos.html#ics.ClusterICs.num_halos">num_halos (ics.ClusterICs attribute)</a>
-</li>
       <li><a href="_as_gen/particles.ClusterParticles.num_passive_scalars.html#particles.ClusterParticles.num_passive_scalars">num_passive_scalars (particles.ClusterParticles property)</a>
 </li>
+      <li>
+    numalgs
+
+      <ul>
+        <li><a href="_as_gen/numalgs.html#module-numalgs">module</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="O">O</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_as_gen/correction.NonPhysicalRegion.obj.html#correction.NonPhysicalRegion.obj">obj (correction.NonPhysicalRegion attribute)</a>
+
+      <ul>
+        <li><a href="_as_gen/correction.Type0aNPR.obj.html#correction.Type0aNPR.obj">(correction.Type0aNPR attribute)</a>
+</li>
+        <li><a href="_as_gen/correction.Type0bNPR.obj.html#correction.Type0bNPR.obj">(correction.Type0bNPR attribute)</a>
+</li>
+        <li><a href="_as_gen/correction.Type0cNPR.obj.html#correction.Type0cNPR.obj">(correction.Type0cNPR attribute)</a>
+</li>
+        <li><a href="_as_gen/correction.Type0NPR.obj.html#correction.Type0NPR.obj">(correction.Type0NPR attribute)</a>
+</li>
+        <li><a href="_as_gen/correction.Type1aNPR.obj.html#correction.Type1aNPR.obj">(correction.Type1aNPR attribute)</a>
+</li>
+        <li><a href="_as_gen/correction.Type1NPR.obj.html#correction.Type1NPR.obj">(correction.Type1NPR attribute)</a>
+</li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
 <h2 id="P">P</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="_as_gen/collection.Ascasibar07.parameters.html#collection.Ascasibar07.parameters">parameters (collection.Ascasibar07 property)</a>
+      <li><a href="_as_gen/model.ClusterModel.panel_plot.html#model.ClusterModel.panel_plot">panel_plot() (model.ClusterModel method)</a>
 
       <ul>
-        <li><a href="_as_gen/collection.ClusterCollection.parameters.html#collection.ClusterCollection.parameters">(collection.ClusterCollection property)</a>
-</li>
-        <li><a href="_as_gen/collection.Sanderson10.parameters.html#collection.Sanderson10.parameters">(collection.Sanderson10 property)</a>
-</li>
-        <li><a href="_as_gen/collection.Vikhlinin06.parameters.html#collection.Vikhlinin06.parameters">(collection.Vikhlinin06 property)</a>
+        <li><a href="_as_gen/model.HydrostaticEquilibrium.panel_plot.html#model.HydrostaticEquilibrium.panel_plot">(model.HydrostaticEquilibrium method)</a>
 </li>
       </ul></li>
       <li><a href="_as_gen/utils.parse_prng.html#utils.parse_prng">parse_prng() (in module utils)</a>
 </li>
       <li><a href="_as_gen/fields.parse_value.html#fields.parse_value">parse_value() (in module fields)</a>
-</li>
-      <li><a href="_as_gen/particles.ClusterParticles.particle_types.html#particles.ClusterParticles.particle_types">particle_types (particles.ClusterParticles attribute)</a>
 </li>
       <li>
     particles
@@ -1078,18 +1025,8 @@ document.write(`
         <li><a href="_as_gen/particles.html#module-particles">module</a>
 </li>
       </ul></li>
-      <li><a href="_as_gen/particles.ClusterParticles.passive_scalars.html#particles.ClusterParticles.passive_scalars">passive_scalars (particles.ClusterParticles attribute)</a>
-</li>
-      <li><a href="_as_gen/collection.Ascasibar07.path.html#collection.Ascasibar07.path">path (collection.Ascasibar07 attribute)</a>
-
-      <ul>
-        <li><a href="_as_gen/collection.ClusterCollection.path.html#collection.ClusterCollection.path">(collection.ClusterCollection attribute)</a>
-</li>
-        <li><a href="_as_gen/collection.Sanderson10.path.html#collection.Sanderson10.path">(collection.Sanderson10 attribute)</a>
-</li>
-        <li><a href="_as_gen/collection.Vikhlinin06.path.html#collection.Vikhlinin06.path">(collection.Vikhlinin06 attribute)</a>
-</li>
-      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_as_gen/model.ClusterModel.plot.html#model.ClusterModel.plot">plot() (model.ClusterModel method)</a>
 
       <ul>
@@ -1098,70 +1035,16 @@ document.write(`
         <li><a href="_as_gen/radial_profiles.RadialProfile.plot.html#radial_profiles.RadialProfile.plot">(radial_profiles.RadialProfile method)</a>
 </li>
       </ul></li>
-      <li><a href="_as_gen/collection.Ascasibar07.plot_summary.html#collection.Ascasibar07.plot_summary">plot_summary() (collection.Ascasibar07 method)</a>
-
-      <ul>
-        <li><a href="_as_gen/collection.ClusterCollection.plot_summary.html#collection.ClusterCollection.plot_summary">(collection.ClusterCollection method)</a>
+      <li><a href="_as_gen/numalgs.positive_interpolation.html#numalgs.positive_interpolation">positive_interpolation() (in module numalgs)</a>
 </li>
-        <li><a href="_as_gen/collection.Sanderson10.plot_summary.html#collection.Sanderson10.plot_summary">(collection.Sanderson10 method)</a>
-</li>
-        <li><a href="_as_gen/collection.Vikhlinin06.plot_summary.html#collection.Vikhlinin06.plot_summary">(collection.Vikhlinin06 method)</a>
-</li>
-      </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="_as_gen/model.ClusterModel.pot.html#model.ClusterModel.pot">pot (model.ClusterModel property)</a>
-
-      <ul>
-        <li><a href="_as_gen/model.HydrostaticEquilibrium.pot.html#model.HydrostaticEquilibrium.pot">(model.HydrostaticEquilibrium property)</a>
-</li>
-      </ul></li>
-      <li><a href="_as_gen/gravity.AQUALGravity.potential.html#gravity.AQUALGravity.potential">potential() (gravity.AQUALGravity method)</a>
-
-      <ul>
-        <li><a href="_as_gen/gravity.EMONDGravity.potential.html#gravity.EMONDGravity.potential">(gravity.EMONDGravity method)</a>
-</li>
-        <li><a href="_as_gen/gravity.NewtonianGravity.potential.html#gravity.NewtonianGravity.potential">(gravity.NewtonianGravity method)</a>
-</li>
-        <li><a href="_as_gen/gravity.QUMONDGravity.potential.html#gravity.QUMONDGravity.potential">(gravity.QUMONDGravity method)</a>
-</li>
-      </ul></li>
-      <li><a href="_as_gen/gravity.AQUALGravity.potential_methods.html#gravity.AQUALGravity.potential_methods">potential_methods (gravity.AQUALGravity attribute)</a>
-
-      <ul>
-        <li><a href="_as_gen/gravity.EMONDGravity.potential_methods.html#gravity.EMONDGravity.potential_methods">(gravity.EMONDGravity attribute)</a>
-</li>
-        <li><a href="_as_gen/gravity.Gravity.potential_methods.html#gravity.Gravity.potential_methods">(gravity.Gravity attribute)</a>
-</li>
-        <li><a href="_as_gen/gravity.NewtonianGravity.potential_methods.html#gravity.NewtonianGravity.potential_methods">(gravity.NewtonianGravity attribute)</a>
-</li>
-        <li><a href="_as_gen/gravity.QUMONDGravity.potential_methods.html#gravity.QUMONDGravity.potential_methods">(gravity.QUMONDGravity attribute)</a>
-</li>
-      </ul></li>
       <li><a href="_as_gen/radial_profiles.power_law_profile.html#radial_profiles.power_law_profile">power_law_profile() (in module radial_profiles)</a>
 </li>
-      <li><a href="_as_gen/collection.Ascasibar07.profiles.html#collection.Ascasibar07.profiles">profiles (collection.Ascasibar07 property)</a>
+      <li><a href="_as_gen/model.ClusterModel.properties.html#model.ClusterModel.properties">properties (model.ClusterModel property)</a>
 
       <ul>
-        <li><a href="_as_gen/collection.ClusterCollection.profiles.html#collection.ClusterCollection.profiles">(collection.ClusterCollection property)</a>
-</li>
-        <li><a href="_as_gen/collection.Sanderson10.profiles.html#collection.Sanderson10.profiles">(collection.Sanderson10 property)</a>
-</li>
-        <li><a href="_as_gen/collection.Vikhlinin06.profiles.html#collection.Vikhlinin06.profiles">(collection.Vikhlinin06 property)</a>
-</li>
-        <li><a href="_as_gen/ics.ClusterICs.profiles.html#ics.ClusterICs.profiles">(ics.ClusterICs attribute)</a>
+        <li><a href="_as_gen/model.HydrostaticEquilibrium.properties.html#model.HydrostaticEquilibrium.properties">(model.HydrostaticEquilibrium property)</a>
 </li>
       </ul></li>
-      <li><a href="_as_gen/virial.VirialEquilibrium.ptype.html#virial.VirialEquilibrium.ptype">ptype (virial.VirialEquilibrium attribute)</a>
-</li>
-  </ul></td>
-</tr></table>
-
-<h2 id="Q">Q</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="_as_gen/gravity.QUMONDGravity.html#gravity.QUMONDGravity">QUMONDGravity (class in gravity)</a>
-</li>
   </ul></td>
 </tr></table>
 
@@ -1169,8 +1052,6 @@ document.write(`
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_as_gen/relations.r_bcg.html#relations.r_bcg">r_bcg() (in module relations)</a>
-</li>
-      <li><a href="_as_gen/ics.ClusterICs.r_max.html#ics.ClusterICs.r_max">r_max (ics.ClusterICs attribute)</a>
 </li>
       <li>
     radial_profiles
@@ -1193,14 +1074,6 @@ document.write(`
 </li>
       <li><a href="_as_gen/fields.RandomVelocityField.html#fields.RandomVelocityField">RandomVelocityField (class in fields)</a>
 </li>
-      <li><a href="_as_gen/model.ClusterModel.rebuild_physical.html#model.ClusterModel.rebuild_physical">rebuild_physical() (model.ClusterModel method)</a>
-
-      <ul>
-        <li><a href="_as_gen/model.HydrostaticEquilibrium.rebuild_physical.html#model.HydrostaticEquilibrium.rebuild_physical">(model.HydrostaticEquilibrium method)</a>
-</li>
-      </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     relations
 
@@ -1208,22 +1081,52 @@ document.write(`
         <li><a href="_as_gen/relations.html#module-relations">module</a>
 </li>
       </ul></li>
-      <li><a href="_as_gen/particles.resample_clusters.html#particles.resample_clusters">resample_clusters() (in module particles)</a>
+      <li><a href="_as_gen/codes.resample_arepo_ics.html#codes.resample_arepo_ics">resample_arepo_ics() (in module codes)</a>
+</li>
+      <li><a href="_as_gen/particles.resample_one_cluster.html#particles.resample_one_cluster">resample_one_cluster() (in module particles)</a>
 </li>
       <li><a href="_as_gen/ics.ClusterICs.resample_particle_ics.html#ics.ClusterICs.resample_particle_ics">resample_particle_ics() (ics.ClusterICs method)</a>
 </li>
+      <li><a href="_as_gen/particles.resample_three_clusters.html#particles.resample_three_clusters">resample_three_clusters() (in module particles)</a>
+</li>
+      <li><a href="_as_gen/particles.resample_two_clusters.html#particles.resample_two_clusters">resample_two_clusters() (in module particles)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_as_gen/radial_profiles.rescale_profile_by_mass.html#radial_profiles.rescale_profile_by_mass">rescale_profile_by_mass() (in module radial_profiles)</a>
 </li>
-      <li><a href="_as_gen/gravity.AQUALGravity.reset.html#gravity.AQUALGravity.reset">reset() (gravity.AQUALGravity method)</a>
+      <li><a href="_as_gen/relations.rho_scale_hern.html#relations.rho_scale_hern">rho_scale_hern() (in module relations)</a>
+</li>
+      <li><a href="_as_gen/correction.NonPhysicalRegion.rmax.html#correction.NonPhysicalRegion.rmax">rmax (correction.NonPhysicalRegion attribute)</a>
 
       <ul>
-        <li><a href="_as_gen/gravity.EMONDGravity.reset.html#gravity.EMONDGravity.reset">(gravity.EMONDGravity method)</a>
+        <li><a href="_as_gen/correction.Type0aNPR.rmax.html#correction.Type0aNPR.rmax">(correction.Type0aNPR attribute)</a>
 </li>
-        <li><a href="_as_gen/gravity.Gravity.reset.html#gravity.Gravity.reset">(gravity.Gravity method)</a>
+        <li><a href="_as_gen/correction.Type0bNPR.rmax.html#correction.Type0bNPR.rmax">(correction.Type0bNPR attribute)</a>
 </li>
-        <li><a href="_as_gen/gravity.NewtonianGravity.reset.html#gravity.NewtonianGravity.reset">(gravity.NewtonianGravity method)</a>
+        <li><a href="_as_gen/correction.Type0cNPR.rmax.html#correction.Type0cNPR.rmax">(correction.Type0cNPR attribute)</a>
 </li>
-        <li><a href="_as_gen/gravity.QUMONDGravity.reset.html#gravity.QUMONDGravity.reset">(gravity.QUMONDGravity method)</a>
+        <li><a href="_as_gen/correction.Type0NPR.rmax.html#correction.Type0NPR.rmax">(correction.Type0NPR attribute)</a>
+</li>
+        <li><a href="_as_gen/correction.Type1aNPR.rmax.html#correction.Type1aNPR.rmax">(correction.Type1aNPR attribute)</a>
+</li>
+        <li><a href="_as_gen/correction.Type1NPR.rmax.html#correction.Type1NPR.rmax">(correction.Type1NPR attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="_as_gen/correction.NonPhysicalRegion.rmin.html#correction.NonPhysicalRegion.rmin">rmin (correction.NonPhysicalRegion attribute)</a>
+
+      <ul>
+        <li><a href="_as_gen/correction.Type0aNPR.rmin.html#correction.Type0aNPR.rmin">(correction.Type0aNPR attribute)</a>
+</li>
+        <li><a href="_as_gen/correction.Type0bNPR.rmin.html#correction.Type0bNPR.rmin">(correction.Type0bNPR attribute)</a>
+</li>
+        <li><a href="_as_gen/correction.Type0cNPR.rmin.html#correction.Type0cNPR.rmin">(correction.Type0cNPR attribute)</a>
+</li>
+        <li><a href="_as_gen/correction.Type0NPR.rmin.html#correction.Type0NPR.rmin">(correction.Type0NPR attribute)</a>
+</li>
+        <li><a href="_as_gen/correction.Type1aNPR.rmin.html#correction.Type1aNPR.rmin">(correction.Type1aNPR attribute)</a>
+</li>
+        <li><a href="_as_gen/correction.Type1NPR.rmin.html#correction.Type1NPR.rmin">(correction.Type1NPR attribute)</a>
 </li>
       </ul></li>
       <li><a href="_as_gen/fields.rot_3d.html#fields.rot_3d">rot_3d() (in module fields)</a>
@@ -1234,8 +1137,6 @@ document.write(`
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="_as_gen/collection.Sanderson10.html#collection.Sanderson10">Sanderson10 (class in collection)</a>
-</li>
       <li><a href="_as_gen/model.ClusterModel.set_field.html#model.ClusterModel.set_field">set_field() (model.ClusterModel method)</a>
 
       <ul>
@@ -1268,8 +1169,6 @@ document.write(`
 </li>
       <li><a href="_as_gen/codes.setup_athena_ics.html#codes.setup_athena_ics">setup_athena_ics() (in module codes)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_as_gen/codes.setup_enzo_ics.html#codes.setup_enzo_ics">setup_enzo_ics() (in module codes)</a>
 </li>
       <li><a href="_as_gen/codes.setup_flash_ics.html#codes.setup_flash_ics">setup_flash_ics() (in module codes)</a>
@@ -1278,12 +1177,28 @@ document.write(`
 </li>
       <li><a href="_as_gen/codes.setup_gizmo_ics.html#codes.setup_gizmo_ics">setup_gizmo_ics() (in module codes)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_as_gen/ics.ClusterICs.setup_particle_ics.html#ics.ClusterICs.setup_particle_ics">setup_particle_ics() (ics.ClusterICs method)</a>
 </li>
       <li><a href="_as_gen/codes.setup_ramses_ics.html#codes.setup_ramses_ics">setup_ramses_ics() (in module codes)</a>
 </li>
-      <li><a href="_as_gen/virial.VirialEquilibrium.sigma.html#virial.VirialEquilibrium.sigma">sigma (virial.VirialEquilibrium property)</a>
+      <li><a href="_as_gen/correction.NonPhysicalRegion.size.html#correction.NonPhysicalRegion.size">size() (correction.NonPhysicalRegion method)</a>
+
+      <ul>
+        <li><a href="_as_gen/correction.Type0aNPR.size.html#correction.Type0aNPR.size">(correction.Type0aNPR method)</a>
 </li>
+        <li><a href="_as_gen/correction.Type0bNPR.size.html#correction.Type0bNPR.size">(correction.Type0bNPR method)</a>
+</li>
+        <li><a href="_as_gen/correction.Type0cNPR.size.html#correction.Type0cNPR.size">(correction.Type0cNPR method)</a>
+</li>
+        <li><a href="_as_gen/correction.Type0NPR.size.html#correction.Type0NPR.size">(correction.Type0NPR method)</a>
+</li>
+        <li><a href="_as_gen/correction.Type1aNPR.size.html#correction.Type1aNPR.size">(correction.Type1aNPR method)</a>
+</li>
+        <li><a href="_as_gen/correction.Type1NPR.size.html#correction.Type1NPR.size">(correction.Type1NPR method)</a>
+</li>
+      </ul></li>
       <li><a href="_as_gen/radial_profiles.snfw_conc.html#radial_profiles.snfw_conc">snfw_conc() (in module radial_profiles)</a>
 </li>
       <li><a href="_as_gen/radial_profiles.snfw_density_profile.html#radial_profiles.snfw_density_profile">snfw_density_profile() (in module radial_profiles)</a>
@@ -1291,6 +1206,8 @@ document.write(`
       <li><a href="_as_gen/radial_profiles.snfw_mass_profile.html#radial_profiles.snfw_mass_profile">snfw_mass_profile() (in module radial_profiles)</a>
 </li>
       <li><a href="_as_gen/radial_profiles.snfw_total_mass.html#radial_profiles.snfw_total_mass">snfw_total_mass() (in module radial_profiles)</a>
+</li>
+      <li><a href="_as_gen/numalgs.solve_temperature.html#numalgs.solve_temperature">solve_temperature() (in module numalgs)</a>
 </li>
       <li><a href="_as_gen/model.ClusterModel.star_virial.html#model.ClusterModel.star_virial">star_virial (model.ClusterModel property)</a>
 
@@ -1312,17 +1229,41 @@ document.write(`
 </li>
       <li><a href="_as_gen/radial_profiles.RadialProfile.to_binary.html#radial_profiles.RadialProfile.to_binary">to_binary() (radial_profiles.RadialProfile method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_as_gen/ics.ClusterICs.to_file.html#ics.ClusterICs.to_file">to_file() (ics.ClusterICs method)</a>
 </li>
       <li><a href="_as_gen/particles.ClusterParticles.to_yt_dataset.html#particles.ClusterParticles.to_yt_dataset">to_yt_dataset() (particles.ClusterParticles method)</a>
 </li>
-      <li><a href="_as_gen/ics.ClusterICs.tot_np.html#ics.ClusterICs.tot_np">tot_np (ics.ClusterICs attribute)</a>
-</li>
       <li><a href="_as_gen/utils.truncate_spline.html#utils.truncate_spline">truncate_spline() (in module utils)</a>
 </li>
-      <li><a href="_as_gen/virial.VirialEquilibrium.type.html#virial.VirialEquilibrium.type">type (virial.VirialEquilibrium attribute)</a>
+      <li><a href="_as_gen/correction.NonPhysicalRegion.type.html#correction.NonPhysicalRegion.type">type (correction.NonPhysicalRegion attribute)</a>
+
+      <ul>
+        <li><a href="_as_gen/correction.Type0aNPR.type.html#correction.Type0aNPR.type">(correction.Type0aNPR attribute)</a>
+</li>
+        <li><a href="_as_gen/correction.Type0bNPR.type.html#correction.Type0bNPR.type">(correction.Type0bNPR attribute)</a>
+</li>
+        <li><a href="_as_gen/correction.Type0cNPR.type.html#correction.Type0cNPR.type">(correction.Type0cNPR attribute)</a>
+</li>
+        <li><a href="_as_gen/correction.Type0NPR.type.html#correction.Type0NPR.type">(correction.Type0NPR attribute)</a>
+</li>
+        <li><a href="_as_gen/correction.Type1aNPR.type.html#correction.Type1aNPR.type">(correction.Type1aNPR attribute)</a>
+</li>
+        <li><a href="_as_gen/correction.Type1NPR.type.html#correction.Type1NPR.type">(correction.Type1NPR attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_as_gen/correction.Type0aNPR.html#correction.Type0aNPR">Type0aNPR (class in correction)</a>
+</li>
+      <li><a href="_as_gen/correction.Type0bNPR.html#correction.Type0bNPR">Type0bNPR (class in correction)</a>
+</li>
+      <li><a href="_as_gen/correction.Type0cNPR.html#correction.Type0cNPR">Type0cNPR (class in correction)</a>
+</li>
+      <li><a href="_as_gen/correction.Type0NPR.html#correction.Type0NPR">Type0NPR (class in correction)</a>
+</li>
+      <li><a href="_as_gen/correction.Type1aNPR.html#correction.Type1aNPR">Type1aNPR (class in correction)</a>
+</li>
+      <li><a href="_as_gen/correction.Type1NPR.html#correction.Type1NPR">Type1NPR (class in correction)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -1363,16 +1304,18 @@ document.write(`
 <h2 id="V">V</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="_as_gen/ics.ClusterICs.velocity.html#ics.ClusterICs.velocity">velocity (ics.ClusterICs attribute)</a>
+      <li><a href="_as_gen/model.ClusterModel.values.html#model.ClusterModel.values">values() (model.ClusterModel method)</a>
+
+      <ul>
+        <li><a href="_as_gen/model.HydrostaticEquilibrium.values.html#model.HydrostaticEquilibrium.values">(model.HydrostaticEquilibrium method)</a>
 </li>
-      <li><a href="_as_gen/collection.Vikhlinin06.html#collection.Vikhlinin06">Vikhlinin06 (class in collection)</a>
-</li>
+      </ul></li>
       <li><a href="_as_gen/radial_profiles.vikhlinin_density_profile.html#radial_profiles.vikhlinin_density_profile">vikhlinin_density_profile() (in module radial_profiles)</a>
-</li>
-      <li><a href="_as_gen/radial_profiles.vikhlinin_temperature_profile.html#radial_profiles.vikhlinin_temperature_profile">vikhlinin_temperature_profile() (in module radial_profiles)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_as_gen/radial_profiles.vikhlinin_temperature_profile.html#radial_profiles.vikhlinin_temperature_profile">vikhlinin_temperature_profile() (in module radial_profiles)</a>
+</li>
       <li>
     virial
 
@@ -1382,12 +1325,6 @@ document.write(`
       </ul></li>
       <li><a href="_as_gen/virial.VirialEquilibrium.html#virial.VirialEquilibrium">VirialEquilibrium (class in virial)</a>
 </li>
-      <li><a href="_as_gen/model.ClusterModel.virialization_method.html#model.ClusterModel.virialization_method">virialization_method (model.ClusterModel property)</a>
-
-      <ul>
-        <li><a href="_as_gen/model.HydrostaticEquilibrium.virialization_method.html#model.HydrostaticEquilibrium.virialization_method">(model.HydrostaticEquilibrium property)</a>
-</li>
-      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -1451,16 +1388,12 @@ document.write(`
               
               
               
-                <footer class="bd-footer-article">
-                  
-<div class="footer-article-items footer-article__inner">
-  
-    <div class="footer-article-item"><!-- Previous / next buttons -->
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
 <div class="prev-next-area">
-</div></div>
-  
 </div>
-
                 </footer>
               
             </div>
@@ -1478,8 +1411,8 @@ document.write(`
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+  <script src="_static/scripts/bootstrap.js?digest=c5ced968eda925caa686"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=c5ced968eda925caa686"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -1489,7 +1422,7 @@ document.write(`
         <div class="footer-item">
   <p class="copyright">
     
-      © Copyright 2020, John ZuHone and Eliza DIggins.
+      © Copyright 2020, John ZuHone.
       <br/>
     
   </p>
@@ -1497,7 +1430,7 @@ document.write(`
       
         <div class="footer-item">
   <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.1.2.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     <br/>
   </p>
 </div>
@@ -1505,10 +1438,11 @@ document.write(`
     </div>
   
   
+  
     <div class="footer-items__end">
       
         <div class="footer-item"><p class="theme-version">
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.13.3.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.14.2.
 </p></div>
       
     </div>

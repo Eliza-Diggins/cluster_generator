@@ -4,7 +4,7 @@ Cluster Models
 --------------
 The :py:class:`model.ClusterModel` class is one of the core structures available in ``cluster_generator``. These objects hold all of
 the data related to a single cluster being modeled. The user can use a :py:class:`model.ClusterModel` object to generate particle distributions,
-enforce hydrostatic equilibrium, virialize halos, and generate intial conditions. Furthermore, the user can generate
+enforce hydrostatic equilibrium, virialize halos, and generate initial conditions. Furthermore, the user can generate
 :py:class:`model.ClusterModel` objects using a variety of pre-built protocols using :py:class:`radial_profiles.RadialProfile` objects to provide necessary fields of data.
 
 .. raw:: html
@@ -25,6 +25,9 @@ Cluster Models: Mathematical Overview
 
     To learn more about the various gravity theories discussed here, see the :ref:`gravity` page.
 
+The Intracluster Medium (ICM)
+''''''''''''''''''''''''''''''
+
 Assuming the intracluster medium of galaxy clusters can be modeled as an
 ideal fluid, the momentum density :math:`\rho{\bf v}` of the
 gas obeys the Euler momentum equation (here written in conservative form
@@ -37,7 +40,7 @@ and ignoring magnetic fields, viscosity, etc.):
 
 where :math:`\rho_g` is the gas density, :math:`{\bf v}` is the gas velocity,
 :math:`P` is the gas pressure, and :math:`{\bf g}` is the gravitational
-acceleration. The assumption of hydrostatic equilibrium implies that 
+acceleration. The assumption of hydrostatic equilibrium implies that
 :math:`{\bf v} = 0` and that all time derivatives are zero, giving:
 
 .. math::
@@ -69,62 +72,42 @@ then
 
 This point becomes important as we begin discussing the interaction between the gas dynamics above and the potential of the system.
 
+Gravity
+'''''''
 
-It is here that the theory begins to diverge dependent on the theoretical context on which the gravity of your system is
-based.
+In the preceding section, we described the basic mathematics of hydrostatic equilibrium; however, to find the dynamical mass and other related quantities,
+an expression for :math:`\Gamma` must be obtained independently. In each gravitational theory implemented in the CGP, the dynamical field may be determined in terms of
+:math:`\Gamma` and can then be used to construct the correct mass profiles. In the window below, we've included 3 archetypal examples:
 
-Newtonian Gravity
-+++++++++++++++++
+.. tab-set::
 
-If the model relies on Newtonian gravity, then :math:`\nabla \Phi = GM_{\mathrm{dyn}}(<r)/r^2`, and therefore, the
-dynamical mass is
+    .. tab-item:: Newtonian
 
-.. math::
+        In Newtonian gravity, the dynamical mass equation derived from the Poisson equation is
 
-    M_{\mathrm{dyn}}(<r) = \frac{r^2}{G}\Gamma = \frac{-r^2 k_b T}{G m_p \eta} \left[\frac{d\ln(\rho_g)}{dr} + \frac{d\ln(T)}{dr} \right]
+        .. math::
 
-Thus, the dynamical mass may be directly obtained and the halo mass found by simply removing the known baryonic component. It should be noted that
-for :math:`M_{\mathrm{dyn}}(<r)` to be asymptotically constant for large :math:`r`,
+            M_{\mathrm{dyn}}(<r) = \frac{r^2}{G}\Gamma = \frac{-r^2 k_b T}{G m_p \eta} \left[\frac{d\ln(\rho_g)}{dr} + \frac{d\ln(T)}{dr} \right].
 
-.. math::
+    .. tab-item:: AQUAL
 
-    M_{\mathrm{dyn}} \sim r^2\Gamma \sim r^{\beta + 1} = r^0,
+        In the AQUAL flavor of MOND, the dynamical mass is different from the Newtonian case by a factor of :math:`\mu(a)`.
 
-Therefore, :math:`T \sim 1/r` for a stable dynamical mass profile at large radii.
+        .. math::
 
-MOND Gravity: AQUAL
-+++++++++++++++++++
-In the case of AQUAL, the mass and the acceleration are instead related by the modified Poisson equation, which implies that
+            M_{\mathrm{dyn}} = \frac{r^2}{G}\mu\left(\frac{| \Gamma |}{a_0}\right)\Gamma.
 
-.. math::
+    .. tab-item:: QUMOND
 
-    M_{\mathrm{dyn}} = \frac{r^2}{G}\mu\left(\frac{| \Gamma |}{a_0}\right)\Gamma.
+        In the QUMOND flavor of MOND, the equations cannot be solved independently and therefore numerical methods are required to solve the
+        implicit equation
 
-Similar to the case in Newtonian dynamics, this can simply be taken directly to obtain the correct form of the dynamical mass; however, it should
-be noted that the asymptotic stability conditions are not the same as in Newtonian gravity. Specifically, in the deep-MOND regime, where :math:`\mu(x) \approx x`,
+        .. math::
 
-.. math::
+            \nu\left(\frac{|\nabla \Psi |}{a_0}\right)\nabla \Psi = \Gamma,\;\;\nabla \Psi = \frac{GM_{\mathrm{dyn}}}{r^2}
 
-    M_{\mathrm{dyn}} \approx \frac{r^2}{G}\frac{\Gamma^2}{a_0} \sim r^2r^{2\beta-2},
-
-and thus :math:`\beta = 0` is required for a stable dynamical mass profile.
-
-MOND Gravity: QUMOND
-++++++++++++++++++++
-In QUMOND, the situation is more complex. The necessary equation becomes
-
-.. math::
-
-    \nu\left(\frac{|\nabla \Psi |}{a_0}\right)\nabla \Psi = \Gamma,\;\;\nabla \Psi = \frac{GM_{\mathrm{dyn}}}{r^2}
-
-This form is not analytically solvable for general :math:`\mu`; however, implicit solutions can be found numerically which provide the
-dynamical mass distribution. In the DMR, :math:`\nu(x) \to x^{-1/2}`, so
-
-.. math::
-
-    (a_0\nabla \Psi)^{1/2} = \Gamma \implies M_{\mathrm{dyn}} \sim r^2 \Gamma^2 \sim r^{2\beta},
-
-Thus, :math:`T(r) \sim r^{-3}` at large radii for a stable dynamical mass profile. These results are summarized in the table below.
+Each of these theories has a different asymptotic behavior in terms of the temperature. Therefore, the required temperature behavior at large
+radii is constrained by the following table. This should be considered when choosing a model.
 
 +--------------+-----------------------------------------------------------------------------------+----------------------------+
 | Gravity Type | :math:`\Gamma` and :math:`\Phi` relationship                                      | Mass Stability Condition   |
@@ -286,7 +269,7 @@ Another common approach for initializing magnetic fields is to let the magnetic 
 
 Adding Other Fields
 ===================
-Users may add additional fields to the :py:class`~model.ClusterModel` instance using the :py:meth:`~model.ClusterModel.set_field` method, which takes a
+Users may add additional fields to the :py:class:`~model.ClusterModel` instance using the :py:meth:`~model.ClusterModel.set_field` method, which takes a
 ``name`` and ``value`` and loads the corresponding field into the model.
 
 .. attention::
@@ -314,108 +297,9 @@ options available; however, we advice consulting the API reference for each of t
 | BINARY        | :py:meth:`~model.ClusterModel.write_model_to_binary`   | **Not Yet Implemented**                             | None                              |
 +---------------+--------------------------------------------------------+-----------------------------------------------------+-----------------------------------+
 
-Additional Notes
-................
-.. attention::
+Non-Physical Profiles
+=====================
 
-    In general, this approach will yield a dark matter halo component regardless of the chosen gravity theory. As such,
-    if the user is studying a MOND theory outside of the context of MOND + DM, this approach will not generally be viable
-    unless it has already been confirmed that the dynamical mass determined by the hydrostatic equilibrium condition matches
-    that contributed by :math:`\rho_\star` and :math:`\rho_g`.
-
-Non-Physical Systems
-====================
-In many situations, a galaxy cluster may be **mathematically** constructed using pathological, incomplete, or ill-determined profiles which
-create (in the case of generation from density and temperature) similarly pathological values for the resulting fields. Because the aim of ``cluster_generator`` is to
-reasonably produce realizable galaxy cluster initial conditions, these pathological cases can interfere with the underlying mathematics used in initial condition generation
-from determining particle velocities to sampling profiles. Nonetheless, ``cluster_generator`` will not prevent the user from generating a :py:class:`model.ClusterModel` which is non-physical.
-Such :py:class:`model.ClusterModel` objects are most easily generated from temperature and density profiles, as their behavior at large and small radii has immediate implications for the
-dynamical variables which are derived during generation.
-
-As an example, consider the following :py:class:`model.ClusterModel` object:
-
-.. highlight:: python
-.. code-block:: python
-    :force:
-    :linenos:
-
-    from cluster_generator.model import ClusterModel
-    from cluster_generator.radial_profiles import find_overdensity_radius, \
-        snfw_density_profile, snfw_total_mass, vikhlinin_density_profile, vikhlinin_temperature_profile, \
-        rescale_profile_by_mass, find_radius_mass, snfw_mass_profile
-
-    # Configuring pathological model
-    #------------------------------------
-    # - Parameters
-    z = 0.1
-    M200 = 1.5e15
-    conc = 4.0
-
-    # - Constructing the density profile
-    r200 = find_overdensity_radius(M200, 200.0, z=z)
-    a = r200 / conc
-    M = snfw_total_mass(M200, r200, a)
-    rhot = snfw_density_profile(M, a)
-    Mt = snfw_mass_profile(M, a)
-    r500, M500 = find_radius_mass(Mt, z=z, delta=500.0)
-    f_g = 0.12
-    rhog = vikhlinin_density_profile(1.0, 100.0, r200, 1.0, 0.67, 3)
-    rhog = rescale_profile_by_mass(rhog, f_g * M500, r500)
-
-    # - Constructing the temperature profile
-    temp = vikhlinin_temperature_profile(2.42,-0.02,5.00,1.1,350,1,19,2)
-    rhos = 0.02 * rhot
-    rmin = 0.1
-    rmax = 10000.0
-
-    # - Producing the model
-    m = ClusterModel.from_dens_and_temp(rmin, rmax, rhog, temp,
-                                        stellar_density=rhos)
-    m.set_magnetic_field_from_beta(100.0, gaussian=True)
-
-.. figure:: _images/model/non-physical-example.png
-
-    The resulting profiles after the :py:class:`model.ClusterModel` object has been generated. Notice that
-    even thought the gas density and temperature profiles are reasonable, the dynamical mass and
-    halo mass have non-physical behaviors.
-
-**What does cluster generator do about this?**
-
-The short answer is **nothing**. At least, not until the user says something. All :py:class:`model.ClusterModel` instances have the
-:py:meth:`model.ClusterModel.is_physical` method, which will determine if the system is physical and to what radii.
-
-.. code-block:: python
-
-    m.is_physical()
-
-will yield.
-
-.. code-block:: shell
-
-    ✖ [ClusterModel object; gravity=Newtonian] is non-physical over 35.2% of domain.
-
- If the user wants to fix the system, they can then call the :py:meth:`model.ClusterModel.rebuild_physical` method, which returns a
-newly constructed equivalent of the original model which is physically self-consistent.
-
-.. code-block:: python
-
-    m2 = m.rebuild_physical()
-    m2.is_physical()
-
-which will instead yield the much more pleasant
-
-.. code-block:: shell
-
-    ✔ ClusterModel object; gravity=Newtonian is physical.
-
-To do this, all of the density profiles are prevented from reaching 0 and then each field is recomputed with that
-new, physically consistent, set of profiles.
-
-
-.. figure:: _images/model/non-physical-fixed.png
-
-    The result of setting ``require_physical`` during model generation. Here **magenta** is the original model without
-    any restriction of physical viability. The profiles for halo (dm) density, and dynamical (total) density clearly have
-    regions of non-physical behavior. The **forest-green** corresponds to ``require_physical == True``, and thus removes all
-    of the non-physical regions of the density and mass profiles; however, leaves the temperature profile the same. Finally,
-    **teal** corresponds to ``require_physical == "rebuild"``, which entirely recomputes the temperature profile after fixing non-physical regions.
+Sometimes, for a variety of reasons, generated :py:class:`model.ClusterModel` instances might have profiles which are non-physical. Sometimes, this is caused by a poor choice
+of radial profile for the given gravity theory, or is caused because some other physical constraint is not respected. The CGP has a model (:py:mod:`correction`) entirely focused on
+fixing these problems. For a comprehensive description of these issues and the algorithms used to solve them, see :ref:`correction` .

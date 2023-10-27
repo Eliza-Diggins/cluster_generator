@@ -41,8 +41,5 @@ particles.ClusterParticles
       :recursive:
    
       ~ClusterParticles.num_passive_scalars
-      ~ClusterParticles.particle_types
-      ~ClusterParticles.fields
-      ~ClusterParticles.passive_scalars
    
    

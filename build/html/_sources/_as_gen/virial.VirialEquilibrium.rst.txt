@@ -28,13 +28,7 @@ virial.VirialEquilibrium
       :toctree:
       :recursive:
    
-      ~VirialEquilibrium.df
       ~VirialEquilibrium.ee
       ~VirialEquilibrium.ff
-      ~VirialEquilibrium.sigma
-      ~VirialEquilibrium.num_elements
-      ~VirialEquilibrium.ptype
-      ~VirialEquilibrium.model
-      ~VirialEquilibrium.type
    
    

@@ -1,6 +1,8 @@
 API
 ===
 
+API Reference for the CGP
+
 .. autosummary::
     :toctree: _as_gen
     :recursive:
@@ -14,6 +16,6 @@ API
     particles
     relations
     virial
-    gravity
+    correction
     codes
-    collection
+    numalgs

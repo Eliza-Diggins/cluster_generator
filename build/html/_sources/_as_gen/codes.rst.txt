@@ -12,6 +12,7 @@
       :recursive:
 
    
+      resample_arepo_ics
       setup_arepo_ics
       setup_art_ics
       setup_athena_ics

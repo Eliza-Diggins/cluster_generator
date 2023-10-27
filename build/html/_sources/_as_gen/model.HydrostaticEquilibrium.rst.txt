@@ -20,6 +20,7 @@ model.HydrostaticEquilibrium
       ~HydrostaticEquilibrium.check_star_virial
       ~HydrostaticEquilibrium.create_dataset
       ~HydrostaticEquilibrium.find_field_at_radius
+      ~HydrostaticEquilibrium.find_radius_for_density
       ~HydrostaticEquilibrium.from_arrays
       ~HydrostaticEquilibrium.from_dens_and_entr
       ~HydrostaticEquilibrium.from_dens_and_tden
@@ -29,16 +30,17 @@ model.HydrostaticEquilibrium
       ~HydrostaticEquilibrium.generate_gas_particles
       ~HydrostaticEquilibrium.generate_star_particles
       ~HydrostaticEquilibrium.generate_tracer_particles
-      ~HydrostaticEquilibrium.is_physical
+      ~HydrostaticEquilibrium.items
       ~HydrostaticEquilibrium.keys
       ~HydrostaticEquilibrium.mass_in_radius
       ~HydrostaticEquilibrium.no_gas
+      ~HydrostaticEquilibrium.panel_plot
       ~HydrostaticEquilibrium.plot
-      ~HydrostaticEquilibrium.rebuild_physical
       ~HydrostaticEquilibrium.set_field
       ~HydrostaticEquilibrium.set_magnetic_field_from_beta
       ~HydrostaticEquilibrium.set_magnetic_field_from_density
       ~HydrostaticEquilibrium.set_rmax
+      ~HydrostaticEquilibrium.values
       ~HydrostaticEquilibrium.write_model_to_ascii
       ~HydrostaticEquilibrium.write_model_to_binary
       ~HydrostaticEquilibrium.write_model_to_h5
@@ -55,11 +57,9 @@ model.HydrostaticEquilibrium
    
       ~HydrostaticEquilibrium.default_fields
       ~HydrostaticEquilibrium.dm_virial
-      ~HydrostaticEquilibrium.pot
+      ~HydrostaticEquilibrium.properties
       ~HydrostaticEquilibrium.star_virial
-      ~HydrostaticEquilibrium.virialization_method
       ~HydrostaticEquilibrium.fields
       ~HydrostaticEquilibrium.num_elements
-      ~HydrostaticEquilibrium.attrs
    
    

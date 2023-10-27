@@ -18,17 +18,18 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=c5ced968eda925caa686" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=c5ced968eda925caa686" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=c5ced968eda925caa686" rel="stylesheet" />
 
   
-  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=c5ced968eda925caa686" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fd506691" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/css/tooltipster.custom.css" />
     <link rel="stylesheet" type="text/css" href="_static/css/tooltipster.bundle.min.css" />
@@ -41,14 +42,15 @@
     <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=c5ced968eda925caa686" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=c5ced968eda925caa686" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=c5ced968eda925caa686"></script>
 
     <script src="_static/jquery.js?v=5d32c60e"></script>
     <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=ccbe24c1"></script>
+    <script src="_static/documentation_options.js?v=5929fcd5"></script>
     <script src="_static/doctools.js?v=888ff710"></script>
-    <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="_static/copybutton.js?v=f281be69"></script>
     <script src="_static/js/hoverxref.js"></script>
@@ -59,6 +61,7 @@
     <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'particles';</script>
+    <link rel="icon" href="_static/cluster_generator_logo.png"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -71,6 +74,15 @@
   
   
   <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
   
   <input type="checkbox"
           class="sidebar-toggle"
@@ -111,7 +123,8 @@
     <span class="fa-solid fa-bars"></span>
   </label>
   
-  <div class="navbar-header-items__start">
+  
+  <div class="col-lg-3 navbar-header-items__start">
     
       <div class="navbar-item">
   
@@ -122,12 +135,18 @@
   
   
   
-    <p class="title logo__title">cluster_generator  documentation</p>
+    
+    
+      
+    
+    
+    <img src="_static/cluster_generator_logo.png" class="logo__image only-light" alt="cluster_generator  documentation - Home"/>
+    <script>document.write(`<img src="_static/cluster_generator_logo.png" class="logo__image only-dark" alt="cluster_generator  documentation - Home"/>`);</script>
+  
   
 </a></div>
     
   </div>
-  
   
   <div class="col-lg-9 navbar-header-items">
     
@@ -143,15 +162,15 @@
   <ul class="bd-navbar-elements navbar-nav">
     
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="Getting_Started.html">
+                      <a class="nav-link nav-internal" href="getting_started.html">
                         Quickstart Guide
                       </a>
                     </li>
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="gravity.html">
-                        Gravity Theories
+                      <a class="nav-link nav-internal" href="examples.html">
+                        Examples
                       </a>
                     </li>
                 
@@ -164,33 +183,18 @@
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="collections.html">
-                        Collections
+                      <a class="nav-link nav-internal" href="codes.html">
+                        Simulation Software
                       </a>
                     </li>
                 
 
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="examples.html">
-                        Examples
-                      </a>
-                    </li>
-                
-            <div class="nav-item dropdown">
-                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    More
-                </button>
-                <div class="dropdown-menu">
-                    
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="api.html">
                         API
                       </a>
                     </li>
                 
-                </div>
-            </div>
-            
   </ul>
 </nav></div>
       
@@ -201,23 +205,25 @@
       
         <div class="navbar-item navbar-persistent--container">
           
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass"></i>
-  </button>
-`);
-</script>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
         </div>
       
       
         <div class="navbar-item">
 <script>
 document.write(`
-  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
 `);
 </script></div>
@@ -228,18 +234,20 @@ document.write(`
   
   
     <div class="navbar-persistent--mobile">
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass"></i>
-  </button>
-`);
-</script>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
     </div>
   
 
   
-    <label class="sidebar-toggle secondary-toggle" for="__secondary">
+    <label class="sidebar-toggle secondary-toggle" for="__secondary" tabindex="0">
       <span class="fa-solid fa-outdent"></span>
     </label>
   
@@ -269,15 +277,15 @@ document.write(`
   <ul class="bd-navbar-elements navbar-nav">
     
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="Getting_Started.html">
+                      <a class="nav-link nav-internal" href="getting_started.html">
                         Quickstart Guide
                       </a>
                     </li>
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="gravity.html">
-                        Gravity Theories
+                      <a class="nav-link nav-internal" href="examples.html">
+                        Examples
                       </a>
                     </li>
                 
@@ -290,33 +298,18 @@ document.write(`
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="collections.html">
-                        Collections
+                      <a class="nav-link nav-internal" href="codes.html">
+                        Simulation Software
                       </a>
                     </li>
                 
 
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="examples.html">
-                        Examples
-                      </a>
-                    </li>
-                
-            <div class="nav-item dropdown">
-                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    More
-                </button>
-                <div class="dropdown-menu">
-                    
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="api.html">
                         API
                       </a>
                     </li>
                 
-                </div>
-            </div>
-            
   </ul>
 </nav></div>
         
@@ -329,10 +322,10 @@ document.write(`
           <div class="navbar-item">
 <script>
 document.write(`
-  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
 `);
 </script></div>
@@ -365,8 +358,8 @@ document.write(`
 
 
 
-<nav aria-label="Breadcrumbs">
-  <ul class="bd-breadcrumbs" role="navigation" aria-label="Breadcrumb">
+<nav aria-label="Breadcrumb">
+  <ul class="bd-breadcrumbs">
     
     <li class="breadcrumb-item breadcrumb-home">
       <a href="index.html" class="nav-link" aria-label="Home">
@@ -391,9 +384,9 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <section id="particles">
-<span id="id1"></span><h1>Particles<a class="headerlink" href="#particles" title="Permalink to this heading">#</a></h1>
+<span id="id1"></span><h1>Particles<a class="headerlink" href="#particles" title="Link to this heading">#</a></h1>
 <section id="generating-particles-from-clustermodel-objects">
-<h2>Generating Particles from <code class="docutils literal notranslate"><span class="pre">ClusterModel</span></code> Objects<a class="headerlink" href="#generating-particles-from-clustermodel-objects" title="Permalink to this heading">#</a></h2>
+<h2>Generating Particles from <code class="docutils literal notranslate"><span class="pre">ClusterModel</span></code> Objects<a class="headerlink" href="#generating-particles-from-clustermodel-objects" title="Link to this heading">#</a></h2>
 <p>Once a <code class="xref py py-class docutils literal notranslate"><span class="pre">ClusterModel</span></code> object is created,
 it can be used to generate particle positions and velocities, of gas, dark matter,
 and/or star types. The positions are generated by drawing uniform random numbers
@@ -407,7 +400,7 @@ on the number of particles and the total mass of the gas, dark matter, or stars.
 (containing all three components of each), and the latter has a shape of
 <code class="docutils literal notranslate"><span class="pre">number_of_particles</span></code>.</p>
 <section id="gas-particles">
-<h3>Gas Particles<a class="headerlink" href="#gas-particles" title="Permalink to this heading">#</a></h3>
+<h3>Gas Particles<a class="headerlink" href="#gas-particles" title="Link to this heading">#</a></h3>
 <p>Gas particles are initialized in hydrostatic equilibrium from the profiles. In
 addition to the fields mentioned above, gas particles also have <code class="docutils literal notranslate"><span class="pre">&quot;density&quot;</span></code>,
 and <code class="docutils literal notranslate"><span class="pre">&quot;thermal_energy&quot;</span></code> fields. They may optionally also have a
@@ -430,12 +423,12 @@ which was originally supplied in the creation of the
 </div>
 </section>
 <section id="dark-matter-and-star-particles">
-<h3>Dark Matter and Star Particles<a class="headerlink" href="#dark-matter-and-star-particles" title="Permalink to this heading">#</a></h3>
+<h3>Dark Matter and Star Particles<a class="headerlink" href="#dark-matter-and-star-particles" title="Link to this heading">#</a></h3>
 <p>Dark matter and star particles are initialized with velocities assuming
 collisionless dynamics and virial equilibrium with the underlying
 gravitational potential from all mass sources.</p>
 <section id="virial-equilibria-mathematical-overview">
-<span id="math-overview-particles"></span><h4>Virial Equilibria: Mathematical Overview<a class="headerlink" href="#virial-equilibria-mathematical-overview" title="Permalink to this heading">#</a></h4>
+<span id="math-overview-particles"></span><h4>Virial Equilibria: Mathematical Overview<a class="headerlink" href="#virial-equilibria-mathematical-overview" title="Link to this heading">#</a></h4>
 <p>The mass density <span class="math notranslate nohighlight">\(\rho({\bf r})\)</span> of such a system can be derived by
 integrating the phase-space distribution function <span class="math notranslate nohighlight">\(f({\bf r}, {\bf v})\)</span>
 over velocity space:</p>
@@ -470,7 +463,7 @@ acceptance-rejection method. The particle velocity components are isotropically
 distributed in the tangential directions <span class="math notranslate nohighlight">\(\theta\)</span> and <span class="math notranslate nohighlight">\(\phi\)</span>.</p>
 </section>
 <section id="checking-the-virial-equilibrium">
-<h4>Checking the Virial Equilibrium<a class="headerlink" href="#checking-the-virial-equilibrium" title="Permalink to this heading">#</a></h4>
+<h4>Checking the Virial Equilibrium<a class="headerlink" href="#checking-the-virial-equilibrium" title="Link to this heading">#</a></h4>
 <p>It is probably a good idea to check that the resulting distribution functions
 for the dark matter and/or stars are consistent with the input mass density
 profiles. The <code class="xref py py-meth docutils literal notranslate"><span class="pre">check_dm_virial()</span></code>
@@ -499,7 +492,7 @@ as the maximum radius of the profile is very large, this should not matter very
 much.</p>
 </section>
 <section id="generating-dark-matter-and-star-particles">
-<h4>Generating Dark Matter and Star Particles<a class="headerlink" href="#generating-dark-matter-and-star-particles" title="Permalink to this heading">#</a></h4>
+<h4>Generating Dark Matter and Star Particles<a class="headerlink" href="#generating-dark-matter-and-star-particles" title="Link to this heading">#</a></h4>
 <p>The <code class="xref py py-meth docutils literal notranslate"><span class="pre">generate_dm_particles()</span></code>
 and <code class="xref py py-meth docutils literal notranslate"><span class="pre">generate_star_particles()</span></code>
 methods carry out these functions for dark matter and stars respectively, and
@@ -530,18 +523,18 @@ which is covered in more detail next.</p>
 </section>
 </section>
 <section id="the-clusterparticles-class">
-<h2>The <code class="docutils literal notranslate"><span class="pre">ClusterParticles</span></code> Class<a class="headerlink" href="#the-clusterparticles-class" title="Permalink to this heading">#</a></h2>
+<h2>The <code class="docutils literal notranslate"><span class="pre">ClusterParticles</span></code> Class<a class="headerlink" href="#the-clusterparticles-class" title="Link to this heading">#</a></h2>
 <p>The <code class="xref py py-class docutils literal notranslate"><span class="pre">ClusterParticles</span></code> class is a
 container for particle properties. It is the format that is returned
 from the various <code class="docutils literal notranslate"><span class="pre">generate_*_particles</span></code> methods described above. This
 class can be used to perform further operations on particles or write
 them to disk.</p>
 <section id="clusterparticles-operations">
-<h3><code class="docutils literal notranslate"><span class="pre">ClusterParticles</span></code> Operations<a class="headerlink" href="#clusterparticles-operations" title="Permalink to this heading">#</a></h3>
+<h3><code class="docutils literal notranslate"><span class="pre">ClusterParticles</span></code> Operations<a class="headerlink" href="#clusterparticles-operations" title="Link to this heading">#</a></h3>
 <p>Several kinds of operations can be performed on
 <code class="xref py py-class docutils literal notranslate"><span class="pre">ClusterParticles</span></code> objects.</p>
 <section id="adding-clusterparticles-objects">
-<h4>Adding <code class="docutils literal notranslate"><span class="pre">ClusterParticles</span></code> Objects<a class="headerlink" href="#adding-clusterparticles-objects" title="Permalink to this heading">#</a></h4>
+<h4>Adding <code class="docutils literal notranslate"><span class="pre">ClusterParticles</span></code> Objects<a class="headerlink" href="#adding-clusterparticles-objects" title="Link to this heading">#</a></h4>
 <p><code class="xref py py-class docutils literal notranslate"><span class="pre">ClusterParticles</span></code> objects can be added
 together. In this case, we add particles of different types so that they
 are combined into a single object:</p>
@@ -556,7 +549,7 @@ be concatenated together:</p>
 </div>
 </section>
 <section id="dropping-particle-types">
-<h4>Dropping Particle Types<a class="headerlink" href="#dropping-particle-types" title="Permalink to this heading">#</a></h4>
+<h4>Dropping Particle Types<a class="headerlink" href="#dropping-particle-types" title="Link to this heading">#</a></h4>
 <p>To drop all fields of a specific particle type from a
 <code class="xref py py-class docutils literal notranslate"><span class="pre">ClusterParticles</span></code> instance, use the
 <code class="xref py py-meth docutils literal notranslate"><span class="pre">drop_ptypes()</span></code> method:</p>
@@ -569,7 +562,7 @@ be concatenated together:</p>
 </div>
 </section>
 <section id="add-position-and-velocity-offsets">
-<h4>Add Position and Velocity Offsets<a class="headerlink" href="#add-position-and-velocity-offsets" title="Permalink to this heading">#</a></h4>
+<h4>Add Position and Velocity Offsets<a class="headerlink" href="#add-position-and-velocity-offsets" title="Link to this heading">#</a></h4>
 <p>By default, a <code class="xref py py-class docutils literal notranslate"><span class="pre">ClusterParticles</span></code> object is
 centered at (0, 0, 0) kpc and has a bulk velocity of (0, 0, 0) kpc/Myr.
 To translate the particle positions of a
@@ -592,7 +585,7 @@ to the values of the <code class="docutils literal notranslate"><span class="pre
 </div>
 </section>
 <section id="make-a-cut-on-radius">
-<h4>Make a Cut on Radius<a class="headerlink" href="#make-a-cut-on-radius" title="Permalink to this heading">#</a></h4>
+<h4>Make a Cut on Radius<a class="headerlink" href="#make-a-cut-on-radius" title="Link to this heading">#</a></h4>
 <p>To cut out particles beyond a certain radius, use the
 <code class="xref py py-meth docutils literal notranslate"><span class="pre">make_radial_cut()</span></code> method:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># make a radial cut at r_max, assuming the center is [0, 0, 0] kpc</span>
@@ -618,7 +611,7 @@ to the values of the <code class="docutils literal notranslate"><span class="pre
 </div>
 </section>
 <section id="add-black-hole-particles">
-<h4>Add Black Hole Particles<a class="headerlink" href="#add-black-hole-particles" title="Permalink to this heading">#</a></h4>
+<h4>Add Black Hole Particles<a class="headerlink" href="#add-black-hole-particles" title="Link to this heading">#</a></h4>
 <p>To add a single black hole particle, use the
 <code class="xref py py-meth docutils literal notranslate"><span class="pre">add_black_hole()</span></code>
 method. The simplest way to do this is to simply provide it with a
@@ -643,7 +636,7 @@ gravitational potential, set <code class="docutils literal notranslate"><span cl
 </div>
 </section>
 <section id="add-a-new-field-or-change-a-field">
-<h4>Add a New Field or Change a Field<a class="headerlink" href="#add-a-new-field-or-change-a-field" title="Permalink to this heading">#</a></h4>
+<h4>Add a New Field or Change a Field<a class="headerlink" href="#add-a-new-field-or-change-a-field" title="Link to this heading">#</a></h4>
 <p>A new field can be added to the particles rather easily. For example, if
 you wanted to add a field which added a tag to the DM particles to keep
 track of which halo they originated from:</p>
@@ -679,7 +672,7 @@ from a radial profile or an equilibrium condition!</p>
 </section>
 </section>
 <section id="clusterparticles-i-o">
-<h3><code class="docutils literal notranslate"><span class="pre">ClusterParticles</span></code> I/O<a class="headerlink" href="#clusterparticles-i-o" title="Permalink to this heading">#</a></h3>
+<h3><code class="docutils literal notranslate"><span class="pre">ClusterParticles</span></code> I/O<a class="headerlink" href="#clusterparticles-i-o" title="Link to this heading">#</a></h3>
 <p><code class="xref py py-class docutils literal notranslate"><span class="pre">ClusterParticles</span></code> objects can be written
 to disk or read from a file on disk. The normal way of writing the particles
 to disk is to use the
@@ -708,7 +701,7 @@ in from disk using the
 </pre></div>
 </div>
 <section id="gadget-like-i-o">
-<h4>Gadget-Like I/O<a class="headerlink" href="#gadget-like-i-o" title="Permalink to this heading">#</a></h4>
+<h4>Gadget-Like I/O<a class="headerlink" href="#gadget-like-i-o" title="Link to this heading">#</a></h4>
 <p><code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code> also provides for the creation of Gadget-like snapshot/IC
 files for use with codes such as Gadget, Arepo, GIZMO, etc. The
 <code class="xref py py-meth docutils literal notranslate"><span class="pre">write_to_gadget_file()</span></code>
@@ -739,7 +732,7 @@ from one of these files, use the
 </pre></div>
 </div>
 <p>For more information on how these files are used in Gadget-like codes, see
-<a class="reference internal" href="codes.html#codes"><span class="std std-ref">Setting Up Idealized Cluster Problems in Various Codes</span></a>.</p>
+<a class="reference internal" href="codes.html#codes"><span class="std std-ref">Simulation Software</span></a>.</p>
 </section>
 </section>
 </section>
@@ -750,16 +743,12 @@ from one of these files, use the
               
               
               
-                <footer class="bd-footer-article">
-                  
-<div class="footer-article-items footer-article__inner">
-  
-    <div class="footer-article-item"><!-- Previous / next buttons -->
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
 <div class="prev-next-area">
-</div></div>
-  
 </div>
-
                 </footer>
               
             </div>
@@ -824,8 +813,8 @@ from one of these files, use the
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+  <script src="_static/scripts/bootstrap.js?digest=c5ced968eda925caa686"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=c5ced968eda925caa686"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -835,7 +824,7 @@ from one of these files, use the
         <div class="footer-item">
   <p class="copyright">
     
-      © Copyright 2020, John ZuHone and Eliza DIggins.
+      © Copyright 2020, John ZuHone.
       <br/>
     
   </p>
@@ -843,7 +832,7 @@ from one of these files, use the
       
         <div class="footer-item">
   <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.1.2.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     <br/>
   </p>
 </div>
@@ -851,10 +840,11 @@ from one of these files, use the
     </div>
   
   
+  
     <div class="footer-items__end">
       
         <div class="footer-item"><p class="theme-version">
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.13.3.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.14.2.
 </p></div>
       
     </div>
