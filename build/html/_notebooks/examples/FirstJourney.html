@@ -1,0 +1,740 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Your First Journey With CGP &#8212; cluster_generator  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=c5ced968eda925caa686" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=c5ced968eda925caa686" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=c5ced968eda925caa686" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=c5ced968eda925caa686" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster.custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster.bundle.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster-sideTip-shadow.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster-sideTip-punk.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster-sideTip-noir.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster-sideTip-light.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster-sideTip-borderless.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/micromodal.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=c5ced968eda925caa686" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=c5ced968eda925caa686" />
+  <script src="../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=c5ced968eda925caa686"></script>
+
+    <script src="../../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/hoverxref.js"></script>
+    <script src="../../_static/js/tooltipster.bundle.min.js"></script>
+    <script src="../../_static/js/micromodal.min.js"></script>
+    <script src="../../_static/design-tabs.js?v=36754332"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_notebooks/examples/FirstJourney';</script>
+    <link rel="icon" href="../../_static/cluster_generator_logo.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/cluster_generator_logo.png" class="logo__image only-light" alt="cluster_generator  documentation - Home"/>
+    <script>document.write(`<img src="../../_static/cluster_generator_logo.png" class="logo__image only-dark" alt="cluster_generator  documentation - Home"/>`);</script>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../getting_started.html">
+                        Quickstart Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../examples.html">
+                        Examples
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../models.html">
+                        Cluster Models
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../codes.html">
+                        Simulation Software
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../api.html">
+                        API
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+        </div>
+      
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+    </div>
+  
+
+  
+    <label class="sidebar-toggle secondary-toggle" for="__secondary" tabindex="0">
+      <span class="fa-solid fa-outdent"></span>
+    </label>
+  
+</div>
+
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../getting_started.html">
+                        Quickstart Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../examples.html">
+                        Examples
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../models.html">
+                        Cluster Models
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../codes.html">
+                        Simulation Software
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../api.html">
+                        API
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">Your First...</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <p><img alt="logo" src="../../_images/cluster_generator_logo.png" /></p>
+<section id="Your-First-Journey-With-CGP">
+<h1>Your First Journey With CGP<a class="headerlink" href="#Your-First-Journey-With-CGP" title="Link to this heading">#</a></h1>
+<p><img alt="badge" src="https://img.shields.io/badge/Date_Created-10/26/23-cyan" /></p>
+<hr class="docutils" />
+<section id="Contents">
+<h2>Contents<a class="headerlink" href="#Contents" title="Link to this heading">#</a></h2>
+<ul>
+<li><p><a class="reference internal" href="#Introducing-The-CGP"><span class="std std-ref">Introduction</span></a></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#Getting-Started-With-the-Package"><span class="std std-ref">Getting Started</span></a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#Setting-Up-Your-First-Cluster"><span class="std std-ref">Your First Cluster</span></a></p>
+<ul>
+<li><p class="rubric" id="building-the-model"><a class="reference internal" href="#Building-The-Model"><span class="std std-ref">Building the Model</span></a></p>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="Introducing-The-CGP">
+<h2>Introducing The CGP<a class="headerlink" href="#Introducing-The-CGP" title="Link to this heading">#</a></h2>
+<p>So you’ve successfully managed to download and install the CGP package into your python distribution. Congratulations! Now what?</p>
+<p>In this guide, we’re going to walk through the generation of a set of simulation initial conditions from start to finish to show you the ropes. Once you’ve got the hang of the basics, the examples page has many more guides exploring all of the different features the CGP provides.</p>
+<section id="Getting-Started-With-the-Package">
+<h3>Getting Started With the Package<a class="headerlink" href="#Getting-Started-With-the-Package" title="Link to this heading">#</a></h3>
+<p>Let’s start by making sure the CGP is properly installed. In your terminal, try</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt;<span class="w"> </span>pip<span class="w"> </span>show<span class="w"> </span>cluster_generator
+</pre></div>
+</div>
+<p>If everything goes as planned, you should see a message telling you some brief information about the project. If this appears, it means you’ve successfully installed the package. Now in a python IDE or terminal, you should be able to import the package as</p>
+<p>```</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cluster_generator</span> <span class="k">as</span> <span class="nn">cg</span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="Setting-Up-Your-First-Cluster">
+<h2>Setting Up Your First Cluster<a class="headerlink" href="#Setting-Up-Your-First-Cluster" title="Link to this heading">#</a></h2>
+<p>The CGP has a <strong>lot</strong> of ways to generate galaxy clusters, but we’re going to start off slow. To build a simple cluster, we’re going to provide the CGP with the radial profiles for <span class="math notranslate nohighlight">\(\rho_{\mathrm{gas}}\)</span> and <span class="math notranslate nohighlight">\(\rho_{\mathrm{dyn}}\)</span> (the total gravitating density). Once we’ve provided those profiles, the CGP will go ahead and do all the rest of the leg work to produce a beautiful galaxy cluster model.</p>
+<p>Let’s use Hernquist profiles<a class="reference external" href="https://ui.adsabs.harvard.edu/abs/1990ApJ...356..359H/abstract">[1]</a>( (they’re very simple!) for both of the density components. For reference, the equation for a Hernquist density profile is</p>
+<div class="math notranslate nohighlight">
+\[\rho(r) = \frac{M}{2\pi}\frac{r_s}{r}\frac{1}{(r+r_s)^3}.\]</div>
+<p>If we let the cluster have a total mass of <span class="math notranslate nohighlight">\(1.2 \times 10^{15} \mathrm{M}_{\odot}\)</span> and a scale length of <span class="math notranslate nohighlight">\(500\;\mathrm{kpc}\)</span>, we can define the total density profile as follows:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">total_density_profile</span> <span class="o">=</span> <span class="n">cg</span><span class="o">.</span><span class="n">radial_profiles</span><span class="o">.</span><span class="n">hernquist_density_profile</span><span class="p">(</span><span class="mf">1.2e15</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>That was pretty simple wasn’t it! Let’s make the gas density now. If we want the gas to make up something like 10% of the mass of the cluster, then we can assign <span class="math notranslate nohighlight">\(M_{\mathrm{gas}} = 1.2\times 10^{14} \mathrm{M}_{\odot}\)</span>. Let’s also try making the scale length a little shorter: 200 kpc.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gas_density_profile</span> <span class="o">=</span> <span class="n">cg</span><span class="o">.</span><span class="n">radial_profiles</span><span class="o">.</span><span class="n">hernquist_density_profile</span><span class="p">(</span><span class="mf">1.2e14</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Let’s go ahead and take a look at what we’ve built so far:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+
+<span class="n">total_density_profile</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5000</span><span class="p">,</span> <span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
+<span class="n">gas_density_profile</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5000</span><span class="p">,</span> <span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/_notebooks_examples_FirstJourney_7_0.png" src="../../_images/_notebooks_examples_FirstJourney_7_0.png" />
+</div>
+</div>
+<p>Excellent! We’ve built our first set of radial profiles. You’re now acquainted with the first and most simple data structure in the CGP: the <code class="docutils literal notranslate"><span class="pre">RadialProfile</span></code> class, which are what these radial profiles were. They’re essentially wrappers around basic python functions. Now that we’ve got our profiles, let’s get around to building our cluster.</p>
+<section id="Building-The-Model">
+<h3>Building The Model<a class="headerlink" href="#Building-The-Model" title="Link to this heading">#</a></h3>
+<p>The next step once we’ve chosen our profiles is to actually build the cluster. To do this, we’re going to take advantage of the <code class="docutils literal notranslate"><span class="pre">ClusterModel</span></code> class, which will do all the math for us.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">galaxy_cluster_model</span> <span class="o">=</span> <span class="n">cg</span><span class="o">.</span><span class="n">ClusterModel</span><span class="o">.</span><span class="n">from_dens_and_tden</span><span class="p">(</span>
+    <span class="mi">1</span><span class="p">,</span> <span class="mi">10000</span><span class="p">,</span> <span class="n">gas_density_profile</span><span class="p">,</span> <span class="n">total_density_profile</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+cluster_generator : [INFO     ] 2023-10-27 09:50:43,933 Computing the profiles from density and total density.
+cluster_generator : [INFO     ] 2023-10-27 09:50:43,939 Integrating total mass profile.
+cluster_generator : [INFO     ] 2023-10-27 09:50:43,994 Integrating pressure profile.
+cluster_generator : [INFO     ] 2023-10-27 09:50:45,651 Integrating gravitational potential profile.
+</pre></div></div>
+</div>
+<p>So what just happened? We generated a <code class="docutils literal notranslate"><span class="pre">ClusterModel</span></code> instance which represents the cluster model from radii <span class="math notranslate nohighlight">\(1\)</span> kpc to <span class="math notranslate nohighlight">\(10,000\)</span> kpc. All of the output to the terminal tells us what’s going on behind the scenes. It looks like first CGP computed the total mass, then the gas pressure, and finally the gravitational potential.</p>
+<p>We can do a lot with these models, but what’s worth remembering is that these <code class="docutils literal notranslate"><span class="pre">ClusterModel</span></code> instances represent complete clusters in their own right. Each model has <code class="docutils literal notranslate"><span class="pre">fields</span></code> representing a variety of different pieces of data. Let’s take a look at what fields are available:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">galaxy_cluster_model</span><span class="o">.</span><span class="n">fields</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="o">.</span><span class="n">units</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+radius kpc
+density Msun/kpc**3
+total_density Msun/kpc**3
+total_mass Msun
+gas_mass Msun
+gravitational_field kpc/Myr**2
+pressure Msun/(Myr**2*kpc)
+temperature keV
+gravitational_potential kpc**2/Myr**2
+dark_matter_density Msun/kpc**3
+dark_matter_mass Msun
+gas_fraction dimensionless
+electron_number_density cm**(-3)
+entropy cm**2*keV
+</pre></div></div>
+</div>
+<p>Each and every one of these profiles represents a different radial profile represented by discrete values. We can look more closely at some of these properties</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+
+<span class="n">galaxy_cluster_model</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s2">&quot;temperature&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/_notebooks_examples_FirstJourney_13_0.png" src="../../_images/_notebooks_examples_FirstJourney_13_0.png" />
+</div>
+</div>
+<p>We can even get a really good summary of what’s going on in our cluster using the <code class="docutils literal notranslate"><span class="pre">.panel_plot</span></code> method:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">cluster_generator.utils</span> <span class="kn">import</span> <span class="n">cgparams</span>
+
+<span class="n">cgparams</span><span class="p">[</span><span class="s2">&quot;plotting&quot;</span><span class="p">][</span><span class="s2">&quot;defaults&quot;</span><span class="p">][</span>
+    <span class="s2">&quot;text.usetex&quot;</span>
+<span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># Not necessary, just to make the plots look nice.</span>
+<span class="n">f</span><span class="p">,</span> <span class="n">a</span> <span class="o">=</span> <span class="n">galaxy_cluster_model</span><span class="o">.</span><span class="n">panel_plot</span><span class="p">(</span><span class="n">base_length</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">aspect_ratio</span><span class="o">=</span><span class="mf">1.2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/_notebooks_examples_FirstJourney_15_0.png" src="../../_images/_notebooks_examples_FirstJourney_15_0.png" />
+</div>
+</div>
+<p>Now that we’ve generated a galaxy cluster model, we’re already most of the way done with this guide! The next step is to actually build the initial conditions. For this example, we’re going to just build an isolated galaxy cluster:</p>
+<p>The first step is to save the cluster model to disk:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">galaxy_cluster_model</span><span class="o">.</span><span class="n">write_model_to_h5</span><span class="p">(</span><span class="s2">&quot;profile.h5&quot;</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">cluster_ic</span> <span class="o">=</span> <span class="n">cg</span><span class="o">.</span><span class="n">ClusterICs</span><span class="p">(</span>
+    <span class="s2">&quot;example_cluster&quot;</span><span class="p">,</span>
+    <span class="mi">1</span><span class="p">,</span>
+    <span class="p">[</span><span class="s2">&quot;profile.h5&quot;</span><span class="p">],</span>
+    <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]],</span>
+    <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]],</span>
+    <span class="n">num_particles</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;dm&quot;</span><span class="p">:</span> <span class="mi">1_000_000</span><span class="p">},</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>And now for the last major step! We can finish off by generating a set of initial conditions to our liking!</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cg</span><span class="o">.</span><span class="n">setup_ramses_ics</span><span class="p">(</span><span class="n">cluster_ic</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "e44c0b5bacf9488dbc831fa46cc8a4f0"}</script></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+cluster_generator : [INFO     ] 2023-10-27 09:50:53,412 We will be assigning 1000000 dark_matter particles.
+cluster_generator : [INFO     ] 2023-10-27 09:50:53,413 Compute 1000000 particle positions.
+cluster_generator : [INFO     ] 2023-10-27 09:50:53,755 Compute dark_matter particle velocities.
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "33dba21d876c4ffdaf22e16cb55dfae6"}</script></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+cluster_generator : [INFO     ] 2023-10-27 09:51:13,721 Simulation setups saved to Merger_Config.txt.
+</pre></div></div>
+</div>
+<p>Now in your local directory, you should see the initialization files. Depending on which code you selected to run, these may look different; however, the general procedure is still the same. Generate the radial profiles, build the clusters, combine them into a set of ICs and output the results. Once you’ve got the output files ready for the simulation software of your choice, go ahead and check out the simulation guide for that software on the examples page. You’ll find detailed instructions
+about actually performing the simulation there!</p>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Contents">Contents</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Introducing-The-CGP">Introducing The CGP</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Getting-Started-With-the-Package">Getting Started With the Package</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Setting-Up-Your-First-Cluster">Setting Up Your First Cluster</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Building-The-Model">Building The Model</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div class="tocsection sourcelink">
+    <a href="../../_sources/_notebooks/examples/FirstJourney.ipynb.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=c5ced968eda925caa686"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=c5ced968eda925caa686"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+  <p class="copyright">
+    
+      © Copyright 2020, John ZuHone.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.14.2.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
