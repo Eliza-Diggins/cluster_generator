@@ -12,6 +12,7 @@ from cluster_generator.correction import (
     Type0aNPR,
     Type0bNPR,
     Type1aNPR,
+    Type2aNPR,
 )
 from cluster_generator.model import ClusterModel
 from cluster_generator.radial_profiles import (
@@ -204,3 +205,47 @@ class TestNPR1a(TestNPR):
 
     def _answers(self):
         return [Type1aNPR(1.956e1, 7.275e1, object)]
+
+
+@pytest.mark.usefixtures("answer_store", "answer_dir")
+@pytest.mark.skipif(
+    sys.version_info < (3, 11), reason="Incompatible dill serialization"
+)
+class TestNPR2a(TestNPR):
+    mdl_name = "test_correction_NRP2a.h5"
+    npr = Type2aNPR
+
+    def model(self, answer_store, answer_dir):
+        if answer_store:
+            if hasattr(self, "is_built") and self.is_built is True:
+                # This was already built once this cycle.
+                self._model = ClusterModel.from_h5_file(
+                    os.path.join(answer_dir, self.mdl_name)
+                )
+                return self._model
+            else:
+                pass
+        else:
+            if os.path.exists(os.path.join(answer_dir, self.mdl_name)):
+                self._model = ClusterModel.from_h5_file(
+                    os.path.join(answer_dir, self.mdl_name)
+                )
+                return self._model
+            else:
+                pass
+
+        density = vikhlinin_density_profile(
+            119846, 94.6, 1239.9, 0.916, 0.526, 4.943, 3
+        )
+        temperature = vikhlinin_temperature_profile(
+            3.61, 0.12, 5, 10, 1420, 0.27, 57, 3.88
+        )
+        self._model = ClusterModel.from_dens_and_temp(1000, 10000, density, temperature)
+        self._model.write_model_to_h5(
+            os.path.join(answer_dir, self.mdl_name), overwrite=True
+        )
+        self.is_built = True
+        return self._model
+
+    def _answers(self):
+        return [Type2aNPR(1.197e3, 1.0e4, object)]

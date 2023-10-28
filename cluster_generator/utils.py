@@ -21,6 +21,7 @@ from unyt import unyt_array, unyt_quantity
 
 # -- configuration directory -- #
 _config_directory = os.path.join(pt.Path(__file__).parents[0], "bin", "config.yaml")
+_bin_directory = os.path.join(pt.Path(__file__).parents[0], "bin")
 
 
 # defining the custom yaml loader for unit-ed objects

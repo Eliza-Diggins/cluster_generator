@@ -76,3 +76,8 @@ electron_number_density:
   scale: "log"
   revision: 1
   kwargs: { }
+radius:
+  label: "radius / $\\left[%(unit)s\\right]$"
+  scale: "log"
+  revision: 1
+  kwargs: { }

@@ -1,0 +1,47 @@
+#======================================================================================================================#
+#                                       ** TEMPLATE EXAMPLE **                                                         #
+#                                     --------------------------                                                       #
+# All collections should have yaml schema which follow this format.                                                    #
+#======================================================================================================================#
+main:
+  # The main tag should contain the basic meta data about the collection. This includes name, source, type, etc.
+  # a citation should also be provided if available.
+  collection_name: "Example Collection" # The name of the collection. Should correspond with the class name.
+  collection_authors: # The people who wrote the collection (NOT THE PROFILE AUTHORS)
+    - "Eliza C. Diggins"
+  source_authors: # The people who actually found the profiles (who's paper you're using to build a collection).
+    - "Some Scientists"
+    - "Who Did"
+    - "The Original Work"
+  citation: | # A citation for that paper.
+    Some Journal, Some authors, On a date, with some more information...
+  n_clusters: 10 # The number of clusters contained in the dataset.
+schema:
+  #--------------------------------------------------------------------------------------------------------------------#
+  # The schema is the most important part of the yaml file. This is the space where we specify the way in which the    #
+  # clusters should be generated within the CGP backend. The formatting here is non-negotiable. Errors will be thrown  #
+  # if any parts of the below file are missing or invalid                                                              #
+  #--------------------------------------------------------------------------------------------------------------------#
+  profiles:
+    # The profiles section should contain the profiles you have stored in the dataset.
+    # each profile should get its own heading named precisely with the field it is specifying.
+    total_density: # --> This specifies a total density component
+      parameters: # This should be a list of parameters, in the order in which they are passed to the function.
+        # !! THIS MUST MATCH -EXACTLY- THE COLUMN NAME CONTAINING THE VALUE OF THAT PARAMETER !! #
+        - "name of parameter 1"
+        - "name of parameter 2"
+        - "name of parameter 3"
+      function: !lambda "lambda x, p0,p1,...: f(x,p0,p1)" # Parameters can have any symbol as long as they match order of parameters.
+        # In this segment, we're going to specify the actual lambda function.
+        # !! WARNING: these are loaded using the ``eval()`` function. It's not secure! Don't do anything stupid. It's
+        # your machine! (We won't allow nefarious lambdas into production [in case someone gets any ideas]).
+      function_name: "Some name of the profile type (beta-profile)"
+    density:
+      # This is a gas density profile. Notice that it matches the FIELD NAME in the CGP.
+      parameters:
+        - "p1"
+      function: !lambda "lambda x: x"
+      function_name: "Some name of the profile type (beta-profile)"
+  build:
+    # The build section tells CGP how to actually build the profile
+    method: "from_dens_and_tden"  # This is the ClusterModel method to use for loading in.

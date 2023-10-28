@@ -1,0 +1,56 @@
+main:
+  collection_name: "Vikhlinin et. al. 2006"
+  collection_authors:
+    - "Eliza C. Diggins"
+  source_authors:
+    - "A. Vikhlinin"
+    - "A. Karatsov"
+    - "W. Forman"
+    - "C. Jones"
+    - "M. Markevitch"
+    - "S. S. Murray"
+    - "L. Van Speybroeck"
+  citation: |
+    @ARTICLE{2006ApJ...640..691V,
+           author = {{Vikhlinin}, A. and {Kravtsov}, A. and {Forman}, W. and {Jones}, C. and {Markevitch}, M. and {Murray}, S.~S. and {Van Speybroeck}, L.},
+            title = "{Chandra Sample of Nearby Relaxed Galaxy Clusters: Mass, Gas Fraction, and Mass-Temperature Relation}",
+          journal = {\apj},
+         keywords = {Cosmology: Observations, Cosmology: Dark Matter, Galaxies: Clusters: General, X-Rays: Galaxies: Clusters, Astrophysics},
+             year = 2006,
+            month = apr,
+           volume = {640},
+           number = {2},
+            pages = {691-709},
+              doi = {10.1086/500288},
+    archivePrefix = {arXiv},
+           eprint = {astro-ph/0507092},
+     primaryClass = {astro-ph},
+           adsurl = {https://ui.adsabs.harvard.edu/abs/2006ApJ...640..691V},
+          adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+    }
+  n_clusters: 13
+schema:
+  profiles:
+    density:
+      parameters:
+        rho_0: "Msun/kpc**3"
+        r_c: "kpc"
+        r_s: "kpc"
+        alpha: ""
+        beta: ""
+        epsilon: ""
+        gamma: ""
+      function: "vikhlinin_density_profile"
+    temperature:
+      parameters:
+        T0: "keV"
+        a: ""
+        b: ""
+        c: ""
+        rt: "kpc"
+        Tmin: "keV"
+        r_cool: "kpc"
+        a_cool: ""
+      function: "vikhlinin_temperature_profile"
+  build:
+    method: "from_dens_and_temp"

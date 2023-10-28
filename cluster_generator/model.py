@@ -1291,7 +1291,7 @@ class ClusterModel:
             plt_defaults = yaml.load(f, yaml.FullLoader)
 
         if fields == "all":
-            fields = [i for i in self.fields.keys() if i != "radius"]
+            fields = [i for i in self.fields.keys()]
         else:
             assert isinstance(
                 fields, (list, tuple)

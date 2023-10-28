@@ -56,7 +56,7 @@ class RadialProfile:
 
     def __init__(self, profile, name=None):
         #: The profile name.
-        self.name = None
+        self.name = name
         if isinstance(profile, RadialProfile):
             self.profile = profile.profile
         else:

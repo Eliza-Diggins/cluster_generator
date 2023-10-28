@@ -14,7 +14,7 @@ import numpy as np
 from tqdm.auto import tqdm
 
 from cluster_generator.model import ClusterModel
-from cluster_generator.numalgs import _check_non_positive
+from cluster_generator.numalgs import _check_non_positive, find_holes
 from cluster_generator.utils import LogMute, cgparams, mylog
 
 
@@ -623,6 +623,146 @@ class Type1aNPR(Type1NPR):
             num_points=len(rr),
             **self.obj.properties,
         )
+
+
+class Type2NPR(NonPhysicalRegion):
+    r"""
+    Non-Physical Region marker class (Subclass of :py:class:`correction.NonPhysicalRegion`) which indicates NPRs of type 2.
+
+    .. note::
+        NPRs of type 2 are gravitational theory dependent.
+
+
+    +--------------+-----------------------------+
+    | Properties                                 |
+    +==============+=============================+
+    | Scope        | Type 2                      |
+    +--------------+-----------------------------+
+    | Methods      | :math:`\rho_g + T_g`        |
+    +--------------+-----------------------------+
+    | Gravity      | All                         |
+    +--------------+-----------------------------+
+    | Correctable? | True                        |
+    +--------------+-----------------------------+
+
+    **Class Diagram**
+
+    .. inheritance-diagram:: cluster_generator.correction
+        :parts: 1
+    """
+
+    _methods = []
+    _fields_of_interest = []
+    _message = """
+    NPR of type 2: Gravity non-specific non-physicality detected.
+    """
+    _scope = "2"
+
+    def __init__(self, rmin, rmax, obj):
+        super().__init__(rmin, rmax, self._scope, obj)
+
+    @classmethod
+    def _identify(cls, model):
+        return []
+
+
+class Type2aNPR(NonPhysicalRegion):
+    r"""
+    Non-Physical Region corresponding to asymptotically inconsistent temperature profiles.
+
+    .. note::
+        NPRs of type 2 are gravitational theory dependent.
+
+
+    +--------------+-----------------------------+
+    | Properties                                 |
+    +==============+=============================+
+    | Scope        | Type 2                      |
+    +--------------+-----------------------------+
+    | Methods      | :math:`\rho_g + T_g`        |
+    +--------------+-----------------------------+
+    | Gravity      | All                         |
+    +--------------+-----------------------------+
+    | Correctable? | True                        |
+    +--------------+-----------------------------+
+
+    **Class Diagram**
+
+    .. inheritance-diagram:: cluster_generator.correction
+        :parts: 1
+
+    """
+
+    """
+    TODO: This needs to be modified after the gravity update. These should seek correction algorithms and id algorithms
+    specific to the corresponding gravity theory.
+    """
+
+    _methods = ["from_dens_and_temp"]
+    _fields_of_interest = ["temperature"]
+    _message = """
+    NPR of type 2a: Asymptotically invalid temperature profile.
+    """
+    _scope = "2a"
+    correctable = True
+
+    def __init__(self, rmin, rmax, obj):
+        super().__init__(rmin, rmax, self._scope, obj)
+
+    @classmethod
+    def _identify(cls, model):
+        """
+        Identifies the type 2a non-physicalities present in the model.
+
+        Parameters
+        ----------
+        model: :py:class:`model.ClusterModel`
+            The model to identify T2ANPRs in.
+
+        Returns
+        -------
+        list of Type2aNPR
+
+        """
+        nprs = []  # The NPRs being returned
+
+        if "method" not in model.properties["meth"]:
+            mylog.warning(
+                "Failed to identify a 'generation_type' for the model. Unable to check for NPRs."
+            )
+        elif model.properties["meth"]["method"] not in cls._methods:
+            return nprs
+        else:
+            pass
+
+        # -- Main identification region -- #
+        if "total_mass" in model.fields:
+            nh, holes = find_holes(
+                model.fields["radius"].d, model.fields["total_mass"].d
+            )
+        else:
+            return nprs
+
+        if (
+            nh > 0 and int(holes[2, -1, -1]) == len(model.fields["radius"]) - 1
+        ):  # Check if one of the holes corresponds to edge of domain
+            nprs.append(cls(holes[0, -1, 0], holes[0, -1, 1], model))
+        if len(nprs) != 0:
+            mylog.warning(
+                f"Located {len(nprs)} non-physicalities of type {cls._scope}."
+            )
+        return nprs
+
+    def _correct(self):
+        """
+        Corrects the non-physicality of Type2a in the model associated with this NPR.
+
+        Returns
+        -------
+        :py:class:`model.cluster_model`
+
+        """
+        pass
 
 
 class CorrectionFailure(Exception):

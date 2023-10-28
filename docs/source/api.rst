@@ -17,5 +17,6 @@ API Reference for the CGP
     relations
     virial
     correction
+    cluster_collections
     codes
     numalgs
