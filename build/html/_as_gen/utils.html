@@ -64,7 +64,7 @@
     <link rel="icon" href="../_static/cluster_generator_logo.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="utils.build_yt_dataset_fields" href="utils.build_yt_dataset_fields.html" />
+    <link rel="next" title="utils.ensure_list" href="utils.ensure_list.html" />
     <link rel="prev" title="API" href="../api.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -342,7 +342,6 @@ document.write(`
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">utils</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="utils.build_yt_dataset_fields.html">utils.build_yt_dataset_fields</a></li>
 <li class="toctree-l2"><a class="reference internal" href="utils.ensure_list.html">utils.ensure_list</a></li>
 <li class="toctree-l2"><a class="reference internal" href="utils.ensure_ytarray.html">utils.ensure_ytarray</a></li>
 <li class="toctree-l2"><a class="reference internal" href="utils.ensure_ytquantity.html">utils.ensure_ytquantity</a></li>
@@ -795,37 +794,34 @@ document.write(`
 <p class="rubric">Functions</p>
 <table class="autosummary longtable table autosummary">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="utils.build_yt_dataset_fields.html#utils.build_yt_dataset_fields" title="utils.build_yt_dataset_fields"><code class="xref py py-obj docutils literal notranslate"><span class="pre">build_yt_dataset_fields</span></code></a>(grid, models, ...)</p></td>
-<td><p>Build the yt dataset files.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="utils.ensure_list.html#utils.ensure_list" title="utils.ensure_list"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ensure_list</span></code></a>(x)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="utils.ensure_list.html#utils.ensure_list" title="utils.ensure_list"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ensure_list</span></code></a>(x)</p></td>
 <td><p>Force x to be a list</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="utils.ensure_ytarray.html#utils.ensure_ytarray" title="utils.ensure_ytarray"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ensure_ytarray</span></code></a>(arr, units)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="utils.ensure_ytarray.html#utils.ensure_ytarray" title="utils.ensure_ytarray"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ensure_ytarray</span></code></a>(arr, units)</p></td>
 <td><p>Ensures the array is a united array</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="utils.ensure_ytquantity.html#utils.ensure_ytquantity" title="utils.ensure_ytquantity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ensure_ytquantity</span></code></a>(x, default_units)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="utils.ensure_ytquantity.html#utils.ensure_ytquantity" title="utils.ensure_ytquantity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ensure_ytquantity</span></code></a>(x, default_units)</p></td>
 <td><p>Ensures the quantity has units</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="utils.generate_particle_radii.html#utils.generate_particle_radii" title="utils.generate_particle_radii"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_particle_radii</span></code></a>(r, m, num_particles)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="utils.generate_particle_radii.html#utils.generate_particle_radii" title="utils.generate_particle_radii"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_particle_radii</span></code></a>(r, m, num_particles)</p></td>
 <td><p>Inverse sampling method to generate particle radii.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="utils.integrate.html#utils.integrate" title="utils.integrate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">integrate</span></code></a>(profile, rr)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="utils.integrate.html#utils.integrate" title="utils.integrate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">integrate</span></code></a>(profile, rr)</p></td>
 <td><p>Integrate over the radii</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="utils.integrate_mass.html#utils.integrate_mass" title="utils.integrate_mass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">integrate_mass</span></code></a>(profile, rr)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="utils.integrate_mass.html#utils.integrate_mass" title="utils.integrate_mass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">integrate_mass</span></code></a>(profile, rr)</p></td>
 <td><p>Integrates over a profile with spherical volume element</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="utils.integrate_toinf.html#utils.integrate_toinf" title="utils.integrate_toinf"><code class="xref py py-obj docutils literal notranslate"><span class="pre">integrate_toinf</span></code></a>(profile, rr)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="utils.integrate_toinf.html#utils.integrate_toinf" title="utils.integrate_toinf"><code class="xref py py-obj docutils literal notranslate"><span class="pre">integrate_toinf</span></code></a>(profile, rr)</p></td>
 <td><p>Integrate to infinity</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="utils.parse_prng.html#utils.parse_prng" title="utils.parse_prng"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse_prng</span></code></a>(prng)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="utils.parse_prng.html#utils.parse_prng" title="utils.parse_prng"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse_prng</span></code></a>(prng)</p></td>
 <td><p>Grabs random state</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="utils.time_limit.html#utils.time_limit" title="utils.time_limit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">time_limit</span></code></a>(function, max_execution_time, ...)</p></td>
-<td><p>Run the function under a time limit.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="utils.time_limit.html#utils.time_limit" title="utils.time_limit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">time_limit</span></code></a>(function, max_execution_time, ...)</p></td>
+<td><p>Assert a maximal time limit on functions with potentially problematic / unbounded execution times.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="utils.truncate_spline.html#utils.truncate_spline" title="utils.truncate_spline"><code class="xref py py-obj docutils literal notranslate"><span class="pre">truncate_spline</span></code></a>(f, r_t, a)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="utils.truncate_spline.html#utils.truncate_spline" title="utils.truncate_spline"><code class="xref py py-obj docutils literal notranslate"><span class="pre">truncate_spline</span></code></a>(f, r_t, a)</p></td>
 <td><p>Takes the function <code class="docutils literal notranslate"><span class="pre">f</span></code> and returns a truncated equivalent of it, which becomes</p></td>
 </tr>
 </tbody>
@@ -868,11 +864,11 @@ document.write(`
       </div>
     </a>
     <a class="right-next"
-       href="utils.build_yt_dataset_fields.html"
+       href="utils.ensure_list.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">utils.build_yt_dataset_fields</p>
+        <p class="prev-next-title">utils.ensure_list</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

@@ -342,7 +342,6 @@ document.write(`
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="utils.html">utils</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="utils.build_yt_dataset_fields.html">utils.build_yt_dataset_fields</a></li>
 <li class="toctree-l2"><a class="reference internal" href="utils.ensure_list.html">utils.ensure_list</a></li>
 <li class="toctree-l2"><a class="reference internal" href="utils.ensure_ytarray.html">utils.ensure_ytarray</a></li>
 <li class="toctree-l2"><a class="reference internal" href="utils.ensure_ytquantity.html">utils.ensure_ytquantity</a></li>
@@ -797,7 +796,21 @@ document.write(`
 <dl class="py function">
 <dt class="sig sig-object py" id="utils.time_limit">
 <span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">time_limit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_execution_time</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/utils.html#time_limit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.time_limit" title="Link to this definition">#</a></dt>
-<dd><p>Run the function under a time limit.</p>
+<dd><p>Assert a maximal time limit on functions with potentially problematic / unbounded execution times.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This function launches a daemon process.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>function</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">callable</span></code>) – The function to run under the time limit.</p></li>
+<li><p><strong>max_execution_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – The maximum runtime in seconds.</p></li>
+<li><p><strong>args</strong> – arguments to pass to the function.</p></li>
+<li><p><strong>kwargs</strong> (<em>optional</em>) – keyword arguments to pass to the function.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 </section>
