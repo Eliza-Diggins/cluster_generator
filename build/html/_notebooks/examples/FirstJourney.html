@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Your First Journey With CGP &#8212; cluster_generator  documentation</title>
+    <title>Your First Journey With CG &#8212; cluster_generator  documentation</title>
   
   
   
@@ -385,14 +385,14 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <p><img alt="logo" src="../../_images/cluster_generator_logo.png" /></p>
-<section id="Your-First-Journey-With-CGP">
-<h1>Your First Journey With CGP<a class="headerlink" href="#Your-First-Journey-With-CGP" title="Link to this heading">#</a></h1>
+<section id="Your-First-Journey-With-CG">
+<h1>Your First Journey With CG<a class="headerlink" href="#Your-First-Journey-With-CG" title="Link to this heading">#</a></h1>
 <p><img alt="badge" src="https://img.shields.io/badge/Date_Created-10/26/23-cyan" /></p>
 <hr class="docutils" />
 <section id="Contents">
 <h2>Contents<a class="headerlink" href="#Contents" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p><a class="reference internal" href="#Introducing-The-CGP"><span class="std std-ref">Introduction</span></a></p>
+<li><p><a class="reference internal" href="#Introducing-CG"><span class="std std-ref">Introduction</span></a></p>
 <ul>
 <li><p><a class="reference internal" href="#Getting-Started-With-the-Package"><span class="std std-ref">Getting Started</span></a></p></li>
 </ul>
@@ -405,13 +405,13 @@ document.write(`
 </ul>
 </section>
 <hr class="docutils" />
-<section id="Introducing-The-CGP">
-<h2>Introducing The CGP<a class="headerlink" href="#Introducing-The-CGP" title="Link to this heading">#</a></h2>
-<p>So you’ve successfully managed to download and install the CGP package into your python distribution. Congratulations! Now what?</p>
-<p>In this guide, we’re going to walk through the generation of a set of simulation initial conditions from start to finish to show you the ropes. Once you’ve got the hang of the basics, the examples page has many more guides exploring all of the different features the CGP provides.</p>
+<section id="Introducing-CG">
+<h2>Introducing CG<a class="headerlink" href="#Introducing-CG" title="Link to this heading">#</a></h2>
+<p>So you’ve successfully managed to download and install the CG package into your python distribution. Congratulations! Now what?</p>
+<p>In this guide, we’re going to walk through the generation of a set of simulation initial conditions from start to finish to show you the ropes. Once you’ve got the hang of the basics, the examples page has many more guides exploring all of the different features CG provides.</p>
 <section id="Getting-Started-With-the-Package">
 <h3>Getting Started With the Package<a class="headerlink" href="#Getting-Started-With-the-Package" title="Link to this heading">#</a></h3>
-<p>Let’s start by making sure the CGP is properly installed. In your terminal, try</p>
+<p>Let’s start by making sure CG is properly installed. In your terminal, try</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt;<span class="w"> </span>pip<span class="w"> </span>show<span class="w"> </span>cluster_generator
 </pre></div>
 </div>
@@ -429,7 +429,7 @@ document.write(`
 <hr class="docutils" />
 <section id="Setting-Up-Your-First-Cluster">
 <h2>Setting Up Your First Cluster<a class="headerlink" href="#Setting-Up-Your-First-Cluster" title="Link to this heading">#</a></h2>
-<p>The CGP has a <strong>lot</strong> of ways to generate galaxy clusters, but we’re going to start off slow. To build a simple cluster, we’re going to provide the CGP with the radial profiles for <span class="math notranslate nohighlight">\(\rho_{\mathrm{gas}}\)</span> and <span class="math notranslate nohighlight">\(\rho_{\mathrm{dyn}}\)</span> (the total gravitating density). Once we’ve provided those profiles, the CGP will go ahead and do all the rest of the leg work to produce a beautiful galaxy cluster model.</p>
+<p>CG has a <strong>lot</strong> of ways to generate galaxy clusters, but we’re going to start off slow. To build a simple cluster, we’re going to provide CG with the radial profiles for <span class="math notranslate nohighlight">\(\rho_{\mathrm{gas}}\)</span> and <span class="math notranslate nohighlight">\(\rho_{\mathrm{dyn}}\)</span> (the total gravitating density). Once we’ve provided those profiles, CG will go ahead and do all the rest of the leg work to produce a beautiful galaxy cluster model.</p>
 <p>Let’s use Hernquist profiles<a class="reference external" href="https://ui.adsabs.harvard.edu/abs/1990ApJ...356..359H/abstract">[1]</a>( (they’re very simple!) for both of the density components. For reference, the equation for a Hernquist density profile is</p>
 <div class="math notranslate nohighlight">
 \[\rho(r) = \frac{M}{2\pi}\frac{r_s}{r}\frac{1}{(r+r_s)^3}.\]</div>
@@ -475,7 +475,7 @@ document.write(`
 <img alt="../../_images/_notebooks_examples_FirstJourney_7_0.png" src="../../_images/_notebooks_examples_FirstJourney_7_0.png" />
 </div>
 </div>
-<p>Excellent! We’ve built our first set of radial profiles. You’re now acquainted with the first and most simple data structure in the CGP: the <code class="docutils literal notranslate"><span class="pre">RadialProfile</span></code> class, which are what these radial profiles were. They’re essentially wrappers around basic python functions. Now that we’ve got our profiles, let’s get around to building our cluster.</p>
+<p>Excellent! We’ve built our first set of radial profiles. You’re now acquainted with the first and most simple data structure in CG: the <code class="docutils literal notranslate"><span class="pre">RadialProfile</span></code> class, which are what these radial profiles were. They’re essentially wrappers around basic python functions. Now that we’ve got our profiles, let’s get around to building our cluster.</p>
 <section id="Building-The-Model">
 <h3>Building The Model<a class="headerlink" href="#Building-The-Model" title="Link to this heading">#</a></h3>
 <p>The next step once we’ve chosen our profiles is to actually build the cluster. To do this, we’re going to take advantage of the <code class="docutils literal notranslate"><span class="pre">ClusterModel</span></code> class, which will do all the math for us.</p>
@@ -500,7 +500,7 @@ cluster_generator : [INFO     ] 2023-10-27 09:50:43,994 Integrating pressure pro
 cluster_generator : [INFO     ] 2023-10-27 09:50:45,651 Integrating gravitational potential profile.
 </pre></div></div>
 </div>
-<p>So what just happened? We generated a <code class="docutils literal notranslate"><span class="pre">ClusterModel</span></code> instance which represents the cluster model from radii <span class="math notranslate nohighlight">\(1\)</span> kpc to <span class="math notranslate nohighlight">\(10,000\)</span> kpc. All of the output to the terminal tells us what’s going on behind the scenes. It looks like first CGP computed the total mass, then the gas pressure, and finally the gravitational potential.</p>
+<p>So what just happened? We generated a <code class="docutils literal notranslate"><span class="pre">ClusterModel</span></code> instance which represents the cluster model from radii <span class="math notranslate nohighlight">\(1\)</span> kpc to <span class="math notranslate nohighlight">\(10,000\)</span> kpc. All of the output to the terminal tells us what’s going on behind the scenes. It looks like first CG computed the total mass, then the gas pressure, and finally the gravitational potential.</p>
 <p>We can do a lot with these models, but what’s worth remembering is that these <code class="docutils literal notranslate"><span class="pre">ClusterModel</span></code> instances represent complete clusters in their own right. Each model has <code class="docutils literal notranslate"><span class="pre">fields</span></code> representing a variety of different pieces of data. Let’s take a look at what fields are available:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
@@ -664,7 +664,7 @@ about actually performing the simulation there!</p>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Contents">Contents</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Introducing-The-CGP">Introducing The CGP</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Introducing-CG">Introducing CG</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Getting-Started-With-the-Package">Getting Started With the Package</a></li>
 </ul>
 </li>

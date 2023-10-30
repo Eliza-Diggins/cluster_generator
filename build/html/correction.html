@@ -391,7 +391,7 @@ this can occur:</p>
 <ul class="simple">
 <li><p><strong>The profiles are explicitly flawed</strong></p>
 <ul>
-<li><p>Example: You ask CGP to create initial conditions for a negative ICM temperature.</p></li>
+<li><p>Example: You ask CG to create initial conditions for a negative ICM temperature.</p></li>
 </ul>
 </li>
 <li><p><strong>The profiles lead to non-physicalities because of their shapes</strong></p>
@@ -412,7 +412,7 @@ purposes, it can lead to inconsistencies.</p></li>
 </ul>
 <p>Clearly, there are a variety of ways that these things can happen and they’re often hard to predict as the end user. In previous
 initial conditions software, it was generally left up to the end user to construct self-consistent profiles (which could be a lot of work).
-The CGP is geared toward making the initialization process as simple as possible to facilitate easier science and therefore
+CG is geared toward making the initialization process as simple as possible to facilitate easier science and therefore
 comes with a set of algorithms for detection and correction of these non-physicalities.</p>
 <hr style="height:10px;background-color:black"><nav class="contents" id="contents">
 <p class="topic-title">Contents</p>
@@ -434,14 +434,14 @@ comes with a set of algorithms for detection and correction of these non-physica
 </nav>
 <hr style="height:10px;background-color:black"><section id="non-physical-regions">
 <h2><a class="toc-backref" href="#id4" role="doc-backlink">Non-Physical Regions</a><a class="headerlink" href="#non-physical-regions" title="Link to this heading">#</a></h2>
-<p>To contend with the issue of non-physical regions, the CGP provides the <a class="reference internal" href="_as_gen/correction.html#module-correction" title="correction"><code class="xref py py-mod docutils literal notranslate"><span class="pre">correction</span></code></a> module which is composed of
+<p>To contend with the issue of non-physical regions, CG provides the <a class="reference internal" href="_as_gen/correction.html#module-correction" title="correction"><code class="xref py py-mod docutils literal notranslate"><span class="pre">correction</span></code></a> module which is composed of
 class objects descended from <a class="reference internal" href="_as_gen/correction.NonPhysicalRegion.html#correction.NonPhysicalRegion" title="correction.NonPhysicalRegion"><code class="xref py py-class docutils literal notranslate"><span class="pre">correction.NonPhysicalRegion</span></code></a>. Each of these classes represents a particular category of
 non-physical region and has subclasses representing the documented sub-cases of the non-physicality described. As such, to get
 started correcting non-physical regions, it is first important to understand how they are categorized.</p>
 <figure class="align-default" id="id2">
 <img alt="Non-physicalities diagram." src="_images/non-physical.drawio.png" />
 <figcaption>
-<p><span class="caption-text">All of the possible non-physicalities which occur in the CGP.</span><a class="headerlink" href="#id2" title="Link to this image">#</a></p>
+<p><span class="caption-text">All of the possible non-physicalities which occur in CG.</span><a class="headerlink" href="#id2" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <section id="type-0-non-physicalities">
@@ -614,7 +614,7 @@ correction methodologies, visit <a class="reference internal" href="correction_m
 </section>
 <section id="adding-a-new-npr">
 <h2><a class="toc-backref" href="#id9" role="doc-backlink">Adding a New NPR</a><a class="headerlink" href="#adding-a-new-npr" title="Link to this heading">#</a></h2>
-<p>If you’re a contributor to the CGP, then you may find yourself in a situation where you need to add a new NPR type to the
+<p>If you’re a contributor to CG, then you may find yourself in a situation where you need to add a new NPR type to the
 <a class="reference internal" href="_as_gen/correction.html#module-correction" title="correction"><code class="xref py py-mod docutils literal notranslate"><span class="pre">correction</span></code></a> module. The process to do so is relatively simple. Every novel NPR class should fit into a category and
 inherit directly from the next highest level NPR in the tree. The generic template for such an addition should look like this</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Type__NPR</span><span class="p">(</span><span class="n">Type__NPR</span><span class="p">):</span>
