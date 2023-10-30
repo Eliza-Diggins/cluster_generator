@@ -1,5 +1,5 @@
 """
-Numerical algorithms for use in the backend of the CGP.
+Numerical algorithms for use in the backend of CG.
 """
 import numpy as np
 from scipy.integrate import quad
@@ -366,6 +366,34 @@ def solve_temperature(r, potential_gradient, density):
     temp = pressure * mu * mp / density
     temp.convert_to_units("keV")
     return temp
+
+
+def extrap_power_law(f, df, alpha, x, sign=1):
+    r"""
+    Converts the function ``f`` to a power law beyond ``x`` while keeping
+    the function at least :math:`C_1[\mathbb{R}`.
+
+    Parameters
+    ----------
+    f
+    df
+    alpha
+    sign
+
+    Returns
+    -------
+
+    Notes
+    -----
+
+    Given a function :math:`f(x)`, this algorithm works by mapping :math:`f(x)\to \xi(x), \xi(x)=f(x)E(x)` for an extrapolation
+    function :math:`E(x)`. Depending on the choice of ``sign``, either of
+
+    .. math::
+
+        E(x) = \frac{}{}
+
+    """
 
 
 def _closest_factors(val):
