@@ -1,0 +1,38 @@
+main:
+  collection_name: "Ascasibar & Diego 2007"
+  collection_authors:
+    - "Eliza C. Diggins"
+  source_authors:
+    - "Ascasibar, Y."
+    - "Diego, J. M."
+  citation: |
+    @article{ascasibar2008phenomenological,
+    title={A phenomenological model of galaxy clusters},
+    author={Ascasibar, Y and Diego, Jos{\'e} Mar{\'\i}a},
+    journal={Monthly Notices of the Royal Astronomical Society},
+    volume={383},
+    number={1},
+    pages={369--374},
+    year={2008},
+    publisher={Blackwell Publishing Ltd Oxford, UK}
+    }
+  n_clusters: 13
+schema:
+  profiles:
+    density:
+      parameters:
+        T0: "keV"
+        t: ""
+        a: "kpc"
+        alpha: ""
+        f: ""
+      function: "ad07_density_profile"
+    temperature:
+      parameters:
+        T0: "keV"
+        t: ""
+        a: "kpc"
+        alpha: ""
+      function: "ad07_temperature_profile"
+  build:
+    method: "from_dens_and_temp"

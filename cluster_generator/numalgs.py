@@ -368,32 +368,151 @@ def solve_temperature(r, potential_gradient, density):
     return temp
 
 
-def extrap_power_law(f, df, alpha, x, sign=1):
+def extrap_power_law(x0, x1, alpha, f=None, df=None, x=None, y=None, sign=1):
     r"""
-    Converts the function ``f`` to a power law beyond ``x`` while keeping
-    the function at least :math:`C_1[\mathbb{R}`.
+    Determines an extrapolation function which gives the provided data (either ``f`` or ``y``) a particular asymptotic power-law
+    behavior which maintaining :math:`C^1[\mathbb{R}]` behavior at ``x_0``, and which is bounded (above, ``sign==1``) or (below, ``sign==-1``)
+    by the equivalent power-law passing through ``(x1,y1)``. If a callable ``f`` and its derivative ``df`` are provided, then a :py:class:`radial_profiles.RadialProfile` is returned
+    which is piecewise defined to give the correct asymptotic behavior. If array data is provided (``x`` and ``y``), then
+    the arrays ``x`` and ``y`` will be returned with the corresponding alterations.
 
     Parameters
     ----------
-    f
-    df
-    alpha
-    sign
+    x0: float
+        The extrapolation point which dictates the position at which the function transitions to the extrapolation function.
+        ``x0 < x1`` is required.
+    x1: float
+        The vertex position. The asymptotic power law :math:`g(x) = y_1(x/x_1)^\alpha` passes through this point
+        and is equivalent to the output function for sufficiently large :math:`x`.
+    alpha: float
+        The corresponding power law index to match to during extrapolation.
+    f: callable, optional
+        Either ``f`` or ``x`` and ``y`` must be specified. A callable function which provides the pre-asymptotic adjustment
+        behavior of the profile.
+    df: callable, optional
+        If ``f`` is provided, ``df`` must also be provided. Provides the derivative of ``f`` at each ``x``.
+    x: array-like, optional
+        The ``x`` values of the function domain.
+    y: array-like, optional
+        The ``y`` values of the function domain.
+    sign: int, optional
+        (default ``1``) The sign of the extrapolation behavior. If ``1``, then the extrapolation behavior is bounded entirely
+        above the corresponding power law through ``x_1,y_1``. Otherwise may be ``-1`` and the extrapolation behavior will
+        be entirely below the corresponding power law.
 
     Returns
     -------
+    callable or :py:class:`numpy.ndarray`
+
+    Raises
+    ------
+    ValueError:
+        If :math:`\omega \le 0`.
 
     Notes
     -----
 
-    Given a function :math:`f(x)`, this algorithm works by mapping :math:`f(x)\to \xi(x), \xi(x)=f(x)E(x)` for an extrapolation
-    function :math:`E(x)`. Depending on the choice of ``sign``, either of
+    This algorithm is designed to take some function :math:`f(x)` which has some (presumably undesireable) behavior beyond
+    some :math:`x_1` and map it (for :math:`x>x_1`) to a new function :math:`\tilde{f}(x) = \xi(x)E_{\pm}(x)` such that for some :math:`x_0<x_1`,
+    :math:`\tilde{f}(x_0) = f(x_0)` and :math:`\tilde{f}'(x_0) = f'(x_0)` and :math:`\xi(x) = y_1(x/x_1)^\alpha`. Here, :math:`E_\pm` is the extrapolation function
+    and is (depending on user provided ``sign``) one of
 
     .. math::
 
-        E(x) = \frac{}{}
+        E_{\pm}(x;x_0) = \frac{\left(\frac{x}{x_0}\right)^\omega}{\left(\frac{x}{x_0}\right)^\omega \mp \gamma}.
+
+    Because at :math:`x=x_0`,
+
+    .. math::
+
+        \xi(x_0)E_{\pm}(x_0,x_0) = y_1\left(\frac{x_0}{x_1}\right)^\alpha \frac{1}{1\pm \gamma} = f(x_0) \implies \gamma = \mp \left(\frac{y_1}{y_0}\left(\frac{x_0}{x_1}\right)^\alpha - 1\right)
+
+    and
+
+    .. math::
+
+        \tilde{f}' = \frac{\xi(x_0)}{x_0(1\mp \gamma)^2}\left[\alpha(1\pm \gamma) \mp \gamma \omega \right] = y_0'
+
+    yielding
+
+    .. math::
+
+        \omega = \frac{\mp 1}{\gamma}\left[\frac{x_0y_0'(1\mp \gamma)^2}{\xi(x_0)} - \alpha(1\mp \gamma)\right]
+
+    For valid results, :math:`\omega > 0` is required.
+
+    Examples
+    --------
+
+    In some cases, radial profiles are not well suited for large :math:`r`. Take for example the :py:class:`radial_profiles.vikhlinin_temperature_profile` for A133;
+    it falls off far too quickly at large radii (beyond the regime where it was fit to data). Thus, to use such a profile, some correction must be done.
+
+    .. plot::
+        :include-source:
+
+        from cluster_generator.radial_profiles import vikhlinin_temperature_profile
+        from cluster_generator.numalgs import extrap_power_law
+        import numpy as np
+        import matplotlib.pyplot as plt
+
+        fig, ax = plt.subplots(1,1)
+        T = vikhlinin_temperature_profile(3.61,0.12,5.00,10.0,1420,0.9747,57,3.88)
+        x = np.geomspace(1,5000,5000)
+        y = T(x)
+
+        ax.semilogx(x,y,"k:")
+
+        xn,yn = extrap_power_law(700,800,-2,x=x,y=y)
+
+        ax.semilogx(xn,yn,"r--")
+
+        plt.show()
 
     """
+    assert x0 < x1, "x0 < x1 for extrapolated power law algorithm to be viable."
+
+    if (f is not None) and (df is not None):
+        mode = "functional"
+    elif (x is not None) and (y is not None):
+        mode = "pointwise"
+    else:
+        raise ValueError(
+            "Could not find either (f and df) or (x and y) for computation."
+        )
+
+    assert sign in [1, -1], "The sign parameter must be either +1 or -1."
+
+    # Determine necessary data
+    if mode == "functional":
+        y0, y1, dy0 = f(x0), f(x1), df(x0)
+    else:
+        inds = np.indices(x.shape).reshape((x.size,))
+        x0, x1 = (
+            x[np.where(np.abs(x - x0) == np.amin(np.abs(x - x0)))],
+            x[np.where(np.abs(x - x1) == np.amin(np.abs(x - x1)))],
+        )
+        i0, i1 = inds[np.where(x == x0)][0], inds[np.where(x == x1)][0]
+        y0, y1 = y[i0], y[i1]
+        dy0 = (y0 - y[i0 + 1]) / (x0 - x[i0 + 1])
+
+    gamma = -sign * ((y1 / y0) * (x0 / x1) ** (alpha) - 1)
+    omega = (-sign / gamma) * (
+        ((x0 * dy0 * (1 - sign * gamma) ** 2) / (y1 * (x0 / x1) ** alpha))
+        - (alpha * (1 - sign * gamma))
+    )
+
+    f_interp = lambda x: (y1 * (x / x1) ** alpha) * (
+        ((x / x0) ** omega) / ((x / x0) ** omega - sign * gamma)
+    )
+
+    if mode == "pointwise":
+        x_, y_ = x.copy(), y.copy()
+        y_[i0:] = f_interp(x_[i0:])
+        return x_, y_
+    else:
+        return lambda t, b=x0, q=f: np.piecewise(
+            x, [x < b, x >= b], [q(t), f_interp(t)]
+        )
 
 
 def _closest_factors(val):

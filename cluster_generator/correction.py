@@ -229,7 +229,7 @@ class NonPhysicalRegion:
             nprs = cls.identify(model, recursive=recursive)
 
         prog_bar = tqdm(
-            leave=True, total=len(nprs), desc=f"Correcting {len(nprs)} NPRs..."
+            leave=False, total=len(nprs), desc=f"Correcting {len(nprs)} NPRs..."
         )
         n_iterations = 0
 
@@ -725,7 +725,6 @@ class Type2aNPR(NonPhysicalRegion):
 
         """
         nprs = []  # The NPRs being returned
-
         if "method" not in model.properties["meth"]:
             mylog.warning(
                 "Failed to identify a 'generation_type' for the model. Unable to check for NPRs."
@@ -762,7 +761,36 @@ class Type2aNPR(NonPhysicalRegion):
         :py:class:`model.cluster_model`
 
         """
-        pass
+        from scipy.interpolate import InterpolatedUnivariateSpline
+
+        from cluster_generator.numalgs import extrap_power_law
+
+        rr, temp = self.obj["radius"].d, self.obj["temperature"].d
+
+        pow_slope = np.gradient(np.log(temp), np.log(rr)) + 1
+        x_crit = rr[np.where(np.abs(pow_slope) == np.amin(np.abs(pow_slope)))]
+
+        rn, tn = extrap_power_law(
+            x_crit - (x_crit / 100), x_crit, -1, x=rr, y=temp, sign=1
+        )
+
+        dr = InterpolatedUnivariateSpline(rn, self.obj["density"].d)
+        tr = InterpolatedUnivariateSpline(rn, tn)
+
+        if "stellar_density" in self.obj.properties["meth"]["profiles"]:
+            stellar_density = self.obj.properties["meth"]["profiles"]["stellar_density"]
+        else:
+            stellar_density = None
+
+        return ClusterModel.from_dens_and_temp(
+            np.amin(rn),
+            np.amax(rn),
+            dr,
+            tr,
+            stellar_density=stellar_density,
+            num_points=len(rr),
+            **self.obj.properties,
+        )
 
 
 class CorrectionFailure(Exception):

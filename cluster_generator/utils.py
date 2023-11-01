@@ -7,6 +7,7 @@ import multiprocessing
 import os
 import pathlib as pt
 import sys
+import warnings
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -249,36 +250,6 @@ def time_limit(function, max_execution_time, *args, **kwargs):
         return result
 
 
-def truncate_spline(f, r_t, a):
-    r"""
-    Takes the function ``f`` and returns a truncated equivalent of it, which becomes
-
-    .. math::
-    f'(x) = f(r_t) \left(\frac{x}{r_t}\right)**(r_t*df/dx(r_t)/f(r_t))
-
-    This preserves the slope and continuity of the function be yields a monotonic power law at large :math:`r`.
-
-    Parameters
-    ----------
-    f: InterpolatedUnivariateSpline
-        The function to truncate
-    r_t: float
-        The scale radius
-    a: float
-        Truncation rate. Higher values cause transition more quickly about :math:`r_t`.
-
-    Returns
-    -------
-    callable
-        The new function.
-
-    """
-    _gamma = r_t * f(r_t, 1) / f(r_t)  # This is the slope.
-    return lambda x, g=_gamma, a=a, r=r_t: f(x) * _truncator_function(a, r, x) + (
-        1 - _truncator_function(a, r, x)
-    ) * (f(r) * _truncator_function(-g, r, x))
-
-
 def integrate_mass(profile, rr):
     """Integrates over a profile with spherical volume element"""
     mass_int = lambda r: profile(r) * r * r
@@ -292,8 +263,14 @@ def integrate(profile, rr):
     """Integrate over the radii"""
     ret = np.zeros(rr.shape)
     rmax = rr[-1]
-    for i, r in enumerate(rr):
-        ret[i] = quad(profile, r, rmax)[0]
+
+    with warnings.catch_warnings(record=True) as w:
+        for i, r in enumerate(rr):
+            ret[i] = quad(profile, r, rmax)[0]
+    if len(w) > 0:
+        mylog.warning(
+            f"Detected {len(w)} warnings during integration. Non-Physical regions may be present in your profiles."
+        )
     return ret
 
 

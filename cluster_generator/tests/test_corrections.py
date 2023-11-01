@@ -61,6 +61,7 @@ class TestNPR:
             return True
 
         m = self.model(answer_store, answer_dir)
+        print(m)
 
         f, a = m.panel_plot(color="red")
         m = NonPhysicalRegion.correct(m, recursive=True)
@@ -240,7 +241,7 @@ class TestNPR2a(TestNPR):
         temperature = vikhlinin_temperature_profile(
             3.61, 0.12, 5, 10, 1420, 0.27, 57, 3.88
         )
-        self._model = ClusterModel.from_dens_and_temp(1000, 10000, density, temperature)
+        self._model = ClusterModel.from_dens_and_temp(600, 10000, density, temperature)
         self._model.write_model_to_h5(
             os.path.join(answer_dir, self.mdl_name), overwrite=True
         )

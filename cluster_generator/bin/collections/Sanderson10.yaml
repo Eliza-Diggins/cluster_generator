@@ -1,0 +1,38 @@
+main:
+  collection_name: "Sanderson et. al. 2010"
+  collection_authors:
+    - "Eliza C. Diggins"
+  source_authors:
+    - "A.J.R. Sanderson"
+    - "T. J. Ponman"
+  citation: |
+    @article{sanderson2010x,
+    title={X-ray modelling of galaxy cluster gas and mass profiles},
+    author={Sanderson, Alastair JR and Ponman, Trevor J},
+    journal={Monthly Notices of the Royal Astronomical Society},
+    volume={402},
+    number={1},
+    pages={65--72},
+    year={2010},
+    publisher={The Royal Astronomical Society}
+    }
+  n_clusters: 19
+schema:
+  profiles:
+    density:
+      parameters:
+        T0: "keV"
+        t: ""
+        a: "kpc"
+        alpha: ""
+        f: ""
+      function: "ad07_density_profile"
+    temperature:
+      parameters:
+        T0: "keV"
+        t: ""
+        a: "kpc"
+        alpha: ""
+      function: "ad07_temperature_profile"
+  build:
+    method: "from_dens_and_temp"

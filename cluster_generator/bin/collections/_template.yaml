@@ -1,7 +1,7 @@
 #======================================================================================================================#
 #                                       ** TEMPLATE EXAMPLE **                                                         #
 #                                     --------------------------                                                       #
-# All collections should have yaml schema which follow this format.                                                    #
+# All collections.rst should have yaml schema which follow this format.                                                    #
 #======================================================================================================================#
 main:
   # The main tag should contain the basic meta data about the collection. This includes name, source, type, etc.

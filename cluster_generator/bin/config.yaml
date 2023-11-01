@@ -63,7 +63,7 @@ numerical:
     max_runtime: !!int 120 # The maximum allowed runtime for the implicit solver (s).
   interpolation:
     # -- These are settings for interpolation methods, particularly those used in correction algorithms -- #
-    correction_parameter: !!float 0.8 # The correction parameter for Type1a NPRs (See corrections documentation)
+    correction_parameter: !!float 0.8 # The correction parameter for Type1a NPRs (See collections documentation)
 
 #======================================================================================================================#
 plotting:

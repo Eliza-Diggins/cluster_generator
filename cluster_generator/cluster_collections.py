@@ -168,7 +168,7 @@ class ProtoCluster:
 
 class Collection:
     """
-    The :py:class:`cluster_collections.Collection` class is the base class for all of the cluster collections available in the
+    The :py:class:`cluster_collections.Collection` class is the base class for all of the cluster collections.rst available in the
     CGP. Generally, this class should not be instantiated but rather the specific sub-class corresponding to the user's
     desired database.
     """
@@ -330,6 +330,34 @@ class Collection:
 
 
 class Vikhlinin06(Collection):
+    r"""
+    Collection of 13 low-redshift galaxy clusters using *Chandra*.
+
+    .. rubric:: Collection Details
+
+    +-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | Collection Type   | X-ray Observations                                                                                                                                       |
+    +-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | Observatory       | Chandra                                                                                                                                                  |
+    +-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | Profiles          | :math:`\rho_g + T_g`                                                                                                                                     |
+    +-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | Authors           | `A. Vikhlinin <https://ui.adsabs.harvard.edu/search/q=author:%22Vikhlinin%2C+A.%22&sort=date%20desc,%20bibcode%20desc>`_                                 |
+    |                   | `A. Kravtsov <https://ui.adsabs.harvard.edu/search/q=author:%22Kravtsov%2C+A.%22&sort=date%20desc,%20bibcode%20desc>`_                                   |
+    |                   | `W. Forman <https://ui.adsabs.harvard.edu/search/q=author:%22Forman%2C+W.%22&sort=date%20desc,%20bibcode%20desc>`_                                       |
+    |                   | `C. Jones <https://ui.adsabs.harvard.edu/search/q=author:%22Jones%2C+C.%22&sort=date%20desc,%20bibcode%20desc>`_                                         |
+    |                   | `M. Markevitch <https://ui.adsabs.harvard.edu/search/q=author:%22Markevitch%2C+M.%22&sort=date%20desc,%20bibcode%20desc>`_                               |
+    |                   | `S. S. Murray <https://ui.adsabs.harvard.edu/search/q=author:%22Murray%2C+S.+S.%22&sort=date%20desc,%20bibcode%20desc>`_                                 |
+    |                   | `L. Van Speybroeck <https://ui.adsabs.harvard.edu/search/q=author:%22Van+Speybroeck%2C+L.%22&sort=date%20desc,%20bibcode%20desc>`_                       |
+    +-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | Recommended       | .. button-link:: https://iopscience.iop.org/article/10.1086/500288/meta                                                                                  |
+    | Citation          |       :color: secondary                                                                                                                                  |
+    |                   |                                                                                                                                                          |
+    |                   |       Go To Citation                                                                                                                                     |
+    +-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
+    """
     _data = os.path.join(_dir, "Vikhlinin06.csv")
     _schema_loc = os.path.join(_dir, "Vikhlinin06.yaml")
 
@@ -337,10 +365,73 @@ class Vikhlinin06(Collection):
         super().__init__(self._data, self._schema_loc)
 
 
+class Ascasibar07(Collection):
+    r"""
+    Collection of 13 low-redshift galaxy clusters using *Chandra*.
+
+    .. rubric:: Collection Details
+
+    +-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | Collection Type   | X-ray Observations [Secondary Analysis]                                                                                                                  |
+    +-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | Observatory       | Chandra                                                                                                                                                  |
+    +-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | Profiles          | :math:`\rho_g + T_g`                                                                                                                                     |
+    +-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | Authors           | `Y. Ascasibar <https://ui.adsabs.harvard.edu/search/q=author:%22Ascasibar%2C+Y.%22&sort=date%20desc,%20bibcode%20desc>`_                                 |
+    |                   | `J. M. Diego <https://ui.adsabs.harvard.edu/search/q=author:%22Diego%2C+J.+M.%22&sort=date%20desc,%20bibcode%20desc>`_                                   |
+    +-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | Recommended       | .. button-link:: https://ui.adsabs.harvard.edu/abs/2008MNRAS.383..369A/abstract                                                                          |
+    | Citation          |       :color: secondary                                                                                                                                  |
+    |                   |                                                                                                                                                          |
+    |                   |       Go To Citation                                                                                                                                     |
+    +-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
+    """
+    _data = os.path.join(_dir, "Ascasibar07.csv")
+    _schema_loc = os.path.join(_dir, "Ascasibar07.yaml")
+
+    def __init__(self):
+        super().__init__(self._data, self._schema_loc)
+
+
+class Sanderson10(Collection):
+    r"""
+    Collection of 20 low-redshift galaxy clusters using *Chandra*.
+
+    .. rubric:: Collection Details
+
+    +-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | Collection Type   | X-ray Observations  [Secondary]                                                                                                                          |
+    +-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | Observatory       | Chandra                                                                                                                                                  |
+    +-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | Profiles          | :math:`\rho_g + T_g`                                                                                                                                     |
+    +-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | Authors           | `A.J.R Sanderson <https://ui.adsabs.harvard.edu/search/q=author:%22Sanderson%2C+Alastair+J.+R.%22&sort=date%20desc,%20bibcode%20desc>`_                  |
+    |                   | `T.J. Ponman <https://ui.adsabs.harvard.edu/search/q=author:%22Ponman%2C+Trevor+J.%22&sort=date%20desc,%20bibcode%20desc>`_                              |
+    +-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | Recommended       | .. button-link:: https://ui.adsabs.harvard.edu/abs/2010MNRAS.402...65S/abstract                                                                          |
+    | Citation          |       :color: secondary                                                                                                                                  |
+    |                   |                                                                                                                                                          |
+    |                   |       Go To Citation                                                                                                                                     |
+    +-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
+    """
+    _data = os.path.join(_dir, "Sanderson10.csv")
+    _schema_loc = os.path.join(_dir, "Sanderson10.yaml")
+
+    def __init__(self):
+        super().__init__(self._data, self._schema_loc)
+
+
 if __name__ == "__main__":
     vik = Vikhlinin06()
-
-    h = vik.clusters["A133"].load(1, 10000)
+    print(vik.clusters)
+    h = vik.clusters["A133"].load(5, 10000)
+    print(h)
     import matplotlib.pyplot as plt
 
     f, a = h.panel_plot()
