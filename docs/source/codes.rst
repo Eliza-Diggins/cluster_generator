@@ -29,6 +29,8 @@ magnetic field in the simulations.
     The ``GalaxyClusterMerger`` setup is currently available from John ZuHone by
     request for users who have a licensed copy of the ``FLASH`` code.
 
+.. _gamer:
+
 ``GAMER``
 =========
 
@@ -53,6 +55,8 @@ for the ``ClusterMerger`` setup are as follows:
 * ``SIMU_OPTION += -DOPENMP`` (recommended)
 * ``SIMU_OPTION += -DSUPPORT_HDF5`` (required)
 
+.. _arepo:
+
 ``Arepo``
 =========
 
@@ -70,16 +74,21 @@ the ``ADD_BACKGROUND_GRID`` Config option in Arepo. The Arepo configuration
 options to be enabled in ``Config.sh`` for this step include:
 
 
+.. _gizmo:
 
 ``GIZMO``
 =========
 
 Coming soon!
 
+.. _enzo:
+
 ``Enzo``
 ========
 
 Coming soon!
+
+.. _ramses:
 
 ``RAMSES``
 ==========
@@ -101,6 +110,7 @@ full breakdown of what can be done with ``RAMSES`` and ``CG``.
 
     |intermediate| |20min| |nyi|
 
+.. _athena:
 
 ``Athena++``
 ============
