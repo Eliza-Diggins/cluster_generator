@@ -1,0 +1,935 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>cluster_collections &#8212; cluster_generator  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=c5ced968eda925caa686" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=c5ced968eda925caa686" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=c5ced968eda925caa686" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=c5ced968eda925caa686" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster.custom.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster.bundle.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster-sideTip-shadow.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster-sideTip-punk.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster-sideTip-noir.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster-sideTip-light.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster-sideTip-borderless.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/micromodal.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=c5ced968eda925caa686" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=c5ced968eda925caa686" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=c5ced968eda925caa686"></script>
+
+    <script src="../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/js/hoverxref.js"></script>
+    <script src="../_static/js/tooltipster.bundle.min.js"></script>
+    <script src="../_static/js/micromodal.min.js"></script>
+    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://unpkg.com/mermaid@10.2.0/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({startOnLoad:true});</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/cluster_collections';</script>
+    <link rel="icon" href="../_static/cluster_generator_logo.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/cluster_generator_logo.png" class="logo__image only-light" alt="cluster_generator  documentation - Home"/>
+    <script>document.write(`<img src="../_static/cluster_generator_logo.png" class="logo__image only-dark" alt="cluster_generator  documentation - Home"/>`);</script>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../getting_started.html">
+                        Quickstart Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../examples.html">
+                        Examples
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../models.html">
+                        Cluster Models
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../codes.html">
+                        Simulation Software
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../api.html">
+                        API
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+        </div>
+      
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+    </div>
+  
+
+  
+</div>
+
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../getting_started.html">
+                        Quickstart Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../examples.html">
+                        Examples
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../models.html">
+                        Cluster Models
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../codes.html">
+                        Simulation Software
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../api.html">
+                        API
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">cluster_collections</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <h1>Source code for cluster_collections</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">The :py:mod:`cluster_collections` module provides user access to pre-existing radial profile models of known systems.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">yaml</span>
+
+<span class="kn">from</span> <span class="nn">cluster_generator.model</span> <span class="kn">import</span> <span class="n">ClusterModel</span>
+<span class="kn">from</span> <span class="nn">cluster_generator.radial_profiles</span> <span class="kn">import</span> <span class="n">RadialProfile</span>
+<span class="kn">from</span> <span class="nn">cluster_generator.utils</span> <span class="kn">import</span> <span class="n">_bin_directory</span><span class="p">,</span> <span class="n">_get_loader</span><span class="p">,</span> <span class="n">mylog</span>
+
+<span class="n">_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">_bin_directory</span><span class="p">,</span> <span class="s2">&quot;collections&quot;</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">_enforce_format</span><span class="p">(</span><span class="n">schema</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Enforces formatting norms on the schema&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">any</span><span class="p">([</span><span class="n">i</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">schema</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;main&quot;</span><span class="p">,</span> <span class="s2">&quot;schema&quot;</span><span class="p">]]):</span>
+        <span class="k">raise</span> <span class="ne">SyntaxError</span><span class="p">(</span>
+            <span class="s2">&quot;The schema file doesn&#39;t have either section &#39;main&#39; or &#39;schema&#39;&quot;</span>
+        <span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">main_header</span> <span class="ow">in</span> <span class="p">[</span>
+        <span class="s2">&quot;collection_name&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;collection_authors&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;source_authors&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;n_clusters&quot;</span><span class="p">,</span>
+    <span class="p">]:</span>
+        <span class="k">if</span> <span class="n">main_header</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">schema</span><span class="p">[</span><span class="s2">&quot;main&quot;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">SyntaxError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The key </span><span class="si">{</span><span class="n">main_header</span><span class="si">}</span><span class="s2"> is not in schema[main].&quot;</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="nb">hasattr</span><span class="p">(</span>
+        <span class="n">ClusterModel</span><span class="p">,</span> <span class="n">schema</span><span class="p">[</span><span class="s2">&quot;schema&quot;</span><span class="p">][</span><span class="s2">&quot;build&quot;</span><span class="p">][</span><span class="s2">&quot;method&quot;</span><span class="p">]</span>
+    <span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;The build method </span><span class="si">{</span><span class="n">schema</span><span class="p">[</span><span class="s1">&#39;schema&#39;</span><span class="p">][</span><span class="s1">&#39;build&#39;</span><span class="p">][</span><span class="s1">&#39;method&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> is not valid.&quot;</span>
+
+
+<div class="viewcode-block" id="ProtoCluster">
+<a class="viewcode-back" href="../_as_gen/cluster_collections.ProtoCluster.html#cluster_collections.ProtoCluster">[docs]</a>
+<span class="k">class</span> <span class="nc">ProtoCluster</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The :py:class:`~cluster_collections.ProtoCluster` class is a precursor to the fully realized :py:class`model.ClusterModel` class.</span>
+<span class="sd">    These are used as minimally memory intensive placeholders to allow the user to easily load the full cluster model.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ProtoCluster.__init__">
+<a class="viewcode-back" href="../_as_gen/cluster_collections.ProtoCluster.__init__.html#cluster_collections.ProtoCluster.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">profiles</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">names</span><span class="p">,</span> <span class="n">load_method</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Loads the :py:class:`~cluster_collections.ProtoCluster` instance.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        profiles: dict of str: callable or dict of str: str</span>
+<span class="sd">            A dictionary containing the profile definitions for the cluster initialization. There are two available options</span>
+<span class="sd">            for the formatting of each element in this argument:</span>
+
+<span class="sd">            - If the dictionary value is a :py:class:`str` type, then it is assumed to be a pre-defined profile already defined in the</span>
+<span class="sd">              :py:mod:`cluster_generator.radial_profiles` module. If a corresponding built-in profile cannot be found, an error</span>
+<span class="sd">              will be raised.</span>
+<span class="sd">            - If the dictionary value is a ``callable`` instance of any kind, it is assumed to be a user defined function (either explicit or lambda).</span>
+<span class="sd">              It will be wrapped in a :py:class:`cluster_generator.radial_profiles.RadialProfile` instance during initialization.</span>
+
+<span class="sd">        parameters: dict of str: list</span>
+<span class="sd">            A dictionary containing the parameters for the profiles. For each profile in ``profiles``, there should be a corresponding key-value pair</span>
+<span class="sd">            in the ``parameters`` argument containing a :py:class:`list` with the values of each of the necessary parameters for the specific cluster</span>
+<span class="sd">            being modeled.</span>
+
+<span class="sd">            .. note::</span>
+
+<span class="sd">                If the type of the elements in the list is :py:class:`float` or :py:class:`int`, then it will be assumed that these parameters are</span>
+<span class="sd">                already following the unit conventions of the CGP. If there is any doubt, we recommend passing the parameters as :py:class:`unyt.array.unyt_quantity`</span>
+<span class="sd">                instances instead. These will be processed to the correct units before proceeding.</span>
+
+<span class="sd">        load_method: str</span>
+<span class="sd">            The ``load_method`` should correspond to the analogous class method on :py:class:`model.ClusterModel` for loading the full model instance.</span>
+<span class="sd">            Typically, these should be something like ``from_dens_and_temp`` or ``from_dens_and_tden``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">load_method</span> <span class="o">=</span> <span class="n">load_method</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">profiles</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">profiles</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">profiles</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="c1"># This is a built-in and we should look it up.</span>
+                <span class="k">if</span> <span class="n">profiles</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="ow">in</span> <span class="n">RadialProfile</span><span class="o">.</span><span class="n">builtin</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">profiles</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">RadialProfile</span><span class="o">.</span><span class="n">built_in</span><span class="p">(</span>
+                        <span class="n">profiles</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="o">*</span><span class="n">parameters</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+                    <span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;The profile type </span><span class="si">{</span><span class="n">profiles</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="si">}</span><span class="s2"> is not recognized as a built-in profile&quot;</span>
+                    <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># This is a newly defined type instance.</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">profiles</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">RadialProfile</span><span class="p">(</span>
+                    <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">profiles</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">params</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="n">k</span><span class="p">]:</span> <span class="n">p</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">params</span><span class="p">),</span>
+                    <span class="n">name</span><span class="o">=</span><span class="n">names</span><span class="p">[</span><span class="n">k</span><span class="p">],</span>
+                <span class="p">)</span>  <span class="c1"># Double lambda to avoid late interpretation in lambdas.</span></div>
+
+
+<div class="viewcode-block" id="ProtoCluster.load">
+<a class="viewcode-back" href="../_as_gen/cluster_collections.ProtoCluster.load.html#cluster_collections.ProtoCluster.load">[docs]</a>
+    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rmin</span><span class="p">,</span> <span class="n">rmax</span><span class="p">,</span> <span class="n">additional_args</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Loads a :py:class:`model.ClusterModel` instance from this :py:class:`cluster_collections.ProtoCluster` instance.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        rmin: float</span>
+<span class="sd">            The minimum radius of the generation regime. (kpc)</span>
+<span class="sd">        rmax: float</span>
+<span class="sd">            The maximum radius of the generation regime. (kpc)</span>
+<span class="sd">        additional_args: dict, optional</span>
+<span class="sd">            The ``additional_args`` argument allows the user to pass additional arguments into the initialization function. Generally,</span>
+<span class="sd">            there should be no reason to specify this unless some alteration has been made to the underlying source code.</span>
+<span class="sd">        kwargs: dict, optional</span>
+<span class="sd">            Additional key-word arguments to pass along to the initialization function.</span>
+
+<span class="sd">            .. note::</span>
+
+<span class="sd">                If ``kwargs`` contains a ``stellar_density`` key and corresponding profile, it will be overridden if the</span>
+<span class="sd">                underlying :py:class:`cluster_collections.ProtoCluster` instance also has a stellar density profile.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">inspect</span>
+
+        <span class="k">if</span> <span class="n">additional_args</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">additional_args</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="n">load_method</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">ClusterModel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_method</span><span class="p">)</span>
+
+        <span class="n">signature</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="nb">str</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">signature</span><span class="p">(</span><span class="n">load_method</span><span class="p">))</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+        <span class="p">)</span>  <span class="c1"># deconstruct so that we use it to get the signature right.</span>
+        <span class="n">arg_sig</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">signature</span> <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">j</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">i</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;=&quot;</span><span class="p">,</span> <span class="s2">&quot;**&quot;</span><span class="p">])]</span>
+
+        <span class="n">args</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">arg_sig</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">arg</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">profiles</span><span class="p">:</span>
+                <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profiles</span><span class="p">[</span><span class="n">arg</span><span class="p">])</span>
+            <span class="k">elif</span> <span class="n">arg</span> <span class="o">==</span> <span class="s2">&quot;rmin&quot;</span><span class="p">:</span>
+                <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rmin</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">arg</span> <span class="o">==</span> <span class="s2">&quot;rmax&quot;</span><span class="p">:</span>
+                <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rmax</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">additional_args</span><span class="p">:</span>
+                <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">additional_args</span><span class="p">[</span><span class="n">arg</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Determined that </span><span class="si">{</span><span class="n">arg</span><span class="si">}</span><span class="s2"> is a required item in the call signature, but it could not be found but it wasn&#39;t found in the additional_args dict.&quot;</span>
+                <span class="p">)</span>
+
+        <span class="k">if</span> <span class="s2">&quot;stellar_density&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">profiles</span><span class="p">:</span>
+            <span class="n">stellar_density</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profiles</span><span class="p">[</span><span class="s2">&quot;stellar_density&quot;</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="s2">&quot;stellar_density&quot;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="n">stellar_density</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;stellar_density&quot;</span><span class="p">]</span>
+            <span class="k">del</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;stellar_density&quot;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">stellar_density</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="n">load_method</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">stellar_density</span><span class="o">=</span><span class="n">stellar_density</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ProtoCluster.keys">
+<a class="viewcode-back" href="../_as_gen/cluster_collections.ProtoCluster.keys.html#cluster_collections.ProtoCluster.keys">[docs]</a>
+    <span class="k">def</span> <span class="nf">keys</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">profiles</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="ProtoCluster.items">
+<a class="viewcode-back" href="../_as_gen/cluster_collections.ProtoCluster.items.html#cluster_collections.ProtoCluster.items">[docs]</a>
+    <span class="k">def</span> <span class="nf">items</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">profiles</span><span class="o">.</span><span class="n">items</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="ProtoCluster.value">
+<a class="viewcode-back" href="../_as_gen/cluster_collections.ProtoCluster.value.html#cluster_collections.ProtoCluster.value">[docs]</a>
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">profiles</span><span class="o">.</span><span class="n">values</span><span class="p">()</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="Collection">
+<a class="viewcode-back" href="../_as_gen/cluster_collections.Collection.html#cluster_collections.Collection">[docs]</a>
+<span class="k">class</span> <span class="nc">Collection</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The :py:class:`cluster_collections.Collection` class is the base class for all of the cluster collections.rst available in the</span>
+<span class="sd">    CGP. Generally, this class should not be instantiated but rather the specific sub-class corresponding to the user&#39;s</span>
+<span class="sd">    desired database.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Collection.__init__">
+<a class="viewcode-back" href="../_as_gen/cluster_collections.Collection.__init__.html#cluster_collections.Collection.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">schema</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes the :py:class:`cluster_collections.Collection` instance.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data: str or :py:class:`pathlib.Path` or :py:class:`pandas.DataFrame`</span>
+<span class="sd">            The parameter data for the collection. If provided as a :py:class:`str` or a :py:class:`~pathlib.Path` object, then</span>
+<span class="sd">            the resulting path should point to a ``.csv`` file containing the relevant parameters. If a :py:class:`pandas.DataFrame` instance</span>
+<span class="sd">            is provided, then the instance should be a table containing each of the clusters in a column ``&quot;name&quot;`` and a float value for</span>
+<span class="sd">            each subsequent parameter (column), which correspond (IN ORDER) with the arguments of the profile functions.</span>
+<span class="sd">        schema: str or :py:class:`pathlib.Path` or dict</span>
+<span class="sd">            The collection schema.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">schema</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">)):</span>
+            <span class="n">mylog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loading collection schema from path: </span><span class="si">{</span><span class="n">schema</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">schema</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_schema</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">_get_loader</span><span class="p">())</span>
+            <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Failed to locate the schema file at </span><span class="si">{</span><span class="n">schema</span><span class="si">}</span><span class="s2">.&quot;</span>
+                <span class="p">)</span>
+            <span class="k">except</span> <span class="n">yaml</span><span class="o">.</span><span class="n">YAMLError</span> <span class="k">as</span> <span class="n">exp</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">SystemError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;The format the schema file does not comply with standards: </span><span class="si">{</span><span class="n">exp</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">schema</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_schema</span> <span class="o">=</span> <span class="n">schema</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Input &#39;schema&#39; was not str, Path, or dict.&quot;</span><span class="p">)</span>
+
+        <span class="n">_enforce_format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_schema</span><span class="p">)</span>
+
+        <span class="n">mylog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Loaded schema for collection </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_schema</span><span class="p">[</span><span class="s1">&#39;main&#39;</span><span class="p">][</span><span class="s1">&#39;collection_name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">.&quot;</span>
+        <span class="p">)</span>
+
+        <span class="n">mylog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Loading the dataset for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_schema</span><span class="p">[</span><span class="s1">&#39;main&#39;</span><span class="p">][</span><span class="s1">&#39;collection_name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">.&quot;</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">)):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The database file </span><span class="si">{</span><span class="n">data</span><span class="si">}</span><span class="s2"> was not found.&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;The &#39;data&#39; argument had type </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="si">}</span><span class="s2"> not str, Path, or pd.DataFrame.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">clusters</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_initialize_proto_clusters</span><span class="p">()</span>
+
+        <span class="n">mylog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Initialized </span><span class="si">{</span><span class="bp">self</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_schema</span><span class="p">[</span><span class="s2">&quot;main&quot;</span><span class="p">][</span><span class="s2">&quot;n_clusters&quot;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&lt; Collection - </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="si">}</span><span class="s2"> &gt;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> collection&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">clusters</span><span class="p">[</span><span class="n">item</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">clusters</span>
+
+    <span class="k">def</span> <span class="nf">__class_getitem__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="n">inst</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">inst</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">clusters</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Collection.keys">
+<a class="viewcode-back" href="../_as_gen/cluster_collections.Collection.keys.html#cluster_collections.Collection.keys">[docs]</a>
+    <span class="k">def</span> <span class="nf">keys</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the keys of the collection. Equivalent to ``self.cluster.keys()``&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">clusters</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Collection.values">
+<a class="viewcode-back" href="../_as_gen/cluster_collections.Collection.values.html#cluster_collections.Collection.values">[docs]</a>
+    <span class="k">def</span> <span class="nf">values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the  values of the collection. Equivalent to ``self.cluster.values()``&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">clusters</span><span class="o">.</span><span class="n">values</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Collection.items">
+<a class="viewcode-back" href="../_as_gen/cluster_collections.Collection.items.html#cluster_collections.Collection.items">[docs]</a>
+    <span class="k">def</span> <span class="nf">items</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the items of the collection. Equivalent to ``self.cluster.items()``&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">clusters</span><span class="o">.</span><span class="n">items</span><span class="p">()</span></div>
+
+
+    <span class="k">def</span> <span class="nf">_initialize_proto_clusters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;This produces the relevant proto-clusters from the available datasets&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clusters</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">])}</span>
+
+        <span class="k">for</span> <span class="n">cluster</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">clusters</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="n">k</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">cluster</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+                <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+            <span class="p">}</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># holds parameters after sorting.</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># holds the functions</span>
+            <span class="n">n</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># holds the function names</span>
+            <span class="k">for</span> <span class="n">profile</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">profiles</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">_params</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;parameters&quot;</span><span class="p">]</span>
+                <span class="n">_f</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;function&quot;</span><span class="p">]</span>
+
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_f</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                    <span class="c1"># This is a built-in and will get its name directly from the built-in name.</span>
+                    <span class="n">_n</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># This is the name specified in the schema.</span>
+                    <span class="n">_n</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;function_name&quot;</span><span class="p">]</span>
+
+                <span class="n">f</span><span class="p">[</span><span class="n">profile</span><span class="p">]</span> <span class="o">=</span> <span class="n">_f</span>
+                <span class="n">p</span><span class="p">[</span><span class="n">profile</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">parameters</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">_params</span><span class="p">]</span>
+                <span class="n">n</span><span class="p">[</span><span class="n">profile</span><span class="p">]</span> <span class="o">=</span> <span class="n">_n</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">clusters</span><span class="p">[</span><span class="n">cluster</span><span class="p">]</span> <span class="o">=</span> <span class="n">ProtoCluster</span><span class="p">(</span>
+                <span class="n">f</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_schema</span><span class="p">[</span><span class="s2">&quot;schema&quot;</span><span class="p">][</span><span class="s2">&quot;build&quot;</span><span class="p">][</span><span class="s2">&quot;method&quot;</span><span class="p">]</span>
+            <span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;The name of the collection.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_schema</span><span class="p">[</span><span class="s2">&quot;main&quot;</span><span class="p">][</span><span class="s2">&quot;collection_name&quot;</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">citation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;The citation (bibtex) for the data source.&quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_schema</span><span class="p">[</span><span class="s2">&quot;main&quot;</span><span class="p">][</span><span class="s2">&quot;citation&quot;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="n">mylog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to locate a citation for collection </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">authors</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;The collection authors (not the original source author)&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_schema</span><span class="p">[</span><span class="s2">&quot;main&quot;</span><span class="p">][</span><span class="s2">&quot;collection_authors&quot;</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">source_authors</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;The original (source) authors.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_schema</span><span class="p">[</span><span class="s2">&quot;main&quot;</span><span class="p">][</span><span class="s2">&quot;source_authors&quot;</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">profiles</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;The profiles from the schema.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_schema</span><span class="p">[</span><span class="s2">&quot;schema&quot;</span><span class="p">][</span><span class="s2">&quot;profiles&quot;</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="Vikhlinin06">
+<a class="viewcode-back" href="../_as_gen/cluster_collections.Vikhlinin06.html#cluster_collections.Vikhlinin06">[docs]</a>
+<span class="k">class</span> <span class="nc">Vikhlinin06</span><span class="p">(</span><span class="n">Collection</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Collection of 13 low-redshift galaxy clusters using *Chandra*.</span>
+
+<span class="sd">    .. rubric:: Collection Details</span>
+
+<span class="sd">    +-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+</span>
+<span class="sd">    | Collection Type   | X-ray Observations                                                                                                                                       |</span>
+<span class="sd">    +-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+</span>
+<span class="sd">    | Observatory       | Chandra                                                                                                                                                  |</span>
+<span class="sd">    +-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+</span>
+<span class="sd">    | Profiles          | :math:`\rho_g + T_g`                                                                                                                                     |</span>
+<span class="sd">    +-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+</span>
+<span class="sd">    | Authors           | `A. Vikhlinin &lt;https://ui.adsabs.harvard.edu/search/q=author:%22Vikhlinin%2C+A.%22&amp;sort=date%20desc,%20bibcode%20desc&gt;`_                                 |</span>
+<span class="sd">    |                   | `A. Kravtsov &lt;https://ui.adsabs.harvard.edu/search/q=author:%22Kravtsov%2C+A.%22&amp;sort=date%20desc,%20bibcode%20desc&gt;`_                                   |</span>
+<span class="sd">    |                   | `W. Forman &lt;https://ui.adsabs.harvard.edu/search/q=author:%22Forman%2C+W.%22&amp;sort=date%20desc,%20bibcode%20desc&gt;`_                                       |</span>
+<span class="sd">    |                   | `C. Jones &lt;https://ui.adsabs.harvard.edu/search/q=author:%22Jones%2C+C.%22&amp;sort=date%20desc,%20bibcode%20desc&gt;`_                                         |</span>
+<span class="sd">    |                   | `M. Markevitch &lt;https://ui.adsabs.harvard.edu/search/q=author:%22Markevitch%2C+M.%22&amp;sort=date%20desc,%20bibcode%20desc&gt;`_                               |</span>
+<span class="sd">    |                   | `S. S. Murray &lt;https://ui.adsabs.harvard.edu/search/q=author:%22Murray%2C+S.+S.%22&amp;sort=date%20desc,%20bibcode%20desc&gt;`_                                 |</span>
+<span class="sd">    |                   | `L. Van Speybroeck &lt;https://ui.adsabs.harvard.edu/search/q=author:%22Van+Speybroeck%2C+L.%22&amp;sort=date%20desc,%20bibcode%20desc&gt;`_                       |</span>
+<span class="sd">    +-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+</span>
+<span class="sd">    | Recommended       | .. button-link:: https://iopscience.iop.org/article/10.1086/500288/meta                                                                                  |</span>
+<span class="sd">    | Citation          |       :color: secondary                                                                                                                                  |</span>
+<span class="sd">    |                   |                                                                                                                                                          |</span>
+<span class="sd">    |                   |       Go To Citation                                                                                                                                     |</span>
+<span class="sd">    +-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+</span>
+
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_data</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">_dir</span><span class="p">,</span> <span class="s2">&quot;Vikhlinin06.csv&quot;</span><span class="p">)</span>
+    <span class="n">_schema_loc</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">_dir</span><span class="p">,</span> <span class="s2">&quot;Vikhlinin06.yaml&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Vikhlinin06.__init__">
+<a class="viewcode-back" href="../_as_gen/cluster_collections.Vikhlinin06.__init__.html#cluster_collections.Vikhlinin06.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_schema_loc</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="Ascasibar07">
+<a class="viewcode-back" href="../_as_gen/cluster_collections.Ascasibar07.html#cluster_collections.Ascasibar07">[docs]</a>
+<span class="k">class</span> <span class="nc">Ascasibar07</span><span class="p">(</span><span class="n">Collection</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Collection of 13 low-redshift galaxy clusters using *Chandra*.</span>
+
+<span class="sd">    .. rubric:: Collection Details</span>
+
+<span class="sd">    +-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+</span>
+<span class="sd">    | Collection Type   | X-ray Observations [Secondary Analysis]                                                                                                                  |</span>
+<span class="sd">    +-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+</span>
+<span class="sd">    | Observatory       | Chandra                                                                                                                                                  |</span>
+<span class="sd">    +-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+</span>
+<span class="sd">    | Profiles          | :math:`\rho_g + T_g`                                                                                                                                     |</span>
+<span class="sd">    +-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+</span>
+<span class="sd">    | Authors           | `Y. Ascasibar &lt;https://ui.adsabs.harvard.edu/search/q=author:%22Ascasibar%2C+Y.%22&amp;sort=date%20desc,%20bibcode%20desc&gt;`_                                 |</span>
+<span class="sd">    |                   | `J. M. Diego &lt;https://ui.adsabs.harvard.edu/search/q=author:%22Diego%2C+J.+M.%22&amp;sort=date%20desc,%20bibcode%20desc&gt;`_                                   |</span>
+<span class="sd">    +-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+</span>
+<span class="sd">    | Recommended       | .. button-link:: https://ui.adsabs.harvard.edu/abs/2008MNRAS.383..369A/abstract                                                                          |</span>
+<span class="sd">    | Citation          |       :color: secondary                                                                                                                                  |</span>
+<span class="sd">    |                   |                                                                                                                                                          |</span>
+<span class="sd">    |                   |       Go To Citation                                                                                                                                     |</span>
+<span class="sd">    +-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+</span>
+
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_data</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">_dir</span><span class="p">,</span> <span class="s2">&quot;Ascasibar07.csv&quot;</span><span class="p">)</span>
+    <span class="n">_schema_loc</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">_dir</span><span class="p">,</span> <span class="s2">&quot;Ascasibar07.yaml&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Ascasibar07.__init__">
+<a class="viewcode-back" href="../_as_gen/cluster_collections.Ascasibar07.__init__.html#cluster_collections.Ascasibar07.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_schema_loc</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="Sanderson10">
+<a class="viewcode-back" href="../_as_gen/cluster_collections.Sanderson10.html#cluster_collections.Sanderson10">[docs]</a>
+<span class="k">class</span> <span class="nc">Sanderson10</span><span class="p">(</span><span class="n">Collection</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Collection of 20 low-redshift galaxy clusters using *Chandra*.</span>
+
+<span class="sd">    .. rubric:: Collection Details</span>
+
+<span class="sd">    +-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+</span>
+<span class="sd">    | Collection Type   | X-ray Observations  [Secondary]                                                                                                                          |</span>
+<span class="sd">    +-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+</span>
+<span class="sd">    | Observatory       | Chandra                                                                                                                                                  |</span>
+<span class="sd">    +-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+</span>
+<span class="sd">    | Profiles          | :math:`\rho_g + T_g`                                                                                                                                     |</span>
+<span class="sd">    +-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+</span>
+<span class="sd">    | Authors           | `A.J.R Sanderson &lt;https://ui.adsabs.harvard.edu/search/q=author:%22Sanderson%2C+Alastair+J.+R.%22&amp;sort=date%20desc,%20bibcode%20desc&gt;`_                  |</span>
+<span class="sd">    |                   | `T.J. Ponman &lt;https://ui.adsabs.harvard.edu/search/q=author:%22Ponman%2C+Trevor+J.%22&amp;sort=date%20desc,%20bibcode%20desc&gt;`_                              |</span>
+<span class="sd">    +-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+</span>
+<span class="sd">    | Recommended       | .. button-link:: https://ui.adsabs.harvard.edu/abs/2010MNRAS.402...65S/abstract                                                                          |</span>
+<span class="sd">    | Citation          |       :color: secondary                                                                                                                                  |</span>
+<span class="sd">    |                   |                                                                                                                                                          |</span>
+<span class="sd">    |                   |       Go To Citation                                                                                                                                     |</span>
+<span class="sd">    +-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+</span>
+
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_data</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">_dir</span><span class="p">,</span> <span class="s2">&quot;Sanderson10.csv&quot;</span><span class="p">)</span>
+    <span class="n">_schema_loc</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">_dir</span><span class="p">,</span> <span class="s2">&quot;Sanderson10.yaml&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Sanderson10.__init__">
+<a class="viewcode-back" href="../_as_gen/cluster_collections.Sanderson10.__init__.html#cluster_collections.Sanderson10.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_schema_loc</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=c5ced968eda925caa686"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=c5ced968eda925caa686"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+  <p class="copyright">
+    
+      © Copyright 2020, John ZuHone.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.14.2.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
