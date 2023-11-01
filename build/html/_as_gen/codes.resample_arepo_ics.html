@@ -29,6 +29,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster.custom.css" />
@@ -351,7 +352,6 @@ document.write(`
 <li class="toctree-l2"><a class="reference internal" href="utils.integrate_toinf.html">utils.integrate_toinf</a></li>
 <li class="toctree-l2"><a class="reference internal" href="utils.parse_prng.html">utils.parse_prng</a></li>
 <li class="toctree-l2"><a class="reference internal" href="utils.time_limit.html">utils.time_limit</a></li>
-<li class="toctree-l2"><a class="reference internal" href="utils.truncate_spline.html">utils.truncate_spline</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="utils.LogMute.html">utils.LogMute</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="utils.LogMute.__init__.html">utils.LogMute.__init__</a></li>
 </ul>
@@ -708,9 +708,37 @@ document.write(`
 <li class="toctree-l3"><a class="reference internal" href="correction.Type1aNPR.obj.html">correction.Type1aNPR.obj</a></li>
 </ul>
 </li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="correction.Type2NPR.html">correction.Type2NPR</a><input class="toctree-checkbox" id="toctree-checkbox-32" name="toctree-checkbox-32" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-32"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="correction.Type2NPR.__init__.html">correction.Type2NPR.__init__</a></li>
+<li class="toctree-l3"><a class="reference internal" href="correction.Type2NPR.correct.html">correction.Type2NPR.correct</a></li>
+<li class="toctree-l3"><a class="reference internal" href="correction.Type2NPR.identify.html">correction.Type2NPR.identify</a></li>
+<li class="toctree-l3"><a class="reference internal" href="correction.Type2NPR.is_close.html">correction.Type2NPR.is_close</a></li>
+<li class="toctree-l3"><a class="reference internal" href="correction.Type2NPR.message.html">correction.Type2NPR.message</a></li>
+<li class="toctree-l3"><a class="reference internal" href="correction.Type2NPR.size.html">correction.Type2NPR.size</a></li>
+<li class="toctree-l3"><a class="reference internal" href="correction.Type2NPR.correctable.html">correction.Type2NPR.correctable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="correction.Type2NPR.rmin.html">correction.Type2NPR.rmin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="correction.Type2NPR.rmax.html">correction.Type2NPR.rmax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="correction.Type2NPR.type.html">correction.Type2NPR.type</a></li>
+<li class="toctree-l3"><a class="reference internal" href="correction.Type2NPR.obj.html">correction.Type2NPR.obj</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="codes.html">codes</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-32" name="toctree-checkbox-32" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-32"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 has-children"><a class="reference internal" href="correction.Type2aNPR.html">correction.Type2aNPR</a><input class="toctree-checkbox" id="toctree-checkbox-33" name="toctree-checkbox-33" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-33"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="correction.Type2aNPR.__init__.html">correction.Type2aNPR.__init__</a></li>
+<li class="toctree-l3"><a class="reference internal" href="correction.Type2aNPR.correct.html">correction.Type2aNPR.correct</a></li>
+<li class="toctree-l3"><a class="reference internal" href="correction.Type2aNPR.identify.html">correction.Type2aNPR.identify</a></li>
+<li class="toctree-l3"><a class="reference internal" href="correction.Type2aNPR.is_close.html">correction.Type2aNPR.is_close</a></li>
+<li class="toctree-l3"><a class="reference internal" href="correction.Type2aNPR.message.html">correction.Type2aNPR.message</a></li>
+<li class="toctree-l3"><a class="reference internal" href="correction.Type2aNPR.size.html">correction.Type2aNPR.size</a></li>
+<li class="toctree-l3"><a class="reference internal" href="correction.Type2aNPR.correctable.html">correction.Type2aNPR.correctable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="correction.Type2aNPR.rmin.html">correction.Type2aNPR.rmin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="correction.Type2aNPR.rmax.html">correction.Type2aNPR.rmax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="correction.Type2aNPR.type.html">correction.Type2aNPR.type</a></li>
+<li class="toctree-l3"><a class="reference internal" href="correction.Type2aNPR.obj.html">correction.Type2aNPR.obj</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="codes.html">codes</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-34" name="toctree-checkbox-34" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-34"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">codes.resample_arepo_ics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="codes.setup_arepo_ics.html">codes.setup_arepo_ics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="codes.setup_art_ics.html">codes.setup_art_ics</a></li>
@@ -723,7 +751,8 @@ document.write(`
 <li class="toctree-l2"><a class="reference internal" href="codes.write_amr_particles.html">codes.write_amr_particles</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="numalgs.html">numalgs</a><input class="toctree-checkbox" id="toctree-checkbox-33" name="toctree-checkbox-33" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-33"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="numalgs.html">numalgs</a><input class="toctree-checkbox" id="toctree-checkbox-35" name="toctree-checkbox-35" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-35"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="numalgs.extrap_power_law.html">numalgs.extrap_power_law</a></li>
 <li class="toctree-l2"><a class="reference internal" href="numalgs.find_holes.html">numalgs.find_holes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="numalgs.identify_domain_borders.html">numalgs.identify_domain_borders</a></li>
 <li class="toctree-l2"><a class="reference internal" href="numalgs.monotone_interpolation.html">numalgs.monotone_interpolation</a></li>

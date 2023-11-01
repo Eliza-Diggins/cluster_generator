@@ -29,6 +29,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/css/tooltipster.custom.css" />
@@ -411,7 +412,7 @@ the region of the hole but never go negative.</p>
 <figure class="align-default" id="id2">
 <img alt="_images/test_correction_NRP1a.h5_corrected.png" src="_images/test_correction_NRP1a.h5_corrected.png" />
 <figcaption>
-<p><span class="caption-text">A naive generation of the cluster A133 using the work of <a class="reference internal" href="#vikrf06" id="id1"><span>[ViKrF06]</span></a> to construct best fit profiles (red) and its corrected
+<p><span class="caption-text">A naive generation of the cluster A133 using the work of <a class="reference internal" href="_as_gen/radial_profiles.vikhlinin_temperature_profile.html#vikrf06" id="id1"><span>[ViKrF06]</span></a> to construct best fit profiles (red) and its corrected
 version (blue). The underlying cause of this NPR is the steep slope of the temperature profile, which leads to the hole in
 the gravitational field.</span><a class="headerlink" href="#id2" title="Link to this image">#</a></p>
 </figcaption>
@@ -426,17 +427,42 @@ find a viable domain of interpolation.</p>
 </section>
 <section id="type-2-nprs">
 <h2>Type 2 NPRs<a class="headerlink" href="#type-2-nprs" title="Link to this heading">#</a></h2>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-1" name="sd-tab-set-1" type="radio">
+</input><label class="sd-tab-label" for="sd-tab-item-1">
+Type 2a NPRs</label><div class="sd-tab-content docutils">
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Pardon our dust, we’re still working on this section of the documentation.</p>
+<p>Recall that <a class="reference internal" href="_as_gen/correction.Type2aNPR.html#correction.Type2aNPR" title="correction.Type2aNPR"><code class="xref py py-class docutils literal notranslate"><span class="pre">correction.Type2aNPR</span></code></a> are caused by non-physical asymptotic temperature behaviors in common profiles.</p>
 </div>
-</section>
-<section id="references">
-<h2>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h2>
-<div role="list" class="citation-list">
-<div class="citation" id="vikrf06" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">ViKrF06</a><span class="fn-bracket">]</span></span>
-<p>Vikhlinin, A., Kravtsov, A., Forman, W., et al. 2006, ApJ, 640, 691.</p>
+<p>Type 2a NPRs are one of the more common classes of NPR that arise in the process of generating initial conditions. Because they are
+often tied to underlying profiles, they are generally fixable; however, the methodology has some complexities. Consider a temperature
+profile <span class="math notranslate nohighlight">\(T(r)\)</span> and a complementary density profile <span class="math notranslate nohighlight">\(\rho_g(r)\)</span>. Under the assumption of HSE,</p>
+<div class="math notranslate nohighlight">
+\[\nabla \Phi = \frac{-k_bT}{m_p\eta} \left[\frac{d\ln(\rho)}{dr} + \frac{d\ln(T)}{dr}\right].\]</div>
+<p>Furthermore, if we want to require that <span class="math notranslate nohighlight">\(M_{dyn}\)</span> be stable at large radii, we require that <span class="math notranslate nohighlight">\(\nabla \Phi \sim 1/r^2\)</span>.
+As such, at large radii, one can treat <span class="math notranslate nohighlight">\(\rho(r) \sim r^\alpha\)</span> and <span class="math notranslate nohighlight">\(T(r) \sim r^\beta\)</span>. Thus,</p>
+<div class="math notranslate nohighlight">
+\[\mathrm{M}_{\mathrm{dyn}}(&lt;r) \sim (\alpha + \beta) \frac{-rk_b r^\beta}{Gm_p\eta} \implies \beta = -1.\]</div>
+<p>In many profiles, this is not the asymptotic behavior of the profile and therefore the dynamical mass becomes unstable.
+In most instances, an increasing dynamical mass profile doesn’t pose much issue for simulation; however, when the dynamical mass
+decreases, it leads to significant non-physicality. As such, to repair these NPRs, the general approach is to replace (at a suitable radius)
+the temperature profile with a power law. To accomplish this, we use the following exponential extrapolation method [Diggins, 2023].</p>
+<div class="admonition-extrapolatory-power-law-replacement admonition">
+<p class="admonition-title">Extrapolatory Power Law Replacement</p>
+<p>Let <span class="math notranslate nohighlight">\(f(x) \in C^n[a,b]\)</span> for some <span class="math notranslate nohighlight">\(n &gt; 1\)</span>. Let <span class="math notranslate nohighlight">\((x_0,f(x_0) = y_0)\)</span> be a point (the interpolatory point) on <span class="math notranslate nohighlight">\(f(x)\)</span> and
+let <span class="math notranslate nohighlight">\((x_1,f(x_1))\)</span> be another point (called the vertex) such that <span class="math notranslate nohighlight">\(x_0 &lt; x_1\)</span>. Then there exist <span class="math notranslate nohighlight">\(\gamma\)</span> and <span class="math notranslate nohighlight">\(\omega\)</span> such that
+the piecewise function</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}F(x) = \begin{cases}f(x),&amp;x\le x_0\\\xi_\alpha(x)E_{\pm}(x),&amp;x&gt;x_0\end{cases},\end{split}\]</div>
+<p>where</p>
+<div class="math notranslate nohighlight">
+\[\xi_\alpha(x) = y_1\left(\frac{x}{x_1}\right)^\alpha,\;\text{and}\; E_{\pm}(x;x_0) = \frac{\left(\frac{x}{x_0}\right)^{\omega}}{\left(\frac{x}{x_0}\right)^{\omega} \mp \gamma}\]</div>
+<p>is <span class="math notranslate nohighlight">\(C^1[a,b]\)</span>.</p>
+</div>
+<p>Using this approach, Type 2a NPRs are corrected by identifying the erroneous domain and using the extrapolatory power law method
+to rebuild the temperature and density profiles correctly. Because this method only guarantees that the system be <span class="math notranslate nohighlight">\(C^1[a,b]\)</span>, it may produce mild jumps in
+the derived dynamical density, and halo density.</p>
 </div>
 </div>
 </section>
@@ -470,7 +496,6 @@ find a viable domain of interpolation.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#type-0-nprs">Type 0 NPRs</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#type-1-nprs">Type 1 NPRs</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#type-2-nprs">Type 2 NPRs</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>
   </nav></div>
 

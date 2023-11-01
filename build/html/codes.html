@@ -29,6 +29,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/css/tooltipster.custom.css" />
@@ -404,9 +405,9 @@ particles. <code class="docutils literal notranslate"><span class="pre">GalaxyCl
 magnetic field in the simulations.</p>
 </section>
 <section id="gamer">
-<h2><code class="docutils literal notranslate"><span class="pre">GAMER</span></code><a class="headerlink" href="#gamer" title="Link to this heading">#</a></h2>
+<span id="id3"></span><h2><code class="docutils literal notranslate"><span class="pre">GAMER</span></code><a class="headerlink" href="#gamer" title="Link to this heading">#</a></h2>
 <p><img alt="fully-supported" src="https://img.shields.io/badge/Support-full-green" /> <img alt="AMR" src="https://img.shields.io/badge/Code_Type-AMR-purple" /> <img alt="documentation_bad" src="https://img.shields.io/badge/Documentation-None-black" /></p>
-<p><code class="docutils literal notranslate"><span class="pre">GAMER</span></code> (GPU-accelerated Adaptive MEsh Refinement code <a class="reference internal" href="#sctsch" id="id3"><span>[ScTsCh]</span></a>) utilizes a modified AMR approach designed
+<p><code class="docutils literal notranslate"><span class="pre">GAMER</span></code> (GPU-accelerated Adaptive MEsh Refinement code <a class="reference internal" href="#sctsch" id="id4"><span>[ScTsCh]</span></a>) utilizes a modified AMR approach designed
 to utilize the acceleration potential of GPUs.
 The <code class="docutils literal notranslate"><span class="pre">GAMER</span></code> simulation setup <code class="docutils literal notranslate"><span class="pre">ClusterMerger</span></code> can be used with the inputs to
 <code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code> to perform a single-cluster simulation, binary merger, or
@@ -427,9 +428,9 @@ for the <code class="docutils literal notranslate"><span class="pre">ClusterMerg
 </ul>
 </section>
 <section id="arepo">
-<h2><code class="docutils literal notranslate"><span class="pre">Arepo</span></code><a class="headerlink" href="#arepo" title="Link to this heading">#</a></h2>
+<span id="id5"></span><h2><code class="docutils literal notranslate"><span class="pre">Arepo</span></code><a class="headerlink" href="#arepo" title="Link to this heading">#</a></h2>
 <p><img alt="fully-supported" src="https://img.shields.io/badge/Support-full-green" /> <img alt="SPH" src="https://img.shields.io/badge/Code_Type-SPH-cyan" /> <img alt="documentation_easy" src="https://img.shields.io/badge/Documentation-Complete-green" /></p>
-<p><code class="docutils literal notranslate"><span class="pre">Arepo</span></code> <a class="reference internal" href="#wesppa" id="id4"><span>[WeSpPa]</span></a> is a smooth-particle hydrodynamics simulation software developed at the <a class="reference external" href="https://arepo-code.org/wp-content/userguide/index.html">Max-Planck Institute for Astrophysics</a>.
+<p><code class="docutils literal notranslate"><span class="pre">Arepo</span></code> <a class="reference internal" href="#wesppa" id="id6"><span>[WeSpPa]</span></a> is a smooth-particle hydrodynamics simulation software developed at the <a class="reference external" href="https://arepo-code.org/wp-content/userguide/index.html">Max-Planck Institute for Astrophysics</a>.
 CG can be used to create HDF5-based initial conditions for
 one, two, or three clusters for an idealized merger simulation for the Arepo code.
 The way to do this is to create a Gadget-like HDF5 initial conditions file:</p>
@@ -440,15 +441,15 @@ the <code class="docutils literal notranslate"><span class="pre">ADD_BACKGROUND_
 options to be enabled in <code class="docutils literal notranslate"><span class="pre">Config.sh</span></code> for this step include:</p>
 </section>
 <section id="gizmo">
-<h2><code class="docutils literal notranslate"><span class="pre">GIZMO</span></code><a class="headerlink" href="#gizmo" title="Link to this heading">#</a></h2>
+<span id="id7"></span><h2><code class="docutils literal notranslate"><span class="pre">GIZMO</span></code><a class="headerlink" href="#gizmo" title="Link to this heading">#</a></h2>
 <p>Coming soon!</p>
 </section>
 <section id="enzo">
-<h2><code class="docutils literal notranslate"><span class="pre">Enzo</span></code><a class="headerlink" href="#enzo" title="Link to this heading">#</a></h2>
+<span id="id8"></span><h2><code class="docutils literal notranslate"><span class="pre">Enzo</span></code><a class="headerlink" href="#enzo" title="Link to this heading">#</a></h2>
 <p>Coming soon!</p>
 </section>
 <section id="ramses">
-<h2><code class="docutils literal notranslate"><span class="pre">RAMSES</span></code><a class="headerlink" href="#ramses" title="Link to this heading">#</a></h2>
+<span id="id9"></span><h2><code class="docutils literal notranslate"><span class="pre">RAMSES</span></code><a class="headerlink" href="#ramses" title="Link to this heading">#</a></h2>
 <p><img alt="fully-supported" src="https://img.shields.io/badge/Support-full-green" /> <img alt="req-ext" src="https://img.shields.io/badge/Requires_Additional_Software-Yes-black" /> <img alt="AMR" src="https://img.shields.io/badge/Code_Type-AMR-purple" /> <img alt="documentation_medium" src="https://img.shields.io/badge/Documentation-Partial-blue" /> <img alt="MOND" src="https://img.shields.io/badge/MONDIAN-purple" /></p>
 <p>The <code class="docutils literal notranslate"><span class="pre">RAMSES</span></code> code is a multipurpose AMR software developed by <a class="reference external" href="https://bitbucket.org/rteyssie/ramses/src/master/">Romain Teyssier</a>. Because of its
 support for minimally invasive patching, <code class="docutils literal notranslate"><span class="pre">RAMSES</span></code> supports a variety of options for non-newtonian gravity, sub-grid physics, and other
@@ -467,7 +468,7 @@ RAMSES</div>
 </div>
 </section>
 <section id="athena">
-<h2><code class="docutils literal notranslate"><span class="pre">Athena++</span></code><a class="headerlink" href="#athena" title="Link to this heading">#</a></h2>
+<span id="id10"></span><h2><code class="docutils literal notranslate"><span class="pre">Athena++</span></code><a class="headerlink" href="#athena" title="Link to this heading">#</a></h2>
 <p>Coming soon!</p>
 <section id="references">
 <h3>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h3>
@@ -477,11 +478,11 @@ RAMSES</div>
 <p>Fryxell, B., Olson, K., Ricker, P., Timmes, F. X., Zingale, M., Lamb, D. Q., … &amp; Tufo, H. (2000). FLASH: An adaptive mesh hydrodynamics code for modeling astrophysical thermonuclear flashes. The Astrophysical Journal Supplement Series, 131(1), 273.</p>
 </div>
 <div class="citation" id="sctsch" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">ScTsCh</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">ScTsCh</a><span class="fn-bracket">]</span></span>
 <p>Schive, H. Y., Tsai, Y. C., &amp; Chiueh, T. (2010). GAMER: a graphic processing unit accelerated adaptive-mesh-refinement code for astrophysics. The Astrophysical Journal Supplement Series, 186(2), 457.</p>
 </div>
 <div class="citation" id="wesppa" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">WeSpPa</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id6">WeSpPa</a><span class="fn-bracket">]</span></span>
 <p>Weinberger, R., Springel, V., &amp; Pakmor, R. (2020). The Arepo public code release. The Astrophysical Journal Supplement Series, 248(2), 32.</p>
 </div>
 </div>

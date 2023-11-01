@@ -27,6 +27,8 @@
       Type0cNPR
       Type1NPR
       Type1aNPR
+      Type2NPR
+      Type2aNPR
    
    
 

@@ -17,5 +17,6 @@ API Reference for CG
     relations
     virial
     correction
+    cluster_collections
     codes
     numalgs

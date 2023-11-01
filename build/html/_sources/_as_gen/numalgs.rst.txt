@@ -12,6 +12,7 @@
       :recursive:
 
    
+      extrap_power_law
       find_holes
       identify_domain_borders
       monotone_interpolation

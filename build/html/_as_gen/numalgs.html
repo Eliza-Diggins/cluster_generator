@@ -29,6 +29,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster.custom.css" />
@@ -64,7 +65,7 @@
     <link rel="icon" href="../_static/cluster_generator_logo.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="numalgs.find_holes" href="numalgs.find_holes.html" />
+    <link rel="next" title="numalgs.extrap_power_law" href="numalgs.extrap_power_law.html" />
     <link rel="prev" title="codes.write_amr_particles" href="codes.write_amr_particles.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -351,7 +352,6 @@ document.write(`
 <li class="toctree-l2"><a class="reference internal" href="utils.integrate_toinf.html">utils.integrate_toinf</a></li>
 <li class="toctree-l2"><a class="reference internal" href="utils.parse_prng.html">utils.parse_prng</a></li>
 <li class="toctree-l2"><a class="reference internal" href="utils.time_limit.html">utils.time_limit</a></li>
-<li class="toctree-l2"><a class="reference internal" href="utils.truncate_spline.html">utils.truncate_spline</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="utils.LogMute.html">utils.LogMute</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="utils.LogMute.__init__.html">utils.LogMute.__init__</a></li>
 </ul>
@@ -708,9 +708,37 @@ document.write(`
 <li class="toctree-l3"><a class="reference internal" href="correction.Type1aNPR.obj.html">correction.Type1aNPR.obj</a></li>
 </ul>
 </li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="correction.Type2NPR.html">correction.Type2NPR</a><input class="toctree-checkbox" id="toctree-checkbox-32" name="toctree-checkbox-32" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-32"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="correction.Type2NPR.__init__.html">correction.Type2NPR.__init__</a></li>
+<li class="toctree-l3"><a class="reference internal" href="correction.Type2NPR.correct.html">correction.Type2NPR.correct</a></li>
+<li class="toctree-l3"><a class="reference internal" href="correction.Type2NPR.identify.html">correction.Type2NPR.identify</a></li>
+<li class="toctree-l3"><a class="reference internal" href="correction.Type2NPR.is_close.html">correction.Type2NPR.is_close</a></li>
+<li class="toctree-l3"><a class="reference internal" href="correction.Type2NPR.message.html">correction.Type2NPR.message</a></li>
+<li class="toctree-l3"><a class="reference internal" href="correction.Type2NPR.size.html">correction.Type2NPR.size</a></li>
+<li class="toctree-l3"><a class="reference internal" href="correction.Type2NPR.correctable.html">correction.Type2NPR.correctable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="correction.Type2NPR.rmin.html">correction.Type2NPR.rmin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="correction.Type2NPR.rmax.html">correction.Type2NPR.rmax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="correction.Type2NPR.type.html">correction.Type2NPR.type</a></li>
+<li class="toctree-l3"><a class="reference internal" href="correction.Type2NPR.obj.html">correction.Type2NPR.obj</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="codes.html">codes</a><input class="toctree-checkbox" id="toctree-checkbox-32" name="toctree-checkbox-32" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-32"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="correction.Type2aNPR.html">correction.Type2aNPR</a><input class="toctree-checkbox" id="toctree-checkbox-33" name="toctree-checkbox-33" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-33"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="correction.Type2aNPR.__init__.html">correction.Type2aNPR.__init__</a></li>
+<li class="toctree-l3"><a class="reference internal" href="correction.Type2aNPR.correct.html">correction.Type2aNPR.correct</a></li>
+<li class="toctree-l3"><a class="reference internal" href="correction.Type2aNPR.identify.html">correction.Type2aNPR.identify</a></li>
+<li class="toctree-l3"><a class="reference internal" href="correction.Type2aNPR.is_close.html">correction.Type2aNPR.is_close</a></li>
+<li class="toctree-l3"><a class="reference internal" href="correction.Type2aNPR.message.html">correction.Type2aNPR.message</a></li>
+<li class="toctree-l3"><a class="reference internal" href="correction.Type2aNPR.size.html">correction.Type2aNPR.size</a></li>
+<li class="toctree-l3"><a class="reference internal" href="correction.Type2aNPR.correctable.html">correction.Type2aNPR.correctable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="correction.Type2aNPR.rmin.html">correction.Type2aNPR.rmin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="correction.Type2aNPR.rmax.html">correction.Type2aNPR.rmax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="correction.Type2aNPR.type.html">correction.Type2aNPR.type</a></li>
+<li class="toctree-l3"><a class="reference internal" href="correction.Type2aNPR.obj.html">correction.Type2aNPR.obj</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="codes.html">codes</a><input class="toctree-checkbox" id="toctree-checkbox-34" name="toctree-checkbox-34" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-34"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="codes.resample_arepo_ics.html">codes.resample_arepo_ics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="codes.setup_arepo_ics.html">codes.setup_arepo_ics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="codes.setup_art_ics.html">codes.setup_art_ics</a></li>
@@ -723,7 +751,8 @@ document.write(`
 <li class="toctree-l2"><a class="reference internal" href="codes.write_amr_particles.html">codes.write_amr_particles</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">numalgs</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-33" name="toctree-checkbox-33" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-33"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">numalgs</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-35" name="toctree-checkbox-35" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-35"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="numalgs.extrap_power_law.html">numalgs.extrap_power_law</a></li>
 <li class="toctree-l2"><a class="reference internal" href="numalgs.find_holes.html">numalgs.find_holes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="numalgs.identify_domain_borders.html">numalgs.identify_domain_borders</a></li>
 <li class="toctree-l2"><a class="reference internal" href="numalgs.monotone_interpolation.html">numalgs.monotone_interpolation</a></li>
@@ -790,23 +819,26 @@ document.write(`
                   
   <section id="module-numalgs">
 <span id="numalgs"></span><h1>numalgs<a class="headerlink" href="#module-numalgs" title="Link to this heading">#</a></h1>
-<p>Numerical algorithms for use in the backend of the CG.</p>
+<p>Numerical algorithms for use in the backend of CG.</p>
 <p class="rubric">Functions</p>
 <table class="autosummary longtable table autosummary">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="numalgs.find_holes.html#numalgs.find_holes" title="numalgs.find_holes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">find_holes</span></code></a>(x, y[, rtol, dy])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="numalgs.extrap_power_law.html#numalgs.extrap_power_law" title="numalgs.extrap_power_law"><code class="xref py py-obj docutils literal notranslate"><span class="pre">extrap_power_law</span></code></a>(x0, x1, alpha[, f, df, x, ...])</p></td>
+<td><p>Determines an extrapolation function which gives the provided data (either <code class="docutils literal notranslate"><span class="pre">f</span></code> or <code class="docutils literal notranslate"><span class="pre">y</span></code>) a particular asymptotic power-law behavior which maintaining <span class="math notranslate nohighlight">\(C^1[\mathbb{R}]\)</span> behavior at <code class="docutils literal notranslate"><span class="pre">x_0</span></code>, and which is bounded (above, <code class="docutils literal notranslate"><span class="pre">sign==1</span></code>) or (below, <code class="docutils literal notranslate"><span class="pre">sign==-1</span></code>) by the equivalent power-law passing through <code class="docutils literal notranslate"><span class="pre">(x1,y1)</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="numalgs.find_holes.html#numalgs.find_holes" title="numalgs.find_holes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">find_holes</span></code></a>(x, y[, rtol, dy])</p></td>
 <td><p>Locates holes (points of non-monotonicity) in the profile defined by <code class="docutils literal notranslate"><span class="pre">y</span></code> over <code class="docutils literal notranslate"><span class="pre">x</span></code>.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="numalgs.identify_domain_borders.html#numalgs.identify_domain_borders" title="numalgs.identify_domain_borders"><code class="xref py py-obj docutils literal notranslate"><span class="pre">identify_domain_borders</span></code></a>(array[, domain])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="numalgs.identify_domain_borders.html#numalgs.identify_domain_borders" title="numalgs.identify_domain_borders"><code class="xref py py-obj docutils literal notranslate"><span class="pre">identify_domain_borders</span></code></a>(array[, domain])</p></td>
 <td><p>Identify the edges of the domains specified in the array.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="numalgs.monotone_interpolation.html#numalgs.monotone_interpolation" title="numalgs.monotone_interpolation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">monotone_interpolation</span></code></a>(x, y[, buffer, rtol])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="numalgs.monotone_interpolation.html#numalgs.monotone_interpolation" title="numalgs.monotone_interpolation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">monotone_interpolation</span></code></a>(x, y[, buffer, rtol])</p></td>
 <td><p>Monotone interpolation scheme based on piecewise cubic spline methods.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="numalgs.positive_interpolation.html#numalgs.positive_interpolation" title="numalgs.positive_interpolation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">positive_interpolation</span></code></a>(x, y, ...[, buffer, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="numalgs.positive_interpolation.html#numalgs.positive_interpolation" title="numalgs.positive_interpolation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">positive_interpolation</span></code></a>(x, y, ...[, buffer, ...])</p></td>
 <td><p>A positive interpolation scheme, which fills &quot;holes&quot; which drop below 0 with 2 piecewise monotone cubics with zero slope at the hole center.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="numalgs.solve_temperature.html#numalgs.solve_temperature" title="numalgs.solve_temperature"><code class="xref py py-obj docutils literal notranslate"><span class="pre">solve_temperature</span></code></a>(r, potential_gradient, density)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="numalgs.solve_temperature.html#numalgs.solve_temperature" title="numalgs.solve_temperature"><code class="xref py py-obj docutils literal notranslate"><span class="pre">solve_temperature</span></code></a>(r, potential_gradient, density)</p></td>
 <td><p>Solves the temperature equation from the potential gradient and the gas density.</p></td>
 </tr>
 </tbody>
@@ -833,11 +865,11 @@ document.write(`
       </div>
     </a>
     <a class="right-next"
-       href="numalgs.find_holes.html"
+       href="numalgs.extrap_power_law.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">numalgs.find_holes</p>
+        <p class="prev-next-title">numalgs.extrap_power_law</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

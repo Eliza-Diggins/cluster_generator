@@ -1,8 +1,8 @@
 .. image:: _images/cluster_generator_logo.png
 
 
-The Cluster Generator
-=====================
+Cluster Generator
+=================
 
 |yt-project| |precom| |docs| |testing| |Github Page| |Pylint| |coverage| |ncodes|
 
@@ -13,8 +13,7 @@ The Cluster Generator
 
 `Cluster Generator <https://jzuhone.github.io/cluster_generator>`_ (CG) is a cross-platform Python library for generating initial conditions of galaxy clusters for N-body / hydrodynamics codes.
 CG provides a variety of construction approaches, different physical assumption, profiles, and gravitational theories. Furthermore, CG is intended to interface with
-a number of N-body / hydrodynamics codes used in studies of galaxy clusters, reducing the headache of converting initial conditions between formats for different simulation software. GCP's goal is to provide
-
+a number of N-body / hydrodynamics codes used in studies of galaxy clusters, reducing the headache of converting initial conditions between formats for different simulation software. GC's goal is to provide
 comprehensive tools for modeling and implementation of galaxy clusters in astrophysical simulations to promote the study of galaxy cluster dynamics.
 
 This repository contains the core package, which is constructed modularly to facilitate easy development by users to meet particular scientific use cases. All of the
@@ -124,8 +123,10 @@ Features
 
         .. dropdown:: Available Datasets
 
-            The :ref:`Collections <collections>` system provides users access to pre-built galaxy clusters from the available literature. Cluster fits
-            are available for all of the following papers:
+            The :ref:`Cluster Collection <cluster_collections>` module provides an easy interface with profiles derived from
+            observational constraints in the literature. These utilities provide the user with a simple way of initializing
+            realistic galaxy cluster models from literature without any pre-processing. The currently available cluster datasets
+            are
 
             - `Vikhlinin et. al. 2006 <https://ui.adsabs.harvard.edu/abs/2006ApJ...640..691V/abstract>`_
 
@@ -188,7 +189,7 @@ Resources
 
         +++
 
-        .. button-ref:: codes
+        .. button-ref:: Articles
             :expand:
             :color: secondary
             :click-parent:
@@ -509,11 +510,11 @@ Reference Pages
           </a>
         </div>
         <div class="ag-courses_item">
-          <a href="examples.html" class="ag-courses-item_link">
+          <a href="collections.html" class="ag-courses-item_link">
             <div class="ag-courses-item_bg"></div>
 
             <div class="ag-courses-item_title">
-              Examples
+              Cluster Collections
             </div>
 
             <div class="ag-courses-item_date-box">
