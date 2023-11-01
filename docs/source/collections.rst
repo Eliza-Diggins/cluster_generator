@@ -11,7 +11,7 @@ literature in the form of its :py:mod:`cluster_generator.cluster_collections` mo
 
 .. rubric:: Available Cluster Collections
 
-.. py:currentmodule:: cluster_collections
+.. py:currentmodule:: cluster_generator.cluster_collections
 
 .. autosummary::
     :template: class.rst
