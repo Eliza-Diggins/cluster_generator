@@ -390,7 +390,7 @@ document.write(`
 sometimes it may be of interest to generate initial conditions which provide a model of a known system which has been
 constrained observationally. In general, to do so requires the user to determine the properties of the system from literature.
 Fortunately, Cluster Generator provides an ever growing library of available cluster models taken directly from the
-literature in the form of its <code class="xref py py-mod docutils literal notranslate"><span class="pre">cluster_collections</span></code> module.</p>
+literature in the form of its <code class="xref py py-mod docutils literal notranslate"><span class="pre">cluster_generator.cluster_collections</span></code> module.</p>
 <p class="rubric">Available Cluster Collections</p>
 <table class="autosummary longtable table autosummary">
 <tbody>
@@ -398,9 +398,9 @@ literature in the form of its <code class="xref py py-mod docutils literal notra
 </table>
 <section id="what-is-a-collection">
 <h2>What is A Collection?<a class="headerlink" href="#what-is-a-collection" title="Link to this heading">#</a></h2>
-<p>Cluster Generator’s collections module is driven by a core class, the <code class="xref py py-class docutils literal notranslate"><span class="pre">cluster_collections.Collection</span></code>, which provides all
+<p>Cluster Generator’s collections module is driven by a core class, the <code class="xref py py-class docutils literal notranslate"><span class="pre">cluster_generator.cluster_collections.Collection</span></code>, which provides all
 of the backend facilities for reading the datasets from file. Each cluster collection available in the package by default is provided
-with its own class, for example the <code class="xref py py-class docutils literal notranslate"><span class="pre">cluster_collections.Vikhlinin06</span></code> class. Each collection contains a number of galaxy cluster parameters
+with its own class, for example the <code class="xref py py-class docutils literal notranslate"><span class="pre">cluster_generator.cluster_collections.Vikhlinin06</span></code> class. Each collection contains a number of galaxy cluster parameters
 and the corresponding analytical profiles which they were fit too.</p>
 </section>
 <section id="using-collections">
@@ -428,8 +428,8 @@ follows:</p>
 <span class="go"> &#39;USG CS152&#39;: &lt;__main__.ProtoCluster object at 0x7f7d7dbab750&gt;}</span>
 </pre></div>
 </div>
-<p>Notice that each item in the system is a <code class="xref py py-class docutils literal notranslate"><span class="pre">cluster_collections.ProtoCluster</span></code> instance. These are a lot like the <a class="reference internal" href="_as_gen/model.ClusterModel.html#model.ClusterModel" title="model.ClusterModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">model.ClusterModel</span></code></a> instances
-except that they aren’t quite initialized yet. The most important thing about these objects is that they have the special <code class="xref py py-meth docutils literal notranslate"><span class="pre">cluster_collections.ProtoCluster.load()</span></code> method
+<p>Notice that each item in the system is a <code class="xref py py-class docutils literal notranslate"><span class="pre">cluster_generator.cluster_collections.ProtoCluster</span></code> instance. These are a lot like the <code class="xref py py-class docutils literal notranslate"><span class="pre">cluster_generator.model.ClusterModel</span></code> instances
+except that they aren’t quite initialized yet. The most important thing about these objects is that they have the special <code class="xref py py-meth docutils literal notranslate"><span class="pre">cluster_generator.cluster_collections.ProtoCluster.load()</span></code> method
 which works as follows:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">h</span> <span class="o">=</span> <span class="n">vik</span><span class="o">.</span><span class="n">clusters</span><span class="p">[</span><span class="s2">&quot;A133&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10000</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
@@ -439,7 +439,7 @@ which works as follows:</p>
 <span class="go">&lt;cluster_generator.model.ClusterModel object at 0x7fab7769b390&gt;</span>
 </pre></div>
 </div>
-<p>Notice that the <code class="xref py py-meth docutils literal notranslate"><span class="pre">cluster_collections.ProtoCluster.load()</span></code> instance converts the <code class="xref py py-class docutils literal notranslate"><span class="pre">cluster_collections.ProtoCluster</span></code> instance into a fully realized <a class="reference internal" href="_as_gen/model.ClusterModel.html#model.ClusterModel" title="model.ClusterModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">model.ClusterModel</span></code></a> instance!
+<p>Notice that the <code class="xref py py-meth docutils literal notranslate"><span class="pre">cluster_generator.cluster_collections.ProtoCluster.load()</span></code> instance converts the <code class="xref py py-class docutils literal notranslate"><span class="pre">cluster_generator.cluster_collections.ProtoCluster</span></code> instance into a fully realized <code class="xref py py-class docutils literal notranslate"><span class="pre">cluster_generator.model.ClusterModel</span></code> instance!
 Unfortunately, we aren’t quite done. See that warning in the returned values? Let’s take a look at what we actually managed to generate and see what’s going on.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">from</span> <span class="nn">cluster_generator.cluster_collections</span> <span class="kn">import</span> <span class="n">Vikhlinin06</span>
@@ -460,7 +460,7 @@ can obtain data. They then construct a profile function (say <span class="math n
 the available data, but they don’t consider whether or not those profiles are actually self-consistent. This means that
 outside of the observed regime, there’s no guarantee that the profile has any representative truth.</p>
 </div>
-<p>Because this issue is a relatively generic happening, the <a class="reference internal" href="_as_gen/correction.html#module-correction" title="correction"><code class="xref py py-mod docutils literal notranslate"><span class="pre">correction</span></code></a> module was created to manage non-physical regions
+<p>Because this issue is a relatively generic happening, the <code class="xref py py-mod docutils literal notranslate"><span class="pre">cluster_generator.correction</span></code> module was created to manage non-physical regions
 in galaxy cluster models including this one. Let’s try the above code again but this time with an NPR correction:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">from</span> <span class="nn">cluster_generator.cluster_collections</span> <span class="kn">import</span> <span class="n">Vikhlinin06</span>
@@ -478,7 +478,7 @@ in galaxy cluster models including this one. Let’s try the above code again bu
 <img alt="_images/collections-2.png" src="_images/collections-2.png" />
 <div class="admonition-sidebar-why-so-bumpy admonition">
 <p class="admonition-title">Sidebar: Why so Bumpy??</p>
-<p>The automated corrections system (<a class="reference internal" href="_as_gen/correction.html#module-correction" title="correction"><code class="xref py py-mod docutils literal notranslate"><span class="pre">correction</span></code></a>) is one of the most complex aspects of the entire Cluster Generator
+<p>The automated corrections system (<code class="xref py py-mod docutils literal notranslate"><span class="pre">cluster_generator.cluster_generator.correction</span></code>) is one of the most complex aspects of the entire Cluster Generator
 code base. Because these non-physical regions are difficult to identify, categorize, and systematically correct, some numerical
 residuals do occasionally persist after corrections have been made. In this case, the correction algorithm in use provides
 a recomputed temperature profile in <span class="math notranslate nohighlight">\(C^1[a,b]\)</span>; however, any system which required a derivative of the temperature profile
