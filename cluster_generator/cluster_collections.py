@@ -425,22 +425,3 @@ class Sanderson10(Collection):
 
     def __init__(self):
         super().__init__(self._data, self._schema_loc)
-
-
-if __name__ == "__main__":
-    vik = Vikhlinin06()
-    print(vik.clusters)
-    h = vik.clusters["A133"].load(5, 10000)
-    print(h)
-    import matplotlib.pyplot as plt
-    from correction import NonPhysicalRegion
-
-    from cluster_generator.cluster_collections import Vikhlinin06
-
-    collection = Vikhlinin06()
-
-    model = collection.clusters["A133"].load(5, 10000)
-    f, a = model.panel_plot(gs_kwargs={"wspace": 0.4}, color="blue")
-    model = NonPhysicalRegion.correct(model, recursive=True)
-    model.panel_plot(fig=f, axes=a, color="red")
-    plt.show()
