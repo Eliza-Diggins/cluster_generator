@@ -433,10 +433,14 @@ if __name__ == "__main__":
     h = vik.clusters["A133"].load(5, 10000)
     print(h)
     import matplotlib.pyplot as plt
-
-    f, a = h.panel_plot()
     from correction import NonPhysicalRegion
 
-    h = NonPhysicalRegion.correct(h, recursive=True)
-    h.panel_plot(fig=f, axes=a)
+    from cluster_generator.cluster_collections import Vikhlinin06
+
+    collection = Vikhlinin06()
+
+    model = collection.clusters["A133"].load(5, 10000)
+    f, a = model.panel_plot(gs_kwargs={"wspace": 0.4}, color="blue")
+    model = NonPhysicalRegion.correct(model, recursive=True)
+    model.panel_plot(fig=f, axes=a, color="red")
     plt.show()
