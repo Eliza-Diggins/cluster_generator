@@ -1,23 +1,9 @@
-name: todo
-on:
-  push:
-    branches:
-      - pull-request-3
-  workflow_dispatch:
-    inputs:
-
+name: "Run TODO to Issue"
+on: ["push"]
 jobs:
-  build:
-    runs-on: "ubuntu-latest"
-    steps:
-      - uses: "actions/checkout@master"
-      - name: "todo-to-issue"
-        uses: "senecajs/todo-to-issue-action@master"
-        with:
-          REPO: ${{ github.repository }}
-          BEFORE: ${{ github.event.before }}
-          SHA: ${{ github.sha }}
-          TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          LABEL: "TODO:"
-          COMMENT_MARKER: "//"
-          INCLUDE_EXT: ".py,.pyx,.rst,.md"
+    build:
+        runs-on: "ubuntu-latest"
+        steps:
+            - uses: "actions/checkout@v3"
+            - name: "TODO to Issue"
+              uses: "alstr/todo-to-issue-action@v4"
