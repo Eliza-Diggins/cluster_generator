@@ -107,7 +107,7 @@ Type 0 non-physicalities occur when something is explicitly wrong with the profi
 Type 1 Non-Physicalities
 ''''''''''''''''''''''''
 
-.. inheritance-diagram:: correction.Type1aNPR
+.. inheritance-diagram:: cluster_generator.correction.Type1aNPR
     :parts: 1
 
 .. rubric:: Non Physical Region Classes
