@@ -59,9 +59,6 @@ started correcting non-physical regions, it is first important to understand how
 Type 0 Non-Physicalities
 ''''''''''''''''''''''''
 
-.. inheritance-diagram:: cluster_generator.correction.Type0aNPR cluster_generator.correction.Type0bNPR cluster_generator.correction.Type0cNPR
-    :parts: 1
-
 .. rubric:: Non Physical Region Classes
 
 .. py:currentmodule:: correction
@@ -107,8 +104,6 @@ Type 0 non-physicalities occur when something is explicitly wrong with the profi
 Type 1 Non-Physicalities
 ''''''''''''''''''''''''
 
-.. inheritance-diagram:: cluster_generator.correction.Type1aNPR
-    :parts: 1
 
 .. rubric:: Non Physical Region Classes
 
@@ -241,8 +236,6 @@ inherit directly from the next highest level NPR in the tree. The generic templa
 
     **Class Diagram**
 
-    .. inheritance-diagram:: cluster_generator.correction
-        :parts: 1
 
     Notes
     -----

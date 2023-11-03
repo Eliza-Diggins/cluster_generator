@@ -1,12 +1,6 @@
 """
 Methods for correcting non-physicality and other issues in CGP's :py:class:`model.ClusterModel` instances.
 
-
-**Module Diagram**
-
-.. inheritance-diagram:: cluster_generator.correction
-    :parts: 1
-
 """
 from collections.abc import Sized
 
@@ -37,8 +31,7 @@ class NonPhysicalRegion:
 
     **Class Diagram**
 
-    .. inheritance-diagram:: cluster_generator.correction
-        :parts: 1
+
     """
 
     _fields_of_interest = []
@@ -292,11 +285,6 @@ class Type0NPR(NonPhysicalRegion):
     | Correctable? | False   |
     +--------------+---------+
 
-    **Class Diagram**
-
-    .. inheritance-diagram:: cluster_generator.correction
-        :parts: 1
-
     """
 
     _methods = []
@@ -364,8 +352,6 @@ class Type0aNPR(Type0NPR):
 
     **Class Diagram**
 
-    .. inheritance-diagram:: cluster_generator.correction
-        :parts: 1
 
     """
 
@@ -397,10 +383,7 @@ class Type0bNPR(Type0NPR):
     | Correctable? | False                       |
     +--------------+-----------------------------+
 
-    **Class Diagram**
 
-    .. inheritance-diagram:: cluster_generator.correction
-        :parts: 1
     """
 
     _fields_of_interest = ["density", "total_density", "stellar_density"]
@@ -438,8 +421,6 @@ class Type0cNPR(Type0NPR):
 
     **Class Diagram**
 
-    .. inheritance-diagram:: cluster_generator.correction
-        :parts: 1
     """
 
     _methods = ["from_arrays"]
@@ -474,10 +455,7 @@ class Type1NPR(NonPhysicalRegion):
     | Correctable? | False                       |
     +--------------+-----------------------------+
 
-    **Class Diagram**
 
-    .. inheritance-diagram:: cluster_generator.correction
-        :parts: 1
     """
 
     _methods = []
@@ -514,8 +492,6 @@ class Type1aNPR(Type1NPR):
 
     **Class Diagram**
 
-    .. inheritance-diagram:: cluster_generator.correction
-        :parts: 1
 
     Notes
     -----
@@ -645,10 +621,7 @@ class Type2NPR(NonPhysicalRegion):
     | Correctable? | True                        |
     +--------------+-----------------------------+
 
-    **Class Diagram**
 
-    .. inheritance-diagram:: cluster_generator.correction
-        :parts: 1
     """
 
     _methods = []
@@ -688,8 +661,6 @@ class Type2aNPR(NonPhysicalRegion):
 
     **Class Diagram**
 
-    .. inheritance-diagram:: cluster_generator.correction
-        :parts: 1
 
     """
 

@@ -25,14 +25,6 @@ jobs:
       - name: Setup
         run: |
           pip install -e .
-      - name: Install GraphViz
-        run: |
-          curl -OL https://gitlab.com/api/v4/projects/4207231/packages/generic/graphviz-releases/9.0.0/graphviz-9.0.0.tar.gz
-          tar -zxf graphviz-9.0.0.tar.gz
-          cd graphviz-9.0.0
-          ./configure
-          make
-          make install
 
       - name: run
         run: |
