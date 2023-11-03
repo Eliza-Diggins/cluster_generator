@@ -909,30 +909,6 @@ document.write(`
 </tr>
 </tbody>
 </table>
-<p><strong>Class Diagram</strong></p>
-digraph inheritanced474a31857 {
-bgcolor=transparent;
-rankdir=TB;
-size=&quot;&quot;;
-  &quot;CorrectionFailure&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Correction Failure raised when non-physicalities cannot be resolved.&quot;];
-  &quot;NonPhysicalRegion&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Archetypal parent class for all :py:class:`correction.NonPhysicalRegion` instances. This class (and it's sub-classes)&quot;];
-  &quot;Type0NPR&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Non-Physical Region marker class (Subclass of :py:class:`correction.NonPhysicalRegion`) which indicates NPRs of type 0.&quot;];
-  &quot;NonPhysicalRegion&quot; -&gt; &quot;Type0NPR&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Type0aNPR&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Subclass of :py:class:`correction.Type0NPR` which indicates a non-physical region associated with negative entropy or&quot;];
-  &quot;Type0NPR&quot; -&gt; &quot;Type0aNPR&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Type0bNPR&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Subclass of :py:class:`correction.Type0NPR` which indicates a non-physical region associated with negative density profiles.&quot;];
-  &quot;Type0NPR&quot; -&gt; &quot;Type0bNPR&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Type0cNPR&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Subclass of :py:class:`correction.Type0NPR` which indicates a non-physical region associated with a cause not elsewhere specified.&quot;];
-  &quot;Type0NPR&quot; -&gt; &quot;Type0cNPR&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Type1NPR&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Non-Physical Region marker class (Subclass of :py:class:`correction.NonPhysicalRegion`) which indicates NPRs of type 1.&quot;];
-  &quot;NonPhysicalRegion&quot; -&gt; &quot;Type1NPR&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Type1aNPR&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Non-Physical Region corresponding to regions of the cluster where the growth rates of the gas temperature and density are inconsistent&quot;];
-  &quot;Type1NPR&quot; -&gt; &quot;Type1aNPR&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Type2NPR&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Non-Physical Region marker class (Subclass of :py:class:`correction.NonPhysicalRegion`) which indicates NPRs of type 2.&quot;];
-  &quot;NonPhysicalRegion&quot; -&gt; &quot;Type2NPR&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Type2aNPR&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Non-Physical Region corresponding to asymptotically inconsistent temperature profiles.&quot;];
-  &quot;NonPhysicalRegion&quot; -&gt; &quot;Type2aNPR&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-}
 <p class="rubric">Methods</p>
 <table class="autosummary longtable table autosummary">
 <tbody>

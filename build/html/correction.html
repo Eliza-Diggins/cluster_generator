@@ -447,20 +447,6 @@ started correcting non-physical regions, it is first important to understand how
 </figure>
 <section id="type-0-non-physicalities">
 <h3><a class="toc-backref" href="#id5" role="doc-backlink">Type 0 Non-Physicalities</a><a class="headerlink" href="#type-0-non-physicalities" title="Link to this heading">#</a></h3>
-digraph inheritanceb80e274612 {
-bgcolor=transparent;
-rankdir=TB;
-size=&quot;&quot;;
-  &quot;NonPhysicalRegion&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Archetypal parent class for all :py:class:`correction.NonPhysicalRegion` instances. This class (and it's sub-classes)&quot;];
-  &quot;Type0NPR&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Non-Physical Region marker class (Subclass of :py:class:`correction.NonPhysicalRegion`) which indicates NPRs of type 0.&quot;];
-  &quot;NonPhysicalRegion&quot; -&gt; &quot;Type0NPR&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Type0aNPR&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Subclass of :py:class:`correction.Type0NPR` which indicates a non-physical region associated with negative entropy or&quot;];
-  &quot;Type0NPR&quot; -&gt; &quot;Type0aNPR&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Type0bNPR&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Subclass of :py:class:`correction.Type0NPR` which indicates a non-physical region associated with negative density profiles.&quot;];
-  &quot;Type0NPR&quot; -&gt; &quot;Type0bNPR&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Type0cNPR&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Subclass of :py:class:`correction.Type0NPR` which indicates a non-physical region associated with a cause not elsewhere specified.&quot;];
-  &quot;Type0NPR&quot; -&gt; &quot;Type0cNPR&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-}
 <p class="rubric">Non Physical Region Classes</p>
 <table class="autosummary longtable table autosummary">
 <tbody>
@@ -513,16 +499,6 @@ Without gas</label><div class="sd-tab-content docutils">
 </section>
 <section id="type-1-non-physicalities">
 <h3><a class="toc-backref" href="#id6" role="doc-backlink">Type 1 Non-Physicalities</a><a class="headerlink" href="#type-1-non-physicalities" title="Link to this heading">#</a></h3>
-digraph inheritancee2e2b5c962 {
-bgcolor=transparent;
-rankdir=TB;
-size=&quot;&quot;;
-  &quot;NonPhysicalRegion&quot; [URL=&quot;_as_gen/correction.NonPhysicalRegion.html#correction.NonPhysicalRegion&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Archetypal parent class for all :py:class:`correction.NonPhysicalRegion` instances. This class (and it's sub-classes)&quot;];
-  &quot;Type1NPR&quot; [URL=&quot;_as_gen/correction.Type1NPR.html#correction.Type1NPR&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Non-Physical Region marker class (Subclass of :py:class:`correction.NonPhysicalRegion`) which indicates NPRs of type 1.&quot;];
-  &quot;NonPhysicalRegion&quot; -&gt; &quot;Type1NPR&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Type1aNPR&quot; [URL=&quot;_as_gen/correction.Type1aNPR.html#correction.Type1aNPR&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Non-Physical Region corresponding to regions of the cluster where the growth rates of the gas temperature and density are inconsistent&quot;];
-  &quot;Type1NPR&quot; -&gt; &quot;Type1aNPR&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-}
 <p class="rubric">Non Physical Region Classes</p>
 <table class="autosummary longtable table autosummary">
 <tbody>
@@ -636,8 +612,6 @@ inherit directly from the next highest level NPR in the tree. The generic templa
 
 <span class="sd">**Class Diagram**</span>
 
-<span class="sd">.. inheritance-diagram:: cluster_generator.correction</span>
-<span class="sd">    :parts: 1</span>
 
 <span class="sd">Notes</span>
 <span class="sd">-----</span>
