@@ -26,7 +26,7 @@ Cluster Models: Mathematical Overview
     To learn more about the various gravity theories discussed here, see the :ref:`gravity` page.
 
 The Intracluster Medium (ICM)
-''''''''''''''''''''''''''''''
++++++++++++++++++++++++++++++++
 
 Assuming the intracluster medium of galaxy clusters can be modeled as an
 ideal fluid, the momentum density :math:`\rho{\bf v}` of the
