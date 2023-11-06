@@ -723,11 +723,7 @@ document.write(`
         <span class="k">if</span> <span class="s2">&quot;stellar_mass&quot;</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">:</span>
             <span class="n">mdm</span> <span class="o">-=</span> <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;stellar_mass&quot;</span><span class="p">]</span>
             <span class="n">ddm</span> <span class="o">-=</span> <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;stellar_density&quot;</span><span class="p">]</span>
-        <span class="n">mdm</span><span class="p">[</span><span class="n">ddm</span><span class="o">.</span><span class="n">v</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">]</span> <span class="o">=</span> <span class="n">mdm</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
-        <span class="n">ddm</span><span class="p">[</span><span class="n">ddm</span><span class="o">.</span><span class="n">v</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
 
-        <span class="k">if</span> <span class="n">ddm</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.0</span> <span class="ow">or</span> <span class="n">mdm</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">:</span>
-            <span class="n">mylog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;The total dark matter mass is either zero or negative!!&quot;</span><span class="p">)</span>
         <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;dark_matter_density&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ddm</span>
         <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;dark_matter_mass&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mdm</span>
 

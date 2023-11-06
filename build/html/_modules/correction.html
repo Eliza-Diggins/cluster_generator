@@ -395,7 +395,11 @@ document.write(`
 <span class="kn">from</span> <span class="nn">tqdm.auto</span> <span class="kn">import</span> <span class="n">tqdm</span>
 
 <span class="kn">from</span> <span class="nn">cluster_generator.model</span> <span class="kn">import</span> <span class="n">ClusterModel</span>
-<span class="kn">from</span> <span class="nn">cluster_generator.numalgs</span> <span class="kn">import</span> <span class="n">_check_non_positive</span><span class="p">,</span> <span class="n">find_holes</span>
+<span class="kn">from</span> <span class="nn">cluster_generator.numalgs</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">_check_non_positive</span><span class="p">,</span>
+    <span class="n">find_holes</span><span class="p">,</span>
+    <span class="n">monotone_interpolation</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="kn">from</span> <span class="nn">cluster_generator.utils</span> <span class="kn">import</span> <span class="n">LogMute</span><span class="p">,</span> <span class="n">cgparams</span><span class="p">,</span> <span class="n">mylog</span>
 
 
@@ -570,6 +574,7 @@ document.write(`
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">mylog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Seeking NPRs [scope=</span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">_scope</span><span class="si">}</span><span class="s2">]...&quot;</span><span class="p">)</span>
+
         <span class="n">nprs</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># The NPRs being returned</span>
         <span class="c1"># -- Self-identification -- #</span>
         <span class="n">nprs</span> <span class="o">+=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_identify</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
@@ -624,6 +629,7 @@ document.write(`
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">mylog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Correcting non-physical behaviours in </span><span class="si">{</span><span class="n">model</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
         <span class="k">with</span> <span class="n">LogMute</span><span class="p">(</span><span class="n">mylog</span><span class="p">):</span>
             <span class="n">nprs</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">identify</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="n">recursive</span><span class="p">)</span>
 
@@ -1089,9 +1095,9 @@ document.write(`
 
 
 
-<div class="viewcode-block" id="Type2aNPR">
-<a class="viewcode-back" href="../_as_gen/correction.Type2aNPR.html#correction.Type2aNPR">[docs]</a>
-<span class="k">class</span> <span class="nc">Type2aNPR</span><span class="p">(</span><span class="n">NonPhysicalRegion</span><span class="p">):</span>
+<div class="viewcode-block" id="Type1bNPR">
+<a class="viewcode-back" href="../_as_gen/correction.Type1bNPR.html#correction.Type1bNPR">[docs]</a>
+<span class="k">class</span> <span class="nc">Type1bNPR</span><span class="p">(</span><span class="n">NonPhysicalRegion</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Non-Physical Region corresponding to asymptotically inconsistent temperature profiles.</span>
 
@@ -1102,7 +1108,7 @@ document.write(`
 <span class="sd">    +--------------+-----------------------------+</span>
 <span class="sd">    | Properties                                 |</span>
 <span class="sd">    +==============+=============================+</span>
-<span class="sd">    | Scope        | Type 2                      |</span>
+<span class="sd">    | Scope        | Type 1b                     |</span>
 <span class="sd">    +--------------+-----------------------------+</span>
 <span class="sd">    | Methods      | :math:`\rho_g + T_g`        |</span>
 <span class="sd">    +--------------+-----------------------------+</span>
@@ -1124,13 +1130,13 @@ document.write(`
     <span class="n">_methods</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;from_dens_and_temp&quot;</span><span class="p">]</span>
     <span class="n">_fields_of_interest</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;temperature&quot;</span><span class="p">]</span>
     <span class="n">_message</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    NPR of type 2a: Asymptotically invalid temperature profile.</span>
+<span class="s2">    NPR of type 1b: Asymptotically invalid temperature profile.</span>
 <span class="s2">    &quot;&quot;&quot;</span>
-    <span class="n">_scope</span> <span class="o">=</span> <span class="s2">&quot;2a&quot;</span>
+    <span class="n">_scope</span> <span class="o">=</span> <span class="s2">&quot;1b&quot;</span>
     <span class="n">correctable</span> <span class="o">=</span> <span class="kc">True</span>
 
-<div class="viewcode-block" id="Type2aNPR.__init__">
-<a class="viewcode-back" href="../_as_gen/correction.Type2aNPR.__init__.html#correction.Type2aNPR.__init__">[docs]</a>
+<div class="viewcode-block" id="Type1bNPR.__init__">
+<a class="viewcode-back" href="../_as_gen/correction.Type1bNPR.__init__.html#correction.Type1bNPR.__init__">[docs]</a>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rmin</span><span class="p">,</span> <span class="n">rmax</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">rmin</span><span class="p">,</span> <span class="n">rmax</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scope</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span></div>
 
@@ -1138,16 +1144,16 @@ document.write(`
     <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">_identify</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Identifies the type 2a non-physicalities present in the model.</span>
+<span class="sd">        Identifies the type 1b non-physicalities present in the model.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        model: :py:class:`model.ClusterModel`</span>
-<span class="sd">            The model to identify T2ANPRs in.</span>
+<span class="sd">            The model to identify T1BNPRs in.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        list of Type2aNPR</span>
+<span class="sd">        list of Type1BNPR</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">nprs</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># The NPRs being returned</span>
@@ -1168,14 +1174,9 @@ document.write(`
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">nprs</span>
 
-        <span class="k">if</span> <span class="p">(</span>
-            <span class="n">nh</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">int</span><span class="p">(</span><span class="n">holes</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">])</span> <span class="o">-</span> <span class="mi">1</span>
-        <span class="p">):</span>  <span class="c1"># Check if one of the holes corresponds to edge of domain</span>
-            <span class="n">nprs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">cls</span><span class="p">(</span><span class="n">holes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">holes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">model</span><span class="p">))</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">nprs</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">mylog</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Located </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">nprs</span><span class="p">)</span><span class="si">}</span><span class="s2"> non-physicalities of type </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">_scope</span><span class="si">}</span><span class="s2">.&quot;</span>
-            <span class="p">)</span>
+        <span class="k">for</span> <span class="n">hole</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nh</span><span class="p">):</span>
+            <span class="n">nprs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">cls</span><span class="p">(</span><span class="n">holes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">hole</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">holes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">hole</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">model</span><span class="p">))</span>
+
         <span class="k">return</span> <span class="n">nprs</span>
 
     <span class="k">def</span> <span class="nf">_correct</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -1189,34 +1190,43 @@ document.write(`
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="kn">from</span> <span class="nn">scipy.interpolate</span> <span class="kn">import</span> <span class="n">InterpolatedUnivariateSpline</span>
 
-        <span class="kn">from</span> <span class="nn">cluster_generator.numalgs</span> <span class="kn">import</span> <span class="n">extrap_power_law</span>
+        <span class="n">rr</span><span class="p">,</span> <span class="n">mass</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">obj</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">obj</span><span class="p">[</span><span class="s2">&quot;total_mass&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span>
 
-        <span class="n">rr</span><span class="p">,</span> <span class="n">temp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">obj</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">obj</span><span class="p">[</span><span class="s2">&quot;temperature&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span>
+        <span class="n">rn</span><span class="p">,</span> <span class="n">mn</span> <span class="o">=</span> <span class="n">monotone_interpolation</span><span class="p">(</span><span class="n">rr</span><span class="p">,</span> <span class="n">mass</span><span class="p">)</span>
+        <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
-        <span class="n">pow_slope</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">temp</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">rr</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span>
-        <span class="n">x_crit</span> <span class="o">=</span> <span class="n">rr</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">pow_slope</span><span class="p">)</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">amin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">pow_slope</span><span class="p">)))]</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">rn</span><span class="p">,</span> <span class="n">mn</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
-        <span class="n">rn</span><span class="p">,</span> <span class="n">tn</span> <span class="o">=</span> <span class="n">extrap_power_law</span><span class="p">(</span>
-            <span class="n">x_crit</span> <span class="o">-</span> <span class="p">(</span><span class="n">x_crit</span> <span class="o">/</span> <span class="mi">100</span><span class="p">),</span> <span class="n">x_crit</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">rr</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">temp</span><span class="p">,</span> <span class="n">sign</span><span class="o">=</span><span class="mi">1</span>
+        <span class="c1"># m_spline = InterpolatedUnivariateSpline(rn,mn)</span>
+
+        <span class="n">dens_spline</span> <span class="o">=</span> <span class="n">InterpolatedUnivariateSpline</span><span class="p">(</span>
+            <span class="n">rn</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">rn</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">mn</span><span class="p">,</span> <span class="n">edge_order</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
         <span class="p">)</span>
+        <span class="n">gas_spline</span> <span class="o">=</span> <span class="n">InterpolatedUnivariateSpline</span><span class="p">(</span>
+            <span class="n">rr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">obj</span><span class="p">[</span><span class="s2">&quot;density&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span>
+        <span class="p">)</span>  <span class="c1"># try to do this with the profiles.</span>
 
-        <span class="n">dr</span> <span class="o">=</span> <span class="n">InterpolatedUnivariateSpline</span><span class="p">(</span><span class="n">rn</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">obj</span><span class="p">[</span><span class="s2">&quot;density&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">)</span>
-        <span class="n">tr</span> <span class="o">=</span> <span class="n">InterpolatedUnivariateSpline</span><span class="p">(</span><span class="n">rn</span><span class="p">,</span> <span class="n">tn</span><span class="p">)</span>
+        <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
+        <span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">rn</span><span class="p">,</span> <span class="n">dens_spline</span><span class="p">(</span><span class="n">rn</span><span class="p">))</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="n">exit</span><span class="p">()</span>
         <span class="k">if</span> <span class="s2">&quot;stellar_density&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">obj</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s2">&quot;meth&quot;</span><span class="p">][</span><span class="s2">&quot;profiles&quot;</span><span class="p">]:</span>
             <span class="n">stellar_density</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">obj</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s2">&quot;meth&quot;</span><span class="p">][</span><span class="s2">&quot;profiles&quot;</span><span class="p">][</span><span class="s2">&quot;stellar_density&quot;</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">stellar_density</span> <span class="o">=</span> <span class="kc">None</span>
 
-        <span class="k">return</span> <span class="n">ClusterModel</span><span class="o">.</span><span class="n">from_dens_and_temp</span><span class="p">(</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="n">ClusterModel</span><span class="o">.</span><span class="n">from_dens_and_tden</span><span class="p">(</span>
             <span class="n">np</span><span class="o">.</span><span class="n">amin</span><span class="p">(</span><span class="n">rn</span><span class="p">),</span>
             <span class="n">np</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span><span class="n">rn</span><span class="p">),</span>
-            <span class="n">dr</span><span class="p">,</span>
-            <span class="n">tr</span><span class="p">,</span>
+            <span class="n">dens_spline</span><span class="p">,</span>
+            <span class="n">gas_spline</span><span class="p">,</span>
             <span class="n">stellar_density</span><span class="o">=</span><span class="n">stellar_density</span><span class="p">,</span>
             <span class="n">num_points</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">rr</span><span class="p">),</span>
             <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">obj</span><span class="o">.</span><span class="n">properties</span><span class="p">,</span>
-        <span class="p">)</span></div>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">q</span></div>
 
 
 
