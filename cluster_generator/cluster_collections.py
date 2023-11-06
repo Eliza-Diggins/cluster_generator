@@ -425,3 +425,15 @@ class Sanderson10(Collection):
 
     def __init__(self):
         super().__init__(self._data, self._schema_loc)
+
+
+if __name__ == "__main__":
+    v = Vikhlinin06
+    import matplotlib.pyplot as plt
+
+    from cluster_generator.correction import NonPhysicalRegion
+
+    u = v["A262"].load(1, 10000)
+    u.panel_plot()
+    plt.show()
+    u = NonPhysicalRegion.correct(u)

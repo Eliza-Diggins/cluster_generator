@@ -1,4 +1,4 @@
-Name,ObsID,Detector,Redshift,MeankT,r500,meanmetallicity,Cool-Core,T0,t,a,alpha,f
+name,ObsID,Detector,Redshift,MeankT,r500,meanmetallicity,Cool-Core,T0,t,a,alpha,f
 NGC5044,798,S,0.008,1.17,717,0.37,CC,3.40,0.17,404,0.37,0.01
 Abell262,2215,S,0.016,2.08,634,0.38,CC,2.74,0.21,333,0.05,0.52
 Abell1060,2220,I,0.012,2.92,770,0.50,non-CC,4.42,0.73,314,0.10,0.38

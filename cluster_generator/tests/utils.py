@@ -45,8 +45,13 @@ def model_answer_testing(model, filename, answer_store, answer_dir):
         old_model = ClusterModel.from_h5_file(p)
         for field in old_model.fields:
             assert_allclose(old_model[field], model[field], rtol=1e-7)
-        assert_allclose(old_model.dm_virial.df, model.dm_virial.df, rtol=1e-7)
-        assert_allclose(old_model.star_virial.df, model.star_virial.df, rtol=1e-7)
+
+        _, _ = model.dm_virial, model.star_virial
+
+        if model.dm_virial is not None:
+            assert_allclose(old_model.dm_virial.df, model.dm_virial.df, rtol=1e-7)
+        if model.star_virial is not None:
+            assert_allclose(old_model.star_virial.df, model.star_virial.df, rtol=1e-7)
 
 
 def particle_answer_testing(parts, filename, answer_store, answer_dir):

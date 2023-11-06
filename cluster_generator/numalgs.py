@@ -92,7 +92,7 @@ def find_holes(x, y, rtol=1e-3, dy=None):
     holes = np.zeros(_x.size)
     ymax = np.maximum.accumulate(_y)
     holes[~np.isclose(_y, ymax, rtol=rtol)] = 1
-    holes[secants <= -1e-8] = 1
+    holes[secants < 0] = 1
 
     # construct boundaries of holes
     _hb = (
@@ -176,6 +176,7 @@ def monotone_interpolation(x, y, buffer=10, rtol=1e-3):
 
     while nholes > 0:
         # carry out the interpolation over the hole.
+        print(nholes)
         hxx, hyy, hii = holes[:, 0, :]
 
         # building the interpolant information
@@ -189,10 +190,9 @@ def monotone_interpolation(x, y, buffer=10, rtol=1e-3):
         hxx = [_x[hii[0]], _x[hii[1]]]
 
         if hii[1] == len(_x) - 1:
-            print(np.amax(_y))
-            _y[hii[0] : hii[1] + 1] = _y[hii[0]]
-            print(_y[-10:], hxx, hyy, hii)
-            input()
+            _y[hii[0] - 1 : hii[1] + 1] = _y[hii[0]] + (
+                _x[hii[0] - 1 : hii[1] + 1] - _x[hii[0] - 1]
+            ) * (_y[hii[0]] / 1000)
         else:
             xb, yb = hxx[1] - (hyy[1] - hyy[0]) / (2 * derivatives[hii[1]]), (1 / 2) * (
                 hyy[0] + hyy[-1]
@@ -202,7 +202,6 @@ def monotone_interpolation(x, y, buffer=10, rtol=1e-3):
             xs = [hxx[0], xb, _x[hii[-1]]]
             ys = [hyy[0], yb, _y[hii[-1]]]
             dys = [0.0, np.amin([2 * s[0], 2 * s[1], p]), derivatives[hii[1]]]
-
             cinterp = CubicHermiteSpline(xs, ys, dys)
             _y[hii[0] : hii[1]] = cinterp(_x[hii[0] : hii[1]])
 

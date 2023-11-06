@@ -44,6 +44,8 @@ class RadialProfile:
         "am06_density_profile",
         "vikhlinin_density_profile",
         "vikhlinin_temperature_profile",
+        "ad07_density_profile",
+        "ad07_temperature_profile",
         "am06_temperature_profile",
         "baseline_entropy_profile",
         "broken_entropy_profile",

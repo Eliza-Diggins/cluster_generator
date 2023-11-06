@@ -8,7 +8,11 @@ import numpy as np
 from tqdm.auto import tqdm
 
 from cluster_generator.model import ClusterModel
-from cluster_generator.numalgs import _check_non_positive, find_holes
+from cluster_generator.numalgs import (
+    _check_non_positive,
+    find_holes,
+    monotone_interpolation,
+)
 from cluster_generator.utils import LogMute, cgparams, mylog
 
 
@@ -167,6 +171,7 @@ class NonPhysicalRegion:
 
         """
         mylog.info(f"Seeking NPRs [scope={cls._scope}]...")
+
         nprs = []  # The NPRs being returned
         # -- Self-identification -- #
         nprs += cls._identify(model)
@@ -218,6 +223,7 @@ class NonPhysicalRegion:
 
         """
         mylog.info(f"Correcting non-physical behaviours in {model}.")
+
         with LogMute(mylog):
             nprs = cls.identify(model, recursive=recursive)
 
@@ -639,7 +645,7 @@ class Type2NPR(NonPhysicalRegion):
         return []
 
 
-class Type2aNPR(NonPhysicalRegion):
+class Type1bNPR(NonPhysicalRegion):
     r"""
     Non-Physical Region corresponding to asymptotically inconsistent temperature profiles.
 
@@ -650,7 +656,7 @@ class Type2aNPR(NonPhysicalRegion):
     +--------------+-----------------------------+
     | Properties                                 |
     +==============+=============================+
-    | Scope        | Type 2                      |
+    | Scope        | Type 1b                     |
     +--------------+-----------------------------+
     | Methods      | :math:`\rho_g + T_g`        |
     +--------------+-----------------------------+
@@ -672,9 +678,9 @@ class Type2aNPR(NonPhysicalRegion):
     _methods = ["from_dens_and_temp"]
     _fields_of_interest = ["temperature"]
     _message = """
-    NPR of type 2a: Asymptotically invalid temperature profile.
+    NPR of type 1b: Asymptotically invalid temperature profile.
     """
-    _scope = "2a"
+    _scope = "1b"
     correctable = True
 
     def __init__(self, rmin, rmax, obj):
@@ -683,16 +689,16 @@ class Type2aNPR(NonPhysicalRegion):
     @classmethod
     def _identify(cls, model):
         """
-        Identifies the type 2a non-physicalities present in the model.
+        Identifies the type 1b non-physicalities present in the model.
 
         Parameters
         ----------
         model: :py:class:`model.ClusterModel`
-            The model to identify T2ANPRs in.
+            The model to identify T1BNPRs in.
 
         Returns
         -------
-        list of Type2aNPR
+        list of Type1BNPR
 
         """
         nprs = []  # The NPRs being returned
@@ -713,14 +719,9 @@ class Type2aNPR(NonPhysicalRegion):
         else:
             return nprs
 
-        if (
-            nh > 0 and int(holes[2, -1, -1]) == len(model.fields["radius"]) - 1
-        ):  # Check if one of the holes corresponds to edge of domain
-            nprs.append(cls(holes[0, -1, 0], holes[0, -1, 1], model))
-        if len(nprs) != 0:
-            mylog.warning(
-                f"Located {len(nprs)} non-physicalities of type {cls._scope}."
-            )
+        for hole in range(nh):
+            nprs.append(cls(holes[0, hole, 0], holes[0, hole, 1], model))
+
         return nprs
 
     def _correct(self):
@@ -734,34 +735,43 @@ class Type2aNPR(NonPhysicalRegion):
         """
         from scipy.interpolate import InterpolatedUnivariateSpline
 
-        from cluster_generator.numalgs import extrap_power_law
+        rr, mass = self.obj["radius"].d, self.obj["total_mass"].d
 
-        rr, temp = self.obj["radius"].d, self.obj["temperature"].d
+        rn, mn = monotone_interpolation(rr, mass)
+        import matplotlib.pyplot as plt
 
-        pow_slope = np.gradient(np.log(temp), np.log(rr)) + 1
-        x_crit = rr[np.where(np.abs(pow_slope) == np.amin(np.abs(pow_slope)))]
+        plt.loglog(rn, mn)
+        plt.show()
 
-        rn, tn = extrap_power_law(
-            x_crit - (x_crit / 100), x_crit, -1, x=rr, y=temp, sign=1
+        # m_spline = InterpolatedUnivariateSpline(rn,mn)
+
+        dens_spline = InterpolatedUnivariateSpline(
+            rn, (1 / (4 * np.pi * rn**2)) * np.gradient(mn, edge_order=2)
         )
+        gas_spline = InterpolatedUnivariateSpline(
+            rr, self.obj["density"].d
+        )  # try to do this with the profiles.
 
-        dr = InterpolatedUnivariateSpline(rn, self.obj["density"].d)
-        tr = InterpolatedUnivariateSpline(rn, tn)
+        import matplotlib.pyplot as plt
 
+        plt.loglog(rn, dens_spline(rn))
+        plt.show()
+        exit()
         if "stellar_density" in self.obj.properties["meth"]["profiles"]:
             stellar_density = self.obj.properties["meth"]["profiles"]["stellar_density"]
         else:
             stellar_density = None
 
-        return ClusterModel.from_dens_and_temp(
+        q = ClusterModel.from_dens_and_tden(
             np.amin(rn),
             np.amax(rn),
-            dr,
-            tr,
+            dens_spline,
+            gas_spline,
             stellar_density=stellar_density,
             num_points=len(rr),
             **self.obj.properties,
         )
+        return q
 
 
 class CorrectionFailure(Exception):
