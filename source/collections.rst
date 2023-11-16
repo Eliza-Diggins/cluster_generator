@@ -114,7 +114,7 @@ in galaxy cluster models including this one. Let's try the above code again but 
     model.panel_plot()
     plt.show()
 
-.. image:: _images/collections/collections-2.png
+.. image:: _images/correction/compare_correction.png
 
 
 .. admonition:: Sidebar: Why so Bumpy??
