@@ -18,4 +18,4 @@ API Reference for CG
     virial
     cluster_collections
     codes
-    numalgs
+    gravity
