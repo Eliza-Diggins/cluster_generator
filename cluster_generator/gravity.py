@@ -53,6 +53,19 @@ class Gravity(ABC):
         pass
 
     @abstractmethod
+    def compute_gravitational_field(self, *args, **kwargs):
+        """
+        Computes the gravitational field from fields.
+
+        Returns
+        -------
+        :py:class:`unyt.unyt_array`
+            The resulting field array.
+
+        """
+        pass
+
+    @abstractmethod
     def compute_dynamical_mass(self, *args, **kwargs):
         """
         Computes the dynamical mass from provided fields.

@@ -35,6 +35,7 @@ physics:
 #======================================================================================================================#
 gravity:
   # -- These settings are all regarding the gravity systems in cluster generator -- #
+  default_gravity: "Newtonian" # The user's default gravitational theory.
   general:
     # -- General gravity settings for types / classes of gravity -- #
     mond:

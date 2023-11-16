@@ -12,11 +12,12 @@ from scipy.integrate import cumtrapz, quad
 from scipy.interpolate import InterpolatedUnivariateSpline
 from unyt import unyt_array, unyt_quantity
 
+from cluster_generator.gravity import get_gravity_class
 from cluster_generator.particles import ClusterParticles
 from cluster_generator.utils import (
-    G,
     _closest_factors,
     _enforce_style,
+    cgparams,
     ensure_ytquantity,
     generate_particle_radii,
     integrate,
@@ -48,7 +49,9 @@ class ClusterModel:
     ----------
     fields: dict of str: :py:class:`unyt.array.unyt_array`
         The fields to attribute to the :py:class:`model.ClusterModel`.
-    properties: dict
+    gravity: str or :py:class:`gravity.Gravity`, optional
+        The gravitational theory to use. Must correspond to one of the named :py:class:`gravity.Gravity` subclasses.
+    properties: dict, optional
         Additional properties to pass into the :py:class:`model.ClusterModel` instance. These are found in the :py:attr:`model.ClusterModel.properties` attribute. See
         the other parameters section for details on the available properties.
     dm_virial: VirialEquilibrium, optional
@@ -81,12 +84,20 @@ class ClusterModel:
 
     _keep_units = ["entropy", "electron_number_density", "magnetic_field_strength"]
 
-    def __init__(self, fields, properties=None, dm_virial=None, star_virial=None):
+    def __init__(
+        self,
+        fields,
+        gravity=cgparams["gravity"]["default_gravity"],
+        properties=None,
+        dm_virial=None,
+        star_virial=None,
+    ):
         """Initialize the :py:class:`model.ClusterModel` instance."""
         #: The ``fields`` associated with the ``Potential`` object.
         self.fields = fields
         #: The number of elements in each ``field`` array.
         self.num_elements = len(self.fields["radius"])
+
         if not properties:
             self._properties = {}
         else:
@@ -97,6 +108,19 @@ class ClusterModel:
 
         self._dm_virial = dm_virial
         self._star_virial = star_virial
+
+        if isinstance(gravity, str):
+            try:
+                #: The :py:class:`gravity.Gravity` class corresponding to the model.
+                self.gravity = get_gravity_class(gravity)
+            except ValueError:
+                raise ValueError(
+                    f"Cannot initialize ClusterModel instance with gravity {gravity} because the gravitational theory was not recognized."
+                )
+        else:
+            self.gravity = gravity
+
+        self._properties["meth"]["gravity"] = self.gravity.name
 
     def __contains__(self, item):
         return item in self.fields
@@ -161,7 +185,13 @@ class ClusterModel:
         return self._properties
 
     @classmethod
-    def from_arrays(cls, fields, stellar_density=None, **kwargs):
+    def from_arrays(
+        cls,
+        fields,
+        gravity=cgparams["gravity"]["default_gravity"],
+        stellar_density=None,
+        **kwargs,
+    ):
         r"""
         Initialize the :py:class:`model.ClusterModel` from ``fields`` alone.
 
@@ -174,6 +204,8 @@ class ClusterModel:
 
                 The ``fields`` parameter must be self-consistent in its definition, and must contain a ``radius`` key, from
                 which the class assesses the number of elements.
+        gravity: str or :py:class:`gravity.Gravity`, optional
+            The gravitational theory to use. Must correspond to one of the named :py:class:`gravity.Gravity` subclasses.
         stellar_density: radial_profiles.RadialProfile, optional
             The stellar density component.
         kwargs:
@@ -192,13 +224,22 @@ class ClusterModel:
         kwargs = _force_method(kwargs, "from_arrays")
         kwargs["meth"]["profiles"] = {}
 
+        if "gravity" in kwargs["method"]:
+            # This overrides because gravity should be specific to the arrays passed.
+            gravity = kwargs["method"]["gravity"]
+        else:
+            # The gravity in the properties gets overridden at initialization. No need to change it here.
+            mylog.warning(
+                "Failed to find a record of gravity in parameters. Using the default; however, this may not be consistent with the arrays."
+            )
+
         if stellar_density is not None:
             kwargs["meth"]["profiles"]["stellar_density"] = stellar_density
             fields["stellar_density"] = stellar_density(fields["radius"].d)
         else:
             pass
 
-        return cls(fields, properties=kwargs)
+        return cls(fields, gravity=gravity, properties=kwargs)
 
     @classmethod
     def from_h5_file(cls, filename, r_min=None, r_max=None):
@@ -248,6 +289,14 @@ class ClusterModel:
             mylog.warning("Loading pickled file from unmatched python version.")
             attrs = {}
 
+        if ("meth" in attrs) and ("gravity" in attrs["meth"]):
+            gravity = attrs["meth"]["gravity"]
+        else:
+            mylog.warning(
+                "Failed to find a gravitational theory for the loaded data. Using the default."
+            )
+            gravity = cgparams["gravity"]["default_gravity"]
+
         fields = OrderedDict()
         for field in fnames:
             a = unyt_array.from_hdf5(filename, dataset_name=field, group_name="fields")
@@ -263,7 +312,7 @@ class ClusterModel:
         for field in fnames:
             fields[field] = fields[field][mask]
 
-        model = cls(fields, properties=attrs)
+        model = cls(fields, gravity=gravity, properties=attrs)
 
         if get_dm_virial:
             mask = np.logical_and(
@@ -282,16 +331,28 @@ class ClusterModel:
         return model
 
     @classmethod
-    def _from_scratch(cls, fields, stellar_density=None, **kwargs):
+    def _from_scratch(
+        cls,
+        fields,
+        gravity=cgparams["gravity"]["default_gravity"],
+        stellar_density=None,
+        **kwargs,
+    ):
         """Load the cluster instance from total density, total mass, and radius."""
+        if isinstance(gravity, str):
+            gravity = get_gravity_class(gravity)
+
         rr = fields["radius"].d
         mylog.info("Integrating gravitational potential profile.")
-        tdens_func = InterpolatedUnivariateSpline(rr, fields["total_density"].d)
-        gpot_profile = lambda r: tdens_func(r) * r
-        gpot1 = fields["total_mass"] / fields["radius"]
-        gpot2 = unyt_array(4.0 * np.pi * integrate(gpot_profile, rr), "Msun/kpc")
-        fields["gravitational_potential"] = -G * (gpot1 + gpot2)
-        fields["gravitational_potential"].convert_to_units("kpc**2/Myr**2")
+
+        fields["gravitational_potential"] = gravity.compute_potential(fields)
+        # TODO: Cleanup!
+        # tdens_func = InterpolatedUnivariateSpline(rr, fields["total_density"].d)
+        # gpot_profile = lambda r: tdens_func(r) * r
+        # gpot1 = fields["total_mass"] / fields["radius"]
+        # gpot2 = unyt_array(4.0 * np.pi * integrate(gpot_profile, rr), "Msun/kpc")
+        # fields["gravitational_potential"] = -G * (gpot1 + gpot2)
+        # fields["gravitational_potential"].convert_to_units("kpc**2/Myr**2")
 
         if "density" in fields and "gas_mass" not in fields:
             mylog.info("Integrating gas mass profile.")
@@ -330,7 +391,7 @@ class ClusterModel:
                 fields["temperature"] * fields["electron_number_density"] ** mtt
             )
 
-        return cls(fields, properties=kwargs)
+        return cls(fields, gravity=gravity, properties=kwargs)
 
     def set_rmax(self, r_max):
         """
@@ -551,6 +612,7 @@ class ClusterModel:
         rmax,
         density,
         temperature,
+        gravity=cgparams["gravity"]["default_gravity"],
         stellar_density=None,
         num_points=1000,
         **kwargs,
@@ -569,12 +631,17 @@ class ClusterModel:
             A radial profile describing the gas mass density.
         temperature : :class:`~cluster_generator.radial_profiles.RadialProfile`
             A radial profile describing the gas temperature.
+        gravity: str or :py:class:`gravity.Gravity`, optional
+            The gravitational theory to use. Must correspond to one of the named :py:class:`gravity.Gravity` subclasses.
         stellar_density : :class:`~cluster_generator.radial_profiles.RadialProfile`, optional
             A radial profile describing the stellar mass density, if desired.
         num_points : integer, optional
             The number of points the profiles are evaluated at.
 
         """
+        if isinstance(gravity, str):
+            gravity = get_gravity_class(gravity)
+
         kwargs = _force_method(kwargs, "from_dens_and_temp")
         kwargs["meth"]["profiles"] = {
             "temperature": temperature,
@@ -595,9 +662,12 @@ class ClusterModel:
         fields["gravitational_field"] = dPdr / fields["density"]
         fields["gravitational_field"].convert_to_units("kpc/Myr**2")
         fields["gas_mass"] = unyt_array(integrate_mass(density, rr), "Msun")
-        fields["total_mass"] = (
-            -fields["radius"] ** 2 * fields["gravitational_field"] / G
-        )
+
+        fields["total_mass"] = gravity.compute_dynamical_mass(fields)
+        # TODO: Cleanup
+        # fields["total_mass"] = (
+        #    -fields["radius"] ** 2 * fields["gravitational_field"] / G
+        # )
         total_mass_spline = InterpolatedUnivariateSpline(rr, fields["total_mass"].v)
         dMdr = unyt_array(total_mass_spline(rr, nu=1), "Msun/kpc")
         fields["total_density"] = dMdr / (4.0 * np.pi * fields["radius"] ** 2)
@@ -610,6 +680,7 @@ class ClusterModel:
         rmax,
         density,
         entropy,
+        gravity=cgparams["gravity"]["default_gravity"],
         stellar_density=None,
         num_points=1000,
         **kwargs,
@@ -629,6 +700,8 @@ class ClusterModel:
             The gas density profile.
         entropy: callable
             The gas entropy profile.
+        gravity: str or :py:class:`gravity.Gravity`, optional
+            The gravitational theory to use. Must correspond to one of the named :py:class:`gravity.Gravity` subclasses.
         stellar_density: callable or unyt_array
             The stellar density profile.
 
@@ -637,6 +710,9 @@ class ClusterModel:
         ClusterModel
 
         """
+        if isinstance(gravity, str):
+            gravity = get_gravity_class(gravity)
+
         kwargs = _force_method(kwargs, "from_dens_and_entr")
         kwargs["meth"]["profiles"] = {
             "entropy": entropy,
@@ -650,6 +726,7 @@ class ClusterModel:
             rmax,
             density,
             temperature,
+            gravity=gravity,
             stellar_density=stellar_density,
             num_points=num_points,
             **kwargs,
@@ -662,6 +739,7 @@ class ClusterModel:
         rmax,
         density,
         total_density,
+        gravity=cgparams["gravity"]["default_gravity"],
         stellar_density=None,
         num_points=1000,
         **kwargs,
@@ -680,12 +758,17 @@ class ClusterModel:
             A radial profile describing the gas mass density.
         total_density : :class:`~cluster_generator.radial_profiles.RadialProfile`
             A radial profile describing the total mass density.
+        gravity: str or :py:class:`gravity.Gravity`, optional
+            The gravitational theory to use. Must correspond to one of the named :py:class:`gravity.Gravity` subclasses.
         stellar_density : :class:`~cluster_generator.radial_profiles.RadialProfile`, optional
             A radial profile describing the stellar mass density, if desired.
         num_points : integer, optional
             The number of points the profiles are evaluated at.
 
         """
+        if isinstance(gravity, str):
+            gravity = get_gravity_class(gravity)
+
         kwargs = _force_method(kwargs, "from_dens_and_tden")
         kwargs["meth"]["profiles"] = {
             "total_density": total_density,
@@ -701,9 +784,12 @@ class ClusterModel:
         mylog.info("Integrating total mass profile.")
         fields["total_mass"] = unyt_array(integrate_mass(total_density, rr), "Msun")
         fields["gas_mass"] = unyt_array(integrate_mass(density, rr), "Msun")
-        fields["gravitational_field"] = (
-            -G * fields["total_mass"] / (fields["radius"] ** 2)
-        )
+
+        fields["gravitational_field"] = gravity.compute_gravitational_field(fields)
+        # TODO: cleanup!
+        # fields["gravitational_field"] = (
+        #    -G * fields["total_mass"] / (fields["radius"] ** 2)
+        # )
         fields["gravitational_field"].convert_to_units("kpc/Myr**2")
         g = fields["gravitational_field"].in_units("kpc/Myr**2").v
         g_r = InterpolatedUnivariateSpline(rr, g)
@@ -720,7 +806,14 @@ class ClusterModel:
 
     @classmethod
     def no_gas(
-        cls, rmin, rmax, total_density, stellar_density=None, num_points=1000, **kwargs
+        cls,
+        rmin,
+        rmax,
+        total_density,
+        gravity=cgparams["gravity"]["default_gravity"],
+        stellar_density=None,
+        num_points=1000,
+        **kwargs,
     ):
         """
         Initialize a :py:class:`model.ClusterModel` which is composed only of collisionless species.
@@ -733,6 +826,8 @@ class ClusterModel:
             Maximum radius of profiles in kpc.
         total_density : :class:`~cluster_generator.radial_profiles.RadialProfile`
             A radial profile describing the total mass density.
+        gravity: str or :py:class:`gravity.Gravity`, optional
+            The gravitational theory to use. Must correspond to one of the named :py:class:`gravity.Gravity` subclasses.
         stellar_density : :class:`~cluster_generator.radial_profiles.RadialProfile`, optional
             A radial profile describing the stellar mass density, if desired.
         num_points : integer, optional
@@ -756,9 +851,10 @@ class ClusterModel:
         fields["total_density"] = unyt_array(total_density(rr), "Msun/kpc**3")
         mylog.info("Integrating total mass profile.")
         fields["total_mass"] = unyt_array(integrate_mass(total_density, rr), "Msun")
-        fields["gravitational_field"] = (
-            -G * fields["total_mass"] / (fields["radius"] ** 2)
-        )
+        fields["gravitational_field"] = gravity.compute_gravitational_field(fields)
+        # fields["gravitational_field"] = (
+        #    -G * fields["total_mass"] / (fields["radius"] ** 2)
+        # )
         fields["gravitational_field"].convert_to_units("kpc/Myr**2")
 
         return cls._from_scratch(fields, stellar_density=stellar_density, **kwargs)
