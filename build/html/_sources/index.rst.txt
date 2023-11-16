@@ -128,7 +128,17 @@ Features
             realistic galaxy cluster models from literature without any pre-processing. The currently available cluster datasets
             are
 
-            - `Vikhlinin et. al. 2006 <https://ui.adsabs.harvard.edu/abs/2006ApJ...640..691V/abstract>`_
+            .. rubric:: Available Cluster Collections
+
+            .. py:currentmodule:: cluster_collections
+
+            .. autosummary::
+                :template: class.rst
+
+                Vikhlinin06
+                Ascasibar07
+                Sanderson10
+
 
     .. grid-item::
 
