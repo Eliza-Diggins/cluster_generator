@@ -1454,12 +1454,15 @@ class ClusterModel:
 
         """
         density_fields = [
-            i
-            for i in self.fields
-            if i in ["dark_matter_density", "density", "stellar_density"]
+            v.d
+            for k, v in self.fields.items()
+            if k in ["dark_matter_density", "density", "stellar_density"]
         ]
-        critical_density = np.sum([self.fields[k].d for k in density_fields], axis=0)
+        # Correcting negative values
+        for i, arr in enumerate(density_fields):
+            density_fields[i][np.where(arr < 0)] = 0
 
+        critical_density = np.sum([k for k in density_fields], axis=0)
         if np.any(np.where(~np.isclose(critical_density, self["total_density"].v))):
             # There is missing mass or too much mass.
             return False

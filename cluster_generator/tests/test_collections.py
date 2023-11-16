@@ -9,7 +9,6 @@ import pytest
 
 import cluster_generator.cluster_collections as cc
 from cluster_generator.cluster_collections import Ascasibar07, Sanderson10, Vikhlinin06
-from cluster_generator.correction import NonPhysicalRegion
 from cluster_generator.model import ClusterModel
 from cluster_generator.tests.utils import model_answer_testing
 from cluster_generator.utils import mylog
@@ -93,6 +92,8 @@ class TestCollection:
 
     def test_construct(self, answer_dir, answer_store):
         """test random construction"""
+        import matplotlib.pyplot as plt
+
         if self.collection is None:
             return True
         c = self.collection()
@@ -101,10 +102,14 @@ class TestCollection:
             for k, v in c.clusters.items():
                 mylog.warning(f"Checking {k}")
                 _v = v.load(1, 10000)
-                _v = NonPhysicalRegion.correct(_v)
+                _v = _v.correct(mode="minimal")
                 model_answer_testing(
                     _v, f"{c.name}-{k}-mdl.h5", answer_store, answer_dir
                 )
+
+                _v.panel_plot()
+                plt.savefig(os.path.join(answer_dir, f"{k}-{c.name}.png"))
+
         else:
             import numpy as np
 
@@ -116,7 +121,7 @@ class TestCollection:
                 if k in keys:
                     mylog.warning(f"Checking {k}")
                     _v = v.load(1, 10000)
-                    _v = NonPhysicalRegion.correct(_v)
+                    _v = _v.correct(mode="minimal")
                     model_answer_testing(
                         _v, f"{c.name}-{k}-mdl.h5", answer_store, answer_dir
                     )
