@@ -1861,7 +1861,8 @@ document.write(`
 
         <span class="kn">from</span> <span class="nn">yt.loaders</span> <span class="kn">import</span> <span class="n">load_uniform_grid</span>
 
-        <span class="kn">from</span> <span class="nn">cluster_generator.utils</span> <span class="kn">import</span> <span class="n">build_yt_dataset_fields</span><span class="p">,</span> <span class="n">mylog</span>
+        <span class="kn">from</span> <span class="nn">cluster_generator.data_structures</span> <span class="kn">import</span> <span class="n">build_yt_dataset_fields</span>
+        <span class="kn">from</span> <span class="nn">cluster_generator.utils</span> <span class="kn">import</span> <span class="n">mylog</span>
 
         <span class="n">mylog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loading yt dataset of </span><span class="si">{</span><span class="bp">self</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
 
@@ -1911,6 +1912,117 @@ document.write(`
             <span class="n">mass_unit</span><span class="o">=</span><span class="s2">&quot;Msun&quot;</span><span class="p">,</span>
             <span class="n">time_unit</span><span class="o">=</span><span class="s2">&quot;Myr&quot;</span><span class="p">,</span>
             <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">is_physical</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Determines if the :py:class:`model.ClusterModel` instance is physically realizable.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            ``True`` if the system is physically realizable, ``False`` otherwise.</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        See the documentation on correcting non-physical regions. This method uses the fact that all non-physicalities in</span>
+<span class="sd">        the system is manifested in the dynamical density. The algorithm therefore checks the dynamical density for signs of</span>
+<span class="sd">        non-physicality and returns the results.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">density_fields</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">i</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fields</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;dark_matter_density&quot;</span><span class="p">,</span> <span class="s2">&quot;density&quot;</span><span class="p">,</span> <span class="s2">&quot;stellar_density&quot;</span><span class="p">]</span>
+        <span class="p">]</span>
+        <span class="n">critical_density</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">d</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">density_fields</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">critical_density</span><span class="p">,</span> <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;total_density&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">v</span><span class="p">))):</span>
+            <span class="c1"># There is missing mass or too much mass.</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># There is no mass differential.</span>
+            <span class="k">return</span> <span class="kc">True</span>
+
+<div class="viewcode-block" id="ClusterModel.correct">
+<a class="viewcode-back" href="../_as_gen/model.ClusterModel.correct.html#model.ClusterModel.correct">[docs]</a>
+    <span class="k">def</span> <span class="nf">correct</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;minimal&quot;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Correct the :py:class:`model.ClusterModel` instance. The ``mode`` kwarg may be used to determine the precise algorithm</span>
+<span class="sd">        that is used to complete the correction.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        mode: str</span>
+<span class="sd">            The algorithm to use for correction. Options are ``minimal`` and ``smooth``. If ``minimal``, then the dynamical density</span>
+<span class="sd">            is replaced with the minimum allowed consistent value but may lack smoothness. If ``smooth``, then a smooth monotone</span>
+<span class="sd">            interpolation scheme is used.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        :py:class:`model.ClusterModel`</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_physical</span><span class="p">:</span>
+            <span class="n">mylog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;No corrections were necessary, returned copy...&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span>
+
+        <span class="n">density_fields</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">k</span><span class="p">:</span> <span class="n">v</span><span class="o">.</span><span class="n">d</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+            <span class="k">if</span> <span class="p">(</span><span class="s2">&quot;density&quot;</span> <span class="ow">in</span> <span class="n">k</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">k</span> <span class="o">!=</span> <span class="s2">&quot;total_density&quot;</span><span class="p">)</span>
+        <span class="p">}</span>
+        <span class="n">critical_density</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">u</span> <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">density_fields</span><span class="o">.</span><span class="n">values</span><span class="p">()]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;minimal&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;total_density&quot;</span><span class="p">][</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;total_density&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span> <span class="o">&lt;</span> <span class="n">critical_density</span><span class="p">)</span>
+            <span class="p">]</span> <span class="o">=</span> <span class="n">critical_density</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.01</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="s2">&quot;density&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s2">&quot;meth&quot;</span><span class="p">][</span><span class="s2">&quot;profiles&quot;</span><span class="p">]:</span>
+                <span class="n">density_function</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s2">&quot;meth&quot;</span><span class="p">][</span><span class="s2">&quot;profiles&quot;</span><span class="p">][</span><span class="s2">&quot;density&quot;</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">density_function</span> <span class="o">=</span> <span class="n">InterpolatedUnivariateSpline</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">,</span> <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;density&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span>
+                <span class="p">)</span>
+
+            <span class="n">total_density_function</span> <span class="o">=</span> <span class="n">InterpolatedUnivariateSpline</span><span class="p">(</span>
+                <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">,</span> <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;total_density&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span>
+            <span class="p">)</span>
+        <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;smooth&quot;</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">cluster_generator.numeric</span> <span class="kn">import</span> <span class="n">hfa</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;total_density&quot;</span><span class="p">][</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;total_density&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span> <span class="o">&lt;</span> <span class="n">critical_density</span><span class="p">)</span>
+            <span class="p">]</span> <span class="o">=</span> <span class="n">critical_density</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.01</span><span class="p">)</span>
+
+            <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">)</span>
+            <span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="s2">&quot;total_density&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">)</span>
+
+            <span class="n">_u</span><span class="p">,</span> <span class="n">_v</span> <span class="o">=</span> <span class="n">hfa</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+            <span class="n">_y</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">**</span> <span class="p">(</span><span class="n">_v</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="s2">&quot;density&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s2">&quot;meth&quot;</span><span class="p">][</span><span class="s2">&quot;profiles&quot;</span><span class="p">]:</span>
+                <span class="n">density_function</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s2">&quot;meth&quot;</span><span class="p">][</span><span class="s2">&quot;profiles&quot;</span><span class="p">][</span><span class="s2">&quot;density&quot;</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">density_function</span> <span class="o">=</span> <span class="n">InterpolatedUnivariateSpline</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">,</span> <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;density&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span>
+                <span class="p">)</span>
+
+            <span class="n">total_density_function</span> <span class="o">=</span> <span class="n">InterpolatedUnivariateSpline</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">d</span><span class="p">,</span> <span class="n">_y</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The correction mode </span><span class="si">{</span><span class="n">mode</span><span class="si">}</span><span class="s2"> is not a valid mode.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ClusterModel</span><span class="o">.</span><span class="n">from_dens_and_tden</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">amin</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]),</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]),</span>
+            <span class="n">density_function</span><span class="p">,</span>
+            <span class="n">total_density_function</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s2">&quot;meth&quot;</span><span class="p">][</span><span class="s2">&quot;profiles&quot;</span><span class="p">][</span><span class="s2">&quot;stellar_density&quot;</span><span class="p">],</span>
+            <span class="n">num_points</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]),</span>
         <span class="p">)</span></div>
 </div>
 

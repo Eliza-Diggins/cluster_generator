@@ -385,7 +385,7 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <section id="correcting-non-physical-behavior">
-<span id="correction"></span><h1><a class="toc-backref" href="#id3" role="doc-backlink">Correcting Non-Physical Behavior</a><a class="headerlink" href="#correcting-non-physical-behavior" title="Link to this heading">#</a></h1>
+<span id="correction"></span><h1><a class="toc-backref" href="#id4" role="doc-backlink">Correcting Non-Physical Behavior</a><a class="headerlink" href="#correcting-non-physical-behavior" title="Link to this heading">#</a></h1>
 <p>In many cases, perfectly reasonable initial profiles (be they <span class="math notranslate nohighlight">\(\rho_g\)</span>, <span class="math notranslate nohighlight">\(T\)</span>, <span class="math notranslate nohighlight">\(\rho_{\mathrm{dyn}}\)</span> or others)
 can lead to manifestly non-physical final clusters when all of the calculations have been made. There are generally 3 reasons why
 this can occur:</p>
@@ -413,241 +413,90 @@ purposes, it can lead to inconsistencies.</p></li>
 </ul>
 <p>Clearly, there are a variety of ways that these things can happen and they’re often hard to predict as the end user. In previous
 initial conditions software, it was generally left up to the end user to construct self-consistent profiles (which could be a lot of work).
-CG is geared toward making the initialization process as simple as possible to facilitate easier science and therefore
-comes with a set of algorithms for detection and correction of these non-physicalities.</p>
-<hr style="height:10px;background-color:black"><nav class="contents" id="contents">
+CG is aimed at making simulation setup as easy as possible and therefore provides tools for semi-automatic correction of non-physical clusters.</p>
+<p class="rubric">Content</p>
+<nav class="contents" id="contents">
 <p class="topic-title">Contents</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#correcting-non-physical-behavior" id="id3">Correcting Non-Physical Behavior</a></p>
+<li><p><a class="reference internal" href="#correcting-non-physical-behavior" id="id4">Correcting Non-Physical Behavior</a></p>
 <ul>
-<li><p><a class="reference internal" href="#non-physical-regions" id="id4">Non-Physical Regions</a></p>
+<li><p><a class="reference internal" href="#what-causes-non-physical-regions" id="id5">What Causes Non-Physical Regions?</a></p></li>
+<li><p><a class="reference internal" href="#correcting-non-physical-regions" id="id6">Correcting Non-Physical Regions</a></p>
 <ul>
-<li><p><a class="reference internal" href="#type-0-non-physicalities" id="id5">Type 0 Non-Physicalities</a></p></li>
-<li><p><a class="reference internal" href="#type-1-non-physicalities" id="id6">Type 1 Non-Physicalities</a></p></li>
-<li><p><a class="reference internal" href="#type-2-non-physicalities" id="id7">Type 2 Non-Physicalities</a></p></li>
+<li><p><a class="reference internal" href="#the-minimal-correction" id="id7">The Minimal Correction</a></p></li>
+<li><p><a class="reference internal" href="#the-smooth-correction" id="id8">The Smooth Correction</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#id1" id="id8">Correcting Non-Physical Behavior</a></p></li>
-<li><p><a class="reference internal" href="#adding-a-new-npr" id="id9">Adding a New NPR</a></p></li>
 </ul>
 </li>
 </ul>
 </nav>
-<hr style="height:10px;background-color:black"><section id="non-physical-regions">
-<h2><a class="toc-backref" href="#id4" role="doc-backlink">Non-Physical Regions</a><a class="headerlink" href="#non-physical-regions" title="Link to this heading">#</a></h2>
-<p>To contend with the issue of non-physical regions, CG provides the <a class="reference internal" href="_as_gen/correction.html#module-correction" title="correction"><code class="xref py py-mod docutils literal notranslate"><span class="pre">correction</span></code></a> module which is composed of
-class objects descended from <a class="reference internal" href="_as_gen/correction.NonPhysicalRegion.html#correction.NonPhysicalRegion" title="correction.NonPhysicalRegion"><code class="xref py py-class docutils literal notranslate"><span class="pre">correction.NonPhysicalRegion</span></code></a>. Each of these classes represents a particular category of
-non-physical region and has subclasses representing the documented sub-cases of the non-physicality described. As such, to get
-started correcting non-physical regions, it is first important to understand how they are categorized.</p>
-<figure class="align-default" id="id2">
-<img alt="Non-physicalities diagram." src="_images/non-physical.drawio.png" />
+<hr style="height:10px;background-color:black"><section id="what-causes-non-physical-regions">
+<h2><a class="toc-backref" href="#id5" role="doc-backlink">What Causes Non-Physical Regions?</a><a class="headerlink" href="#what-causes-non-physical-regions" title="Link to this heading">#</a></h2>
+<p>Behind the scenes, CG uses a relatively complex set of mechanisms to generate a galaxy cluster from the minimal set of profiles provided by
+the user. In general, even if the user provides a set of perfectly reasonable (or at least apparently reasonable) profiles, there is no guarantee
+that those profiles are inherently compatible with the physical constraints of the cluster. To understand this better, it should be noted that there
+are 3 core constraints in the process of generating a cluster: the conservation of mass (dynamical mass is the sum of all other mass species), gravitation (links thermodynamics and
+collisionless mass components), and hydrostatic equilibrium (HSE). In the most general case, there may be <span class="math notranslate nohighlight">\(n-1\)</span> collisionless mass species provided explicitly, producing <span class="math notranslate nohighlight">\(n\)</span> constraints on the mass components (sum of all
+species must add to total density). If the cluster has gas, then there must be some quantity which is (up to an isomorphism) equivalent to the gas density. In this context, we call such a quantity
+a gas density proxy; however, it could be gas density itself. Finally, there needs to be
+some gravitational proxy like the dynamical mass, the potential, or the potential gradient. With these <span class="math notranslate nohighlight">\(n+1\)</span> total constraints, the entire system is
+calculable; however, it need not be physically consistent.</p>
+<figure class="align-default" id="id1">
+<img alt="_images/proxy_diagram.png" src="_images/proxy_diagram.png" />
 <figcaption>
-<p><span class="caption-text">All of the possible non-physicalities which occur in CG.</span><a class="headerlink" href="#id2" title="Link to this image">#</a></p>
+<p><span class="caption-text">A diagram of the relevant constraints and how they are related along with the possible pathways to a
+fully realized cluster model.</span><a class="headerlink" href="#id1" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<section id="type-0-non-physicalities">
-<h3><a class="toc-backref" href="#id5" role="doc-backlink">Type 0 Non-Physicalities</a><a class="headerlink" href="#type-0-non-physicalities" title="Link to this heading">#</a></h3>
-<p class="rubric">Non Physical Region Classes</p>
-<table class="autosummary longtable table autosummary">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="_as_gen/correction.Type0NPR.html#correction.Type0NPR" title="correction.Type0NPR"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Type0NPR</span></code></a>(rmin, rmax, obj)</p></td>
-<td><p>Non-Physical Region marker class (Subclass of <a class="reference internal" href="_as_gen/correction.NonPhysicalRegion.html#correction.NonPhysicalRegion" title="correction.NonPhysicalRegion"><code class="xref py py-class docutils literal notranslate"><span class="pre">correction.NonPhysicalRegion</span></code></a>) which indicates NPRs of type 0.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="_as_gen/correction.Type0aNPR.html#correction.Type0aNPR" title="correction.Type0aNPR"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Type0aNPR</span></code></a>(rmin, rmax, obj)</p></td>
-<td><p>Subclass of <a class="reference internal" href="_as_gen/correction.Type0NPR.html#correction.Type0NPR" title="correction.Type0NPR"><code class="xref py py-class docutils literal notranslate"><span class="pre">correction.Type0NPR</span></code></a> which indicates a non-physical region associated with negative entropy or temperature regions.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="_as_gen/correction.Type0bNPR.html#correction.Type0bNPR" title="correction.Type0bNPR"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Type0bNPR</span></code></a>(rmin, rmax, obj)</p></td>
-<td><p>Subclass of <a class="reference internal" href="_as_gen/correction.Type0NPR.html#correction.Type0NPR" title="correction.Type0NPR"><code class="xref py py-class docutils literal notranslate"><span class="pre">correction.Type0NPR</span></code></a> which indicates a non-physical region associated with negative density profiles.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="_as_gen/correction.Type0cNPR.html#correction.Type0cNPR" title="correction.Type0cNPR"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Type0cNPR</span></code></a>(rmin, rmax, obj)</p></td>
-<td><p>Subclass of <a class="reference internal" href="_as_gen/correction.Type0NPR.html#correction.Type0NPR" title="correction.Type0NPR"><code class="xref py py-class docutils literal notranslate"><span class="pre">correction.Type0NPR</span></code></a> which indicates a non-physical region associated with a cause not elsewhere specified.</p></td>
-</tr>
-</tbody>
-</table>
-<p class="rubric">Causes</p>
-<p>Type 0 non-physicalities occur when something is explicitly wrong with the profiles the user has provided.</p>
-<div class="sd-tab-set docutils">
-<input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
-</input><label class="sd-tab-label" for="sd-tab-item-0">
-From <span class="math notranslate nohighlight">\(\rho_g + T_g\)</span></label><div class="sd-tab-content docutils">
-<p>If the density profile is found to be negative, then it will result in a <a class="reference internal" href="_as_gen/correction.Type0bNPR.html#correction.Type0bNPR" title="correction.Type0bNPR"><code class="xref py py-class docutils literal notranslate"><span class="pre">correction.Type0bNPR</span></code></a> instance. If
-the temperature profile is inconsistent, then it will result in a <a class="reference internal" href="_as_gen/correction.Type0aNPR.html#correction.Type0aNPR" title="correction.Type0aNPR"><code class="xref py py-class docutils literal notranslate"><span class="pre">correction.Type0aNPR</span></code></a>.</p>
-</div>
-<input id="sd-tab-item-1" name="sd-tab-set-0" type="radio">
-</input><label class="sd-tab-label" for="sd-tab-item-1">
-From <span class="math notranslate nohighlight">\(\rho_g + \rho_{\mathrm{dyn}}\)</span></label><div class="sd-tab-content docutils">
-<p>A <a class="reference internal" href="_as_gen/correction.Type0bNPR.html#correction.Type0bNPR" title="correction.Type0bNPR"><code class="xref py py-class docutils literal notranslate"><span class="pre">correction.Type0bNPR</span></code></a> occurs if any of the following happen:</p>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(\rho_g &lt; 0\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(\rho_{\mathrm{dyn}} &lt; 0\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(\rho_g &gt; \rho_{\mathrm{dyn}}\)</span></p></li>
-</ul>
-</div>
-<input id="sd-tab-item-2" name="sd-tab-set-0" type="radio">
-</input><label class="sd-tab-label" for="sd-tab-item-2">
-From <span class="math notranslate nohighlight">\(\rho_g + S_g\)</span></label><div class="sd-tab-content docutils">
-<p>The <span class="math notranslate nohighlight">\(\rho_g + S_g\)</span> approach is entirely equivalent to the <span class="math notranslate nohighlight">\(\rho_g+T_g\)</span> approach. Given that
-If the density profile is found to be negative, then it will result in a <a class="reference internal" href="_as_gen/correction.Type0bNPR.html#correction.Type0bNPR" title="correction.Type0bNPR"><code class="xref py py-class docutils literal notranslate"><span class="pre">correction.Type0bNPR</span></code></a> instance. If
-the entropy profile is inconsistent, then it will result in a <a class="reference internal" href="_as_gen/correction.Type0aNPR.html#correction.Type0aNPR" title="correction.Type0aNPR"><code class="xref py py-class docutils literal notranslate"><span class="pre">correction.Type0aNPR</span></code></a>.</p>
-</div>
-<input id="sd-tab-item-3" name="sd-tab-set-0" type="radio">
-</input><label class="sd-tab-label" for="sd-tab-item-3">
-Without gas</label><div class="sd-tab-content docutils">
-<p>A <a class="reference internal" href="_as_gen/correction.Type0bNPR.html#correction.Type0bNPR" title="correction.Type0bNPR"><code class="xref py py-class docutils literal notranslate"><span class="pre">correction.Type0bNPR</span></code></a> arises if the input density profile is negative.</p>
-</div>
-</div>
+<p>What does any of this have to do with non-physicality? Because these pathways are the necessary constraints used to generate
+all of the clusters created by CG, one may reduce the problem of how non-physicalities arise in general to the question of how they arise
+from more general proxies. A more detailed description of the relevant pathways from which to build cluster models reveals that [Diggins] any
+non-physicality in a cluster is necessarily manifested in the <span class="math notranslate nohighlight">\(\rho_{\mathrm{dyn}}\)</span> profile. This is a critical result as it allows for the
+implementation of a 1-size-fits-all solution to non-physical clusters. The basic idea is to identify the core constraint on the dynamical density and correct it from there.</p>
+<figure class="align-default" id="id2">
+<img alt="_images/GenDiagram.drawio.png" src="_images/GenDiagram.drawio.png" />
+<figcaption>
+<p><span class="caption-text">A comprehensive diagram of the cluster generation processes used in <code class="docutils literal notranslate"><span class="pre">cluster_generator</span></code>.
+The left hand column indicates input quantities, the right hand side output quantities. The central column describes the different generation algorithms.
+Brackets following output quantities show the relative smoothness of the output. If the least smooth input function is <span class="math notranslate nohighlight">\(f \in C^n[a,b]\)</span>, then an output with a bracketed value <span class="math notranslate nohighlight">\(k\)</span> will be <span class="math notranslate nohighlight">\(g\in C^{n-k}[a,b]\)</span>.
+Values with 0 may be as smooth or more than the input.</span><a class="headerlink" href="#id2" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
 </section>
-<section id="type-1-non-physicalities">
-<h3><a class="toc-backref" href="#id6" role="doc-backlink">Type 1 Non-Physicalities</a><a class="headerlink" href="#type-1-non-physicalities" title="Link to this heading">#</a></h3>
-<p class="rubric">Non Physical Region Classes</p>
-<table class="autosummary longtable table autosummary">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="_as_gen/correction.Type1NPR.html#correction.Type1NPR" title="correction.Type1NPR"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Type1NPR</span></code></a>(rmin, rmax, obj)</p></td>
-<td><p>Non-Physical Region marker class (Subclass of <a class="reference internal" href="_as_gen/correction.NonPhysicalRegion.html#correction.NonPhysicalRegion" title="correction.NonPhysicalRegion"><code class="xref py py-class docutils literal notranslate"><span class="pre">correction.NonPhysicalRegion</span></code></a>) which indicates NPRs of type 1.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="_as_gen/correction.Type1aNPR.html#correction.Type1aNPR" title="correction.Type1aNPR"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Type1aNPR</span></code></a>(rmin, rmax, obj)</p></td>
-<td><p>Non-Physical Region corresponding to regions of the cluster where the growth rates of the gas temperature and density are inconsistent with a positive gravitational field.</p></td>
-</tr>
-</tbody>
-</table>
-<p class="rubric">Causes</p>
-<p>Type 1 non-physical regions are the most commonly occurring class. These arise when some aspect of the provided profiles
-is inconsistent during later steps of the computation process.</p>
-<div class="sd-tab-set docutils">
-<input checked="checked" id="sd-tab-item-4" name="sd-tab-set-1" type="radio">
-</input><label class="sd-tab-label" for="sd-tab-item-4">
-From <span class="math notranslate nohighlight">\(\rho_g + T_g\)</span></label><div class="sd-tab-content docutils">
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The <span class="math notranslate nohighlight">\(\rho_g + T_g\)</span> approach is the most temperamental of the generation approaches; however it is also
-the most useful for matching observational properties of clusters. We therefore encourage every user to understand
-the non-physicalities described in this section.</p>
-</div>
-<p>In the <span class="math notranslate nohighlight">\(\rho_g + T_g\)</span> approach, temperature and density profiles are provided from which HSE is used to determine the gravitational field. From
-the field, we can finally determine the dynamical mass. If both <span class="math notranslate nohighlight">\(\rho_g, T_g\)</span> are self-consistent, then the gravitational field follows from HSE as</p>
+<section id="correcting-non-physical-regions">
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Correcting Non-Physical Regions</a><a class="headerlink" href="#correcting-non-physical-regions" title="Link to this heading">#</a></h2>
+<p>In the previous section, we discussed the key result that all non-physical behaviors in galaxy cluster models are necessarily manifested in the
+dynamical density profile. Given this, the name of the game becomes correcting the dynamical density profile. The constraint which must be obeyed is that</p>
 <div class="math notranslate nohighlight">
-\[\nabla \Phi = \frac{-k_b T}{m_p \eta} \left[\frac{d\ln(\rho_g)}{dr} + \frac{d\ln(T)}{dr} \right].\]</div>
-<p>If <strong>both profiles are monotonically decreasing</strong>, then <span class="math notranslate nohighlight">\(\nabla \Phi &gt; 0\)</span> which is consistent. The criterion for a non-physicality is (by Gauss’ Law) that
-<span class="math notranslate nohighlight">\(\nabla \Phi &gt; 0\)</span>. Therefore, an inconsistency arises if the derivative factor of the expression is non-negative.</p>
-<div class="admonition-type-1-non-physicalities admonition">
-<p class="admonition-title">Type 1 Non-Physicalities</p>
-<p>There are three Type 1 non-physicalities which can arise in this case:</p>
-<ul class="simple">
-<li><p><strong>Type 1a-1</strong>: <span class="math notranslate nohighlight">\(\nabla_r \rho_g &gt; 0\)</span> and <span class="math notranslate nohighlight">\(|\nabla_r \ln(T_g)| &lt; |\nabla_r \ln(\rho_g)|\)</span>. (The density is increasing too fast)</p></li>
-<li><p><strong>Type 1a-2</strong>: <span class="math notranslate nohighlight">\(\nabla_r T_g &gt; 0\)</span> and <span class="math notranslate nohighlight">\(|\nabla_r \ln(T_g)| &gt; |\nabla_r \ln(\rho_g)|\)</span>. (The temperature is increasing too fast)</p></li>
-<li><p><strong>Type 1a-3</strong>: <span class="math notranslate nohighlight">\(\nabla_r T_g &gt; 0\)</span> and <span class="math notranslate nohighlight">\(\nabla_r \rho_g &gt; 0\)</span>.</p></li>
-</ul>
-</div>
-<p>Of these, Type 1a-2 is by far the most common because in <strong>cool-core clusters</strong>, the temperature gradient does go positive and therefore must be
-limited.</p>
-</div>
-<input id="sd-tab-item-5" name="sd-tab-set-1" type="radio">
-</input><label class="sd-tab-label" for="sd-tab-item-5">
-From <span class="math notranslate nohighlight">\(\rho_g + \rho_{\mathrm{dyn}}\)</span></label><div class="sd-tab-content docutils">
-<p>The <span class="math notranslate nohighlight">\(\rho_g + \rho_{\mathrm{dyn}}\)</span> approach is almost entirely self consistent. Only Type 0 non-physicalities occur
-in this case.</p>
-</div>
-<input id="sd-tab-item-6" name="sd-tab-set-1" type="radio">
-</input><label class="sd-tab-label" for="sd-tab-item-6">
-From <span class="math notranslate nohighlight">\(\rho_g + S_g\)</span></label><div class="sd-tab-content docutils">
-<p>The <span class="math notranslate nohighlight">\(\rho_g + S_g\)</span> approach is entirely equivalent to the <span class="math notranslate nohighlight">\(\rho_g+S_g\)</span> approach. Given that</p>
+\[\rho_{\mathrm{dyn}}(r) = \sum_{i} \rho_{i}(r),\]</div>
+<p>where the sum over <span class="math notranslate nohighlight">\(i\)</span> represents all of the relevant species of mass contribution. This is the core correction which must be performed in order
+to correct issues in galaxy cluster models. If the dynamical mass falls below this threshold, there are immediately non-physical ramifications.</p>
+<section id="the-minimal-correction">
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">The Minimal Correction</a><a class="headerlink" href="#the-minimal-correction" title="Link to this heading">#</a></h3>
+<p>In a naive sense, the easiest way to correct these non-physical regions is the force the dynamical density to be equal to or greater than the
+required critical density and that radius. Thus, if</p>
 <div class="math notranslate nohighlight">
-\[S(r) = k_bT_g(r)n_e(r)^{-2/3},\]</div>
-<p>A temperature profile is immediately specified which must meet all of the criteria for the temperature profile in the <span class="math notranslate nohighlight">\(\rho_g + T_g\)</span> approach.</p>
-</div>
-<input id="sd-tab-item-7" name="sd-tab-set-1" type="radio">
-</input><label class="sd-tab-label" for="sd-tab-item-7">
-Without gas</label><div class="sd-tab-content docutils">
-<p>This approach is entirely self-consistent as long as the density profile provided is physical.</p>
-</div>
-</div>
+\[\rho_{\mathrm{critical}} = \sum_i \rho_i(r),\]</div>
+<p>then the simple transformation</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\rho_{\mathrm{dyn}}(r) = \begin{cases}\rho_{\mathrm{dyn}}(r),&amp;\rho_{\mathrm{dyn}}(r) \ge \rho_{\mathrm{critical}}\\\rho_{\mathrm{critical}},&amp;\rho_{\mathrm{dyn}}(r) &lt; \rho_{\mathrm{critical}}\end{cases}\end{split}\]</div>
+<p>will rebuild the cluster in such a way that it is forced to be physically realizable. This correction approach is called the <strong>minimal correction method (MCM)</strong>. It has advantages and disadvantages just as all of the other
+correction methods. Because it defines a piecewise <span class="math notranslate nohighlight">\(\rho_{\mathrm{dyn}}\)</span>, the profile will be potentially discontinuous at a finite number of points. This is clearly an unnatural configuration; however, because all of the other
+quantities involved in the cluster are generated by integration from <span class="math notranslate nohighlight">\(\rho_{\mathrm{dyn}}\)</span> all other profiles are at least continuous and most are also smooth.</p>
 </section>
-<section id="type-2-non-physicalities">
-<h3><a class="toc-backref" href="#id7" role="doc-backlink">Type 2 Non-Physicalities</a><a class="headerlink" href="#type-2-non-physicalities" title="Link to this heading">#</a></h3>
-<p>Type 2 Non-Physical regions occur when some aspect of the gravitational theory being used is inconsistent with the
-profiles provided and thus leads to non-physical results.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>These classes will be implemented with the upcoming gravity update.</p>
-</div>
-<hr style="height:10px;background-color:black"></section>
+<section id="the-smooth-correction">
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">The Smooth Correction</a><a class="headerlink" href="#the-smooth-correction" title="Link to this heading">#</a></h3>
+<p>An improvement on the approach of the MCM is the SCM, or smooth correction method. The basic principle of this correction method is the
+same as that of the minimal approach; however, this approach replaces <span class="math notranslate nohighlight">\(\rho_{\mathrm{dyn}}\)</span> with a monotone decreasing profile, which is
+smooth at all points of the domain. This is a more disruptive approach to correction; however, it produces considerably smoother profiles.</p>
+<figure class="align-default" id="id3">
+<img alt="_images/compare_correction.png" src="_images/compare_correction.png" />
+<figcaption>
+<p><span class="caption-text">(Blue) the original, uncorrected, profile for A133 from Vikhlinin et. al. 2006. (Red) the naive / minimal correction method.</span><a class="headerlink" href="#id3" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
 </section>
-<section id="id1">
-<h2><a class="toc-backref" href="#id8" role="doc-backlink">Correcting Non-Physical Behavior</a><a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
-<p>Now that we’ve established the types of non-physical regions (NPRs), we are ready to discuss how to fix them. Some non-physical regions
-are not reparable (largely because they indicate a failure that we deem should be made obvious to the user); however, wherever possible we
-have constructed purpose built algorithms to provide the best possible reconstruction methods to excise NPRs.</p>
-<p>The core utility of the <a class="reference internal" href="_as_gen/correction.html#module-correction" title="correction"><code class="xref py py-mod docutils literal notranslate"><span class="pre">correction</span></code></a> module is not simply to categorize NPRs but also to fix them. As such, every
-class in the module has two core methods: <a class="reference internal" href="_as_gen/correction.NonPhysicalRegion.identify.html#correction.NonPhysicalRegion.identify" title="correction.NonPhysicalRegion.identify"><code class="xref py py-meth docutils literal notranslate"><span class="pre">correction.NonPhysicalRegion.identify()</span></code></a> and <a class="reference internal" href="_as_gen/correction.NonPhysicalRegion.correct.html#correction.NonPhysicalRegion.correct" title="correction.NonPhysicalRegion.correct"><code class="xref py py-meth docutils literal notranslate"><span class="pre">correction.NonPhysicalRegion.correct()</span></code></a>. These
-attempt to identify the NPRs corresponding to that type and correct them respectively. Each takes a <code class="docutils literal notranslate"><span class="pre">recursive</span></code> keyword argument which will tell
-the system whether or not to check all of the available subclasses in the same way. In some cases, an NPR isn’t fixable in which case a <code class="xref py py-class docutils literal notranslate"><span class="pre">correction.CorrectionFailure</span></code> will
-be raised indicating that an error has occurred. In most cases, these are used to indicate that the user has made an error which is severe enough to warrant a complete reconsideration
-of the model.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>For more examples on how this process works in practice, visit the <a class="reference internal" href="examples.html#examples"><span class="std std-ref">Examples</span></a> page. For a more in-depth explanation of
-correction methodologies, visit <a class="reference internal" href="correction_methods.html#correction-methods"><span class="std std-ref">Methods For Correcting Non-Physical Regions</span></a>.</p>
-</div>
-</section>
-<section id="adding-a-new-npr">
-<h2><a class="toc-backref" href="#id9" role="doc-backlink">Adding a New NPR</a><a class="headerlink" href="#adding-a-new-npr" title="Link to this heading">#</a></h2>
-<p>If you’re a contributor to CG, then you may find yourself in a situation where you need to add a new NPR type to the
-<a class="reference internal" href="_as_gen/correction.html#module-correction" title="correction"><code class="xref py py-mod docutils literal notranslate"><span class="pre">correction</span></code></a> module. The process to do so is relatively simple. Every novel NPR class should fit into a category and
-inherit directly from the next highest level NPR in the tree. The generic template for such an addition should look like this</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Type__NPR</span><span class="p">(</span><span class="n">Type__NPR</span><span class="p">):</span>
-<span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Non-Physical Region corresponding to regions of the cluster where **INSERT YOUR DESCRIPTION**.</span>
-
-<span class="sd">+--------------+-----------------------------+</span>
-<span class="sd">| Properties                                 |</span>
-<span class="sd">+==============+=============================+</span>
-<span class="sd">| Scope        | Type &lt;type&gt;                 |</span>
-<span class="sd">+--------------+-----------------------------+</span>
-<span class="sd">| Methods      | &lt;methods&gt;                   |</span>
-<span class="sd">+--------------+-----------------------------+</span>
-<span class="sd">| Gravity      | &lt;grav types&gt;                |</span>
-<span class="sd">+--------------+-----------------------------+</span>
-<span class="sd">| Correctable? | &lt;correctable&gt;               |</span>
-<span class="sd">+--------------+-----------------------------+</span>
-
-<span class="sd">**Class Diagram**</span>
-
-
-<span class="sd">Notes</span>
-<span class="sd">-----</span>
-<span class="sd">Documentation notes.</span>
-
-<span class="sd">&quot;&quot;&quot;</span>
-
-<span class="n">_methods</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">]</span>
-<span class="n">_message</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">NPR of type &lt;type&gt;: &lt;Your description of the new NPR&gt;</span>
-<span class="s2">&quot;&quot;&quot;</span>
-<span class="n">_scope</span> <span class="o">=</span> <span class="s2">&quot;&lt;type&gt;&quot;</span>
-<span class="n">correctable</span> <span class="o">=</span> <span class="kc">True</span> <span class="c1"># --&gt; Is this NPR correctable?</span>
-
-<span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rmin</span><span class="p">,</span> <span class="n">rmax</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
-    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">rmin</span><span class="p">,</span> <span class="n">rmax</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span>
-
-<span class="nd">@classmethod</span>
-<span class="k">def</span> <span class="nf">_identify</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
-    <span class="n">nprs</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># The NPRs being returned</span>
-
-
-    <span class="c1">#</span>
-    <span class="c1"># YOUR CODE TO IDENTIFY THE NPR GOES HERE.</span>
-    <span class="c1">#</span>
-    <span class="k">return</span> <span class="n">nprs</span>
-
-<span class="k">def</span> <span class="nf">_correct</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-
-    <span class="c1">#</span>
-    <span class="c1"># YOUR CORRECTION CODE GOES HERE.</span>
-    <span class="c1">#</span>
-
-    <span class="k">return</span> <span class="n">New_Model</span>
-</pre></div>
-</div>
 </section>
 </section>
 
@@ -676,14 +525,12 @@ inherit directly from the next highest level NPR in the tree. The generic templa
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#non-physical-regions">Non-Physical Regions</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#type-0-non-physicalities">Type 0 Non-Physicalities</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#type-1-non-physicalities">Type 1 Non-Physicalities</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#type-2-non-physicalities">Type 2 Non-Physicalities</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-causes-non-physical-regions">What Causes Non-Physical Regions?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#correcting-non-physical-regions">Correcting Non-Physical Regions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-minimal-correction">The Minimal Correction</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-smooth-correction">The Smooth Correction</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Correcting Non-Physical Behavior</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-a-new-npr">Adding a New NPR</a></li>
 </ul>
   </nav></div>
 

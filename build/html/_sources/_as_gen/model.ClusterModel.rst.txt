@@ -18,6 +18,7 @@ model.ClusterModel
       ~ClusterModel.check_dm_virial
       ~ClusterModel.check_hse
       ~ClusterModel.check_star_virial
+      ~ClusterModel.correct
       ~ClusterModel.create_dataset
       ~ClusterModel.find_field_at_radius
       ~ClusterModel.find_radius_for_density
@@ -57,6 +58,7 @@ model.ClusterModel
    
       ~ClusterModel.default_fields
       ~ClusterModel.dm_virial
+      ~ClusterModel.is_physical
       ~ClusterModel.properties
       ~ClusterModel.star_virial
       ~ClusterModel.fields

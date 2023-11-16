@@ -469,7 +469,7 @@ can obtain data. They then construct a profile function (say <span class="math n
 the available data, but they don’t consider whether or not those profiles are actually self-consistent. This means that
 outside of the observed regime, there’s no guarantee that the profile has any representative truth.</p>
 </div>
-<p>Because this issue is a relatively generic happening, the <a class="reference internal" href="_as_gen/correction.html#module-correction" title="correction"><code class="xref py py-mod docutils literal notranslate"><span class="pre">correction</span></code></a> module was created to manage non-physical regions
+<p>Because this issue is a relatively generic happening, the <code class="xref py py-mod docutils literal notranslate"><span class="pre">correction</span></code> module was created to manage non-physical regions
 in galaxy cluster models including this one. Let’s try the above code again but this time with an NPR correction:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">from</span> <span class="nn">cluster_generator.cluster_collections</span> <span class="kn">import</span> <span class="n">Vikhlinin06</span>

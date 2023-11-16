@@ -18,6 +18,7 @@ model.HydrostaticEquilibrium
       ~HydrostaticEquilibrium.check_dm_virial
       ~HydrostaticEquilibrium.check_hse
       ~HydrostaticEquilibrium.check_star_virial
+      ~HydrostaticEquilibrium.correct
       ~HydrostaticEquilibrium.create_dataset
       ~HydrostaticEquilibrium.find_field_at_radius
       ~HydrostaticEquilibrium.find_radius_for_density
@@ -57,6 +58,7 @@ model.HydrostaticEquilibrium
    
       ~HydrostaticEquilibrium.default_fields
       ~HydrostaticEquilibrium.dm_virial
+      ~HydrostaticEquilibrium.is_physical
       ~HydrostaticEquilibrium.properties
       ~HydrostaticEquilibrium.star_virial
       ~HydrostaticEquilibrium.fields
