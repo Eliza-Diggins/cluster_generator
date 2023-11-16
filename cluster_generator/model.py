@@ -1383,7 +1383,8 @@ class ClusterModel:
 
         from yt.loaders import load_uniform_grid
 
-        from cluster_generator.utils import build_yt_dataset_fields, mylog
+        from cluster_generator.data_structures import build_yt_dataset_fields
+        from cluster_generator.utils import mylog
 
         mylog.info(f"Loading yt dataset of {self}...")
 
@@ -1433,6 +1434,114 @@ class ClusterModel:
             mass_unit="Msun",
             time_unit="Myr",
             **kwargs,
+        )
+
+    @property
+    def is_physical(self):
+        """
+        Determines if the :py:class:`model.ClusterModel` instance is physically realizable.
+
+        Returns
+        -------
+        bool
+            ``True`` if the system is physically realizable, ``False`` otherwise.
+
+        Notes
+        -----
+        See the documentation on correcting non-physical regions. This method uses the fact that all non-physicalities in
+        the system is manifested in the dynamical density. The algorithm therefore checks the dynamical density for signs of
+        non-physicality and returns the results.
+
+        """
+        density_fields = [
+            i
+            for i in self.fields
+            if i in ["dark_matter_density", "density", "stellar_density"]
+        ]
+        critical_density = np.sum([self.fields[k].d for k in density_fields], axis=0)
+
+        if np.any(np.where(~np.isclose(critical_density, self["total_density"].v))):
+            # There is missing mass or too much mass.
+            return False
+        else:
+            # There is no mass differential.
+            return True
+
+    def correct(self, mode="minimal"):
+        """
+        Correct the :py:class:`model.ClusterModel` instance. The ``mode`` kwarg may be used to determine the precise algorithm
+        that is used to complete the correction.
+
+        Parameters
+        ----------
+        mode: str
+            The algorithm to use for correction. Options are ``minimal`` and ``smooth``. If ``minimal``, then the dynamical density
+            is replaced with the minimum allowed consistent value but may lack smoothness. If ``smooth``, then a smooth monotone
+            interpolation scheme is used.
+
+        Returns
+        -------
+        :py:class:`model.ClusterModel`
+
+        """
+        if self.is_physical:
+            mylog.info("No corrections were necessary, returned copy...")
+            return self
+
+        density_fields = {
+            k: v.d
+            for k, v in self.fields.items()
+            if ("density" in k) and (k != "total_density")
+        }
+        critical_density = np.sum(
+            np.array([u for u in density_fields.values()]), axis=0
+        )
+
+        if mode == "minimal":
+            self.fields["total_density"][
+                np.where(self.fields["total_density"].d < critical_density)
+            ] = critical_density * (1.01)
+
+            if "density" in self.properties["meth"]["profiles"]:
+                density_function = self.properties["meth"]["profiles"]["density"]
+            else:
+                density_function = InterpolatedUnivariateSpline(
+                    self["radius"].d, self["density"].d
+                )
+
+            total_density_function = InterpolatedUnivariateSpline(
+                self["radius"].d, self["total_density"].d
+            )
+        elif mode == "smooth":
+            from cluster_generator.numeric import hfa
+
+            self.fields["total_density"][
+                np.where(self.fields["total_density"].d < critical_density)
+            ] = critical_density * (1.01)
+
+            u = np.log10(self["radius"].d)
+            v = np.log10(self["total_density"].d)
+
+            _u, _v = hfa(u, v, 50)
+            _y = 10 ** (_v)
+
+            if "density" in self.properties["meth"]["profiles"]:
+                density_function = self.properties["meth"]["profiles"]["density"]
+            else:
+                density_function = InterpolatedUnivariateSpline(
+                    self["radius"].d, self["density"].d
+                )
+
+            total_density_function = InterpolatedUnivariateSpline(self["radius"].d, _y)
+        else:
+            raise ValueError(f"The correction mode {mode} is not a valid mode.")
+        return ClusterModel.from_dens_and_tden(
+            np.amin(self["radius"]),
+            np.amax(self["radius"]),
+            density_function,
+            total_density_function,
+            self.properties["meth"]["profiles"]["stellar_density"],
+            num_points=len(self["radius"]),
         )
 
 
