@@ -113,6 +113,7 @@ class TestCorrections:
                 self._model = ClusterModel.from_h5_file(
                     os.path.join(answer_dir, self.mdl_name)
                 )
+                print(self._model.gravity)
                 return self._model
             else:
                 pass

@@ -224,7 +224,7 @@ class ClusterModel:
         kwargs = _force_method(kwargs, "from_arrays")
         kwargs["meth"]["profiles"] = {}
 
-        if "gravity" in kwargs["method"]:
+        if "gravity" in kwargs["meth"]:
             # This overrides because gravity should be specific to the arrays passed.
             gravity = kwargs["method"]["gravity"]
         else:
@@ -345,14 +345,7 @@ class ClusterModel:
         rr = fields["radius"].d
         mylog.info("Integrating gravitational potential profile.")
 
-        fields["gravitational_potential"] = gravity.compute_potential(fields)
-        # TODO: Cleanup!
-        # tdens_func = InterpolatedUnivariateSpline(rr, fields["total_density"].d)
-        # gpot_profile = lambda r: tdens_func(r) * r
-        # gpot1 = fields["total_mass"] / fields["radius"]
-        # gpot2 = unyt_array(4.0 * np.pi * integrate(gpot_profile, rr), "Msun/kpc")
-        # fields["gravitational_potential"] = -G * (gpot1 + gpot2)
-        # fields["gravitational_potential"].convert_to_units("kpc**2/Myr**2")
+        fields["gravitational_potential"] = gravity.compute_potential(fields, method=1)
 
         if "density" in fields and "gas_mass" not in fields:
             mylog.info("Integrating gas mass profile.")
@@ -664,10 +657,6 @@ class ClusterModel:
         fields["gas_mass"] = unyt_array(integrate_mass(density, rr), "Msun")
 
         fields["total_mass"] = gravity.compute_dynamical_mass(fields)
-        # TODO: Cleanup
-        # fields["total_mass"] = (
-        #    -fields["radius"] ** 2 * fields["gravitational_field"] / G
-        # )
         total_mass_spline = InterpolatedUnivariateSpline(rr, fields["total_mass"].v)
         dMdr = unyt_array(total_mass_spline(rr, nu=1), "Msun/kpc")
         fields["total_density"] = dMdr / (4.0 * np.pi * fields["radius"] ** 2)
@@ -768,7 +757,6 @@ class ClusterModel:
         """
         if isinstance(gravity, str):
             gravity = get_gravity_class(gravity)
-
         kwargs = _force_method(kwargs, "from_dens_and_tden")
         kwargs["meth"]["profiles"] = {
             "total_density": total_density,
@@ -785,11 +773,9 @@ class ClusterModel:
         fields["total_mass"] = unyt_array(integrate_mass(total_density, rr), "Msun")
         fields["gas_mass"] = unyt_array(integrate_mass(density, rr), "Msun")
 
-        fields["gravitational_field"] = gravity.compute_gravitational_field(fields)
-        # TODO: cleanup!
-        # fields["gravitational_field"] = (
-        #    -G * fields["total_mass"] / (fields["radius"] ** 2)
-        # )
+        fields["gravitational_field"] = gravity.compute_gravitational_field(
+            fields, method=1
+        )
         fields["gravitational_field"].convert_to_units("kpc/Myr**2")
         g = fields["gravitational_field"].in_units("kpc/Myr**2").v
         g_r = InterpolatedUnivariateSpline(rr, g)
@@ -840,6 +826,8 @@ class ClusterModel:
         :py:class:`model.ClusterModel`
 
         """
+        if isinstance(gravity, str):
+            gravity = get_gravity_class(gravity)
         kwargs = _force_method(kwargs, "no_gas")
         kwargs["meth"]["profiles"] = {
             "total_density": total_density,
@@ -851,10 +839,9 @@ class ClusterModel:
         fields["total_density"] = unyt_array(total_density(rr), "Msun/kpc**3")
         mylog.info("Integrating total mass profile.")
         fields["total_mass"] = unyt_array(integrate_mass(total_density, rr), "Msun")
-        fields["gravitational_field"] = gravity.compute_gravitational_field(fields)
-        # fields["gravitational_field"] = (
-        #    -G * fields["total_mass"] / (fields["radius"] ** 2)
-        # )
+        fields["gravitational_field"] = gravity.compute_gravitational_field(
+            fields, method=1
+        )
         fields["gravitational_field"].convert_to_units("kpc/Myr**2")
 
         return cls._from_scratch(fields, stellar_density=stellar_density, **kwargs)
@@ -1638,7 +1625,8 @@ class ClusterModel:
             np.amax(self["radius"]),
             density_function,
             total_density_function,
-            self.properties["meth"]["profiles"]["stellar_density"],
+            stellar_density=self.properties["meth"]["profiles"]["stellar_density"],
+            gravity=self.gravity.name,
             num_points=len(self["radius"]),
         )
 
