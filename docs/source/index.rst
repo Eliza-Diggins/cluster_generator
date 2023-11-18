@@ -96,12 +96,15 @@ Features
             comprehensive catalog of alternative gravity theories to explore. The following are built-in, but adding more
             is a relatively simple task:
 
-            - :ref:`Newtonian Gravity <gravity>`
+            .. rubric:: Available Gravitational Theories
 
-            .. dropdown:: MONDian Gravities
+            .. py:currentmodule:: gravity
 
-                - :ref:`AQUAL <aqual>`
-                - :ref:`QUMOND <qumond>`
+            .. autosummary::
+                :template: class.rst
+
+                Newtonian
+
 
 
     .. grid-item::
@@ -610,6 +613,7 @@ Additional Pages
    models
    codes
    api
+   gravity
 
 .. |yt-project| image:: https://img.shields.io/static/v1?label="works%20with"&message="yt"&color="blueviolet"
    :target: https://yt-project.org
