@@ -121,6 +121,28 @@ class ClusterModel:
             self.gravity = gravity
 
         self._properties["meth"]["gravity"] = self.gravity.name
+        self._properties["meth"][
+            "virialization"
+        ] = self.gravity.get_virialization_method()
+
+    @property
+    def virialization_method(self):
+        """
+        The virialization method that the :py:class:`model.ClusterModel` instance uses when generating particle realizations.
+        By default, the ``virialization_method`` is inherited directly from the :py:class:`gravity.Gravity` class connected with the model; however,
+        this attribute can be modified to override this behavior.
+
+        Returns
+        -------
+        str
+            The virialization method.
+
+        """
+        return self._properties["meth"]["virialization"]
+
+    @virialization_method.setter
+    def virialization_method(self, value):
+        self._properties["meth"]["virialization"] = value
 
     def __contains__(self, item):
         return item in self.fields
