@@ -408,6 +408,17 @@ class TestAQUAL(GravityTest):
     nmethods = {k: len(v) for k, v in gravity_class._method_requirements.items()}
 
     @classmethod
+    def test_interpolation_inversion(cls, answer_dir, answer_store):
+        "checks that we are inverting the interpolation function correctly."
+        x = np.geomspace(1e-3, 1e3, 100)
+        y = cls.gravity_class.interpolation_function(
+            x
+        ) * cls.gravity_class.inverse_interpolation_function(
+            x * cls.gravity_class.interpolation_function(x)
+        )
+        assert_allclose(np.ones(x.size), y, rtol=1e-4)
+
+    @classmethod
     @pytest.mark.parametrize(
         "method,is_asymptotic",
         [
@@ -734,6 +745,17 @@ class TestQUMOND(GravityTest):
         )
 
     @classmethod
+    def test_interpolation_inversion(cls, answer_dir, answer_store):
+        "checks that we are inverting the interpolation function correctly."
+        x = np.geomspace(1e-3, 1e3, 100)
+        y = cls.gravity_class.interpolation_function(
+            x
+        ) * cls.gravity_class.inverse_interpolation_function(
+            x * cls.gravity_class.interpolation_function(x)
+        )
+        assert_allclose(np.ones(x.size), y, rtol=1e-4)
+
+    @classmethod
     def check_potential(cls, fields, sub_method, answer_dir, answer_store, **kwargs):
         from scipy.interpolate import InterpolatedUnivariateSpline
 
@@ -794,7 +816,6 @@ class TestQUMOND(GravityTest):
                 ((fields["radius"] ** 2 * cls.gravity_class.get_a0()) / (G))
                 * (u**2 / (1 + u))
             ).to("Msun")
-
             assert_allclose(fields["total_mass"].d, check_field.d, rtol=1e-7)
             assert check_field.units == fields["total_mass"].units
 

@@ -43,6 +43,11 @@ def model_answer_testing(model, filename, answer_store, answer_dir):
         model.write_model_to_h5(p, overwrite=True)
     else:
         old_model = ClusterModel.from_h5_file(p)
+        import matplotlib.pyplot as plt
+
+        f, a = model.panel_plot(gs_kwargs={"left": 0.2, "right": 0.99})
+        old_model.panel_plot(fig=f, axes=a)
+        plt.show()
         for field in old_model.fields:
             assert_allclose(old_model[field], model[field], rtol=1e-7)
 

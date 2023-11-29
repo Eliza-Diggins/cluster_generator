@@ -1,11 +1,6 @@
 #
 # This file holds the default plot instructions for each of the fields available.
 #
-radius:
-  label: "$r$ / $\\left[%(unit)s\\right]$"
-  scale: "log"
-  revision: 1
-  kwargs: {}
 density:
   label: "$\\rho_{g}$ / $\\left[%(unit)s\\right]$"
   scale: "log"
@@ -86,3 +81,8 @@ radius:
   scale: "log"
   revision: 1
   kwargs: { }
+magnetic_field_strength:
+  label: "$\\left|\\vec{B}\\right|$ / $ $\\left[%(unit)s\\right]$"
+  scale: "log"
+  revision: 1
+  kwargs: {}
