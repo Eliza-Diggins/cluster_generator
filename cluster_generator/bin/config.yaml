@@ -31,12 +31,12 @@ system:
 physics:
   # -- The physics settings are basic user-configurable physical parameters -- #
   hydrogen_abundance: 0.76 # The primordial hydrogen abundance (0.76 generally accepted value)
-
+  default_cosmology: null # The default cosmology. If not null, then Colossus MUST BE INSTALLED.
 #======================================================================================================================#
 gravity:
   # -- These settings are all regarding the gravity systems in cluster generator -- #
   default_gravity: "Newtonian" # The user's default gravitational theory.
-  default_virialization: "Eddington" # The default virialization method
+  default_virialization: "eddington" # The default virialization method
   general:
     # -- General gravity settings for types / classes of gravity -- #
     mond:
@@ -47,13 +47,17 @@ gravity:
   QUMOND:
     # - Settings for the QUMOND implementation - #
     interpolation_function: !lambda "lambda x: ((1 / 2) * (np.sqrt(1 + (4 / x)) + 1))"
+    milgrom_inv: !lambda "lambda x: x/(1+x)" # The milgromian inverse of the interpolation function. May be null, but this will lead to numerical approach.
   AQUAL:
     # - Settings for the AQUAL implementation - #
     interpolation_function: !lambda "lambda x: x/(1+x)"
+    milgrom_inv: !lambda "lambda x: ((1 / 2) * (np.sqrt(1 + (4 / x)) + 1))"
   EMOND:
     # - Settings for the EMOND implementation - #
-    a0_function: !lambda "lambda x,a=0.003868,A=0.30944,p0=-7.614: a + (A-a)*(0.5*np.tanh(np.log10(x/p0)**2) + 0.5)"
-
+    a0_function: null #!lambda "lambda x,a=0.003868,A=0.30944,p0=-7.614: a + (A-a)*(0.5*np.tanh(np.log10((x/p0)**2)) + 0.5)"
+    default_gauge: !!python/tuple [2,200] # The default EMOND gauge condition.
+    interpolation_function: !lambda "lambda x: x/(1+x)"
+    milgrom_inv: !lambda "lambda x: ((1 / 2) * (np.sqrt(1 + (4 / x)) + 1))"
 #======================================================================================================================#
 numerical:
   # -- These are settings regarding the numerical methods implemented in the code -- #

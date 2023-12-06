@@ -82,7 +82,7 @@ radius:
   revision: 1
   kwargs: { }
 magnetic_field_strength:
-  label: "$\\left|\\vec{B}\\right|$ / $ $\\left[%(unit)s\\right]$"
+  label: "$\\left|\\vec{B}\\right|$ / $\\left[%(unit)s\\right]$"
   scale: "log"
   revision: 1
   kwargs: {}

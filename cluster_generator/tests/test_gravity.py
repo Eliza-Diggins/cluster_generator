@@ -12,7 +12,7 @@ import pytest
 from numpy.testing import assert_allclose
 from unyt import unyt_array, unyt_quantity
 
-from cluster_generator.gravity import AQUAL, QUMOND, Newtonian
+from cluster_generator.gravity import AQUAL, EMOND, QUMOND, Newtonian
 from cluster_generator.utils import G
 
 
@@ -858,6 +858,308 @@ class TestQUMOND(GravityTest):
             assert check_field.units == fields["gravitational_field"].units
         else:
             raise NotImplementedError
+
+
+class ConstructorEMOND(Constructor):
+    """Constructor class for the AQUAL tests"""
+
+    name = "EMOND"
+
+    @classmethod
+    def setup_compute_dynamical_mass(cls, sub_method, **kwargs):
+        """
+        We use a field (beta r^-2) with different values of beta to comprehensively test the dynamical mass
+        computations.
+        """
+        fields = {}
+        rr = np.geomspace(1, 10000, 1000)
+        fields["radius"] = unyt_array(rr, "kpc")
+
+        is_asymptotic = kwargs["is_asymptotic"]
+
+        if sub_method == 1:
+            # constant density profile
+            if is_asymptotic:
+                rc = 3.724e10  # --> minimum relative acceleration is 1000
+            else:
+                rc = 3724  # --> minimum relative acceleration is 0.01
+            beta = unyt_quantity(rc, "kpc**3/Myr**2")
+            field_array = -beta * fields["radius"] ** (-2)
+
+            fields["gravitational_field"] = field_array
+        else:
+            raise ValueError("No such sub-method")
+
+        return fields
+
+    @classmethod
+    def setup_compute_potential(cls, sub_method, **kwargs):
+        fields = {}
+        rr = np.geomspace(1, 10000, 1000)
+        fields["radius"] = unyt_array(rr, "kpc")
+
+        if sub_method == 1:
+            # We are computing from the gravitational field.
+            fields["gravitational_field"] = -(G / fields["radius"] ** 2) * (
+                unyt_quantity(1e15, "Msun")
+            )
+        elif sub_method == 2:
+            fields["total_mass"] = unyt_array(
+                1e15 * np.ones(fields["radius"].size), "Msun"
+            )
+        else:
+            raise NotImplementedError
+
+        return fields
+
+    @classmethod
+    def setup_compute_gravitational_field(cls, sub_method, **kwargs):
+        fields = {}
+        rr = np.geomspace(1, 10000, 1000)
+        fields["radius"] = unyt_array(rr, "kpc")
+
+        a_0 = unyt_quantity(1.2e-10, "m/s**2")
+
+        is_asymptotic = kwargs["is_asymptotic"]
+
+        if sub_method == 1:
+            # constant density profile
+            if is_asymptotic:
+                gamma = 1e5  # --> relative acceleration regime.
+            else:
+                gamma = 1  # --> relative acceleration regime.
+            sigma_0 = (a_0 / G) * gamma  # becomes the surface density.
+            mass_array = sigma_0 * fields["radius"] ** 2
+
+            fields["total_mass"] = mass_array
+            fields["total_mass"].convert_to_units("Msun")
+
+        elif sub_method == 2:
+            a, b = 1, 1
+            potential_function = lambda x, alpha=a, beta=b: (-alpha / x) * (
+                np.log(1 + (x / beta))
+            )
+
+            fields["gravitational_potential"] = unyt_array(
+                potential_function(rr), "kpc**2/Myr**2"
+            )
+        else:
+            raise ValueError("No such sub-method")
+
+        return fields
+
+
+class TestEMOND(GravityTest):
+    constructor_class = ConstructorEMOND
+    gravity_class = EMOND
+    gravity_class.set_a0(unyt_quantity(1.2e-10, "m/s**2"))
+
+    nmethods = {k: len(v) for k, v in gravity_class._method_requirements.items()}
+
+    @classmethod
+    @pytest.mark.parametrize(
+        "method,is_asymptotic",
+        [
+            (m, k)
+            for m, k in product(
+                range(1, nmethods["compute_gravitational_field"] + 1), [True, False]
+            )
+        ],
+    )
+    def test_compute_gravitational_field(
+        cls, answer_dir, answer_store, method, is_asymptotic, **kwargs
+    ):
+        cls.gravity_class.set_A0(lambda x: 0.003868 + (0 * x))
+        super().test_compute_gravitational_field(
+            answer_dir, answer_store, method, is_asymptotic=is_asymptotic, **kwargs
+        )
+
+    @classmethod
+    @pytest.mark.parametrize(
+        "method",
+        range(1, nmethods["compute_potential"] + 1),
+    )
+    def test_compute_potential(cls, answer_dir, answer_store, method, **kwargs):
+        if method == 2:
+            cls.gravity_class.set_A0(lambda x: 0.003868 + (0 * x))
+        super().test_compute_potential(answer_dir, answer_store, method, **kwargs)
+
+    @classmethod
+    @pytest.mark.parametrize(
+        "method,is_asymptotic",
+        [
+            (m, k)
+            for m, k in product(
+                range(1, nmethods["compute_dynamical_mass"] + 1), [True, False]
+            )
+        ],
+    )
+    def test_compute_dynamical_mass(
+        cls, answer_dir, answer_store, method, is_asymptotic, **kwargs
+    ):
+        cls.gravity_class.set_A0(lambda x: 0.003868 + (0 * x))
+        super().test_compute_dynamical_mass(
+            answer_dir, answer_store, method, is_asymptotic=is_asymptotic, **kwargs
+        )
+
+    @classmethod
+    def test_interpolation_inversion(cls, answer_dir, answer_store):
+        "checks that we are inverting the interpolation function correctly."
+        x = np.geomspace(1e-3, 1e3, 100)
+        y = cls.gravity_class.interpolation_function(
+            x
+        ) * cls.gravity_class.inverse_interpolation_function(
+            x * cls.gravity_class.interpolation_function(x)
+        )
+        assert_allclose(np.ones(x.size), y, rtol=1e-4)
+
+    @classmethod
+    @pytest.mark.parametrize(
+        "gauge_factor,gauge_scale",
+        [(m, k) for m, k in product([200, 500, 1000], [1, 2, 3])],
+    )
+    def test_gauge_radius(cls, gauge_scale, gauge_factor):
+        # Tests the gauge finding against a hernquist profile.
+
+        answers = {500: 1505.54, 1000: 1194.95, 200: 2043.34}
+
+        rr = np.geomspace(1, 1000, 100000)
+        m0 = (1e15) * np.ones(rr.size)
+
+        fields = {"radius": unyt_array(rr, "kpc"), "total_mass": unyt_array(m0, "Msun")}
+        cls.gravity_class.set_gauge_point((gauge_scale, gauge_factor))
+        val = cls.gravity_class.find_gauge_radius(fields)
+
+        assert_allclose(val.d, gauge_scale * answers[gauge_factor], rtol=1e-2)
+
+    @classmethod
+    def check_potential(cls, fields, sub_method, answer_dir, answer_store, **kwargs):
+        """confirm that the gravitational potential is correctly computed."""
+
+        if sub_method == 1:
+            # This is directly from the potential.
+            r_gauge = cls.gravity_class.find_gauge_radius(fields)
+            check_field = (-G / fields["radius"]) * unyt_quantity(1e15, "Msun")
+            check_field -= check_field[np.where(fields["radius"] > r_gauge)][0]
+
+            assert_allclose(
+                fields["gravitational_potential"].d, check_field.d, rtol=1e-5
+            )
+            assert check_field.units == fields["gravitational_potential"].units
+        elif sub_method == 2:
+            from scipy.interpolate import InterpolatedUnivariateSpline
+
+            from cluster_generator.utils import integrate
+
+            newt_field = (-G / fields["radius"] ** 2) * unyt_quantity(1e15, "Msun")
+            dphi = newt_field * cls.gravity_class.inverse_interpolation_function(
+                np.abs(newt_field) / unyt_quantity(1.2e-10, "m/s**2")
+            )
+
+            dphi_spline = InterpolatedUnivariateSpline(fields["radius"].d, dphi.d)
+            phi = unyt_array(
+                integrate(dphi_spline, fields["radius"].d), "kpc**2/Myr**2"
+            )
+            phi -= phi[
+                np.where(fields["radius"] > cls.gravity_class.find_gauge_radius(fields))
+            ][0]
+
+            assert_allclose(fields["gravitational_potential"], phi, 1e-1)
+        else:
+            raise NotImplementedError
+
+    @classmethod
+    def check_dynamical_mass(
+        cls, fields, sub_method, answer_dir, answer_store, **kwargs
+    ):
+        is_asymptotic = kwargs["is_asymptotic"]
+        if sub_method == 1:
+            # constant density profile
+            if is_asymptotic:
+                rc = 3.724e10  # --> minimum relative acceleration is 1000
+            else:
+                rc = 3724  # --> minimum relative acceleration is 0.01
+            beta = unyt_quantity(rc, "kpc**3/Myr**2")
+
+        if sub_method == 1 and is_asymptotic:
+            test_function = lambda r: beta / G + (0 * r.d)
+            check_field = test_function(fields["radius"]).to("Msun")
+
+            assert_allclose(fields["total_mass"].d, check_field.d, rtol=1e-4)
+            assert check_field.units == fields["total_mass"].units
+        elif sub_method == 1 and not is_asymptotic:
+            test_function = lambda r: (
+                beta / G
+            ) * cls.gravity_class.interpolation_function(
+                (beta / cls.gravity_class.get_a0()) * (r ** (-2))
+            )
+            check_field = test_function(fields["radius"]).to("Msun")
+
+            assert_allclose(fields["total_mass"].d, check_field.d, rtol=1e-2)
+            assert check_field.units == fields["total_mass"].units
+
+    @classmethod
+    def check_gravitational_field(
+        cls, fields, sub_method, answer_dir, answer_store, **kwargs
+    ):
+        """Confirm that the gravitational field is computed accurately."""
+        is_asymptotic = kwargs["is_asymptotic"]
+        if sub_method == 1:
+            # constant density profile
+            if is_asymptotic:
+                gamma = 1e5  # --> relative acceleration regime.
+            else:
+                gamma = 1  # --> relative acceleration regime.
+            acc_newt = (
+                cls.gravity_class.get_a0()
+            ) * gamma  # becomes the surface density.
+
+        if sub_method == 1 and is_asymptotic:
+            check_field = -acc_newt.to("kpc/Myr**2") * np.ones(fields["radius"].size)
+
+            assert_allclose(fields["gravitational_field"].d, check_field.d, rtol=1e-5)
+            assert check_field.units == fields["gravitational_field"].units
+        elif sub_method == 1 and not is_asymptotic:
+            check_field = (
+                -acc_newt.to("kpc/Myr**2")
+                * (0.5 * (1 + np.sqrt(5)))
+                * np.ones(fields["radius"].size)
+            )
+
+            assert_allclose(fields["gravitational_field"].d, check_field.d, rtol=1e-3)
+            assert check_field.units == fields["gravitational_field"].units
+        elif sub_method == 2:
+            test_function = lambda x: (np.log(1 + x) / x**2) - (1 / (x * (1 + x)))
+
+            check_field = -unyt_array(test_function(fields["radius"].d), "kpc/Myr**2")
+
+            assert_allclose(fields["gravitational_field"].d, check_field.d, rtol=1e-5)
+            assert check_field.units == fields["gravitational_field"].units
+        else:
+            raise NotImplementedError
+
+
+@pytest.mark.parametrize("gravity", ["AQUAL", "QUMOND", "EMOND", "Newtonian"])
+def test_model(answer_dir, answer_store, gravity):
+    import matplotlib.pyplot as plt
+
+    from cluster_generator.model import ClusterModel
+    from cluster_generator.radial_profiles import (
+        vikhlinin_density_profile,
+        vikhlinin_temperature_profile,
+    )
+    from cluster_generator.tests.utils import model_answer_testing
+
+    density = vikhlinin_density_profile(119846, 94.6, 1239.9, 0.916, 0.526, 4.943, 3)
+    temperature = vikhlinin_temperature_profile(3.61, 0.12, 5, 10, 1420, 0.27, 57, 3.88)
+    model = ClusterModel.from_dens_and_temp(
+        1, 10000, density, temperature, gravity=gravity
+    )
+    f, a = model.panel_plot()
+    model = model.correct()
+    _, _ = model.panel_plot(fig=f, axes=a, color="red")
+    plt.savefig(os.path.join(answer_dir, f"Panel_Plot_{gravity}.png"))
+    model_answer_testing(model, f"gravity_model_{gravity}.h5", answer_store, answer_dir)
 
 
 if __name__ == "__main__":

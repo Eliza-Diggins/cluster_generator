@@ -12,10 +12,9 @@ from scipy.integrate import cumtrapz, quad
 from scipy.interpolate import InterpolatedUnivariateSpline
 from unyt import unyt_array, unyt_quantity
 
-from cluster_generator.gravity import get_gravity_class
+from cluster_generator.gravity import Gravity, get_gravity_class
 from cluster_generator.particles import ClusterParticles
 from cluster_generator.utils import (
-    _closest_factors,
     _enforce_style,
     cgparams,
     ensure_ytquantity,
@@ -366,7 +365,7 @@ class ClusterModel:
 
         rr = fields["radius"].d
         mylog.info("Integrating gravitational potential profile.")
-
+        print(gravity.name)
         fields["gravitational_potential"] = gravity.compute_potential(fields, method=1)
 
         if "density" in fields and "gas_mass" not in fields:
@@ -621,6 +620,7 @@ class ClusterModel:
             )
 
     @classmethod
+    @Gravity._initialization_decorator
     def from_dens_and_temp(
         cls,
         rmin,
@@ -682,9 +682,12 @@ class ClusterModel:
         total_mass_spline = InterpolatedUnivariateSpline(rr, fields["total_mass"].v)
         dMdr = unyt_array(total_mass_spline(rr, nu=1), "Msun/kpc")
         fields["total_density"] = dMdr / (4.0 * np.pi * fields["radius"] ** 2)
-        return cls._from_scratch(fields, stellar_density=stellar_density, **kwargs)
+        return cls._from_scratch(
+            fields, stellar_density=stellar_density, gravity=gravity.name, **kwargs
+        )
 
     @classmethod
+    @Gravity._initialization_decorator
     def from_dens_and_entr(
         cls,
         rmin,
@@ -744,6 +747,7 @@ class ClusterModel:
         )
 
     @classmethod
+    @Gravity._initialization_decorator
     def from_dens_and_tden(
         cls,
         rmin,
@@ -779,19 +783,22 @@ class ClusterModel:
         """
         if isinstance(gravity, str):
             gravity = get_gravity_class(gravity)
+
         kwargs = _force_method(kwargs, "from_dens_and_tden")
         kwargs["meth"]["profiles"] = {
             "total_density": total_density,
             "density": density,
             "stellar_density": stellar_density,
         }
-        mylog.info("Computing the profiles from density and total density.")
+        mylog.info(
+            f"Constructing model from density and total density, gravity={gravity.name}."
+        )
         rr = np.logspace(np.log10(rmin), np.log10(rmax), num_points, endpoint=True)
         fields = OrderedDict()
         fields["radius"] = unyt_array(rr, "kpc")
         fields["density"] = unyt_array(density(rr), "Msun/kpc**3")
         fields["total_density"] = unyt_array(total_density(rr), "Msun/kpc**3")
-        mylog.info("Integrating total mass profile.")
+        mylog.info("Integrating for total mass profile.")
         fields["total_mass"] = unyt_array(integrate_mass(total_density, rr), "Msun")
         fields["gas_mass"] = unyt_array(integrate_mass(density, rr), "Msun")
 
@@ -802,7 +809,7 @@ class ClusterModel:
         g = fields["gravitational_field"].in_units("kpc/Myr**2").v
         g_r = InterpolatedUnivariateSpline(rr, g)
         dPdr_int = lambda r: density(r) * g_r(r)
-        mylog.info("Integrating pressure profile.")
+        mylog.info("Integrating for pressure profile.")
         P = -integrate(dPdr_int, rr)
         dPdr_int2 = lambda r: density(r) * g[-1] * (rr[-1] / r) ** 2
         P -= quad(dPdr_int2, rr[-1], np.inf, limit=100)[0]
@@ -810,9 +817,12 @@ class ClusterModel:
         fields["temperature"] = fields["pressure"] * mu * mp / fields["density"]
         fields["temperature"].convert_to_units("keV")
 
-        return cls._from_scratch(fields, stellar_density=stellar_density, **kwargs)
+        return cls._from_scratch(
+            fields, stellar_density=stellar_density, gravity=gravity, **kwargs
+        )
 
     @classmethod
+    @Gravity._initialization_decorator
     def no_gas(
         cls,
         rmin,
@@ -1322,9 +1332,9 @@ class ClusterModel:
         r_max=None,
         fig=None,
         axes=None,
-        aspect_ratio=1,
-        base_length=3,
-        gs_kwargs=None,
+        subplot_size=3,
+        gskwargs=None,
+        margins=(0.06, 0.98, 0.02, 0.95),
         **kwargs,
     ):
         """
@@ -1352,14 +1362,13 @@ class ClusterModel:
             field name belonging to the plot and the corresponding axes on which that plot is drawn. If not specified, a grid is
             generated on the figure and subdivided to facilitate the drawing.
 
-        aspect_ratio: float, optional
-            The aspect ratio of the individual subplots.
+        subplot_size: float, optional
+            The default size of each subplot.
 
-        base_length: float, optional
-            The base length of each plot. Used to determine rest of the geometry.
-        gs_kwargs: dict, optional
+        margins: tuple, optional
+            Figure margins to enforce.
+        gskwargs: dict, optional
             additional kwargs to pass to the :py:class:`matplotlib.figure.GridSpec` instance.
-
         **kwargs
             Additional keyword arguments which are to be passed directly to :py:func:`matplotlib.pyplot.plot`. There are several formatting
             options for these keyword arguments and the behavior depends on their format.
@@ -1371,10 +1380,11 @@ class ClusterModel:
 
         Returns
         -------
-        :py:class:`~matplotlib.figure.Figure`
-            The figure corresponding to the plot.
-        :py:class:`~matplotlib.axes.Axes`
-            The axes dictionary corresponding to the plot
+        :py:class:`matplotlib.figure`
+            The figure object containing the axes.
+
+        dict of :py:class:`matplotlib.axes`
+            The axes dictionary.
 
         """
         import pathlib as pt
@@ -1397,47 +1407,54 @@ class ClusterModel:
                 fields, (list, tuple)
             ), "The fields must be specified as an array or a tuple."
 
+        # Managing the sizing
+        if gskwargs is None:
+            gskwargs = {"wspace": 0.35, "hspace": 0}
+
+        _next_square = int(np.ceil(np.sqrt(len(fields))))
+        verticals = int(np.ceil(len(fields) / _next_square))
+        W = (_next_square * subplot_size * (1 + gskwargs["wspace"])) / (
+            1 - margins[0] - (1 - margins[1])
+        )
+        H = (verticals * subplot_size * (1 + gskwargs["hspace"])) / (
+            1 - margins[2] - (1 - margins[3])
+        )
+
         if fig is None:
-            fig = plt.figure()
+            fig = plt.figure(figsize=(W, H))
 
         if axes is None:
             axes = {}
-            r, c = _closest_factors(len(fields))
-
-            # computing the figure behavior
-            h = (1 / (1 - 0.16)) * r * aspect_ratio * base_length
-            w = ((1 + 0.2) / (1 - 0.16)) * c * base_length
-            fig.set_figwidth(w)
-            fig.set_figheight(h)
-            fig.subplots_adjust(left=0.1, right=0.99, top=0.99, bottom=0.05)
-
-            if gs_kwargs is None:
-                gs_kwargs = {}
-
-            gridspec = fig.add_gridspec(r, c, **gs_kwargs)
-            gspec_it = product(range(0, r), range(0, c))
-
-            for gi, fi in zip(gspec_it, fields):
+            gridspec = fig.add_gridspec(_next_square, _next_square, **gskwargs)
+            gspec_it = product(range(0, verticals), range(0, _next_square))
+            modified_fields = [None for j in range(_next_square * verticals)]
+            modified_fields[: len(fields)] = fields
+            for gi, fi in zip(gspec_it, modified_fields):
                 ri, ci = gi
                 axes[fi] = fig.add_subplot(gridspec[ri, ci])
         else:
             assert all(i in axes for i in fields), "Some fields do not have axes."
 
         for field, ax in axes.items():
-            tmp_kwargs = {
-                k: (v[field] if isinstance(v, dict) else v) for k, v in kwargs.items()
-            }
+            if field is not None:
+                tmp_kwargs = {
+                    k: (v[field] if isinstance(v, dict) else v)
+                    for k, v in kwargs.items()
+                }
 
-            self.plot(
-                field,
-                r_min=r_min,
-                r_max=r_max,
-                fig=fig,
-                ax=ax,
-                defaults=plt_defaults[field],
-                **tmp_kwargs,
-            )
+                self.plot(
+                    field,
+                    r_min=r_min,
+                    r_max=r_max,
+                    fig=fig,
+                    ax=ax,
+                    defaults=plt_defaults[field],
+                    **tmp_kwargs,
+                )
 
+        fig.subplots_adjust(
+            **{k: v for k, v in zip(["left", "right", "bottom", "top"], list(margins))}
+        )
         return fig, axes
 
     def mass_in_radius(self, radius):
@@ -1642,6 +1659,8 @@ class ClusterModel:
             total_density_function = InterpolatedUnivariateSpline(self["radius"].d, _y)
         else:
             raise ValueError(f"The correction mode {mode} is not a valid mode.")
+
+        print(self.gravity.name)
         return ClusterModel.from_dens_and_tden(
             np.amin(self["radius"]),
             np.amax(self["radius"]),
@@ -1670,3 +1689,37 @@ def _force_method(dictionary, meth):
         dictionary["meth"] = {"method": meth}
 
     return dictionary
+
+
+if __name__ == "__main__":
+    from radial_profiles import (
+        find_overdensity_radius,
+        find_radius_mass,
+        rescale_profile_by_mass,
+        snfw_density_profile,
+        snfw_mass_profile,
+        snfw_total_mass,
+        vikhlinin_density_profile,
+    )
+
+    z = 0.1
+    M200 = 1.5e15
+    conc = 4.0
+    r200 = find_overdensity_radius(M200, 200.0, z=z)
+    a = r200 / conc
+    M = snfw_total_mass(M200, r200, a)
+    rhot = snfw_density_profile(M, a)
+    Mt = snfw_mass_profile(M, a)
+    r500, M500 = find_radius_mass(Mt, z=z, delta=500.0)
+    f_g = 0.12
+    rhog = vikhlinin_density_profile(1.0, 100.0, r200, 1.0, 0.67, 3)
+    rhog = rescale_profile_by_mass(rhog, f_g * M500, r500)
+    rhos = 0.02 * rhot
+    rmin = 0.1
+    rmax = 10000.0
+    m = ClusterModel.from_dens_and_tden(rmin, rmax, rhog, rhot, stellar_density=rhos)
+    m.set_magnetic_field_from_beta(100.0, gaussian=True)
+    import matplotlib.pyplot as plt
+
+    m.panel_plot()
+    plt.show()

@@ -42,3 +42,63 @@ Each of these methods **must** be defined for any valid gravity class. Each of t
 containing the available radial profiles (just like the :py:class:`model.ClusterModel` class). Additionally, most of these methods
 take a ``method`` kwarg, which can be used to enforce a particular method for completing the computation. If the method is not specified
 manually, the code will seek out the first available method which requires only fields the user has provided.
+
+MONDian Gravity
+===============
+
+Introduction
+------------
+
+Many of the non-newtonian gravitational theories provided in the cluster generator package are so called MONDian theories. These
+include the two "archetypal" gravity classes :py:class:`gravity.AQUAL` and :py:class:`gravity.QUMOND` as well as a variety of different
+extensions of these core theories. Because these theories are distinctly non-linear, this section will describe the basic premise of the
+MONDian gravity theories.
+
+Archetypes
+----------
+
+There are two archetypal MONDian theories. The first is the so called AQUAL formulation [MiBe84]_, represented by the :py:class:`gravity.AQUAL` class, and
+QUMOND [Milgrom10]_, which is a quasi-linear formulation represented by the :py:class:`gravity.QUMOND` class. These are generically quite different theories; however,
+they each result in modified Poisson equations. The AQUAL poisson equation is
+
+.. math::
+
+    \nabla \cdot \left[\nabla \Phi \mu\left(\frac{|\nabla \Phi|}{a_0}\right)\right],
+
+where :math:`a_0` is the MOND constant, and :math:`\mu(x)` is the so called interpolation function. Similarly, the QUMOND formalism contains two Poisson equations:
+
+.. math::
+
+    \nabla^2 \Psi = 4\pi G \rho,
+
+and
+
+.. math::
+
+    \nabla \cdot \left[\nabla \Psi \eta\left(\frac{|\nabla \Psi|}{a_0}\right)\right] = \nabla^2\Phi = 4\pi G \hat{\rho},
+
+where :math:`\eta` is also called the interpolation function, and :math:`\hat{\rho}` is a "phantom" density.
+
+In general, cluster generator manipulates the provided fields in such a way as to solve these equations for the necessary information. Unfortunately,
+the theory is manifestly non-linear and so in almost all cases, at least one critical process in the code will include numerically solving a non-linear poisson equation.
+As we will see, the interpolation functions play a massive role in these equations.
+
+The Interpolation Maps
+----------------------
+
+We have discussed the existence of the functions :math:`\mu` and :math:`\eta`; however, more should be said on the subject. For consistent theoretical behavior,
+we require that :math:`x \ll 1 \implies \mu(x) \sim x,\;\;x \gg 1 \implies \mu(x) \sim 1`. Similarly, :math:`x \ll 1 \implies \eta(x) \sim x^{-1/2},\;\; x\gg 1 \implies \eta(x) \sim 1`. As such,
+the two are manifestly different; however, they may be connected by a curious link.
+
+.. admonition:: Milgromian Inversion
+
+    Let :math:`\mu(x)` and :math:`F(x)` be functions such that :math:`F(x)=x\mu(x)`. Furthermore, let :math:`G(x)` and `\eta(x)` be defined such that :math:`G(x)= x\eta(x)`. We then say
+    that :math:`\mu \equiv \eta` under **Milgromian Inversion** (:math:`\mu(x) = \eta^\dagger(x)`) if and only if
+
+    .. math::
+
+        \forall x \in \mathbb{R} > 0, \; y = F(x) = x \mu(x),\;\;\text{and}\;\;x = G(y) = y\eta(y)
+
+In light of this definition, we introduce a unique aspect of the cluster generator approach, which may be unfamiliar to even seasoned MOND theorists. For each theory, there is a specified
+interpolation function :py:meth:`gravity.Mondian.interpolation_function`, as well as an inverse interpolation function :py:meth:`gravity.Mondian.inverse_interpolation_function`. Generically,
+one needs only specify an interpolation function; however, if the correct Milgromian inverse is provided, then numerical inversion may be skipped in exchange for a more tractable analytical evaluation.

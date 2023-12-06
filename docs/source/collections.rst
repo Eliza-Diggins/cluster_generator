@@ -84,7 +84,7 @@ Unfortunately, we aren't quite done. See that warning in the returned values? Le
 
     model = collection.clusters["A133"].load(5,10000)
 
-    model.panel_plot(gs_kwargs={"wspace":0.4})
+    model.panel_plot(gskwargs={"wspace":0.4})
     plt.show()
 
 

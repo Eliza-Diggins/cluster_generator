@@ -1,7 +1,21 @@
 """
-Module containing the core gravitational classes for Cluster Generator.
+Gravitation module for cluster generator.
+
+Navigating This Module
+======================
+
+The :py:mod:`gravity` module is one of the more complex regions of the cluster generator base code and, due to this, can be
+a little tricky to navigate. The following notes should be kept in mind while seeking for information regarding the module.
+
+- The module is designed based on a class hierarchy. Each gravity class inherits from an abstract class :py:class:`gravity.Gravity`, which
+  is effectively a scaffold. Different groups of gravitational theories also have scaffold classes. Properties / methods which should be
+  shared between similar gravity theories are found in their progenitor class.
+- Each gravity class comprises 3 core methods: :py:meth:`gravity.Gravity.compute_potential`, :py:meth:`gravity.Gravity.compute_gravitational_field`, :py:meth:`gravity.Gravity.compute_dynamical_mass`. Additional
+  methods are simply structural needs to build those core methods.
+- Different gravity theories may require additional data. This can either be supplied to the class by way of a class method, or through the configuration.
 """
 from abc import ABC, abstractmethod
+from functools import wraps
 
 import numpy as np
 from scipy.interpolate import InterpolatedUnivariateSpline
@@ -11,14 +25,58 @@ from unyt import unyt_array
 from cluster_generator.utils import G, cgparams, ensure_ytquantity, integrate, mylog
 
 
+def _get_method(class_method):
+    """Checks the gravity calculation approach for a valid method and selects it."""
+    function_name = class_method.__name__
+
+    @wraps(class_method)
+    def method_specific(cls, fields, *args, **kwargs):
+        """Wrapper"""
+        out_field = function_name.replace("compute_", "")
+        if out_field in fields:
+            mylog.info(
+                f"Skipping call to {function_name} because {out_field} already in provided fields. [gravity={cls.name}]."
+            )
+        if "method" in kwargs:
+            method = kwargs["method"]
+            del kwargs["method"]
+        else:
+            method = None
+
+        if method is None:
+            for k, v in cls._method_requirements[function_name].items():
+                if all(i in fields for i in v):
+                    method = k
+
+            if method is None:  # failed to find a valid method.
+                raise ValueError("No valid method was found.")
+        else:
+            if any(
+                i not in fields for i in cls._method_requirements[function_name][method]
+            ):
+                missing = [
+                    i
+                    for i in cls._method_requirements[function_name][method]
+                    if i not in fields
+                ]
+                raise ValueError(
+                    f"Failed to execute {function_name} in {cls.name} gravity with method {method} because one of {cls._method_requirements['compute_potential'][method]}({missing}) was not found."
+                )
+
+        mylog.info(f"Executing {function_name} [method={method}, gravity={cls.name}]")
+        return class_method(cls, fields, *args, method=method, **kwargs)
+
+    return method_specific
+
+
 class Gravity(ABC):
     """
-    Abstract class structure for gravitational theory classes.
+    Abstract class structure / template class for gravitational theory classes.
 
     .. warning::
 
         This is an archetypal class and cannot be used by cluster models. If you are trying to use a 'default' gravity,
-        see :py:class:`gravity.Newtonian`.
+        see :py:class:`gravity.Newtonian`. This class is only meaningful for developers.
 
     .. rubric:: Gravity Theories Inherited From This Scaffold
 
@@ -28,7 +86,7 @@ class Gravity(ABC):
         :template: class.rst
 
         Classical
-        MONDian
+        Mondian
         EMOND
         AQUAL
         QUMOND
@@ -118,6 +176,27 @@ class Gravity(ABC):
                 return k
 
         raise ValueError("No valid method was found.")
+
+    @staticmethod
+    def _initialization_decorator(initialization_method):
+        """Wraps the model initialization methods to allow for post processing."""
+        function_name = initialization_method.__name__
+
+        @wraps(initialization_method)
+        def wrapper(cls, *args, **kwargs):
+            model = initialization_method(cls, *args, **kwargs)
+
+            if "gravity" in kwargs:
+                return get_gravity_class(kwargs["gravity"])._post_process_model(
+                    model, function_name
+                )
+
+        return wrapper
+
+    @classmethod
+    def _post_process_model(cls, model, initialization_method):
+        """Blank template class"""
+        return model
 
     def __str__(self):
         return self.name
@@ -369,9 +448,7 @@ class Mondian(Gravity, ABC):
             # We have to solve the problem numerically.
             numerical_function = lambda x: x * forw_func(x) - y
 
-            return (
-                fsolve(numerical_function, archetypal_equation(y)) / y
-            )  # TODO: This needs to be improved with a real guess.
+            return fsolve(numerical_function, archetypal_equation(y)) / y
 
     @classmethod
     def set_interpolation_function(cls, function):
@@ -446,10 +523,11 @@ class QUMOND(Mondian):
     _backward_interpolation_function = cgparams["gravity"]["QUMOND"][
         "interpolation_function"
     ]
-    _forward_interpolation_function = None
+    _forward_interpolation_function = cgparams["gravity"]["QUMOND"]["milgrom_inv"]
     _default_interpolation_direction = "backward"
 
     @classmethod
+    @_get_method
     def compute_potential(cls, fields, method=None):
         r"""
         Computes the QUMOND gravitational potential :math:`\Phi` from the provided ``fields``.
@@ -484,28 +562,6 @@ class QUMOND(Mondian):
         :py:meth:`gravity.Newtonian.compute_gravitational_field`,:py:meth:`gravity.Newtonian.compute_dynamical_mass`
 
         """
-        if method is None:
-            try:
-                method = cls._determine_best_method(fields, "compute_potential")
-            except ValueError:
-                raise ValueError(
-                    f"No method for gravitational dynamical mass calculation in gravity {cls.name} with fields {fields.keys()} was found."
-                )
-        else:
-            if any(
-                i not in fields
-                for i in cls._method_requirements["compute_potential"][method]
-            ):
-                missing = [
-                    i
-                    for i in cls._method_requirements["compute_potential"][method]
-                    if i not in fields
-                ]
-                raise ValueError(
-                    f"Failed to compute dynamical mass in {cls.name} gravity with method {method} because one of {cls._method_requirements['compute_potential'][method]}({missing}) was not found."
-                )
-
-        mylog.info(f"Computing potential [method={method}, gravity={cls.name}]")
         if method == 1:
             field_function = InterpolatedUnivariateSpline(
                 fields["radius"].d, fields["gravitational_field"].to("kpc/Myr**2").d
@@ -534,6 +590,7 @@ class QUMOND(Mondian):
         return fields["gravitational_potential"]
 
     @classmethod
+    @_get_method
     def compute_dynamical_mass(cls, fields, method=None):
         r"""
         Computes the QUMOND dynamical mass :math:`M_{\mathrm{dyn}}(<r)` from the provided ``fields``.
@@ -565,28 +622,6 @@ class QUMOND(Mondian):
         :py:meth:`gravity.QUMOND.compute_potential`,:py:meth:`gravity.QUMOND.compute_gravitational_field`
 
         """
-        if method is None:
-            try:
-                method = cls._determine_best_method(fields, "compute_dynamical_mass")
-            except ValueError:
-                raise ValueError(
-                    f"No method for gravitational dynamical mass calculation in gravity {cls.name} with fields {fields.keys()} was found."
-                )
-        else:
-            if any(
-                i not in fields
-                for i in cls._method_requirements["compute_dynamical_mass"][method]
-            ):
-                missing = [
-                    i
-                    for i in cls._method_requirements["compute_dynamical_mass"][method]
-                    if i not in fields
-                ]
-                raise ValueError(
-                    f"Failed to compute dynamical mass in {cls.name} gravity with method {method} because one of {cls._method_requirements['compute_dynamical_mass'][method]}({missing}) was not found."
-                )
-
-        mylog.info(f"Computing dynamical mass [method={method}, gravity={cls.name}]")
         if method == 1:
             # -- Compute from Gauss' Law and spherical symmetry -- #
             scaled_field = -fields["gravitational_field"] / cls.get_a0()
@@ -610,6 +645,7 @@ class QUMOND(Mondian):
         return fields["total_mass"]
 
     @classmethod
+    @_get_method
     def compute_gravitational_field(cls, fields, method=None):
         r"""
         Computes the QUMOND gravitational field :math:`-\nabla \Phi` from the provided ``fields``.
@@ -648,26 +684,6 @@ class QUMOND(Mondian):
         :py:meth:`gravity.QUMOND.compute_potential`,:py:meth:`gravity.QUMOND.compute_dynamical_mass`
 
         """
-        if method is None:
-            try:
-                method = cls._determine_best_method(
-                    fields, "compute_gravitational_field"
-                )
-            except ValueError:
-                raise ValueError(
-                    f"No method for gravitational field calculation in gravity {cls.name} with fields {fields.keys()} was found."
-                )
-        else:
-            if any(
-                i not in fields
-                for i in cls._method_requirements["compute_gravitational_field"][method]
-            ):
-                raise ValueError(
-                    f"Failed to compute gravitational field in {cls.name} gravity with method {method} because one of {cls._method_requirements['compute_gravitational_field'][method]} was not found."
-                )
-        mylog.info(
-            f"Computing gravitational field [method={method}, gravity={cls.name}]"
-        )
         if method == 1:
             # -- Compute from Gauss' Law and spherical symmetry -- #
             newtonian_field = Newtonian.compute_gravitational_field(
@@ -732,10 +748,11 @@ class AQUAL(Mondian):
     _forward_interpolation_function = cgparams["gravity"]["AQUAL"][
         "interpolation_function"
     ]
-    _backward_interpolation_function = None
+    _backward_interpolation_function = cgparams["gravity"]["AQUAL"]["milgrom_inv"]
     _default_interpolation_direction = "forward"
 
     @classmethod
+    @_get_method
     def compute_potential(cls, fields, method=None):
         r"""
         Computes the AQUAL gravitational potential :math:`\Phi` from the provided ``fields``.
@@ -770,28 +787,6 @@ class AQUAL(Mondian):
         :py:meth:`gravity.Newtonian.compute_gravitational_field`,:py:meth:`gravity.Newtonian.compute_dynamical_mass`
 
         """
-        if method is None:
-            try:
-                method = cls._determine_best_method(fields, "compute_potential")
-            except ValueError:
-                raise ValueError(
-                    f"No method for gravitational dynamical mass calculation in gravity {cls.name} with fields {fields.keys()} was found."
-                )
-        else:
-            if any(
-                i not in fields
-                for i in cls._method_requirements["compute_potential"][method]
-            ):
-                missing = [
-                    i
-                    for i in cls._method_requirements["compute_potential"][method]
-                    if i not in fields
-                ]
-                raise ValueError(
-                    f"Failed to compute dynamical mass in {cls.name} gravity with method {method} because one of {cls._method_requirements['compute_potential'][method]}({missing}) was not found."
-                )
-
-        mylog.info(f"Computing potential [method={method}, gravity={cls.name}]")
         if method == 1:
             field_function = InterpolatedUnivariateSpline(
                 fields["radius"].d, fields["gravitational_field"].to("kpc/Myr**2").d
@@ -820,6 +815,7 @@ class AQUAL(Mondian):
         return fields["gravitational_potential"]
 
     @classmethod
+    @_get_method
     def compute_dynamical_mass(cls, fields, method=None):
         r"""
         Computes the AQUAL dynamical mass :math:`M_{\mathrm{dyn}}(<r)` from the provided ``fields``.
@@ -851,28 +847,6 @@ class AQUAL(Mondian):
         :py:meth:`gravity.AQUAL.compute_potential`,:py:meth:`gravity.AQUAL.compute_gravitational_field`
 
         """
-        if method is None:
-            try:
-                method = cls._determine_best_method(fields, "compute_dynamical_mass")
-            except ValueError:
-                raise ValueError(
-                    f"No method for gravitational dynamical mass calculation in gravity {cls.name} with fields {fields.keys()} was found."
-                )
-        else:
-            if any(
-                i not in fields
-                for i in cls._method_requirements["compute_dynamical_mass"][method]
-            ):
-                missing = [
-                    i
-                    for i in cls._method_requirements["compute_dynamical_mass"][method]
-                    if i not in fields
-                ]
-                raise ValueError(
-                    f"Failed to compute dynamical mass in {cls.name} gravity with method {method} because one of {cls._method_requirements['compute_dynamical_mass'][method]}({missing}) was not found."
-                )
-
-        mylog.info(f"Computing dynamical mass [method={method}, gravity={cls.name}]")
         if method == 1:
             fields["total_mass"] = (
                 -(fields["radius"] ** 2 * fields["gravitational_field"]) / G
@@ -887,6 +861,7 @@ class AQUAL(Mondian):
         return fields["total_mass"]
 
     @classmethod
+    @_get_method
     def compute_gravitational_field(cls, fields, method=None):
         r"""
         Computes the AQUAL gravitational field :math:`-\nabla \Phi` from the provided ``fields``.
@@ -932,26 +907,6 @@ class AQUAL(Mondian):
         :py:meth:`gravity.AQUAL.compute_potential`,:py:meth:`gravity.AQUAL.compute_dynamical_mass`
 
         """
-        if method is None:
-            try:
-                method = cls._determine_best_method(
-                    fields, "compute_gravitational_field"
-                )
-            except ValueError:
-                raise ValueError(
-                    f"No method for gravitational field calculation in gravity {cls.name} with fields {fields.keys()} was found."
-                )
-        else:
-            if any(
-                i not in fields
-                for i in cls._method_requirements["compute_gravitational_field"][method]
-            ):
-                raise ValueError(
-                    f"Failed to compute gravitational field in {cls.name} gravity with method {method} because one of {cls._method_requirements['compute_gravitational_field'][method]} was not found."
-                )
-        mylog.info(
-            f"Computing gravitational field [method={method}, gravity={cls.name}]"
-        )
         if method == 1:
             # -- Compute from Gauss' Law and spherical symmetry -- #
             newtonian_scaled_field = (
@@ -1016,49 +971,256 @@ class EMOND(Mondian):
     name = "EMOND"
 
     _method_requirements = {
-        "compute_potential": {1: ("total_density", "total_mass", "radius")},
-        "compute_dynamical_mass": {1: ("gravitational_field", "radius")},
+        "compute_potential": {
+            1: ("radius", "gravitational_field"),
+            2: ("radius", "total_mass"),
+        },
+        "compute_dynamical_mass": {1: ()},
         "compute_gravitational_field": {
-            1: ("total_mass", "radius"),
-            2: ("gravitational_potential", "radius"),
+            1: ("radius", "total_mass"),
+            2: ("radius", "gravitational_potential"),
+        },
+        "compute_A0": {
+            1: ("gravitational_field", "radius", "gas_mass"),
+            2: ("gravitational_field", "radius", "density"),
         },
     }
 
-    _interpolation_function = cgparams["gravity"]["AQUAL"]["interpolation_function"]
-    _inverse_interpolation_function = None
+    _interpolation_function = cgparams["gravity"]["EMOND"]["interpolation_function"]
+    _inverse_interpolation_function = cgparams["gravity"]["EMOND"]["milgrom_inv"]
+    _default_interpolation_direction = "forward"
+    _A0 = cgparams["gravity"]["EMOND"]["a0_function"]
+    _gauge = cgparams["gravity"]["EMOND"]["default_gauge"]
 
     @classmethod
-    def interpolation_function(cls, x):
+    def gauge_point(cls):
         r"""
-        Evaluate the AQUAL interpolation function associated with this gravity instantiation. By default, this function
-        is pulled from the ``config.yaml`` file; however it may be set with the :py:meth:`gravity.AQUAL.set_interpolation_function` method.
-
-        Parameters
-        ----------
-        x: :py:class:`numpy.ndarray`
-            The function input. This should be :math:`\nabla \Phi / a_0`.
-
-            .. warning::
-
-                This should be unitless!
+        The gauge point of the EMOND paradigm. This property dictates the boundary conditions for potential computation.
 
         Returns
         -------
-        :py:class:`numpy.ndarray`
-            The function output.
+        tuple
+            The gauge point ``(a,b)``, where ``a`` is the factor and ``b`` is the overdensity size.
+            As an example, if the boundary should be at :math:`5r_{500}`, then the gauge point will be ``(5,500)``.
+
+        Notes
+        -----
+        The gauge point is generically represented as :math:`Ar_{B}`, where :math:`r_B` is a particular overdensity radius (:math:`r_{200},r_{500},\cdots`).
+        By setting a standard gauge in terms of the overdensity size, the potential can be standardized across systems in a consistent way. This is critical
+        in EMOND because the paradigm is gauge dependent.
+
+        .. admonition:: Definition
+
+            The overdensity radius :math:`r_{\chi}` is defined in the context of EMOND as the radius for which the **Newtonian** acceleration
+            of the system is equivalent to that of a sphere of uniform density :math:`\chi \rho_{\mathrm{crit}}` at that radius.
+
+        Given that the overdensity mass is
+
+        .. math::
+
+            M_\chi = \frac{4\pi}{3} \chi \rho_{\mathrm{crit}} r_\chi^3,
+
+        The resulting gravitational field (in a Newtonian paradigm) is
+
+        .. math::
+
+            \nabla \Phi_{\chi} = \frac{GM_\chi}{r_\chi^2} = \frac{4\pi G \rho_{\mathrm{crit}} \chi}{3} r_\chi = \nabla \Phi_{\chi}
+
+        Thus,
+
+        .. math::
+
+            \Sigma(r_\chi) = \frac{\nabla \Phi(r\chi)}{G\rho_{\mathrm{crit}} r_\chi} = \frac{4\pi}{3}\chi.
+
+        .. note::
+
+            In the event that :math:`r_\chi` cannot be found within the domain, we assume that
+
+            .. math::
+
+                \nabla \Phi(r) = \frac{r_{\mathrm{end}}^2}{r^2}\nabla \Phi(r_{\mathrm{end}})
+
+            and compute the relevant radius from that prescription.
 
         """
-        return cls._interpolation_function(x)
+        return cls._gauge
 
     @classmethod
-    def set_interpolation_function(cls, function):
-        """Sets the interpolation function."""
-        cls._interpolation_function = function
+    def set_gauge_point(cls, value):
+        """
+        Sets the gauge point property.
+
+        Parameters
+        ----------
+        value: tuple
+            The gauge point ``(a,b)``, where ``a`` is the factor and ``b`` is the overdensity size.
+
+        Returns
+        -------
+        None
+
+        """
+        cls._gauge = value
 
     @classmethod
-    def compute_potential(cls, fields, method=None):
+    def find_gauge_radius(
+        cls, fields, z=0, cosmology=cgparams["physics"]["default_cosmology"]
+    ):
         r"""
-        Computes the QUMOND gravitational potential :math:`\Phi` from the provided ``fields``.
+        Computes the relevant radius of the gauge point for the given set of fields.
+
+        Parameters
+        ----------
+        fields: dict of str: :py:class:`unyt.array.unyt_array`
+            The dictionary of :py:class:`model.ClusterModel` fields to use for the calculation.
+        z: float, optional
+            The redshift of the system from which to calculate. Default is 0.
+        cosmology: :py:class:`yt.Cosmology`, optional
+            The cosmology to use in the calculation.
+
+        Returns
+        -------
+        :py:class:`unyt.array.unyt_array`
+            The radius of the over-density position.
+
+        Notes
+        -----
+        The overdensity is computed either from the total mass profile, total density profile, or the potential profile in
+        that order of precedence. In order, the resulting formulations are
+
+        - **Total Mass**: Given that the average density is just
+
+          .. math::
+
+                \bar{\rho} = \frac{M(<r)}{(4/3)\pi r^3} \implies \chi(r) = \frac{3M(<r)}{4\pi r^3 \rho_{\mathrm{crit}}}
+
+          The relevant overdensity specified by the :py:meth:`gravity.EMOND.gauge_point` is then located from :math:`\chi(r)`. If :math:`\chi(r)` does not
+          extend sufficiently low over the provided radius, then it is assumed that the density is truncated at the largest radius and thus
+
+          .. math::
+
+            \chi(r > r_0) = \chi(r_0) \left(\frac{r_0}{r}\right)^3 \implies r = r_0 \left(\frac{\chi_0}{\chi}\right)^{1/3}
+
+        - **Density**: If the total density is provided, a similar approach is carried out using a cumulative average to determine average density.
+        - **Gravitational Field**: If the gravitational field is provided, then the corresponding Newtonian mass is
+
+          .. math::
+
+                M = \frac{r^2}{G}\nabla \Phi,
+
+          and the procedure may progress as it did in the first method.
+
+          .. warning::
+
+                It should be noted here that, when it concerns the gauge of EMOND systems, we **always** set the gauge
+                relative to the over-densities implied by a Newtonian interpretation. This choice is valid because it is not the
+                underlying cosmology that is important, only the sufficient homogeneity of the gauge choices between systems.
+
+        """
+        from yt.utilities.cosmology import Cosmology
+
+        if cosmology is None:
+            cosmology = Cosmology()
+        elif isinstance(cosmology, str):
+            try:
+                from colossus.cosmology import cosmo
+
+                cosmology = cosmo.setCosmology(cosmology)
+
+            except ImportError:
+                raise ValueError(
+                    "A custom cosmology was detected, but Colossus was not installed."
+                )
+
+        rho_crit = cosmology.critical_density(z).to_value("Msun/kpc**3")
+
+        if all(
+            i not in fields
+            for i in ["gravitational_field", "total_mass", "total_density"]
+        ):
+            raise ValueError(
+                "One of ('gravitational_field','total_mass','total_density') is required to compute a gauge radius, but no such fields were found."
+            )
+
+        if "total_mass" in fields:
+            average_density = (3 * fields["total_mass"]) / (
+                4 * np.pi * fields["radius"] ** 3
+            )
+        elif "total_density" in fields:
+            average_density = np.cumsum(fields["total_density"]) / np.arange(
+                1, len(fields["total_density"])
+            )
+        else:
+            average_density = -(3 * fields["gravitational_field"]) / (
+                4 * G * np.pi * fields["radius"]
+            )
+
+        _gauge_scale, _gauge_factor = cls.gauge_point()
+
+        chi = average_density.to_value("Msun/kpc**3") / rho_crit  # overdensity factor.
+        if np.amin(chi) < _gauge_factor < np.amax(chi):
+            # The gauge factor falls within the computed range.
+            r_base = fields["radius"][
+                np.where(
+                    np.abs(chi - _gauge_factor) == np.amin(np.abs(chi - _gauge_factor))
+                )
+            ]
+
+            return _gauge_scale * r_base
+
+        else:
+            # The gauge factor is not clearly attainable.
+            return (
+                _gauge_scale
+                * fields["radius"][-1]
+                * (chi[-1] / _gauge_factor) ** (1 / 3)
+            )
+
+    @classmethod
+    def A0(cls, potential):
+        r"""
+        Evaluates the :math:`A_0(\Phi)` function associated with the gravity implementation.
+
+        Parameters
+        ----------
+        potential: :py:class:`unyt.array.unyt_array`
+            The potential array on which to evaluate :math:`A_0(\Phi)`.
+
+        Returns
+        -------
+        :py:class:`unyt.array.unyt_array`
+            The calculated acceleration threshold.
+
+        """
+        if cls._A0 is None:
+            raise ValueError(
+                "There is no A0 yet associated with this gravity implementation."
+            )
+        else:
+            return cls._A0(potential)
+
+    @classmethod
+    def set_A0(cls, function):
+        r"""
+        Sets the :math:`A_0(\Phi)` function for the gravity implementation.
+
+        Parameters
+        ----------
+        function: callable
+            The function to assign to the :math:`A_0(\Phi)` role.
+
+        Returns
+        -------
+        None
+
+        """
+        cls._A0 = function
+
+    @classmethod
+    @_get_method
+    def compute_A0(cls, fields, method=None):
+        r"""
+        Computes the :math:`A_0(\Phi)` function for which the cluster requires no dark matter content in the EMOND paradigm.
 
         Parameters
         ----------
@@ -1070,66 +1232,229 @@ class EMOND(Mondian):
 
         Returns
         -------
+        callable
+            The function :math:`A_0(\phi)`.
+
+        Notes
+        -----
+        This computation can only be accomplished if :math:`\rho_{\mathrm{gas}}` (or some suitable proxy thereof) is known as well
+        as either :math:`\Phi` or :math:`\nabla \Phi`. The algorithm will attempt to identify opportunities to use the provided fields
+        to obtain these quantities; however, if insufficient information is provided, an error will be raised.
+
+        Raises
+        ------
+        ValueError
+            The algorithm failed to identify a reasonable path by which to compute the function.
+
+        """
+        if method == 1:  # using the field, radius, and gas mass.
+            # forcing the field in this case to be monotone decreasing
+            if np.any(fields["gravitational_field"].d > 0):
+                mylog.warning(
+                    "The gravitational field has non-negative elements. Implies non-monotone potential. Calculating best monotone estimate of A0."
+                )
+                temp_field = np.minimum.accumulate(
+                    fields["gravitational_field"].copy()[::-1]
+                )[::-1]
+                temp_pot = cls.compute_potential(
+                    {"radius": fields["radius"], "gravitational_field": temp_field}
+                )
+            else:
+                temp_field = fields["gravitational_field"].copy()
+                if "gravitational_potential" not in fields:
+                    fields["gravitational_potential"] = cls.compute_potential(
+                        fields, method=1
+                    )
+                temp_pot = fields["gravitational_potential"].d
+
+            newtonian_field = -fields["gas_mass"] * G / fields["radius"] ** 2
+            field_ratio = np.abs(
+                newtonian_field.to_value("kpc/Myr**2")
+                / temp_field.to_value("kpc/Myr**2")
+            )
+            field_ratio[np.where(field_ratio > 0.75)] = 0.75
+            numerical_function = (
+                lambda x: cls._interpolation_function(np.abs(temp_field.d) / x)
+                - field_ratio
+            )
+            guess = np.abs(temp_field.d) * (1 - field_ratio) / field_ratio
+
+            roots = fsolve(numerical_function, guess)
+            _A0_uncorrected = unyt_array(roots, temp_field.units)
+            func = InterpolatedUnivariateSpline(
+                temp_pot.to_value("kpc**2/Myr**2"),
+                _A0_uncorrected.to_value("kpc/Myr**2"),
+            )
+
+            return func
+        elif method == 2:  # using the field, radius, and density
+            from cluster_generator.utils import integrate_mass
+
+            rr = fields["radius"].to_value("kpc")
+            dfunc = InterpolatedUnivariateSpline(
+                rr, fields["density"].to_value("Msun/kpc**3")
+            )
+            fields["gas_mass"] = unyt_array(integrate_mass(dfunc, rr), "Msun")
+            return cls.compute_A0(fields, method=1)
+        else:
+            raise ValueError(
+                f"Method {method} for computing A0 in {cls.name} doesn't exist."
+            )
+
+    @classmethod
+    @_get_method
+    def compute_potential(cls, fields, method=None, **kwargs):
+        r"""
+        Computes the EMOND gravitational potential :math:`\Phi` from the provided ``fields``.
+
+        Parameters
+        ----------
+        fields: dict of str: :py:class:`unyt.array.unyt_array`
+            The dictionary of :py:class:`model.ClusterModel` fields to use for the calculation.
+        method: int
+            The method number to use. Defaults to ``None``, which will cause the algorithm to seek the first allowable
+            method in the list.
+        **kwargs:
+            Additional keyword arguments to be passed through the :py:meth:`gravity.EMOND.find_gauge_radius`.
+
+        Returns
+        -------
         dict of str: :py:class:`unyt.array.unyt_array`
             a new copy of the fields with the added data from the computation.
 
         Notes
         -----
-        - **Method 1**: (``gravitational_field``, ``radius``) Computes the gravitational potential directly from the field:
+        .. warning::
+
+            The EMOND paradigm differs from other paradigms in that it is highly gauge dependent. Before generating a cluster,
+            you should always check the gauge settings (:py:attr:`gravity.EMOND.gauge`).
+
+        - **Method 1**: (``gravitational_field``, ``radius``) Computes the gravitational potential directly from the field. Unlike in
+          more classical paradigms, the gauge is explicitly set in this approach. If the gauge point (:math:`r_\star`) falls within the
+          ``radius`` array, then a simple correction is made to adjust the gauge as necessary. Otherwise, the field is extrapolated to the
+          necessary radius under the classical Milgromian presumption that :math:`\nabla \Phi \sim r^{-1}` for sufficiently low accelerations.
+
+          Once extrapolation and gauge correction occur, the potential is simply given by
 
           .. math::
 
-                \Phi = -\int_r^{r_0} \nabla \Phi dr = \int_{r}^{r_0} \textbf{g} dr.
+                \Phi = -\int_r^{r_\star} \nabla \Phi dr = \int_{r}^{r_\star} \textbf{g} dr.
 
-        - **Method 2**: (``total_mass``,``radius``) Computes the gravitational potential from the total mass component. This
-          is effectively a proxy for Method 1 wherein the total mass is used to find the Newtonian field, and the Newtonian field is
-          then converted.
+        .. warning::
+
+            Pathological gauge points, particularly when placed well within the Newtonian domain of the system will lead to
+            highly erroneous results. It is suggested that a cosmological gauge be chosen on the order of :math:`r_{200}` or
+            further out.
+
+            It may be worthwhile to compute the cluster in AQUAL or QUMOND first to gauge the state of play for selecting the boundary
+            condition.
+
+        - **Method 2**: (``total_mass``, ``radius``) Method 2 uses the :math:`A_0(\Phi)` function to construct and solve a differential
+          equation for the potential. Formally,
+
+          .. math::
+
+                \mu\left(\frac{|\nabla \Phi|}{A_0(\Phi(r))}\right) \nabla \Psi = \nabla \Psi = \frac{G M_{\mathrm{dyn}}(<r)}{r^2}
+
+          Letting :math:`\omega = |\nabla \Phi|/A_0(\Phi(r))` and :math:`\kappa = |\nabla \Psi|/A_0(\Phi(r))`,
+
+          .. math::
+
+                \mu(\omega)\omega = \kappa \implies \omega = \kappa \mu^\dagger\left(\kappa\right)= \kappa \eta\left(\kappa\right),
+
+          Where :math:`\mu^\dagger` is the **Milgromian Inverse**. This yields the following non-linear, 1st order ODE
+
+          .. math::
+
+                \frac{\partial \Phi}{\partial r} = \nabla \Psi \eta\left(\frac{|\nabla \Psi|}{A_0(\Phi(r))}\right).
+
+          This equation is then solved numerically using an RK67 algorithm.
 
         See Also
         --------
         :py:meth:`gravity.Newtonian.compute_gravitational_field`,:py:meth:`gravity.Newtonian.compute_dynamical_mass`
 
         """
-        if method is None:
-            try:
-                method = cls._determine_best_method(fields, "compute_potential")
-            except ValueError:
-                raise ValueError(
-                    f"No method for gravitational dynamical mass calculation in gravity {cls.name} with fields {fields.keys()} was found."
-                )
-        else:
-            if any(
-                i not in fields
-                for i in cls._method_requirements["compute_potential"][method]
-            ):
-                missing = [
-                    i
-                    for i in cls._method_requirements["compute_potential"][method]
-                    if i not in fields
-                ]
-                raise ValueError(
-                    f"Failed to compute dynamical mass in {cls.name} gravity with method {method} because one of {cls._method_requirements['compute_potential'][method]}({missing}) was not found."
-                )
+        gauge_radius = cls.find_gauge_radius(fields, **kwargs).to_value("kpc")
+        rr_base = fields["radius"].to_value("kpc")
+        if method == 1:  # Compute from the gravitational field and radius.
+            if gauge_radius > rr_base[-1]:
+                # the radii need to be extended. Determine the frequency of points then extrapolate.
+                point_density = (np.log10(rr_base[-1] / rr_base[0])) / len(rr_base)
+                rr_extension = np.geomspace(
+                    rr_base[-1],
+                    gauge_radius,
+                    int(np.ceil(point_density * np.log10(gauge_radius / rr_base[-1]))),
+                )[1:]
 
-        if method == 1:
-            field_function = InterpolatedUnivariateSpline(
-                fields["radius"].d, fields["gravitational_field"].to("kpc/Myr**2").d
-            )
+                rr = unyt_array(
+                    np.concatenate([rr_base, rr_extension]), fields["radius"].units
+                ).to_value("kpc")
+                gf = unyt_array(
+                    np.concatenate(
+                        [
+                            fields["gravitational_field"].to_value("kpc/Myr**2"),
+                            fields["gravitational_field"].to_value("kpc/Myr**2")[-1]
+                            * (fields["radius"][-1] / rr_extension),
+                        ]
+                    )
+                )
+            else:
+                rr = rr_base
+                gf = fields["gravitational_field"].to_value("kpc/Myr**2")
+
+            # Potential can now be constructed on extended domain.
+            field_function = InterpolatedUnivariateSpline(rr, gf)
             fields["gravitational_potential"] = unyt_array(
                 integrate(field_function, fields["radius"].d), "kpc**2/Myr**2"
             )
+            r_beyond_gauge = rr[np.where(rr > gauge_radius)]
+
+            if len(r_beyond_gauge):
+                # correcting for gauge within the domain
+                fields["gravitational_potential"] -= fields["gravitational_potential"][
+                    np.where(rr > gauge_radius)
+                ][0]
+
         elif method == 2:
-            # -- pull the field -- #
-            fields["gravitational_field"] = cls.compute_gravitational_field(
-                fields, method=1
-            )
+            from scipy.integrate import solve_ivp
 
-            field_function = InterpolatedUnivariateSpline(
-                fields["radius"].d, fields["gravitational_field"].to("kpc/Myr**2").d
+            # Compute from total mass and radius.
+            assert (
+                cls._inverse_interpolation_function is not None
+            ), f"Method 2 for computing potential from {cls.name} requires an explicit milgromian inverse."
+            assert (
+                cls._A0 is not None
+            ), f"Failed to find the acceleration function for {cls.name}. A0 must be manually specified to initialize by this method."
+
+            newtonian_field = (-G / fields["radius"] ** 2) * fields["total_mass"]
+            newtonian_field = newtonian_field.to_value("kpc/Myr**2")
+            newtonian_field_spline = InterpolatedUnivariateSpline(
+                fields["radius"].d, newtonian_field
             )
-            fields["gravitational_potential"] = unyt_array(
-                integrate(field_function, fields["radius"].d), "kpc**2/Myr**2"
+            d_function = lambda r, phi: newtonian_field_spline(
+                r
+            ) * cls._inverse_interpolation_function(
+                np.abs(newtonian_field_spline(r)) / cls._A0(phi)
             )
+            r_span = (fields["radius"].d[0], fields["radius"].d[-1])
+
+            phi_solved = solve_ivp(d_function, r_span, [0], t_eval=fields["radius"].d)
+            assert (
+                phi_solved.success
+            ), f"Failed to solve the differential equation for potential, message={phi_solved.message}"
+            fields["gravitational_potential"] = -unyt_array(
+                phi_solved.y[0] - phi_solved.y[0, -1], "kpc**2/Myr**2"
+            )
+            # Compute the gauge transformation necessary.
+            if gauge_radius < r_span[1]:
+                fields["gravitational_potential"] -= fields["gravitational_potential"][
+                    np.where(fields["radius"].to_value("kpc") > gauge_radius)
+                ][0]
+            else:
+                fields["gravitational_potential"] -= (
+                    G * fields["total_mass"][-1] / fields["radius"][-1]
+                ) * np.log(gauge_radius / fields["radius"][-1])
 
         else:
             raise ValueError(
@@ -1139,9 +1464,10 @@ class EMOND(Mondian):
         return fields["gravitational_potential"]
 
     @classmethod
+    @_get_method
     def compute_dynamical_mass(cls, fields, method=None):
         r"""
-        Computes the QUMOND dynamical mass :math:`M_{\mathrm{dyn}}(<r)` from the provided ``fields``.
+        Computes the EMOND dynamical mass :math:`M_{\mathrm{dyn}}(<r)` from the provided ``fields``.
 
         Parameters
         ----------
@@ -1170,63 +1496,44 @@ class EMOND(Mondian):
         :py:meth:`gravity.QUMOND.compute_potential`,:py:meth:`gravity.QUMOND.compute_gravitational_field`
 
         """
-        if method is None:
-            try:
-                method = cls._determine_best_method(fields, "compute_dynamical_mass")
-            except ValueError:
-                raise ValueError(
-                    f"No method for gravitational dynamical mass calculation in gravity {cls.name} with fields {fields.keys()} was found."
-                )
-        else:
-            if any(
-                i not in fields
-                for i in cls._method_requirements["compute_dynamical_mass"][method]
-            ):
-                missing = [
-                    i
-                    for i in cls._method_requirements["compute_dynamical_mass"][method]
-                    if i not in fields
-                ]
-                raise ValueError(
-                    f"Failed to compute dynamical mass in {cls.name} gravity with method {method} because one of {cls._method_requirements['compute_dynamical_mass'][method]}({missing}) was not found."
-                )
+        from cluster_generator.utils import integrate_mass
+
         if method == 1:
-            from scipy.optimize import fsolve
+            if "gravitational_potential" not in fields:
+                fields["gravitational_potential"] = cls.compute_potential(fields)
 
-            # -- Compute from Gauss' Law and spherical symmetry -- #
-            scaled_field = -fields["gravitational_field"] / cls.get_a0()
-            sf_signs = np.sign(scaled_field)
+            if cls._A0 is None:
+                rho_g_func = InterpolatedUnivariateSpline(
+                    fields["radius"].d, fields["density"].to_value("Msun/kpc**3")
+                )
+                fields["total_mass"] = unyt_array(
+                    integrate_mass(rho_g_func, fields["radius"].d), "Msun"
+                )
+                return fields["total_mass"]
 
-            scaled_field = np.abs(scaled_field)
-
-            guess_roots = scaled_field**2 / (1 + scaled_field)  # inversion
-
-            _optimization_function = (
-                lambda x: cls._interpolation_function(x) * x - scaled_field
+            fields["total_mass"] = (
+                -(fields["radius"] ** 2 * fields["gravitational_field"]) / G
+            ) * cls._forward_interpolation_function(
+                np.abs(
+                    (
+                        fields["gravitational_field"].d
+                        / cls._A0(
+                            fields["gravitational_potential"].to_value("kpc**2/Myr**2")
+                        )
+                    )
+                )
             )
-            if np.allclose(_optimization_function(guess_roots), 0, rtol=1e-7):
-                # We don't need to waste time on the numerical solver, this is close enough.
-                roots = guess_roots
-            else:
-                roots = fsolve(_optimization_function, guess_roots)
-
-            newtonian = sf_signs * (
-                cls.get_a0() * roots
-            )  # sign correction and rescaling.
-
-            # Computing the actual mass
-            fields["total_mass"] = newtonian * (fields["radius"] ** 2 / G)
         else:
             raise ValueError(
                 f"Method {method} for computing dynamical mass in {cls.name} doesn't exist."
             )
-
         return fields["total_mass"]
 
     @classmethod
+    @_get_method
     def compute_gravitational_field(cls, fields, method=None):
         r"""
-        Computes the QUMOND gravitational field :math:`-\nabla \Phi` from the provided ``fields``.
+        Computes the EMOND gravitational field :math:`-\nabla \Phi` from the provided ``fields``.
 
         Parameters
         ----------
@@ -1262,39 +1569,12 @@ class EMOND(Mondian):
         :py:meth:`gravity.QUMOND.compute_potential`,:py:meth:`gravity.QUMOND.compute_dynamical_mass`
 
         """
-        if method is None:
-            try:
-                method = cls._determine_best_method(
-                    fields, "compute_gravitational_field"
-                )
-            except ValueError:
-                raise ValueError(
-                    f"No method for gravitational field calculation in gravity {cls.name} with fields {fields.keys()} was found."
-                )
-        else:
-            if any(
-                i not in fields
-                for i in cls._method_requirements["compute_gravitational_field"][method]
-            ):
-                raise ValueError(
-                    f"Failed to compute gravitational field in {cls.name} gravity with method {method} because one of {cls._method_requirements['compute_gravitational_field'][method]} was not found."
-                )
-
         if method == 1:
+            if "gravitational_potential" not in fields:
+                fields["gravitational_potential"] = cls.compute_potential(fields)
+            return cls.compute_gravitational_field(fields, method=2)
+        if method == 2:
             # -- Compute from Gauss' Law and spherical symmetry -- #
-            newtonian_field = Newtonian.compute_gravitational_field(
-                fields, method=1
-            )  # pull from newtonian calcs.
-
-            fields[
-                "gravitational_field"
-            ] = newtonian_field * cls._interpolation_function(
-                np.abs((fields["gravitational_field"] / cls.get_a0()).d)
-            )
-            fields["gravitational_field"].convert_to_units("kpc/Myr**2")
-
-        elif method == 2:
-            # Compute by taking the gradient
             potential_spline = InterpolatedUnivariateSpline(
                 fields["radius"].to("kpc").d,
                 fields["gravitational_potential"].to("kpc**2/Myr**2").d,
@@ -1302,13 +1582,21 @@ class EMOND(Mondian):
             fields["gravitational_field"] = -unyt_array(
                 potential_spline(fields["radius"].to("kpc").d, 1), "kpc/Myr**2"
             )
-
         else:
             raise ValueError(
                 f"Method {method} for computing gravitational field in {cls.name} doesn't exist."
             )
 
         return fields["gravitational_field"]
+
+    @classmethod
+    def _post_process_model(cls, model, initialization_method):
+        if initialization_method == "from_dens_and_temp":
+            # clean up the machine epsilon error in the dm density.
+            model["dark_matter_density"] = unyt_array(
+                np.zeros(model["radius"].size), "Msun/kpc**3"
+            )
+        return model
 
 
 class Newtonian(Classical):
@@ -1332,6 +1620,7 @@ class Newtonian(Classical):
     }
 
     @classmethod
+    @_get_method
     def compute_potential(cls, fields, method=None):
         r"""
         Computes the Newtonian gravitational potential :math:`\Phi` from the provided ``fields``.
@@ -1362,28 +1651,6 @@ class Newtonian(Classical):
         :py:meth:`gravity.Newtonian.compute_gravitational_field`,:py:meth:`gravity.Newtonian.compute_dynamical_mass`
 
         """
-        if method is None:
-            try:
-                method = cls._determine_best_method(fields, "compute_potential")
-            except ValueError:
-                raise ValueError(
-                    f"No method for gravitational dynamical mass calculation in gravity {cls.name} with fields {fields.keys()} was found."
-                )
-        else:
-            if any(
-                i not in fields
-                for i in cls._method_requirements["compute_potential"][method]
-            ):
-                missing = [
-                    i
-                    for i in cls._method_requirements["compute_potential"][method]
-                    if i not in fields
-                ]
-                raise ValueError(
-                    f"Failed to compute dynamical mass in {cls.name} gravity with method {method} because one of {cls._method_requirements['compute_potential'][method]}({missing}) was not found."
-                )
-
-        mylog.info(f"Computing potential [method={method}, gravity={cls.name}]")
         if method == 1:
             field_function = InterpolatedUnivariateSpline(
                 fields["radius"].d, fields["gravitational_field"].to("kpc/Myr**2").d
@@ -1411,6 +1678,7 @@ class Newtonian(Classical):
         return fields["gravitational_potential"]
 
     @classmethod
+    @_get_method
     def compute_dynamical_mass(cls, fields, method=None):
         r"""
         Computes the Newtonian dynamical mass :math:`M_{\mathrm{dyn}}(<r)` from the provided ``fields``.
@@ -1442,28 +1710,6 @@ class Newtonian(Classical):
         :py:meth:`gravity.Newtonian.compute_potential`,:py:meth:`gravity.Newtonian.compute_gravitational_field`
 
         """
-        if method is None:
-            try:
-                method = cls._determine_best_method(fields, "compute_dynamical_mass")
-            except ValueError:
-                raise ValueError(
-                    f"No method for gravitational dynamical mass calculation in gravity {cls.name} with fields {fields.keys()} was found."
-                )
-        else:
-            if any(
-                i not in fields
-                for i in cls._method_requirements["compute_dynamical_mass"][method]
-            ):
-                missing = [
-                    i
-                    for i in cls._method_requirements["compute_dynamical_mass"][method]
-                    if i not in fields
-                ]
-                raise ValueError(
-                    f"Failed to compute dynamical mass in {cls.name} gravity with method {method} because one of {cls._method_requirements['compute_dynamical_mass'][method]}({missing}) was not found."
-                )
-
-        mylog.info(f"Computing dynamical mass [method={method}, gravity={cls.name}]")
         if method == 1:
             fields["total_mass"] = (
                 -(fields["radius"] ** 2 * fields["gravitational_field"]) / G
@@ -1472,10 +1718,10 @@ class Newtonian(Classical):
             raise ValueError(
                 f"Method {method} for computing dynamical mass in {cls.name} doesn't exist."
             )
-
         return fields["total_mass"]
 
     @classmethod
+    @_get_method
     def compute_gravitational_field(cls, fields, method=None):
         r"""
         Computes the Newtonian gravitational field :math:`-\nabla \Phi` from the provided ``fields``.
@@ -1512,27 +1758,6 @@ class Newtonian(Classical):
         :py:meth:`gravity.Newtonian.compute_potential`,:py:meth:`gravity.Newtonian.compute_dynamical_mass`
 
         """
-        if method is None:
-            try:
-                method = cls._determine_best_method(
-                    fields, "compute_gravitational_field"
-                )
-            except ValueError:
-                raise ValueError(
-                    f"No method for gravitational field calculation in gravity {cls.name} with fields {fields.keys()} was found."
-                )
-        else:
-            if any(
-                i not in fields
-                for i in cls._method_requirements["compute_gravitational_field"][method]
-            ):
-                raise ValueError(
-                    f"Failed to compute gravitational field in {cls.name} gravity with method {method} because one of {cls._method_requirements['compute_gravitational_field'][method]} was not found."
-                )
-
-        mylog.info(
-            f"Computing gravitational field [method={method}, gravity={cls.name}]"
-        )
         if method == 1:
             # Compute the field using Gauss' Law in spherical symmetry.
             fields["gravitational_field"] = (-G * fields["total_mass"]) / (

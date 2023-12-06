@@ -15,7 +15,7 @@ from cluster_generator.radial_profiles import (
 )
 
 
-def generate_model():
+def generate_model(gravity="Newtonian"):
     z = 0.1
     M200 = 1.5e15
     conc = 4.0
@@ -31,7 +31,9 @@ def generate_model():
     rhos = 0.02 * rhot
     rmin = 0.1
     rmax = 10000.0
-    m = ClusterModel.from_dens_and_tden(rmin, rmax, rhog, rhot, stellar_density=rhos)
+    m = ClusterModel.from_dens_and_tden(
+        rmin, rmax, rhog, rhot, stellar_density=rhos, gravity=gravity
+    )
     m.set_magnetic_field_from_beta(100.0, gaussian=True)
 
     return m
@@ -45,7 +47,7 @@ def model_answer_testing(model, filename, answer_store, answer_dir):
         old_model = ClusterModel.from_h5_file(p)
         import matplotlib.pyplot as plt
 
-        f, a = model.panel_plot(gs_kwargs={"left": 0.2, "right": 0.99})
+        f, a = model.panel_plot(margins=(0.2, 0.99, 0.02, 0.95))
         old_model.panel_plot(fig=f, axes=a)
         plt.show()
         for field in old_model.fields:

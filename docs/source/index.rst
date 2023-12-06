@@ -104,6 +104,9 @@ Features
                 :template: class.rst
 
                 Newtonian
+                AQUAL
+                QUMOND
+                EMOND
 
 
 

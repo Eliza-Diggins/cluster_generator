@@ -1183,7 +1183,7 @@ def find_overdensity_radius(m, delta, z=0.0, cosmo=None):
 
     Parameters
     ----------
-    m : float
+    m : unyt.array.unyt_array
         The enclosed mass.
     delta : float
         The overdensity to compute the radius for.

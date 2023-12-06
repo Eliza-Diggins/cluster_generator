@@ -76,3 +76,4 @@ unyt==2.9.5
 virtualenv==20.24.6
 widgetsnbextension==4.0.9
 yt==4.3.0
+colossus
