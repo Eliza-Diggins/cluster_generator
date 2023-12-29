@@ -365,7 +365,6 @@ class ClusterModel:
 
         rr = fields["radius"].d
         mylog.info("Integrating gravitational potential profile.")
-        print(gravity.name)
         fields["gravitational_potential"] = gravity.compute_potential(fields, method=1)
 
         if "density" in fields and "gas_mass" not in fields:

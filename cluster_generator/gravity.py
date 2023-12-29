@@ -190,6 +190,8 @@ class Gravity(ABC):
                 return get_gravity_class(kwargs["gravity"])._post_process_model(
                     model, function_name
                 )
+            else:
+                return model
 
         return wrapper
 

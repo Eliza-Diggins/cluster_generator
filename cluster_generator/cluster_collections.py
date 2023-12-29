@@ -425,3 +425,9 @@ class Sanderson10(Collection):
 
     def __init__(self):
         super().__init__(self._data, self._schema_loc)
+
+
+if __name__ == "__main__":
+    c = Vikhlinin06()
+    _v = c.clusters["A133"].load(1, 1000)
+    print(_v)
