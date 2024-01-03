@@ -1387,9 +1387,9 @@ class EMOND(Mondian):
                 rr_extension = np.geomspace(
                     rr_base[-1],
                     gauge_radius,
-                    int(np.ceil(point_density * np.log10(gauge_radius / rr_base[-1]))),
-                )[1:]
-                print(rr_extension, rr_extension.shape)
+                    int(np.ceil(np.log10(gauge_radius / rr_base[-1]) / point_density)),
+                ).ravel()[1:]
+                print(rr_extension.shape, rr_base.shape)
                 rr = unyt_array(
                     np.concatenate([rr_base, rr_extension]), fields["radius"].units
                 ).to_value("kpc")
