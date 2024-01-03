@@ -54,7 +54,7 @@ gravity:
     milgrom_inv: !lambda "lambda x: ((1 / 2) * (np.sqrt(1 + (4 / x)) + 1))"
   EMOND:
     # - Settings for the EMOND implementation - #
-    a0_function: null #!lambda "lambda x,a=0.003868,A=0.30944,p0=-7.614: a + (A-a)*(0.5*np.tanh(np.log10((x/p0)**2)) + 0.5)"
+    a0_function: null #!lambda "lambda x,a=0.003868,p0=-7.614: a*np.exp(-x/p0)"
     default_gauge: !!python/tuple [2,200] # The default EMOND gauge condition.
     interpolation_function: !lambda "lambda x: x/(1+x)"
     milgrom_inv: !lambda "lambda x: ((1 / 2) * (np.sqrt(1 + (4 / x)) + 1))"

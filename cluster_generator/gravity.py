@@ -10,7 +10,7 @@ a little tricky to navigate. The following notes should be kept in mind while se
 - The module is designed based on a class hierarchy. Each gravity class inherits from an abstract class :py:class:`gravity.Gravity`, which
   is effectively a scaffold. Different groups of gravitational theories also have scaffold classes. Properties / methods which should be
   shared between similar gravity theories are found in their progenitor class.
-- Each gravity class comprises 3 core methods: :py:meth:`gravity.Gravity.compute_potential`, :py:meth:`gravity.Gravity.compute_gravitational_field`, :py:meth:`gravity.Gravity.compute_dynamical_mass`. Additional
+- Each gravity class comprises 3 core methods: :py:meth:`gravity.Gravity.compute_gravitational_potential`, :py:meth:`gravity.Gravity.compute_gravitational_field`, :py:meth:`gravity.Gravity.compute_dynamical_mass`. Additional
   methods are simply structural needs to build those core methods.
 - Different gravity theories may require additional data. This can either be supplied to the class by way of a class method, or through the configuration.
 """
@@ -37,6 +37,7 @@ def _get_method(class_method):
             mylog.info(
                 f"Skipping call to {function_name} because {out_field} already in provided fields. [gravity={cls.name}]."
             )
+            return fields[out_field]
         if "method" in kwargs:
             method = kwargs["method"]
             del kwargs["method"]
@@ -60,7 +61,7 @@ def _get_method(class_method):
                     if i not in fields
                 ]
                 raise ValueError(
-                    f"Failed to execute {function_name} in {cls.name} gravity with method {method} because one of {cls._method_requirements['compute_potential'][method]}({missing}) was not found."
+                    f"Failed to execute {function_name} in {cls.name} gravity with method {method} because one of {cls._method_requirements['compute_gravitational_potential'][method]}({missing}) was not found."
                 )
 
         mylog.info(f"Executing {function_name} [method={method}, gravity={cls.name}]")
@@ -114,7 +115,7 @@ class Gravity(ABC):
         pass
 
     @abstractmethod
-    def compute_potential(self, *args, **kwargs):
+    def compute_gravitational_potential(self, *args, **kwargs):
         """
         Computes the potential from provided fields.
 
@@ -511,7 +512,7 @@ class QUMOND(Mondian):
     name = "QUMOND"
 
     _method_requirements = {
-        "compute_potential": {
+        "compute_gravitational_potential": {
             1: ("gravitational_field", "radius"),
             2: ("total_density", "total_mass", "radius"),
         },
@@ -530,7 +531,7 @@ class QUMOND(Mondian):
 
     @classmethod
     @_get_method
-    def compute_potential(cls, fields, method=None):
+    def compute_gravitational_potential(cls, fields, method=None):
         r"""
         Computes the QUMOND gravitational potential :math:`\Phi` from the provided ``fields``.
 
@@ -621,7 +622,7 @@ class QUMOND(Mondian):
 
         See Also
         --------
-        :py:meth:`gravity.QUMOND.compute_potential`,:py:meth:`gravity.QUMOND.compute_gravitational_field`
+        :py:meth:`gravity.QUMOND.compute_gravitational_potential`,:py:meth:`gravity.QUMOND.compute_gravitational_field`
 
         """
         if method == 1:
@@ -683,7 +684,7 @@ class QUMOND(Mondian):
 
         See Also
         --------
-        :py:meth:`gravity.QUMOND.compute_potential`,:py:meth:`gravity.QUMOND.compute_dynamical_mass`
+        :py:meth:`gravity.QUMOND.compute_gravitational_potential`,:py:meth:`gravity.QUMOND.compute_dynamical_mass`
 
         """
         if method == 1:
@@ -736,7 +737,7 @@ class AQUAL(Mondian):
     name = "AQUAL"
 
     _method_requirements = {
-        "compute_potential": {
+        "compute_gravitational_potential": {
             1: ("gravitational_field", "radius"),
             2: ("total_density", "total_mass", "radius"),
         },
@@ -755,7 +756,7 @@ class AQUAL(Mondian):
 
     @classmethod
     @_get_method
-    def compute_potential(cls, fields, method=None):
+    def compute_gravitational_potential(cls, fields, method=None):
         r"""
         Computes the AQUAL gravitational potential :math:`\Phi` from the provided ``fields``.
 
@@ -846,7 +847,7 @@ class AQUAL(Mondian):
 
         See Also
         --------
-        :py:meth:`gravity.AQUAL.compute_potential`,:py:meth:`gravity.AQUAL.compute_gravitational_field`
+        :py:meth:`gravity.AQUAL.compute_gravitational_potential`,:py:meth:`gravity.AQUAL.compute_gravitational_field`
 
         """
         if method == 1:
@@ -906,7 +907,7 @@ class AQUAL(Mondian):
 
         See Also
         --------
-        :py:meth:`gravity.AQUAL.compute_potential`,:py:meth:`gravity.AQUAL.compute_dynamical_mass`
+        :py:meth:`gravity.AQUAL.compute_gravitational_potential`,:py:meth:`gravity.AQUAL.compute_dynamical_mass`
 
         """
         if method == 1:
@@ -973,7 +974,7 @@ class EMOND(Mondian):
     name = "EMOND"
 
     _method_requirements = {
-        "compute_potential": {
+        "compute_gravitational_potential": {
             1: ("radius", "gravitational_field"),
             2: ("radius", "total_mass"),
         },
@@ -1258,15 +1259,15 @@ class EMOND(Mondian):
                 temp_field = np.minimum.accumulate(
                     fields["gravitational_field"].copy()[::-1]
                 )[::-1]
-                temp_pot = cls.compute_potential(
+                temp_pot = cls.compute_gravitational_potential(
                     {"radius": fields["radius"], "gravitational_field": temp_field}
                 )
             else:
                 temp_field = fields["gravitational_field"].copy()
                 if "gravitational_potential" not in fields:
-                    fields["gravitational_potential"] = cls.compute_potential(
-                        fields, method=1
-                    )
+                    fields[
+                        "gravitational_potential"
+                    ] = cls.compute_gravitational_potential(fields, method=1)
                 temp_pot = fields["gravitational_potential"].d
 
             newtonian_field = -fields["gas_mass"] * G / fields["radius"] ** 2
@@ -1305,7 +1306,7 @@ class EMOND(Mondian):
 
     @classmethod
     @_get_method
-    def compute_potential(cls, fields, method=None, **kwargs):
+    def compute_gravitational_potential(cls, fields, method=None, **kwargs):
         r"""
         Computes the EMOND gravitational potential :math:`\Phi` from the provided ``fields``.
 
@@ -1388,7 +1389,7 @@ class EMOND(Mondian):
                     gauge_radius,
                     int(np.ceil(point_density * np.log10(gauge_radius / rr_base[-1]))),
                 )[1:]
-
+                print(rr_extension, rr_extension.shape)
                 rr = unyt_array(
                     np.concatenate([rr_base, rr_extension]), fields["radius"].units
                 ).to_value("kpc")
@@ -1451,7 +1452,7 @@ class EMOND(Mondian):
             # Compute the gauge transformation necessary.
             if gauge_radius < r_span[1]:
                 fields["gravitational_potential"] -= fields["gravitational_potential"][
-                    np.where(fields["radius"].to_value("kpc") > gauge_radius)
+                    np.where(fields["radius"].to_value("kpc") > gauge_radius)[0]
                 ][0]
             else:
                 fields["gravitational_potential"] -= (
@@ -1495,36 +1496,47 @@ class EMOND(Mondian):
 
         See Also
         --------
-        :py:meth:`gravity.QUMOND.compute_potential`,:py:meth:`gravity.QUMOND.compute_gravitational_field`
+        :py:meth:`gravity.QUMOND.compute_gravitational_potential`,:py:meth:`gravity.QUMOND.compute_gravitational_field`
 
         """
         from cluster_generator.utils import integrate_mass
 
         if method == 1:
+            # potential is necessary to carry out integration.
             if "gravitational_potential" not in fields:
-                fields["gravitational_potential"] = cls.compute_potential(fields)
+                fields["gravitational_potential"] = cls.compute_gravitational_potential(
+                    fields
+                )
 
             if cls._A0 is None:
+                mylog.info(
+                    "No A0(Phi) function was found. Assuming gas mass == dynamical mass."
+                )
                 rho_g_func = InterpolatedUnivariateSpline(
                     fields["radius"].d, fields["density"].to_value("Msun/kpc**3")
                 )
                 fields["total_mass"] = unyt_array(
                     integrate_mass(rho_g_func, fields["radius"].d), "Msun"
                 )
-                return fields["total_mass"]
 
-            fields["total_mass"] = (
-                -(fields["radius"] ** 2 * fields["gravitational_field"]) / G
-            ) * cls._forward_interpolation_function(
-                np.abs(
-                    (
-                        fields["gravitational_field"].d
-                        / cls._A0(
-                            fields["gravitational_potential"].to_value("kpc**2/Myr**2")
+            else:
+                mylog.info(
+                    "A0(Phi) function was found. Dynamical mass obtained from poisson equation."
+                )
+                fields["total_mass"] = (
+                    -(fields["radius"] ** 2 * fields["gravitational_field"]) / G
+                ) * cls._forward_interpolation_function(
+                    np.abs(
+                        (
+                            fields["gravitational_field"].d
+                            / cls._A0(
+                                fields["gravitational_potential"].to_value(
+                                    "kpc**2/Myr**2"
+                                )
+                            )
                         )
                     )
                 )
-            )
         else:
             raise ValueError(
                 f"Method {method} for computing dynamical mass in {cls.name} doesn't exist."
@@ -1568,12 +1580,14 @@ class EMOND(Mondian):
 
         See Also
         --------
-        :py:meth:`gravity.QUMOND.compute_potential`,:py:meth:`gravity.QUMOND.compute_dynamical_mass`
+        :py:meth:`gravity.QUMOND.compute_gravitational_potential`,:py:meth:`gravity.QUMOND.compute_dynamical_mass`
 
         """
         if method == 1:
             if "gravitational_potential" not in fields:
-                fields["gravitational_potential"] = cls.compute_potential(fields)
+                fields["gravitational_potential"] = cls.compute_gravitational_potential(
+                    fields
+                )
             return cls.compute_gravitational_field(fields, method=2)
         if method == 2:
             # -- Compute from Gauss' Law and spherical symmetry -- #
@@ -1610,7 +1624,7 @@ class Newtonian(Classical):
     name = "Newtonian"
 
     _method_requirements = {
-        "compute_potential": {
+        "compute_gravitational_potential": {
             1: ("gravitational_field", "radius"),
             2: ("total_density", "total_mass", "radius"),
         },
@@ -1623,7 +1637,7 @@ class Newtonian(Classical):
 
     @classmethod
     @_get_method
-    def compute_potential(cls, fields, method=None):
+    def compute_gravitational_potential(cls, fields, method=None):
         r"""
         Computes the Newtonian gravitational potential :math:`\Phi` from the provided ``fields``.
 
@@ -1709,7 +1723,7 @@ class Newtonian(Classical):
 
         See Also
         --------
-        :py:meth:`gravity.Newtonian.compute_potential`,:py:meth:`gravity.Newtonian.compute_gravitational_field`
+        :py:meth:`gravity.Newtonian.compute_gravitational_potential`,:py:meth:`gravity.Newtonian.compute_gravitational_field`
 
         """
         if method == 1:
@@ -1757,7 +1771,7 @@ class Newtonian(Classical):
 
         See Also
         --------
-        :py:meth:`gravity.Newtonian.compute_potential`,:py:meth:`gravity.Newtonian.compute_dynamical_mass`
+        :py:meth:`gravity.Newtonian.compute_gravitational_potential`,:py:meth:`gravity.Newtonian.compute_dynamical_mass`
 
         """
         if method == 1:
