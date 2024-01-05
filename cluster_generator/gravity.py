@@ -188,9 +188,12 @@ class Gravity(ABC):
             model = initialization_method(cls, *args, **kwargs)
 
             if "gravity" in kwargs:
-                return get_gravity_class(kwargs["gravity"])._post_process_model(
-                    model, function_name
-                )
+                if isinstance(kwargs["gravity"], str):
+                    return get_gravity_class(kwargs["gravity"])._post_process_model(
+                        model, function_name
+                    )
+                else:
+                    return kwargs["gravity"]._post_process_model(model, function_name)
             else:
                 return model
 
