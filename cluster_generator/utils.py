@@ -9,7 +9,7 @@ import pathlib as pt
 import sys
 from functools import reduce
 from numbers import Number
-from typing import Any, Callable, Collection, Iterable, Mapping
+from typing import Any, Callable, Collection, Generic, Iterable, Mapping, Type, TypeVar
 
 import numpy as np
 import ruamel.yaml
@@ -25,6 +25,11 @@ try:
     from typing import Self  # noqa
 except ImportError:
     from typing_extensions import Self as Self  # noqa
+
+# -- Typing Variables -- #
+Instance = TypeVar("Instance")
+Value = TypeVar("Value")
+Attribute = TypeVar("Attribute")
 
 config_directory = os.path.join(pt.Path(__file__).parents[0], "bin", "config.yaml")
 # :py:class:`pathlib.Path`: The directory in which the ``cluster_generator`` configuration files are located.
@@ -224,6 +229,29 @@ def setInDict(dataDict: Mapping, mapList: Iterable[slice], value: Any):
         The value to set the object to
     """
     getFromDict(dataDict, mapList[:-1])[mapList[-1]] = value
+
+
+class ClassDescriptor(Generic[Instance, Attribute, Value]):
+    """
+    Structure for creating class-variable properties.
+    """
+
+    def __init__(
+        self,
+        getter: Callable[[Instance, Type[Instance]], Value],
+        setter: Callable[[Instance, Type[Instance], Any], None] = None,
+    ):
+        self.getter = getter
+        self.setter = setter
+
+    def __set_name__(self, owner: Type[Instance], name: str) -> None:
+        self._name = name
+
+    def __get__(self, instance: Instance, owner: Type[Instance]) -> Any:
+        return self.getter(instance, owner)
+
+    def __set__(self, instance: Instance, owner: Type[Instance], value: Any) -> None:
+        self.setter(instance, owner, value)
 
 
 class Registry:
