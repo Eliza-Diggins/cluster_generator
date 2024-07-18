@@ -8,7 +8,7 @@ from cluster_generator.utilities.config import cgparams
 # Disable progress bars during tests -> GH actions cannot emulate console, prints each update on seperate line (slow).
 cgparams.config.system.preferences.disable_progress_bars = True
 
-_remote_host = "http://home.chpc.utah.edu/~u1281896/cluster_generator"  # The remote host from which to fetch answers.
+_remote_host = "astro.utah.edu/~u1281896/cluster_generator"  # The remote host from which to fetch answers.
 
 
 def download_file(url, output_path):

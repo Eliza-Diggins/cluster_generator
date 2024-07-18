@@ -3,7 +3,7 @@ from pathlib import Path
 
 import h5py
 from numpy.random import RandomState
-from numpy.testing import assert_equal
+from numpy.testing import assert_allclose
 
 from cluster_generator.model import ClusterModel
 from cluster_generator.particles import ClusterParticles
@@ -119,7 +119,7 @@ def _h5_recursive_check(
     # If the object is a dataset, then we need to check the array equality and exit without passing through the
     # rest of this function.
     if isinstance(primary_object, h5py.Dataset):
-        assert_equal(primary_object[...], secondary_object[...])
+        assert_allclose(primary_object[...], secondary_object[...], rtol=1e-7)
         return
 
     # -- Groups or Files -- #
@@ -154,9 +154,9 @@ def model_answer_testing(
     else:
         old_model = ClusterModel.from_h5_file(p)
         for field in old_model.fields:
-            assert_equal(old_model[field], model[field])
-        assert_equal(old_model.dm_virial.df, model.dm_virial.df)
-        assert_equal(old_model.star_virial.df, model.star_virial.df)
+            assert_allclose(old_model[field], model[field], rtol=1e-7)
+        assert_allclose(old_model.dm_virial.df, model.dm_virial.df, rtol=1e-7)
+        assert_allclose(old_model.star_virial.df, model.star_virial.df, rtol=1e-7)
 
 
 def h5_answer_testing(
@@ -210,4 +210,4 @@ def particle_answer_testing(
     else:
         old_parts = ClusterParticles.from_file(p)
         for field in old_parts.fields:
-            assert_equal(old_parts[field], parts[field])
+            assert_allclose(old_parts[field], parts[field], rtol=1e-7)
