@@ -58,7 +58,7 @@ should therefore acknowledge its use in the prose of their work with a statement
 
 
 .. |yt-project| image:: https://img.shields.io/static/v1?label="works%20with"&message="yt"&color="blueviolet"
-   :target: https://yt-project.org
+    :target: https://yt-project.org
 .. |docs| image:: https://img.shields.io/badge/docs-latest-brightgreen.svg
     :target: https://github.com/jzuhone/cluster_generator
 .. |testing| image:: https://github.com/jzuhone/cluster_generator/actions/workflows/test.yml/badge.svg
