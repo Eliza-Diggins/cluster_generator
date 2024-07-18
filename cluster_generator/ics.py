@@ -91,8 +91,11 @@ class ClusterICs:
         "stellar_mass",
         "gas_mass",
         "tracer_mass",
-        "black_hole_mass",
     ]
+
+    _ic_particle_types = [k for k in recognized_particle_types if k != "black_hole"]
+    # These are the virialized particle species which should be generated from models. BH are excluded because they
+    # aren't virialized.
 
     def __init__(
         self,
@@ -138,6 +141,16 @@ class ClusterICs:
         """ int: The number of halos present in the IC system."""
         self.models: list[Path] = [Path(i) for i in ensure_list(models)]
         """ list of Path: The paths of the constituent profiles."""
+
+        # Adding some redundancy for odd user input of centers and velocities.
+        if (
+            self.num_halos == 1
+        ):  # User may provide centers as single list / array of size 3.
+            if len(centers) == 3:
+                centers = [centers]
+            if len(velocities) == 3:
+                velocities = [velocities]
+
         self.centers: list[unyt_array] = [
             ensure_ytarray(c, "kpc") for c in ensure_list(centers)
         ]
@@ -184,11 +197,11 @@ class ClusterICs:
 
         # Managing number of particles
         if num_particles is None:
-            _np = {k: 0 for k in recognized_particle_types}
+            _np = {k: 0 for k in self.__class__._ic_particle_types}
         else:
             _np = {
                 k: num_particles[k] if k in num_particles else 0
-                for k in recognized_particle_types
+                for k in self.__class__._ic_particle_types
             }
 
         _res = self._determine_num_particles(
@@ -237,7 +250,7 @@ class ClusterICs:
         from collections import defaultdict
 
         # Setup particle-species buffers for each cluster model
-        species_masses = {species: [] for species in recognized_particle_types}
+        species_masses = {species: [] for species in self.__class__._ic_particle_types}
 
         # determine masses for each cluster
         for i, model_file in enumerate(self.models):
@@ -248,7 +261,7 @@ class ClusterICs:
             idxst = model["radius"] < self.r_max_tracer[i]
 
             for species, field, idx in zip(
-                recognized_particle_types,
+                self.__class__._ic_particle_types,
                 self.__class__._massfields,
                 [idxs, idxs, idxs, idxst],
             ):
@@ -264,14 +277,16 @@ class ClusterICs:
         # Allocating particles to each cluster based on total number of particles specified.
         num_particles = defaultdict(list)
         for i in range(self.num_halos):
-            for species in recognized_particle_types:
+            for species in self.__class__._ic_particle_types:
                 if total_species_masses.get(species, 0) > 0:
                     num_particles[species].append(
-                        np.rint(
-                            n_parts[species]
-                            * (
-                                species_masses[species][i]
-                                / total_species_masses[species]
+                        int(
+                            np.rint(
+                                n_parts[species]
+                                * (
+                                    species_masses[species][i]
+                                    / total_species_masses[species]
+                                ),
                             )
                         )
                     )
@@ -305,12 +320,12 @@ class ClusterICs:
             model = ClusterModel.from_h5_file(model_file)
 
             model_particles = None
-            for species in recognized_particle_types:
+            for species in self.__class__._ic_particle_types:
                 # Iterate through the various particle species and generate them.
-                _generator = getattr(model, f"generate_{species}_particles")
-
                 if self.num_particles[species][i] <= 0:
                     continue
+
+                _generator = getattr(model, f"generate_{species}_particles")
 
                 _p = _generator(
                     self.num_particles[species][i], r_max=self.r_max[i], prng=prng
@@ -325,6 +340,63 @@ class ClusterICs:
             outfile = f"{self.basename}_{str(i)}_particles.h5"
             model_particles.write_particles(outfile, overwrite=True)
             self.particle_files[i] = Path(outfile)
+
+    def add_black_holes(
+        self,
+        halo_ids: list[int] | int,
+        bh_mass: list[MaybeUnitVector] | MaybeUnitVector,
+        pos: list[MaybeUnitVector] | MaybeUnitVector = None,
+        vel: list[MaybeUnitVector] | MaybeUnitVector = None,
+        use_pot_min: list[bool] | bool = False,
+    ) -> None:
+        """Add black holes to the specified halos.
+
+        Parameters
+        ----------
+        halo_ids: list of int
+            The ids (indices) of the models that should have black holes added to them.
+        bh_mass: list of unyt_quantities
+            The masses of the black holes for each of the halos.
+        pos: list of unyt_array
+            The relative position (in the model's frame of reference) of the black hole.
+        vel: list of unyt_array
+            The relative velocity (in the model's frame of reference) of the black hole.
+        use_pot_min: list of bool
+            Whether or not to use the potential minimum to set the position of the BH. This overrides the
+            ``pos`` arguments.
+        """
+        # forcing everything to be self consistent.
+        halo_ids = halo_ids if isinstance(halo_ids, list) else [int(halo_ids)]
+        bh_mass = bh_mass if isinstance(bh_mass, list) else [bh_mass] * len(halo_ids)
+
+        if len(halo_ids) == 1:
+            # pos and vel may be odd because they could be single dim lists.
+            if isinstance(pos, list) and len(pos) == 3:
+                pos = [ensure_ytarray(pos, "kpc")]
+            if isinstance(vel, list) and len(vel) == 3:
+                vel = [ensure_ytarray(vel, "km/s")]
+
+        pos = pos if isinstance(pos, list) else [pos] * len(halo_ids)
+        vel = vel if isinstance(vel, list) else [vel] * len(halo_ids)
+        use_pot_min = (
+            use_pot_min
+            if isinstance(use_pot_min, list)
+            else [use_pot_min] * len(halo_ids)
+        )
+
+        # now cycle through
+        for index, halo_id in enumerate(halo_ids):
+            assert (
+                self.particle_files[halo_id] is not None
+            ), f"Cannot add BH to non-existant particle dataset (id = {halo_id})."
+
+            _parts = ClusterParticles.from_file(self.particle_files[halo_id])
+
+            _parts.add_black_hole(
+                bh_mass[index], pos[index], vel[index], use_pot_min=use_pot_min[index]
+            )
+
+            _parts.write_particles_to_h5(self.particle_files[halo_id], overwrite=True)
 
     def to_file(self, filename: str | Path, overwrite: bool = False):
         r"""Write the initial conditions information to a file.
@@ -376,7 +448,7 @@ class ClusterICs:
             )
 
         # Determining the number of particles of each type
-        for particle_species in recognized_particle_types:
+        for particle_species in self.__class__._ic_particle_types:
             if self.num_particles.get(particle_species, 0) > 0:
                 out[f"num_{particle_species}_particles"] = self.num_particles[
                     particle_species
@@ -601,3 +673,26 @@ class ClusterICs:
         ds_obj.add_ICs(self)
 
         return ds_obj.filename
+
+
+if __name__ == "__main__":
+    from cluster_generator.tests.utils import generate_model
+
+    model = generate_model()
+    model.write_model_to_h5("test.h5", overwrite=True)
+
+    num_particles = {k: 200000 for k in ["dm", "star", "gas"]}
+    center1, center2 = compute_centers_for_binary([0.0, 0.0, 0.0], 3000.0, 500.0)
+    velocity1 = [500.0, 0.0, 0.0]
+    velocity2 = [-500.0, 0.0, 0.0]
+    ics = ClusterICs(
+        "double",
+        2,
+        ["test.h5", "test.h5"],
+        [center1, center2],
+        [velocity1, velocity2],
+        num_particles=num_particles,
+    )
+
+    # Generate the particles
+    parts = ics.setup_particle_ics()

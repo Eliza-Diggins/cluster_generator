@@ -47,7 +47,6 @@ def test_double_ics(answer_dir: str, answer_store: bool, temp_dir: str):
     # -- Making sure that there is a model -- #
     # The model should be at temp_dir/base_model.h5. If not, we may need to generate a new one.
     base_model_path = get_base_model_path(temp_dir)
-
     # Configure and generate the ICs
     num_particles = {k: 200000 for k in ["dm", "star", "gas"]}
     center1, center2 = compute_centers_for_binary([0.0, 0.0, 0.0], 3000.0, 500.0)

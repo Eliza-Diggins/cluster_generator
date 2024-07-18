@@ -156,12 +156,18 @@ class ClusterParticles:
         # Concatenate fields, creating them if necessary
         for field in other.fields:
             if field in base_fields:
-                base_fields[field] = np.concatenate(
-                    (
-                        base_fields[field],
-                        other.fields[field].to(base_fields[field].units),
-                    )
+                base_fields[field] = ensure_ytarray(
+                    np.concatenate(
+                        (
+                            base_fields[field].d,
+                            other.fields[field].to_value(base_fields[field].units),
+                        )
+                    ),
+                    base_fields[field].units,
                 )
+                # In unyt>3.0, unit wrangling here isn't needed as np.concatenate handles units properly, but
+                # for backwards compatibility, we use the verbose approach.
+
             else:
                 base_fields[field] = other[field]
         particle_types = list(set(self.particle_types + other.particle_types))
@@ -900,7 +906,7 @@ def combine_clusters(
     particle datasets and then resamples from their underlying datasets to ensure that the physics is self-consistent.
     """
     centers = [ensure_ytarray(c, "kpc") for c in centers]
-    velocities = [ensure_ytquantity(v, "km/s") for v in velocities]
+    velocities = [ensure_ytarray(v, "km/s") for v in velocities]
 
     if not (len(centers) == len(velocities) == len(particles) == len(models)):
         raise ValueError(
