@@ -1,6 +1,4 @@
-"""
-Pytest suite for unit-testing the particle generation system.
-"""
+"""Pytest suite for unit-testing the particle generation system."""
 import pytest
 
 from cluster_generator.tests.utils import get_base_model, particle_answer_testing, prng
@@ -8,9 +6,7 @@ from cluster_generator.tests.utils import get_base_model, particle_answer_testin
 
 @pytest.mark.slow
 def test_particles(answer_store: bool, answer_dir: str, temp_dir: str):
-    """
-    Test model particle generation.
-    """
+    """Test model particle generation."""
     # fetching the base model
     m = get_base_model(temp_dir)
 

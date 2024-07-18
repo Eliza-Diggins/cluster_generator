@@ -1,7 +1,5 @@
-"""
-Testing suite for generating and checking the :py:mod:`cluster_generator.model` module.
-
-"""
+"""Testing suite for generating and checking the :py:mod:`cluster_generator.model`
+module."""
 
 import os
 
@@ -11,8 +9,7 @@ from cluster_generator.tests.utils import generate_model, model_answer_testing
 
 
 def test_model_build(answer_store: bool, answer_dir: str, temp_dir: str):
-    """
-    Test the basic construction mechanisms for a model.
+    """Test the basic construction mechanisms for a model.
 
     Parameters
     ----------

@@ -1,11 +1,9 @@
-"""
-Configure pytest for cluster_generator
-"""
+"""Configure pytest for cluster_generator."""
 import os
 
 import pytest
 
-from cluster_generator.utils import cgparams
+from cluster_generator.utilities.config import cgparams
 
 # Disable progress bars during tests -> GH actions cannot emulate console, prints each update on seperate line (slow).
 cgparams.config.system.preferences.disable_progress_bars = True
@@ -55,13 +53,13 @@ def pytest_addoption(parser):
 
 @pytest.fixture()
 def answer_store(request) -> bool:
-    """fetches the ``--answer_store`` option."""
+    """Fetches the ``--answer_store`` option."""
     return request.config.getoption("--answer_store")
 
 
 @pytest.fixture()
 def answer_dir(request) -> str:
-    """fetches the ``--answer_dir`` option."""
+    """Fetches the ``--answer_dir`` option."""
     ad = os.path.abspath(request.config.getoption("--answer_dir"))
     if not os.path.exists(ad):
         os.makedirs(ad)
@@ -70,9 +68,11 @@ def answer_dir(request) -> str:
 
 @pytest.fixture()
 def temp_dir(request) -> str:
-    """
-    Pull the temporary directory. If this is specified by the user, then it may be a non-temp directory which is not
-    wiped after runtime. If not specified, then a temp directory is generated and wiped after runtime.
+    """Pull the temporary directory.
+
+    If this is specified by the user, then it may be a non-temp directory which is not
+    wiped after runtime. If not specified, then a temp directory is generated and wiped
+    after runtime.
     """
     td = request.config.getoption("--tmp")
 

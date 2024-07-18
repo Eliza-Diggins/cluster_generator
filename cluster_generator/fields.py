@@ -1,6 +1,4 @@
-"""
-3D fields for magnetic field initiation and other field based tasks.
-"""
+"""3D fields for magnetic field initiation and other field based tasks."""
 
 import os
 
@@ -9,12 +7,13 @@ from unyt import unyt_array
 
 from cluster_generator.model import ClusterModel
 from cluster_generator.opt.cython_utils import div_clean
-from cluster_generator.utils import mylog, parse_prng
+from cluster_generator.utilities.logging import mylog
+from cluster_generator.utilities.utils import parse_prng
 
 
 def parse_value(value, default_units):
-    """
-    Parses an array of values into the correct units.
+    """Parses an array of values into the correct units.
+
     Parameters
     ----------
     value: array-like or tuple
@@ -23,6 +22,7 @@ def parse_value(value, default_units):
         Finally, if ``value`` is an array, it is assumed that the ``default_units`` are correct.
     default_units: str
         The default unit for the quantity.
+
     Returns
     -------
     unyt_array:
@@ -38,8 +38,8 @@ def parse_value(value, default_units):
 
 
 def rot_3d(axis, gx, gy, gz, ang):
-    """
-    Rotates the vector ``[gx,gy,gz]`` by an angle ``ang`` around a specified axis.
+    """Rotates the vector ``[gx,gy,gz]`` by an angle ``ang`` around a specified axis.
+
     Parameters
     ----------
     axis: int
@@ -252,9 +252,8 @@ class ClusterField:
         field_unit=None,
         format="hdf5",
     ):
-        r"""
-        Write the 3D field to a file. The coordinates of
-        the cells along the different axes are also written.
+        r"""Write the 3D field to a file. The coordinates of the cells along the
+        different axes are also written.
 
         Parameters
         ----------
@@ -306,9 +305,8 @@ class ClusterField:
                 f.attrs["divergence_clean"] = int(self.divergence_clean)
 
     def map_field_to_particles(self, cluster_particles, ptype="gas", units=None):
-        r"""
-        Map the 3D field to a set of particles, creating new
-        particle fields. This uses tri-linear interpolation.
+        r"""Map the 3D field to a set of particles, creating new particle fields. This
+        uses tri-linear interpolation.
 
         Parameters
         ----------

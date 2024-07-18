@@ -21,9 +21,8 @@ prng: RandomState = RandomState(25)
 
 
 def generate_model() -> ClusterModel:
-    """
-    Construct a toy-model (:py:class:`cluster_generator.model.ClusterModel`) for use in testing.
-    """
+    """Construct a toy-model (:py:class:`cluster_generator.model.ClusterModel`) for use
+    in testing."""
     # parameters
     z = 0.1
     M200 = 1.5e15
@@ -51,8 +50,8 @@ def generate_model() -> ClusterModel:
 
 
 def get_base_model(temp_dir: str | Path) -> ClusterModel:
-    """
-    Fetch the base model from the temp directory. If it can't be found, generate a new one.
+    """Fetch the base model from the temp directory. If it can't be found, generate a
+    new one.
 
     Parameters
     ----------
@@ -75,8 +74,8 @@ def get_base_model(temp_dir: str | Path) -> ClusterModel:
 
 
 def get_base_model_path(temp_dir: str | Path) -> Path:
-    """
-    Fetch the base model path from the temp directory. If it can't be found, generate a new one.
+    """Fetch the base model path from the temp directory. If it can't be found, generate
+    a new one.
 
     Parameters
     ----------
@@ -136,8 +135,7 @@ def _h5_recursive_check(
 def model_answer_testing(
     model: ClusterModel, filename: str, answer_store: bool, answer_dir: str
 ):
-    """
-    Test a new model against an old one and ensure that they have the same fields.
+    """Test a new model against an old one and ensure that they have the same fields.
 
     Parameters
     ----------
@@ -164,8 +162,7 @@ def model_answer_testing(
 def h5_answer_testing(
     new_path: str, filename: str, answer_store: bool, answer_dir: str
 ):
-    """
-    Recursively test an HDF5 file against another.
+    """Recursively test an HDF5 file against another.
 
     Parameters
     ----------
@@ -194,8 +191,7 @@ def h5_answer_testing(
 def particle_answer_testing(
     parts: ClusterParticles, filename: str, answer_store: bool, answer_dir: str
 ):
-    """
-    Check equivalence of particle datasets.
+    """Check equivalence of particle datasets.
 
     Parameters
     ----------

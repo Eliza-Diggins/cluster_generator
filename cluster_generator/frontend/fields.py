@@ -1,6 +1,8 @@
 from yt.fields.field_info_container import FieldInfoContainer
 from yt.utilities.physical_constants import kboltz, mh
 
+import cluster_generator.utilities.physics
+
 # We need to specify which fields we might have in our dataset.  The field info
 # container subclass here will define which fields it knows about.  There are
 # optionally methods on it that get called which can be subclassed.
@@ -111,7 +113,7 @@ class ClusterGeneratorFieldInfo(FieldInfoContainer):
         def _temperature(field, data):
             return (
                 (data["gas", "pressure"] / data["gas", "density"])
-                * data.ds.mu
+                * cluster_generator.utilities.physics.mu
                 * mh
                 / kboltz
             )

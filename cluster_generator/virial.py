@@ -1,5 +1,13 @@
-"""
-Module containing methods for particle virialization.
+"""Module containing methods for particle virialization.
+
+Notes
+-----
+
+..warning::
+
+    For the most part, there is very little reason to interact with any component of this module directly.
+    If you find yourself needing to interact with this code, make sure you understand what your intention is.
+    Changes to this code base may lead to difficult-to-debug errors / inaccuracies.
 """
 from collections import OrderedDict
 
@@ -10,13 +18,16 @@ from unyt import unyt_array
 
 from cluster_generator.opt.cython_utils import generate_velocities
 from cluster_generator.particles import ClusterParticles
-from cluster_generator.utils import cgparams, generate_particle_radii, mylog, quad
+from cluster_generator.utilities.config import cgparams
+from cluster_generator.utilities.logging import mylog
+from cluster_generator.utilities.utils import generate_particle_radii, quad
 
 
 class VirialEquilibrium:
+    """Class representing the virial equilibrium state of cluster particles."""
+
     def __init__(self, model, ptype="dark_matter", df=None):
-        r"""
-        Generate a virial equilibrium model from a profile.
+        r"""Generate a virial equilibrium model from a profile.
 
         Parameters
         ----------
@@ -76,11 +87,9 @@ class VirialEquilibrium:
         return self.df.d[::-1]
 
     def check_virial(self):
-        r"""
-        Computes the radial density profile for the collisionless
-        particles computed from integrating over the distribution
-        function, and the relative difference between this and the
-        input density profile.
+        r"""Computes the radial density profile for the collisionless particles computed
+        from integrating over the distribution function, and the relative difference
+        between this and the input density profile.
 
         Returns
         -------
@@ -113,8 +122,7 @@ class VirialEquilibrium:
         compute_potential=False,
         prng=None,
     ):
-        """
-        Generate a set of dark matter or star particles in virial equilibrium.
+        """Generate a set of dark matter or star particles in virial equilibrium.
 
         Parameters
         ----------
@@ -143,7 +151,7 @@ class VirialEquilibrium:
         particles : :class:`~cluster_generator.particles.ClusterParticles`
             A set of dark matter or star particles.
         """
-        from cluster_generator.utils import parse_prng
+        from cluster_generator.utilities.utils import parse_prng
 
         num_particles_sub = num_particles // sub_sample
         key = {"dark_matter": "dm", "stellar": "star"}[self.ptype]

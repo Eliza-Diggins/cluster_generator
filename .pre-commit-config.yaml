@@ -38,3 +38,9 @@ repos:
         flake8-2020==1.6.1,
         setuptools
       ]
+-  repo: https://github.com/PyCQA/docformatter
+   rev: v1.7.5
+   hooks:
+   - id: docformatter
+     additional_dependencies: [ tomli ]
+     args: ["--in-place","-r","--black","--config=./pyproject.toml" ]

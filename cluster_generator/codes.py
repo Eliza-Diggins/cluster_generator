@@ -1,6 +1,4 @@
-"""
-Code-specific utilities for the ``cluster_generator`` library.
-"""
+"""Code-specific utilities for the ``cluster_generator`` library."""
 
 from pathlib import Path
 
@@ -10,7 +8,7 @@ from unyt import uconcatenate, unyt_array
 
 from cluster_generator.model import ClusterModel
 from cluster_generator.particles import ClusterParticles
-from cluster_generator.utils import mylog
+from cluster_generator.utilities.logging import mylog
 
 
 def write_amr_particles(
@@ -22,9 +20,8 @@ def write_amr_particles(
     in_cgs=False,
     format="hdf5",
 ):
-    """
-    Write the particles to an HDF5 file to be read in by the GAMER,
-    FLASH, or RAMSES codes.
+    """Write the particles to an HDF5 file to be read in by the GAMER, FLASH, or RAMSES
+    codes.
 
     Parameters
     ----------
@@ -74,16 +71,12 @@ def write_amr_particles(
 
 
 def setup_gamer_ics(ics, regenerate_particles=False, use_tracers=False):
-    r"""
-
-    Generate the "Input_TestProb" lines needed for use
-    with the ClusterMerger setup in GAMER. If the particles
-    (dark matter and potentially star) have not been
-    created yet, they will be created at this step. New profile
-    files will also be created which have all fields in CGS units
-    for reading into GAMER. If a magnetic field file is present
-    in the ICs, a note will be given about how it should be named
-    for GAMER to use it.
+    r"""Generate the "Input_TestProb" lines needed for use with the ClusterMerger setup
+    in GAMER. If the particles (dark matter and potentially star) have not been created
+    yet, they will be created at this step. New profile files will also be created which
+    have all fields in CGS units for reading into GAMER. If a magnetic field file is
+    present in the ICs, a note will be given about how it should be named for GAMER to
+    use it.
 
     Parameters
     ----------
@@ -100,7 +93,7 @@ def setup_gamer_ics(ics, regenerate_particles=False, use_tracers=False):
     if use_tracers:
         gamer_ptypes.insert(0, "tracer")
     gamer_ptype_num = {"tracer": 0, "dm": 2, "star": 3}
-    hses = [ClusterModel.from_h5_file(hf) for hf in ics.profiles]
+    hses = [ClusterModel.from_h5_file(hf) for hf in ics.models]
     parts = ics._generate_particles(regenerate_particles=regenerate_particles)
     outlines = [f"Merger_Coll_NumHalos\t\t{ics.num_halos}\t# number of halos"]
     for i in range(ics.num_halos):
@@ -112,16 +105,16 @@ def setup_gamer_ics(ics, regenerate_particles=False, use_tracers=False):
         write_amr_particles(
             parts[i], particle_file, ptypes, gamer_ptype_num, in_cgs=True, format="hdf5"
         )
-        hse_file_gamer = ics.profiles[i].replace(".h5", "_gamer.h5")
+        hse_file_gamer = ics.models[i].replace(".h5", "_gamer.h5")
         hses[i].write_model_to_h5(
             hse_file_gamer, overwrite=True, in_cgs=True, r_max=ics.r_max[i]
         )
-        vel = ics.velocity[i].to_value("km/s")
+        vel = ics.velocities[i].to_value("km/s")
         outlines += [
             f"Merger_File_Prof{i+1}\t\t{hse_file_gamer}\t# profile table of cluster {i+1}",
             f"Merger_File_Par{i+1}\t\t{particle_file}\t# particle file of cluster {i+1}",
-            f"Merger_Coll_PosX{i+1}\t\t{ics.center[i][0].v}\t# X-center of cluster {i+1} in kpc",
-            f"Merger_Coll_PosY{i+1}\t\t{ics.center[i][1].v}\t# Y-center of cluster {i+1} in kpc",
+            f"Merger_Coll_PosX{i+1}\t\t{ics.centers[i][0].v}\t# X-center of cluster {i + 1} in kpc",
+            f"Merger_Coll_PosY{i+1}\t\t{ics.centers[i][1].v}\t# Y-center of cluster {i + 1} in kpc",
             f"Merger_Coll_VelX{i+1}\t\t{vel[0]}\t# X-velocity of cluster {i+1} in km/s",
             f"Merger_Coll_VelY{i+1}\t\t{vel[1]}\t# Y-velocity of cluster {i+1} in km/s",
         ]
@@ -138,12 +131,9 @@ def setup_gamer_ics(ics, regenerate_particles=False, use_tracers=False):
 
 
 def setup_flash_ics(ics, use_particles=True, regenerate_particles=False):
-    r"""
-
-    Generate the "flash.par" lines needed for use
-    with the GalaxyClusterMerger setup in FLASH. If the particles
-    (dark matter and potentially star) have not been
-    created yet, they will be created at this step.
+    r"""Generate the "flash.par" lines needed for use with the GalaxyClusterMerger setup
+    in FLASH. If the particles (dark matter and potentially star) have not been created
+    yet, they will be created at this step.
 
     Parameters
     ----------
@@ -160,11 +150,11 @@ def setup_flash_ics(ics, use_particles=True, regenerate_particles=False):
         ics._generate_particles(regenerate_particles=regenerate_particles)
     outlines = [f"testSingleCluster\t=\t{ics.num_halos} # number of halos"]
     for i in range(ics.num_halos):
-        vel = ics.velocity[i].to("km/s")
+        vel = ics.velocities[i].to("km/s")
         outlines += [
-            f"profile{i+1}\t=\t{ics.profiles[i]}\t# profile table of cluster {i+1}",
-            f"xInit{i+1}\t=\t{ics.center[i][0]}\t# X-center of cluster {i+1} in kpc",
-            f"yInit{i+1}\t=\t{ics.center[i][1]}\t# Y-center of cluster {i+1} in kpc",
+            f"profile{i+1}\t=\t{ics.models[i]}\t# profile table of cluster {i + 1}",
+            f"xInit{i+1}\t=\t{ics.centers[i][0]}\t# X-center of cluster {i + 1} in kpc",
+            f"yInit{i+1}\t=\t{ics.centers[i][1]}\t# Y-center of cluster {i + 1} in kpc",
             f"vxInit{i+1}\t=\t{vel[0]}\t# X-velocity of cluster {i+1} in km/s",
             f"vyInit{i+1}\t=\t{vel[1]}\t# Y-velocity of cluster {i+1} in km/s",
         ]
@@ -210,7 +200,7 @@ def setup_ramses_ics(ics, regenerate_particles=False):
     """
     names = ["Main", "Sub", "Third"]
     config_lines = ["# Merger Dynamics Setting, do not change the general format"]
-    hses = [ClusterModel.from_h5_file(hf) for hf in ics.profiles]
+    hses = [ClusterModel.from_h5_file(hf) for hf in ics.models]
     parts = ics._generate_particles(regenerate_particles=regenerate_particles)
     fields_to_write = ["radius", "density", "pressure"]
     for i in range(ics.num_halos):
@@ -224,8 +214,8 @@ def setup_ramses_ics(ics, regenerate_particles=False):
             r_max=ics.r_max,
             fields_to_write=fields_to_write,
         )
-        vel = ics.velocity[i].to_value("km/s")
-        pos = ics.center[i].to_value("kpc")
+        vel = ics.velocities[i].to_value("km/s")
+        pos = ics.centers[i].to_value("kpc")
         config_lines += [
             f"x_cen[kpc]     ={pos[0]:16.6e}",
             f"y_cen[kpc]     ={pos[1]:16.6e}",
@@ -263,11 +253,11 @@ def setup_arepo_ics(
         .T
     )
     rmax2 = ics.r_max**2
-    idxs = np.sum((posg - ics.center[0].v) ** 2, axis=1) > rmax2[0]
+    idxs = np.sum((posg - ics.centers[0].v) ** 2, axis=1) > rmax2[0]
     if ics.num_halos > 1:
-        idxs |= np.sum((posg - ics.center[1].v) ** 2, axis=1) > rmax2[1]
+        idxs |= np.sum((posg - ics.centers[1].v) ** 2, axis=1) > rmax2[1]
     if ics.num_halos > 2:
-        idxs |= np.sum((posg - ics.center[2].v) ** 2, axis=1) > rmax2[2]
+        idxs |= np.sum((posg - ics.centers[2].v) ** 2, axis=1) > rmax2[2]
     dV = dx**3
     nleft = idxs.sum()
     idens = np.argmin(cparts["gas", "density"].d)

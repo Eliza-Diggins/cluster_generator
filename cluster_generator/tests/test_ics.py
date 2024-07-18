@@ -1,6 +1,4 @@
-"""
-Testing module for initial conditions objects.
-"""
+"""Testing module for initial conditions objects."""
 
 import pytest
 
@@ -14,8 +12,9 @@ from cluster_generator.tests.utils import (
 
 @pytest.mark.slow
 def test_single_ics(answer_dir: str, answer_store: bool, temp_dir: str):
-    """
-    Generate a 1-cluster IC object and create its particles. Then check against answers.
+    """Generate a 1-cluster IC object and create its particles.
+
+    Then check against answers.
     """
     # -- Making sure that there is a model -- #
     # The model should be at temp_dir/base_model.h5. If not, we may need to generate a new one.
@@ -41,8 +40,9 @@ def test_single_ics(answer_dir: str, answer_store: bool, temp_dir: str):
 
 @pytest.mark.slow
 def test_double_ics(answer_dir: str, answer_store: bool, temp_dir: str):
-    """
-    Generate a 2-cluster IC object and create its particles. Then check against answers.
+    """Generate a 2-cluster IC object and create its particles.
+
+    Then check against answers.
     """
     # -- Making sure that there is a model -- #
     # The model should be at temp_dir/base_model.h5. If not, we may need to generate a new one.

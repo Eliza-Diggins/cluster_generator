@@ -37,6 +37,7 @@ setup(
         "cython",
         "ruamel.yaml",
         "h5py",
+        "tqdm",
     ],
     classifiers=[
         "Intended Audience :: Science/Research",

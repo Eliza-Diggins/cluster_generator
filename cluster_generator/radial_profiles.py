@@ -1,27 +1,32 @@
-"""
-Module for generating radial profiles used to build galaxy cluster models.
+"""Radial profiles for representing physical properties of galaxy clusters.
+
+Notes
+-----
+
+In addition to the built-in :py:class:`RadialProfile` instances, you can also create your own simply by initializing the :py:class:`RadialProfile`
+class on a function representing your preferred radial profile.
 """
 from numbers import Number
 from typing import Any, Callable, Literal
 
 import numpy as np
+import yt.utilities.cosmology
 from numpy.typing import ArrayLike
 
-from cluster_generator.utils import Registry, Self, enforce_style  # back-compat.
+from cluster_generator.utilities.types import NumericInput, Registry, Self
+from cluster_generator.utilities.utils import enforce_style  # back-compat.
+
+NumericCallable = Callable[[NumericInput], NumericInput]
 
 _nfw_factor = lambda conc: 1.0 / (np.log(conc + 1.0) - conc / (1.0 + conc))
 
 
 class ProfileRegistry(Registry):
-    """
-    Registry class for storing collections of profile types.
-    """
+    """Registry of valid built-in :py:class:`RadialProfile` generators."""
 
     @property
     def types(self) -> list[str]:
-        """
-        The available types of profile in this registry.
-        """
+        """The available types of profile in this registry."""
         _t = []
         for _, v in self._mapping.items():
             if hasattr(v, "type"):
@@ -31,40 +36,45 @@ class ProfileRegistry(Registry):
 
 
 DEFAULT_PROFILE_REGISTRY: ProfileRegistry = ProfileRegistry()
+""" ProfileRegistry: The default registry of radial profiles."""
 
 
 class RadialProfile:
-    """
-    Class representation of a single radial profile.
-    """
+    """Class representation of a single radial profile."""
 
-    def __init__(
-        self, profile: Self | Callable[[ArrayLike | Number], ArrayLike | Number]
-    ):
+    def __init__(self, profile: Self | NumericCallable):
+        """Initialize a :py:class:`RadialProfile` instance.
+
+        Parameters
+        ----------
+        profile: callable
+            The function (or existing :py:class:`RadialProfile`) to create the radial profile.
+        """
         if isinstance(profile, RadialProfile):
-            self.profile = profile.profile
+            self.profile: NumericCallable = profile.profile
         else:
-            self.profile = profile
+            self.profile: NumericCallable = profile
+            """ callable: The underlying function of radius for this radial profile."""
 
-    def __call__(self, r: ArrayLike | Number) -> ArrayLike | Number:
+    def __call__(self, r: NumericInput) -> NumericInput:
         return self.profile(r)
 
     def _do_op(
         self,
         other: Any,
-        op: Callable[[ArrayLike | Number, ArrayLike | Number], ArrayLike | Number],
-    ) -> Callable[[ArrayLike | Number], ArrayLike | Number]:
+        op: Callable[[NumericInput, NumericInput], NumericInput],
+    ) -> NumericCallable:
         if hasattr(other, "profile"):
             p = lambda r: op(self.profile(r), other.profile(r))
         else:
             p = lambda r: op(self.profile(r), other)
         return p
 
-    def __add__(self, other: Any) -> Self:
+    def __add__(self, other: Self | NumericCallable) -> Self:
         p = self._do_op(other, np.add)
         return RadialProfile(p)
 
-    def __mul__(self, other: Any) -> Self:
+    def __mul__(self, other: Self | NumericCallable) -> Self:
         p = self._do_op(other, np.multiply)
         return RadialProfile(p)
 
@@ -76,9 +86,8 @@ class RadialProfile:
         return RadialProfile(p)
 
     def add_core(self, r_core: float, alpha: float) -> Self:
-        """
-        Add a small core with radius ``r_core`` to the profile by
-        multiplying it by :math:`1-exp(-(r/r_core)^alpha)`.
+        r"""Add a small core with radius ``r_core`` to the profile by multiplying it by
+        :math:`1-exp(-(r/r_{\rm{core}})^{\alpha})`.
 
         Parameters
         ----------
@@ -96,8 +105,8 @@ class RadialProfile:
         return RadialProfile(_core)
 
     def cutoff(self, r_cut: float, k: float = 5) -> Self:
-        """
-        Truncate the profile with a particular sharpness dictated by ``k`` at radius ``r_cut``.
+        """Truncate the profile with a particular sharpness dictated by ``k`` at radius
+        ``r_cut``.
 
         Parameters
         ----------
@@ -108,7 +117,6 @@ class RadialProfile:
 
         Returns
         -------
-
         """
 
         def _cutoff(r):
@@ -121,9 +129,8 @@ class RadialProfile:
 
     @classmethod
     def from_array(cls, r: ArrayLike, f_r: ArrayLike) -> Self:
-        """
-        Generate a callable radial profile using an array of radii
-        and an array of values.
+        """Generate a callable radial profile using an array of radii and an array of
+        values.
 
         Parameters
         ----------
@@ -147,9 +154,8 @@ class RadialProfile:
         ax: Any = None,
         scale: Literal["log", "linear"] = "log",
         **kwargs
-    ):
-        """
-        Make a quick plot of a profile using Matplotlib.
+    ) -> tuple[Any, Any]:
+        """Make a quick plot of a profile using Matplotlib.
 
         Parameters
         ----------
@@ -168,6 +174,13 @@ class RadialProfile:
         ax : :class:`~matplotlib.axes.Axes`, optional
             An Axes instance to plot in. Default: None, one will be
             created if not provided.
+
+        Return
+        ------
+        fig: :py:class:`plt.Figure`
+            The figure.
+        ax: :py:class:`plt.Axes`
+            The axes.
         """
         import matplotlib.pyplot as plt
 
@@ -192,9 +205,8 @@ class RadialProfile:
 
 
 @DEFAULT_PROFILE_REGISTRY.autoregister(type="generic")
-def constant_profile(const):
-    """
-    A constant profile.
+def constant_profile(const: Number) -> RadialProfile:
+    """A constant profile.
 
     Parameters
     ----------
@@ -208,13 +220,10 @@ def constant_profile(const):
 
 
 @DEFAULT_PROFILE_REGISTRY.autoregister(type="generic")
-def power_law_profile(A, r_s, alpha):
-    """
-    A profile which is a power-law with radius, scaled
-    so that it has a certain value ``A`` at a scale
-    radius ``r_s``. Can be used as a density, temperature,
-    mass, or entropy profile (or whatever else one may
-    need).
+def power_law_profile(A: float, r_s: float, alpha: float) -> RadialProfile:
+    """A profile which is a power-law with radius, scaled so that it has a certain value
+    ``A`` at a scale radius ``r_s``. Can be used as a density, temperature, mass, or
+    entropy profile (or whatever else one may need).
 
     Parameters
     ----------
@@ -230,10 +239,9 @@ def power_law_profile(A, r_s, alpha):
 
 
 @DEFAULT_PROFILE_REGISTRY.autoregister(type="density")
-def beta_model_profile(rho_c, r_c, beta):
-    """
-    A beta-model density profile (Cavaliere A.,
-    Fusco-Femiano R., 1976, A&A, 49, 137).
+def beta_model_profile(rho_c: float, r_c: float, beta: float) -> RadialProfile:
+    """A beta-model density profile (Cavaliere A., Fusco-Femiano R., 1976, A&A, 49,
+    137).
 
     Parameters
     ----------
@@ -249,10 +257,8 @@ def beta_model_profile(rho_c, r_c, beta):
 
 
 @DEFAULT_PROFILE_REGISTRY.autoregister(type="density")
-def hernquist_density_profile(M_0, a):
-    """
-    A Hernquist density profile (Hernquist, L. 1990,
-    ApJ, 356, 359).
+def hernquist_density_profile(M_0: float, a: float) -> RadialProfile:
+    """A Hernquist density profile (Hernquist, L. 1990, ApJ, 356, 359).
 
     Parameters
     ----------
@@ -266,10 +272,9 @@ def hernquist_density_profile(M_0, a):
 
 
 @DEFAULT_PROFILE_REGISTRY.autoregister(type="density")
-def cored_hernquist_density_profile(M_0, a, b):
-    """
-    A Hernquist density profile (Hernquist, L. 1990,
-    ApJ, 356, 359) with a core radius.
+def cored_hernquist_density_profile(M_0: float, a: float, b: float) -> RadialProfile:
+    """A Hernquist density profile (Hernquist, L. 1990, ApJ, 356, 359) with a core
+    radius.
 
     Parameters
     ----------
@@ -290,10 +295,8 @@ def cored_hernquist_density_profile(M_0, a, b):
 
 
 @DEFAULT_PROFILE_REGISTRY.autoregister(type="mass")
-def hernquist_mass_profile(M_0, a):
-    """
-    A Hernquist mass profile (Hernquist, L. 1990,
-    ApJ, 356, 359).
+def hernquist_mass_profile(M_0: float, a: float) -> RadialProfile:
+    """A Hernquist mass profile (Hernquist, L. 1990, ApJ, 356, 359).
 
     Parameters
     ----------
@@ -306,11 +309,9 @@ def hernquist_mass_profile(M_0, a):
     return RadialProfile(p)
 
 
-def convert_nfw_to_hernquist(M_200, r_200, conc):
-    """
-    Given M200, r200, and a concentration parameter for an
-    NFW profile, return the Hernquist mass and scale radius
-    parameters.
+def convert_nfw_to_hernquist(M_200: float, r_200: float, conc: float) -> RadialProfile:
+    """Given M200, r200, and a concentration parameter for an NFW profile, return the
+    Hernquist mass and scale radius parameters.
 
     Parameters
     ----------
@@ -328,10 +329,9 @@ def convert_nfw_to_hernquist(M_200, r_200, conc):
 
 
 @DEFAULT_PROFILE_REGISTRY.autoregister(type="density")
-def nfw_density_profile(rho_s, r_s):
-    """
-    An NFW density profile (Navarro, J.F., Frenk, C.S.,
-    & White, S.D.M. 1996, ApJ, 462, 563).
+def nfw_density_profile(rho_s: float, r_s: float) -> RadialProfile:
+    """An NFW density profile (Navarro, J.F., Frenk, C.S., & White, S.D.M. 1996, ApJ,
+    462, 563).
 
     Parameters
     ----------
@@ -345,10 +345,9 @@ def nfw_density_profile(rho_s, r_s):
 
 
 @DEFAULT_PROFILE_REGISTRY.autoregister(type="mass")
-def nfw_mass_profile(rho_s, r_s):
-    """
-    An NFW mass profile (Navarro, J.F., Frenk, C.S.,
-    & White, S.D.M. 1996, ApJ, 462, 563).
+def nfw_mass_profile(rho_s: float, r_s: float) -> RadialProfile:
+    """An NFW mass profile (Navarro, J.F., Frenk, C.S., & White, S.D.M. 1996, ApJ, 462,
+    563).
 
     Parameters
     ----------
@@ -365,11 +364,14 @@ def nfw_mass_profile(rho_s, r_s):
     return RadialProfile(_nfw)
 
 
-def nfw_scale_density(conc, z=0.0, delta=200.0, cosmo=None):
-    """
-    Compute a scale density parameter for an NFW profile
-    given a concentration parameter, and optionally
-    a redshift, overdensity, and cosmology.
+def nfw_scale_density(
+    conc: float,
+    z: float = 0.0,
+    delta: float = 200.0,
+    cosmo: yt.utilities.cosmology.Cosmology = None,
+) -> RadialProfile:
+    """Compute a scale density parameter for an NFW profile given a concentration
+    parameter, and optionally a redshift, overdensity, and cosmology.
 
     Parameters
     ----------
@@ -397,10 +399,9 @@ def nfw_scale_density(conc, z=0.0, delta=200.0, cosmo=None):
 
 
 @DEFAULT_PROFILE_REGISTRY.autoregister(type="density")
-def tnfw_density_profile(rho_s, r_s, r_t):
-    """
-    A truncated NFW (tNFW) density profile (Baltz, E.A.,
-    Marshall, P., & Oguri, M. 2009, JCAP, 2009, 015).
+def tnfw_density_profile(rho_s: float, r_s: float, r_t: float) -> RadialProfile:
+    """A truncated NFW (tNFW) density profile (Baltz, E.A., Marshall, P., & Oguri, M.
+    2009, JCAP, 2009, 015).
 
     Parameters
     ----------
@@ -421,10 +422,9 @@ def tnfw_density_profile(rho_s, r_s, r_t):
 
 
 @DEFAULT_PROFILE_REGISTRY.autoregister(type="mass")
-def tnfw_mass_profile(rho_s, r_s, r_t):
-    """
-    A truncated NFW (tNFW) mass profile (Baltz, E.A.,
-    Marshall, P., & Oguri, M. 2009, JCAP, 2009, 015).
+def tnfw_mass_profile(rho_s: float, r_s: float, r_t: float) -> RadialProfile:
+    """A truncated NFW (tNFW) mass profile (Baltz, E.A., Marshall, P., & Oguri, M. 2009,
+    JCAP, 2009, 015).
 
     Parameters
     ----------
@@ -452,10 +452,9 @@ def tnfw_mass_profile(rho_s, r_s, r_t):
 
 
 @DEFAULT_PROFILE_REGISTRY.autoregister(type="density")
-def snfw_density_profile(M, a):
-    """
-    A "super-NFW" density profile (Lilley, E. J.,
-    Wyn Evans, N., & Sanders, J.L. 2018, MNRAS).
+def snfw_density_profile(M: float, a: float) -> RadialProfile:
+    """A "super-NFW" density profile (Lilley, E. J., Wyn Evans, N., & Sanders, J.L.
+    2018, MNRAS).
 
     Parameters
     ----------
@@ -473,10 +472,9 @@ def snfw_density_profile(M, a):
 
 
 @DEFAULT_PROFILE_REGISTRY.autoregister(type="mass")
-def snfw_mass_profile(M, a):
-    """
-    A "super-NFW" mass profile (Lilley, E. J.,
-    Wyn Evans, N., & Sanders, J.L. 2018, MNRAS).
+def snfw_mass_profile(M: float, a: float) -> RadialProfile:
+    """A "super-NFW" mass profile (Lilley, E. J., Wyn Evans, N., & Sanders, J.L. 2018,
+    MNRAS).
 
     Parameters
     ----------
@@ -493,11 +491,9 @@ def snfw_mass_profile(M, a):
     return RadialProfile(_snfw)
 
 
-def snfw_total_mass(mass, radius, a):
-    """
-    Find the total mass parameter for the super-NFW
-    model by inputting a reference mass and radius
-    (say, M200c and R200c), along with the scale radius.
+def snfw_total_mass(mass: float, radius: float, a: float) -> RadialProfile:
+    """Find the total mass parameter for the super-NFW model by inputting a reference
+    mass and radius (say, M200c and R200c), along with the scale radius.
 
     Parameters
     ----------
@@ -513,10 +509,9 @@ def snfw_total_mass(mass, radius, a):
 
 
 @DEFAULT_PROFILE_REGISTRY.autoregister(type="density")
-def cored_snfw_density_profile(M, a, r_c):
-    """
-    A cored "super-NFW" density profile (Lilley, E. J.,
-    Wyn Evans, N., & Sanders, J.L. 2018, MNRAS).
+def cored_snfw_density_profile(M: float, a: float, r_c: float) -> RadialProfile:
+    """A cored "super-NFW" density profile (Lilley, E. J., Wyn Evans, N., & Sanders,
+    J.L. 2018, MNRAS).
 
     Parameters
     ----------
@@ -539,10 +534,9 @@ def cored_snfw_density_profile(M, a, r_c):
 
 
 @DEFAULT_PROFILE_REGISTRY.autoregister(type="mass")
-def cored_snfw_mass_profile(M, a, r_c):
-    """
-    A cored "super-NFW" mass profile (Lilley, E. J.,
-    Wyn Evans, N., & Sanders, J.L. 2018, MNRAS).
+def cored_snfw_mass_profile(M: float, a: float, r_c: float) -> RadialProfile:
+    """A cored "super-NFW" mass profile (Lilley, E. J., Wyn Evans, N., & Sanders, J.L.
+    2018, MNRAS).
 
     Parameters
     ----------
@@ -568,12 +562,10 @@ def cored_snfw_mass_profile(M, a, r_c):
     return RadialProfile(_snfw)
 
 
-def snfw_conc(conc_nfw):
-    """
-    Given an NFW concentration parameter, calculate the
-    corresponding sNFW concentration parameter. This comes
-    from Equation 31 of (Lilley, E. J., Wyn Evans, N., &
-    Sanders, J.L. 2018, MNRAS).
+def snfw_conc(conc_nfw: float) -> float:
+    """Given an NFW concentration parameter, calculate the corresponding sNFW
+    concentration parameter. This comes from Equation 31 of (Lilley, E. J., Wyn Evans,
+    N., & Sanders, J.L. 2018, MNRAS).
 
     Parameters
     ----------
@@ -583,11 +575,11 @@ def snfw_conc(conc_nfw):
     return 0.76 * conc_nfw + 1.36
 
 
-def cored_snfw_total_mass(mass, radius, a, r_c):
-    """
-    Find the total mass parameter for the cored super-NFW
-    model by inputting a reference mass and radius
-    (say, M200c and R200c), along with the scale radius.
+def cored_snfw_total_mass(
+    mass: float, radius: float, a: float, r_c: float
+) -> RadialProfile:
+    """Find the total mass parameter for the cored super-NFW model by inputting a
+    reference mass and radius (say, M200c and R200c), along with the scale radius.
 
     Parameters
     ----------
@@ -608,11 +600,9 @@ _dn = lambda n: 3.0 * n - 1.0 / 3.0 + 8.0 / (1215.0 * n) + 184.0 / (229635.0 * n
 
 
 @DEFAULT_PROFILE_REGISTRY.autoregister(type="density")
-def einasto_density_profile(M, r_s, n):
-    """
-    A density profile where the logarithmic slope is a
-    power-law. The form here is that given in Section 2 of
-    Retana-Montenegro et al. 2012, A&A, 540, A70.
+def einasto_density_profile(M: float, r_s: float, n: int) -> RadialProfile:
+    """A density profile where the logarithmic slope is a power-law. The form here is
+    that given in Section 2 of Retana-Montenegro et al. 2012, A&A, 540, A70.
 
     Parameters
     ----------
@@ -620,7 +610,7 @@ def einasto_density_profile(M, r_s, n):
         The total mass of the profile in M.
     r_s : float
         The scale radius in kpc.
-    n : float
+    n : int
         The inverse power-law index.
     """
     from scipy.special import gamma
@@ -637,11 +627,9 @@ def einasto_density_profile(M, r_s, n):
 
 
 @DEFAULT_PROFILE_REGISTRY.autoregister(type="mass")
-def einasto_mass_profile(M, r_s, n):
-    """
-    A mass profile where the logarithmic slope is a
-    power-law. The form here is that given in Section 2 of
-    Retana-Montenegro et al. 2012, A&A, 540, A70.
+def einasto_mass_profile(M: float, r_s: float, n: int) -> RadialProfile:
+    """A mass profile where the logarithmic slope is a power-law. The form here is that
+    given in Section 2 of Retana-Montenegro et al. 2012, A&A, 540, A70.
 
     Parameters
     ----------
@@ -649,7 +637,7 @@ def einasto_mass_profile(M, r_s, n):
         The total mass of the profile in M.
     r_s : float
         The scale radius in kpc.
-    n : float
+    n : int
         The inverse power-law index.
     """
     from scipy.special import gammaincc
@@ -665,11 +653,11 @@ def einasto_mass_profile(M, r_s, n):
 
 
 @DEFAULT_PROFILE_REGISTRY.autoregister(type="density")
-def am06_density_profile(rho_0, a, a_c, c, n):
-    """
-    The density profile for galaxy clusters suggested by
-    Ascasibar, Y., & Markevitch, M. 2006, ApJ, 650, 102.
-    Works best in concert with the ``am06_temperature_profile``.
+def am06_density_profile(
+    rho_0: float, a: float, a_c: float, c: float, n: int
+) -> RadialProfile:
+    """The density profile for galaxy clusters suggested by Ascasibar, Y., & Markevitch,
+    M. 2006, ApJ, 650, 102. Works best in concert with the ``am06_temperature_profile``.
 
     Parameters
     ----------
@@ -681,7 +669,7 @@ def am06_density_profile(rho_0, a, a_c, c, n):
         The scale radius of the cool core in kpc.
     c : float
         The scale of the temperature drop of the cool core.
-    n : float
+    n : int
     """
     alpha = -1.0 - n * (c - 1.0) / (c - a / a_c)
     beta = 1.0 - n * (1.0 - a / a_c) / (c - a / a_c)
@@ -695,11 +683,17 @@ def am06_density_profile(rho_0, a, a_c, c, n):
 
 
 @DEFAULT_PROFILE_REGISTRY.autoregister(type="density")
-def vikhlinin_density_profile(rho_0, r_c, r_s, alpha, beta, epsilon, gamma=None):
-    """
-    A modified beta-model density profile for galaxy
-    clusters from Vikhlinin, A., Kravtsov, A., Forman, W.,
-    et al. 2006, ApJ, 640, 691.
+def vikhlinin_density_profile(
+    rho_0: float,
+    r_c: float,
+    r_s: float,
+    alpha: float,
+    beta: float,
+    epsilon: float,
+    gamma: float = None,
+) -> RadialProfile:
+    """A modified beta-model density profile for galaxy clusters from Vikhlinin, A.,
+    Kravtsov, A., Forman, W., et al. 2006, ApJ, 640, 691.
 
     Parameters
     ----------
@@ -731,11 +725,18 @@ def vikhlinin_density_profile(rho_0, r_c, r_s, alpha, beta, epsilon, gamma=None)
 
 
 @DEFAULT_PROFILE_REGISTRY.autoregister(type="temperature")
-def vikhlinin_temperature_profile(T_0, a, b, c, r_t, T_min, r_cool, a_cool):
-    """
-    A temperature profile for galaxy clusters from
-    Vikhlinin, A., Kravtsov, A., Forman, W., et al.
-    2006, ApJ, 640, 691.
+def vikhlinin_temperature_profile(
+    T_0: float,
+    a: float,
+    b: float,
+    c: float,
+    r_t: float,
+    T_min: float,
+    r_cool: float,
+    a_cool: float,
+) -> RadialProfile:
+    """A temperature profile for galaxy clusters from Vikhlinin, A., Kravtsov, A.,
+    Forman, W., et al. 2006, ApJ, 640, 691.
 
     Parameters
     ----------
@@ -766,11 +767,12 @@ def vikhlinin_temperature_profile(T_0, a, b, c, r_t, T_min, r_cool, a_cool):
 
 
 @DEFAULT_PROFILE_REGISTRY.autoregister(type="temperature")
-def am06_temperature_profile(T_0, a, a_c, c):
-    """
-    The temperature profile for galaxy clusters suggested by
-    Ascasibar, Y., & Markevitch, M. 2006, ApJ, 650, 102.
-    Works best in concert with the ``am06_density_profile``.
+def am06_temperature_profile(
+    T_0: float, a: float, a_c: float, c: float
+) -> RadialProfile:
+    """The temperature profile for galaxy clusters suggested by Ascasibar, Y., &
+    Markevitch, M. 2006, ApJ, 650, 102. Works best in concert with the
+    ``am06_density_profile``.
 
     Parameters
     ----------
@@ -788,10 +790,11 @@ def am06_temperature_profile(T_0, a, a_c, c):
 
 
 @DEFAULT_PROFILE_REGISTRY.autoregister(type="entropy")
-def baseline_entropy_profile(K_0, K_200, r_200, alpha):
-    """
-    The baseline entropy profile for galaxy clusters (Voit, G.M.,
-    Kay, S.T., & Bryan, G.L. 2005, MNRAS, 364, 909).
+def baseline_entropy_profile(
+    K_0: float, K_200: float, r_200: float, alpha: float
+) -> RadialProfile:
+    """The baseline entropy profile for galaxy clusters (Voit, G.M., Kay, S.T., & Bryan,
+    G.L. 2005, MNRAS, 364, 909).
 
     Parameters
     ----------
@@ -809,7 +812,9 @@ def baseline_entropy_profile(K_0, K_200, r_200, alpha):
 
 
 @DEFAULT_PROFILE_REGISTRY.autoregister(type="entropy")
-def broken_entropy_profile(r_s, K_scale, alpha, K_0=0.0):
+def broken_entropy_profile(
+    r_s: float, K_scale: float, alpha: float, K_0: float = 0.0
+) -> RadialProfile:
     def _entr(r):
         x = r / r_s
         ret = (x**alpha) * (1.0 + x**5) ** (0.2 * (1.1 - alpha))
@@ -819,7 +824,9 @@ def broken_entropy_profile(r_s, K_scale, alpha, K_0=0.0):
 
 
 @DEFAULT_PROFILE_REGISTRY.autoregister(type="entropy")
-def walker_entropy_profile(r_200, A, B, K_scale, alpha=1.1):
+def walker_entropy_profile(
+    r_200: float, A: float, B: float, K_scale: float, alpha: float = 1.1
+) -> RadialProfile:
     def _entr(r):
         x = r / r_200
         return K_scale * (A * x**alpha) * np.exp(-((x / B) ** 2))
@@ -828,9 +835,7 @@ def walker_entropy_profile(r_200, A, B, K_scale, alpha=1.1):
 
 
 def rescale_profile_by_mass(profile, mass, radius):
-    """
-    Rescale a density ``profile`` by a total ``mass``
-    within some ``radius``.
+    """Rescale a density ``profile`` by a total ``mass`` within some ``radius``.
 
     Parameters
     ----------
@@ -852,7 +857,6 @@ def rescale_profile_by_mass(profile, mass, radius):
     >>> M200 = 1.0e14
     >>> r200 = 900.0
     >>> gas_density = rescale_profile_by_mass(gas_density, M200, r200)
-
     """
     from scipy.integrate import quad
 
@@ -862,9 +866,8 @@ def rescale_profile_by_mass(profile, mass, radius):
 
 
 def find_overdensity_radius(m, delta, z=0.0, cosmo=None):
-    """
-    Given a mass value and an overdensity, find the radius
-    that corresponds to that enclosed mass.
+    """Given a mass value and an overdensity, find the radius that corresponds to that
+    enclosed mass.
 
     Parameters
     ----------
@@ -888,9 +891,8 @@ def find_overdensity_radius(m, delta, z=0.0, cosmo=None):
 
 
 def find_radius_mass(m_r, delta, z=0.0, cosmo=None):
-    """
-    Given a mass profile and an overdensity, find the radius
-    and mass (e.g. M200, r200)
+    """Given a mass profile and an overdensity, find the radius and mass (e.g. M200,
+    r200)
 
     Parameters
     ----------

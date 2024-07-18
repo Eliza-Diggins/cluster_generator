@@ -1,6 +1,4 @@
-"""
-Testing module for the :py:mod:``data_structures`` module.
-"""
+"""Testing module for the :py:mod:``data_structures`` module."""
 import os
 
 import pytest
@@ -12,15 +10,11 @@ from cluster_generator.tests.utils import generate_model, h5_answer_testing
 
 @pytest.mark.usefixtures("answer_dir", "answer_store", "temp_dir")
 class Test_YTHDF5:
-    """
-    Tests for the :py:class:`data_structures.YTHDF5`` class.
-    """
+    """Tests for the :py:class:`data_structures.YTHDF5`` class."""
 
     @pytest.mark.slow
     def test_construction(self, answer_dir: str, answer_store: bool, temp_dir: str):
-        """
-        Test YTHDF5 construction process for the base model.
-        """
+        """Test YTHDF5 construction process for the base model."""
         # Loading the model from tmp directory.
         model_path = os.path.join(temp_dir, "base_model.h5")
 
@@ -58,15 +52,11 @@ class Test_YTHDF5:
         return yt.load(ds_path)
 
     def test_yt_load(self, answer_dir: str, answer_store: bool, temp_dir: str):
-        """
-        Try to load the model in yt.
-        """
+        """Try to load the model in yt."""
         _ = self._load_yt(answer_dir, temp_dir)
 
     def test_yt_fields(self, answer_dir, answer_store: bool, temp_dir: str):
-        """
-        Check that all of the anticipated fields are correctly loaded.
-        """
+        """Check that all of the anticipated fields are correctly loaded."""
         _expected_fields = [
             ("gas", "density"),
             ("gas", "momentum_density_x"),

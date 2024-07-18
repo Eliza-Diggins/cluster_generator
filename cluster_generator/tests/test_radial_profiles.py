@@ -1,6 +1,4 @@
-"""
-Tests for the ``RadialProfile`` objects
-"""
+"""Tests for the ``RadialProfile`` objects."""
 
 import os
 import pathlib as pt
@@ -11,7 +9,7 @@ import pytest
 from numpy.testing import assert_allclose
 
 import cluster_generator.radial_profiles as rp
-from cluster_generator.utils import integrate_mass
+from cluster_generator.utilities.utils import integrate_mass
 
 _params = (
     {  # Stores all of the parameters for the generation of each of the test cases.
@@ -46,9 +44,7 @@ _params = (
 
 @pytest.mark.parametrize("profile", list(rp.DEFAULT_PROFILE_REGISTRY.keys()))
 def test_profiles(profile: str, answer_dir: str, answer_store: bool, temp_dir: str):
-    """
-    Test that radial profiles successfully produce arrays and match answers.
-    """
+    """Test that radial profiles successfully produce arrays and match answers."""
     # Setup
     _r = np.geomspace(1, 10000, 1000)
     _answer_file = pt.Path(os.path.join(answer_dir, "radial_profiles.h5"))
