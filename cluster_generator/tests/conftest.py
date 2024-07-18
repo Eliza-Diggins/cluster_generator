@@ -170,6 +170,9 @@ def fetch_remote(request):
             print("\0338", end="", flush=True)
 
             # download from the remote path.
+            if not os.path.exists(_answer_dir):
+                Path(_answer_dir).mkdir(parents=True, exist_ok=True)
+
             try:
                 download_file(remote_path, os.path.join(_answer_dir, package_name))
             except Exception as e:
