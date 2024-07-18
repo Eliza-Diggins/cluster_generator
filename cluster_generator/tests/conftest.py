@@ -8,7 +8,7 @@ from cluster_generator.utilities.config import cgparams
 # Disable progress bars during tests -> GH actions cannot emulate console, prints each update on seperate line (slow).
 cgparams.config.system.preferences.disable_progress_bars = True
 
-_remote_host = ""  # The remote host from which to fetch answers.
+_remote_host = "http://home.chpc.utah.edu/~u1281896/cluster_generator"  # The remote host from which to fetch answers.
 
 
 def download_file(url, output_path):
@@ -66,6 +66,11 @@ def pytest_addoption(parser):
         "--fetch_remote",
         help="Fetch answers from remote directory.",
         action="store_true",
+    )
+    parser.addoption(
+        "--remote_file",
+        help="Explicitly set the remote file to fetch.",
+        default=None,
     )
 
 
@@ -140,15 +145,21 @@ def fetch_remote(request):
     # Fetch the options
     _answer_dir = Path(os.path.abspath(request.config.getoption("--answer_dir")))
     _answer_store = request.config.getoption("--answer_store")
+    _fetch_remote = request.config.getoption("--fetch_remote")
+    _remote_file = request.config.getoption("--remote_file")
 
     # Ensure that _answer_store is False; otherwise this is pointless.
-    if not _answer_store:
+    if (not _answer_store) and _fetch_remote:
         # Fetching system info: need OS, python version, and cluster generator version.
         _system = system()  # --> Linux, Windows, etc.
         _py_version = sys.version.split(" ")[0]
         _cg_version = version("cluster_generator")
 
-        package_name = f"cg_answers_{_system}_{_py_version}_{_cg_version}.tar.gz"
+        if _remote_file is None:
+            package_name = f"cg_answers_{_system}_{_py_version}_{_cg_version}.tar.gz"
+        else:
+            package_name = f"{_remote_file}.tar.gz"
+
         remote_path = os.path.join(_remote_host, package_name)
 
         with capmanager.global_and_fixture_disabled():

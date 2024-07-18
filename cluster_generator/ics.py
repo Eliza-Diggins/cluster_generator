@@ -673,26 +673,3 @@ class ClusterICs:
         ds_obj.add_ICs(self)
 
         return ds_obj.filename
-
-
-if __name__ == "__main__":
-    from cluster_generator.tests.utils import generate_model
-
-    model = generate_model()
-    model.write_model_to_h5("test.h5", overwrite=True)
-
-    num_particles = {k: 200000 for k in ["dm", "star", "gas"]}
-    center1, center2 = compute_centers_for_binary([0.0, 0.0, 0.0], 3000.0, 500.0)
-    velocity1 = [500.0, 0.0, 0.0]
-    velocity2 = [-500.0, 0.0, 0.0]
-    ics = ClusterICs(
-        "double",
-        2,
-        ["test.h5", "test.h5"],
-        [center1, center2],
-        [velocity1, velocity2],
-        num_particles=num_particles,
-    )
-
-    # Generate the particles
-    parts = ics.setup_particle_ics()

@@ -9,10 +9,10 @@ from cluster_generator.tests.utils import generate_model, h5_answer_testing
 
 
 @pytest.mark.usefixtures("answer_dir", "answer_store", "temp_dir")
+@pytest.mark.slow
 class Test_YTHDF5:
     """Tests for the :py:class:`data_structures.YTHDF5`` class."""
 
-    @pytest.mark.slow
     def test_construction(self, answer_dir: str, answer_store: bool, temp_dir: str):
         """Test YTHDF5 construction process for the base model."""
         # Loading the model from tmp directory.

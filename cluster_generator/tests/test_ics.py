@@ -1,7 +1,5 @@
 """Testing module for initial conditions objects."""
 
-import pytest
-
 from cluster_generator.ics import ClusterICs, compute_centers_for_binary
 from cluster_generator.tests.utils import (
     get_base_model_path,
@@ -10,7 +8,6 @@ from cluster_generator.tests.utils import (
 )
 
 
-@pytest.mark.slow
 def test_single_ics(answer_dir: str, answer_store: bool, temp_dir: str):
     """Generate a 1-cluster IC object and create its particles.
 
@@ -38,7 +35,6 @@ def test_single_ics(answer_dir: str, answer_store: bool, temp_dir: str):
     particle_answer_testing(parts, "particles_single.h5", answer_store, answer_dir)
 
 
-@pytest.mark.slow
 def test_double_ics(answer_dir: str, answer_store: bool, temp_dir: str):
     """Generate a 2-cluster IC object and create its particles.
 

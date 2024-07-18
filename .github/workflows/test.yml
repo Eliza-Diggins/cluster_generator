@@ -27,5 +27,5 @@ jobs:
           pip install -e .
       - name: Running pytest
         run: |
-          pytest cluster_generator --doctest-modules --answer_dir="./tmp" --answer_store --cov=cluster_generator --cov-report=xml -s
+          pytest cluster_generator --doctest-modules --answer_dir="./tmp" --fetch_remote --remote_file='cg_answers_Linux_3.11.5_0.1.0' --cov=cluster_generator --cov-report=xml -m 'not slow'
           COVERALLS_REPO_TOKEN=tQ0ra8kUn56CDx6Cjp7Wil8Pp5qA9vTdK coveralls
