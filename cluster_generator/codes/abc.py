@@ -1,4 +1,5 @@
 """Abstract base classes for implementing hydrodynamics code support."""
+import logging
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, fields
 from pathlib import Path
@@ -8,7 +9,7 @@ import unyt
 
 from cluster_generator.ics import ClusterICs
 from cluster_generator.utilities.config import yaml
-from cluster_generator.utilities.logging import mylog
+from cluster_generator.utilities.logging import LogDescriptor
 from cluster_generator.utilities.types import Instance, Self, Value
 
 
@@ -150,7 +151,7 @@ class RuntimeParameters(ABC):
 
     def deduce_instance_values(
         self, instance: Instance, owner: Type[Instance], ics: ClusterICs
-    ) -> bool:
+    ) -> tuple[bool, Any]:
         """Given an instance of :py:class:`SimulationCode`, generate the corresponding
         RTPs from its compile-time fields and user fields.
 
@@ -168,26 +169,36 @@ class RuntimeParameters(ABC):
         bool
             ``True`` if the process failed. ``False`` otherwise.
         """
-        mylog.info(f"Deducing {instance} RTPs from RuntimeParameters.")
+        from cluster_generator.utilities.logging import ErrorGroup
+
+        instance.logger.info(f"Constructing RTP values for {instance}...")
 
         # Determine the available setters
         _setters = self.__class__.get_setters(instance, owner)
-        mylog.debug(f"Setting {len(_setters)} RTPs in {instance}.")
+        instance.logger.debug(f"Setting {len(_setters)} RTPs in {instance}.")
 
-        _failed = False
+        errors = []
         for k, v in _setters.items():
             try:
                 instance.rtp[k] = v(instance, owner, ics)
-                mylog.debug(f"{k} -> {instance.rtp[k]}.")
+                instance.logger.debug(f"\t{k} -> {instance.rtp[k]}.")
             except Exception as e:
-                mylog.error(f"Error setting {k}: {e.__repr__()}")
-                _failed = True
+                errors.append(e.__class__(f"({k}): {e}"))
 
-        return _failed
+        if len(errors):
+            return False, ErrorGroup(
+                f"Failed to set RTPs for {instance}!", error_list=errors
+            )
+        else:
+            return True, None
 
     @abstractmethod
     def write_rtp_template(
-        self, instance: Instance, owner: Type[Instance], path: str | Path
+        self,
+        instance: Instance,
+        owner: Type[Instance],
+        path: str | Path,
+        overwrite: bool = False,
     ) -> Path:
         """Generate a ready-to-run RTP template for a given :py:class:`SimulationCode`
         instance.
@@ -200,6 +211,8 @@ class RuntimeParameters(ABC):
             The owner type for the simulation Code.
         path: str
             The path to the RTP file/directory at which to generate the template.
+        overwrite: bool, optional
+            Allow method to overwrite an existing file at this path. Default is ``False``.
 
         Raises
         ------
@@ -308,6 +321,8 @@ class SimulationCode(ABC):
     the class itself (yielding default RTPs stored in the ``/bin`` directory), or on an instance of the class (yielding the
     current simulation's RTPs).
     """
+    # Setting up the logging system
+    logger: ClassVar[logging.Logger] = LogDescriptor()
 
     # USER PARAMETERS
     #
@@ -343,6 +358,7 @@ class SimulationCode(ABC):
         -------
         tuple
         """
+        self.logger.info(f"Checking RTPs of {self}...")
         res, err = self.__class__.get_rtp_class().check_valid(
             self, self.__class__, strict=strict
         )
@@ -360,6 +376,7 @@ class SimulationCode(ABC):
         -------
         tuple
         """
+        self.logger.info(f"Checking fields of {self}...")
         # fetch the class's fields and determine allowed values.
         allowed_values = {
             field.name: field.metadata.get("allowed_values", None)
@@ -405,6 +422,7 @@ class SimulationCode(ABC):
         tuple
 
         """
+        self.logger.info(f"Checking parameters of {self}...")
         r_rtp, l_rtp = self.check_rtp(strict=False)
         r_f, l_f = self.check_fields(strict=False)
 
@@ -457,7 +475,10 @@ class SimulationCode(ABC):
             that method which needs to be written fresh by the developer for each new code.
         """
         rtp_class: RuntimeParameters = self.get_rtp_class()
-        rtp_class.deduce_instance_values(self, self.__class__, ics)
+        status, error = rtp_class.deduce_instance_values(self, self.__class__, ics)
+
+        if not status:
+            raise error
 
     @classmethod
     def from_install_directory(
@@ -530,7 +551,7 @@ class SimulationCode(ABC):
         """
         pass
 
-    def generate_rtp_template(self, path: str | Path) -> Path:
+    def generate_rtp_template(self, path: str | Path, overwrite: bool = False) -> Path:
         """Create the necessary files / execute necessary procedures to setup RTPs for
         the simulation.
 
@@ -539,6 +560,8 @@ class SimulationCode(ABC):
         path: str
             The path at which to generate the RTPs. In some simulation codes, this may be a directory, in others a single
             path.
+        overwrite: bool, optional
+            Allow method to overwrite an existing file at this path. Default is ``False``.
 
         Notes
         -----
@@ -553,4 +576,6 @@ class SimulationCode(ABC):
             particularly the :py:meth:`RuntimeParameters.write_rtp_template` method which actually does the leg-work here. It is
             that method which needs to be written fresh by the developer for each new code.
         """
-        return self.get_rtp_class().write_rtp_template(self, type(self), path)
+        return self.get_rtp_class().write_rtp_template(
+            self, type(self), path, overwrite=overwrite
+        )

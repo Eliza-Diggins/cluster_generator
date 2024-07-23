@@ -1,9 +1,11 @@
 """Frontend tools for interacting with the Arepo hydrodynamics code."""
 import os
 from dataclasses import dataclass
+from logging import Logger
 from pathlib import Path
-from typing import ClassVar, Literal, Type
+from typing import Any, ClassVar, Literal, Type
 
+import numpy as np
 import unyt
 from typing_extensions import Self
 from unyt import unyt_array, unyt_quantity
@@ -12,7 +14,7 @@ from cluster_generator.codes.abc import RuntimeParameters, SimulationCode
 from cluster_generator.codes.utils import _const_factory, cfield, ufield
 from cluster_generator.ics import ClusterICs
 from cluster_generator.utilities.config import config_directory
-from cluster_generator.utilities.logging import mylog
+from cluster_generator.utilities.logging import LogDescriptor
 from cluster_generator.utilities.types import Instance
 
 
@@ -32,18 +34,20 @@ class ArepoRuntimeParameters(RuntimeParameters):
     @staticmethod
     def set_OutputListFilename(
         instance: Instance, _: Type[Instance], __: ClusterICs
-    ) -> str | None:
+    ) -> str:
         if isinstance(instance.OUTPUT_STYLE, unyt_array):
             return os.path.join(instance.OUTPUT_DIR, "tout_list.txt")
         else:
-            return None
+            # We aren't using this, but AREPO still wants the flag to be present.
+            return ""
 
     @staticmethod
     def set_TimeBetSnapshot(
         instance: Instance, _: Type[Instance], __: ClusterICs
-    ) -> float | None:
+    ) -> float | str:
         if isinstance(instance.OUTPUT_STYLE, unyt_array):
-            return None
+            # We aren't using this, but AREPO still wants the flag to be present.
+            return ""
         else:
             # we have a tuple, we want to use it.
             return instance.OUTPUT_STYLE[1].to_value(
@@ -53,9 +57,10 @@ class ArepoRuntimeParameters(RuntimeParameters):
     @staticmethod
     def set_TimeOfFirstSnapshot(
         instance: Instance, _: Type[Instance], __: ClusterICs
-    ) -> float | None:
+    ) -> float | str:
         if isinstance(instance.OUTPUT_STYLE, unyt_array):
-            return None
+            # We aren't using this, but AREPO still wants the flag to be present.
+            return ""
         else:
             # we have a tuple, we want to use it.
             return instance.OUTPUT_STYLE[0].to_value(
@@ -69,6 +74,95 @@ class ArepoRuntimeParameters(RuntimeParameters):
         else:
             # Deduce correct boxsize from the provided ICs.
             return unyt_quantity(2 * ic.r_max, "kpc").to_value(instance.LENGTH_UNIT)
+
+    @staticmethod
+    def set_TimeMax(instance: Instance, _: Type[Instance], __: ClusterICs) -> float:
+        return instance.TIME_MAX.in_base(instance.unit_system).d
+
+    @staticmethod
+    def set_TimeBetStatistics(
+        instance: Instance, _: Type[Instance], __: ClusterICs
+    ) -> float:
+        # We want to match the output frequency.
+        if isinstance(instance.OUTPUT_STYLE, unyt_array):
+            # This is an unyt array, we take the minimum separation
+            _tdiff = np.amax(
+                (instance.OUTPUT_STYLE[1:] - instance.OUTPUT_STYLE[:-1])
+                .in_base(instance.unit_system)
+                .d
+            )
+        else:
+            _tdiff = instance.OUTPUT_STYLE[1].in_base(instance.unit_system).d
+
+        return _tdiff
+
+    def deduce_instance_values(
+        self, instance: Instance, owner: Type[Instance], ics: ClusterICs
+    ) -> tuple[bool, Any]:
+        # Run the standard method -> get everything that's specified normally.
+        _, errors = super().deduce_instance_values(instance, owner, ics)
+
+        if errors is None:
+            errors = []
+
+        # MANAGING SOFTENING
+        # ------------------
+        # Because softening parameters are adaptive to NTYPES and NTYPESSOFT, we have to add them dynamically.
+        #
+        # This section of code determines the fill-in values for the softening lengths and applies them.
+        for particle_type in range(instance.NTYPES):
+            # iterate through each type of particle and assign the softening type to the particle.
+            instance.rtp[
+                f"SofteningTypeOfPartType{particle_type}"
+            ] = instance.SOFTENING_TYPES.get(particle_type, 1)
+            instance.logger.debug(
+                f"\tSofteningTypeOfPartType{particle_type} -> {instance.rtp[f'SofteningTypeOfPartType{particle_type}']}"
+            )
+
+        # Assign the softening lengths. Starting with the comoving softening length.
+        for softening_type in range(instance.NSOFTTYPES):
+            try:
+                instance.rtp[f"SofteningComovingType{softening_type}"] = (
+                    instance.SOFTENING_COMOVING[softening_type]
+                    .in_base(instance.unit_system)
+                    .d
+                )
+                instance.logger.debug(
+                    f"\tSofteningComovingType{softening_type} -> {instance.rtp[f'SofteningComovingType{softening_type}']}"
+                )
+            except KeyError:
+                errors.append(
+                    ValueError(
+                        f"(SofteningComovingType{softening_type}): No softening length provided!"
+                    )
+                )
+
+        # Assign the physical softening lengths. If not provided, set as the comoving value.
+        for softening_type in range(instance.NSOFTTYPES):
+            try:
+                instance.rtp[f"SofteningMaxPhysType{softening_type}"] = (
+                    instance.SOFTENING_PHYSICAL[softening_type]
+                    .in_base(instance.unit_system)
+                    .d
+                )
+            except (KeyError, TypeError):
+                instance.rtp[f"SofteningMaxPhysType{softening_type}"] = instance.rtp[
+                    f"SofteningComovingType{softening_type}"
+                ]
+
+            instance.logger.debug(
+                f"\tSofteningMaxPhysType{softening_type} -> {instance.rtp[f'SofteningMaxPhysType{softening_type}']}"
+            )
+
+        # Return in the same fashion as the standard implementation.
+        if len(errors):
+            from cluster_generator.utilities.logging import ErrorGroup
+
+            return False, ErrorGroup(
+                f"Failed to set RTPs for {instance}!", error_list=errors
+            )
+        else:
+            return True, None
 
     def write_rtp_template(
         self,
@@ -90,7 +184,7 @@ class ArepoRuntimeParameters(RuntimeParameters):
         overwrite: bool, optional
             Allow method to overwrite an existing file at this path. Default is ``False``.
         """
-        mylog.info(f"Generating Arepo RTP template for {instance}.")
+        instance.logger.info(f"Generating Arepo RTP template for {instance}.")
 
         # Managing overwrite issues and other potential IO/file system pitfalls.
         path = Path(path)
@@ -108,6 +202,23 @@ class ArepoRuntimeParameters(RuntimeParameters):
             assert path.parents[
                 0
             ].exists(), f"Parent directory of {path} doesn't exist."
+
+        # Adding RTPs for the softening groups.
+        # ------------------------------------
+        # Dynamic softening length parameters need to be added to the owner rtps otherwise we cannot find them
+        # when iterating through defaults!
+        for particle_type_id in range(instance.NTYPES):
+            owner.rtp[f"SofteningTypeOfPartType{particle_type_id}"] = dict(
+                required=True, group="Softening"
+            )
+
+        for softening_type in range(instance.NSOFTTYPES):
+            owner.rtp[f"SofteningComovingType{softening_type}"] = dict(
+                required=True, group="Softening"
+            )
+            owner.rtp[f"SofteningMaxPhysType{softening_type}"] = dict(
+                required=True, group="Softening"
+            )
 
         # Sorting RTPs
         # -------------
@@ -129,7 +240,7 @@ class ArepoRuntimeParameters(RuntimeParameters):
             # ------------------------------------
             # For Arepo, we check compile-time flags, then check for nulls, then proceed.
             for _gk in _group_keys:
-                _instance_value = instance.rtp[_gk]
+                _instance_value = instance.rtp.get(_gk, None)
                 _yflags, _nflags = owner.rtp[_gk].get("compile_flags", ([], []))
                 _req = owner.rtp[_gk].get("required", False)
 
@@ -147,6 +258,7 @@ class ArepoRuntimeParameters(RuntimeParameters):
                     raise ValueError(
                         f"RTP {_gk} is required but has null value in {instance}."
                     )
+
                 _rtp_write_dict[_group][_gk] = _instance_value
 
         # Writing the template to disk
@@ -175,17 +287,29 @@ class Arepo(SimulationCode):
         )
     )  # Path to the correct code bin in cluster_generator.
 
+    logger: ClassVar[Logger] = LogDescriptor()
+    """ Logger: The class logger for this code."""
+
     # USER PARAMETERS
     #
     # These are the parameters the user need to provide at the time of instantiation.
     IC_PATH: str = ufield()
     """str: The path to the initial conditions file."""
+    SOFTENING_COMOVING: dict[int, unyt_quantity] = ufield()
+    """
+    dict: The comoving softening lengths.
+
+    These should be specified in units of physical length. During runtime, it is interpreted as a comoving equivalent. If co-moving
+    integration is not enabled, then these are simply physical lengths.
+    """
     OUTPUT_STYLE: tuple[unyt_quantity, unyt_quantity] | unyt_array = ufield()
     """ tuple of unyt_quantity or unyt_array: The frequency of snapshot outputs.
 
     If a tuple is provided, the first value is the time of first output and the second is the time between remaining snapshots.
     If an array of times is provided, then they will be used for the output times.
     """
+    TIME_MAX: unyt_quantity = ufield()
+    """ unyt_quantity: The maximum (simulation) time at which to end the simulation."""
     OUTPUT_DIR: str = ufield(default="./output", flag="OutputDir")
     """str: The directory in which to generate the simulation output.
 
@@ -256,6 +380,21 @@ class Arepo(SimulationCode):
     """ unyt_quantity: The end time of the simulation.
 
     Default is 10 Gyrs.
+    """
+    SOFTENING_TYPES: dict[int, unyt_quantity] = ufield(
+        default_factory=_const_factory({0: 0, 1: 1, 2: 1, 3: 1, 4: 1, 5: 1}),
+    )
+    """ dict: The assigned softening types for each particle type.
+
+    Should be a dictionary of keys from 0 to ``NTYPES-1`` with values corresponding to the preferred softening type. Generally,
+    its advisable to have a type for gas particles and a type for non-gas particles. This is the default configuration.
+    """
+    SOFTENING_PHYSICAL: dict[int, unyt_quantity] = ufield(default=None)
+    """
+    dict: The maximum physical softening lengths.
+
+    These are non-comoving softening lengths that come into play as soon as the comoving value begins to exceed this one.
+    If left unspecified, they are set to the same value as the comoving so that they play no role.
     """
 
     # COMPILE-TIME PARAMETERS
@@ -349,7 +488,7 @@ class Arepo(SimulationCode):
     TOLERATE_WRITE_ERROR: bool = cfield(default=False)
     PASSIVE_SCALARS: int = cfield(default=0, av=[0])
     """ int: The number of passive scalars being advected with the fluid."""
-    NSOFTTYPES: int = cfield(default=4)
+    NSOFTTYPES: int = cfield(default=2, av=[2])
     """ int: The number of softening types.
 
     There must be an equal number of ``SofteningComovingTypeX`` attributes in the paramfile.txt.
@@ -375,16 +514,24 @@ class Arepo(SimulationCode):
     ) -> Path:
         # Create a shared particle dataset from the initial conditions
         # we do this in ./arepo_tmp to contain any particle files generated.
+        self.logger.info(f"Constructing AREPO ICs from {initial_conditions}.")
+
         initial_conditions.directory = "./arepo_tmp"
+        self.logger.debug(f"\tIC dump directory: {Path(initial_conditions.directory)}.")
+
+        self.logger.info("Combining constituent models and generating particles...")
         combined_particles = initial_conditions.setup_particle_ics(**kwargs)
+        self.logger.info("Combining constituent models and generating particles [DONE]")
 
         # Produce compliant HDF5 file
         if self.IC_FORMAT == 3:
             from cluster_generator.codes.arepo.io import write_particles_to_arepo_hdf5
 
+            self.logger.info("Writing particles to AREPO HDF5...")
             write_particles_to_arepo_hdf5(
                 self, combined_particles, path=self.IC_PATH, overwrite=overwrite
             )
+            self.logger.info("Writing particles to AREPO HDF5. [DONE]")
         else:
             raise ValueError(f"IC_FORMAT={self.IC_FORMAT} is not currently supported.")
 
@@ -411,3 +558,44 @@ class Arepo(SimulationCode):
         ctps = read_ctps(installation_directory)
 
         return cls(**ctps, **parameters)
+
+
+if __name__ == "__main__":
+    from cluster_generator.ics import ClusterICs, compute_centers_for_binary
+    from cluster_generator.tests.utils import generate_model
+
+    base_model_path = "cluster1.h5"
+
+    if not os.path.exists(base_model_path):
+        model = generate_model()
+        model.write_model_to_h5(base_model_path)
+
+    # Configure and generate the ICs
+    num_particles = {k: 2000000 for k in ["dm", "star", "gas"]}
+    center1, center2 = compute_centers_for_binary([0.0, 0.0, 0.0], 3000.0, 500.0)
+    velocity1 = [500.0, 0.0, 0.0]
+    velocity2 = [-500.0, 0.0, 0.0]
+    ics = ClusterICs(
+        "double",
+        2,
+        [base_model_path, base_model_path],
+        [center1, center2],
+        [velocity1, velocity2],
+        num_particles=num_particles,
+    )
+    ap = Arepo.from_install_directory(
+        "./",
+        IC_PATH="arepo_test_ics.h5",
+        OUTPUT_STYLE=(unyt.unyt_quantity(0, "Gyr"), unyt.unyt_quantity(0.1, "Gyr")),
+        BOXSIZE=unyt.unyt_quantity(14, "Mpc"),
+        END_TIME=unyt.unyt_quantity(10, "Gyr"),
+        OUTPUT_DIR="/scratch/general/vast/u1281896/arepo_test",
+        TIME_MAX=unyt.unyt_quantity(10, "Gyr"),
+        SOFTENING_COMOVING={
+            0: unyt.unyt_quantity(2.0, "kpc"),
+            1: unyt.unyt_quantity(2.0, "kpc"),
+        },
+    )
+
+    ap.determine_runtime_params(ics)
+    ap.generate_rtp_template("test.txt", overwrite=True)

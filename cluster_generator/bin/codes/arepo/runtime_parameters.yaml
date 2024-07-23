@@ -81,7 +81,7 @@ GridSize:
     Initial guess of grid size for ADDBACKGROUNDGRID. The input will be rounded
     to the nearest power of two.
   compile_flags: [[ADDBACKGROUNDGRID],[]]
-  default_value:
+  default_value: 16
   group: "IO/Code"
   required: false
 OutputDir:
@@ -132,9 +132,9 @@ OutputListFilename:
     File with a list of the desired output times. Can be specified with a
     relative or absolute path.
   compile_flags: [[],[]]
-  default_value: null
+  default_value: ""
   group: "IO/Code"
-  required: false
+  required: true
 SnapFormat:
   desc: >-
     Similar to ICFormat, this parameter selects the file-format of snapshot
@@ -187,9 +187,9 @@ TimeBetSnapshot:
     in the scale factor. Otherwise, the parameter is an additive constant that
     gives the linear spacing between snapshot times.
   compile_flags: [[],[]]
-  default_value:
+  default_value: 0.0
   group: "IO/Code"
-  required: false
+  required: true
 TimeBetStatistics:
   desc: >-
     The code can be asked to measure the total kinetic, thermal, and potential
@@ -199,18 +199,18 @@ TimeBetStatistics:
     compile time option EVALPOTENTIAL needs to be activated to obtain a
     measurement of the gravitational potential energy.
   compile_flags: [[],[]]
-  default_value:
+  default_value: none
   group: "IO/Code"
-  required: false
+  required: true
 TimeOfFirstSnapshot:
   desc: >-
     The time of the first desired snapshot file in code units in case a file
     with output times is not specified. For cosmological simulations, the value
     given here is the scale factor of the first desired output.
   compile_flags: [[],[]]
-  default_value:
+  default_value: 0.0
   group: "IO/Code"
-  required: false
+  required: true
 FlushCpuTimeDiff:
   desc: >-
     Time interval (in seconds) for flush calls on all log-files. In case
@@ -250,7 +250,7 @@ ResubmitCommand:
   compile_flags: [[],[]]
   default_value: ""
   group: "IO/Code"
-  required: false
+  required: true
 MaxMemSize:
   desc: >-
     The memory allocated per MPI task, in megabytes. A contiguous memory area of
@@ -304,7 +304,7 @@ TimeMax:
   compile_flags: [[],[]]
   default_value:
   group: "Setup"
-  required: false
+  required: true
 ComovingIntegrationOn:
   desc: >-
     If set to “0”, the code assumes plain Newtonian physics, with time,
@@ -575,7 +575,7 @@ CellMaxAngleFactor:
   compile_flags: [[REGULARIZE_MESH_FACE_ANGLE],[VORONOI_STATIC_MESH]]
   default_value: 2.25
   group: "Solver"
-  required: false
+  required: true
 CellShapingFactor:
   desc: >-
     Alternative “roundness” criterion. This criterion uses the distance between
@@ -701,43 +701,8 @@ GasSoftFactor:
     sphere.
   compile_flags: [[],[]]
   default_value: 2.5
-  group: "Solver"
-  required: false
-SofteningComovingTypeX:
-  desc: >-
-    A Plummer equivalent gravitational softening length, to be referenced by one
-    or more specific particle types. For cosmological simulations in comoving
-    coordinates, this is interpreted as a comoving softening length in code
-    length units.
-  compile_flags: [[],[]]
-  default_value:
-  group: "Solver"
-  required: false
-SofteningMaxPhysTypeX:
-  desc: >-
-    When comoving integration is used, this parameter gives the maximum physical
-    gravitational softening length corresponding to SofteningComovingTypeX
-    (referenced by one or more specific particle types depending on the entries
-    of SofteningTypeOfPartTypeN). Depending on the relative settings of the
-    Comoving and MaxPhys softenings, the code will hence switch from a softening
-    constant in comoving units to one constant in physical units. For example,
-    if the MaxPhys value is exactly half the Comoving value, then particles
-    using this softening type will have comoving softening until z=1 and fixed
-    physical softenings after that point in time. Given in code length units.
-  compile_flags: [[],[]]
-  default_value:
-  group: "Solver"
-  required: false
-SofteningTypeOfPartTypeX:
-  desc: >-
-    For each particle type in the simulation which is involved in gravitational
-    calculations, a “softening type” must be assigned, i.e. an integer index
-    referring to one of the above SofteningComovingTypeX/SofteningMaxPhysTypeX
-    entry pairs.
-  compile_flags: [[],[]]
-  default_value:
-  group: "Solver"
-  required: false
+  group: "Softening"
+  required: true
 MinimumComovingHydroSoftening:
   desc: >-
     If this treatment for gas softenings is used, a discrete spectrum of
@@ -747,7 +712,7 @@ MinimumComovingHydroSoftening:
     length units.
   compile_flags: [[ADAPTIVE_HYDRO_SOFTENING],[]]
   default_value: 1.0
-  group: "Solver"
+  group: "Softening"
   required: false
 AdaptiveHydroSofteningSpacing:
   desc: >-
@@ -757,7 +722,7 @@ AdaptiveHydroSofteningSpacing:
     this must be larger than unity.
   compile_flags: [[ADAPTIVE_HYDRO_SOFTENING],[]]
   default_value: 1.2
-  group: "Solver"
+  group: "Softening"
   required: false
 DesLinkNgb:
   desc: >-
