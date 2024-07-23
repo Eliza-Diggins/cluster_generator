@@ -39,7 +39,7 @@ class ArepoRuntimeParameters(RuntimeParameters):
             return os.path.join(instance.OUTPUT_DIR, "tout_list.txt")
         else:
             # We aren't using this, but AREPO still wants the flag to be present.
-            return ""
+            return "0"
 
     @staticmethod
     def set_TimeBetSnapshot(
@@ -47,7 +47,7 @@ class ArepoRuntimeParameters(RuntimeParameters):
     ) -> float | str:
         if isinstance(instance.OUTPUT_STYLE, unyt_array):
             # We aren't using this, but AREPO still wants the flag to be present.
-            return ""
+            return 0
         else:
             # we have a tuple, we want to use it.
             return instance.OUTPUT_STYLE[1].to_value(
@@ -57,10 +57,10 @@ class ArepoRuntimeParameters(RuntimeParameters):
     @staticmethod
     def set_TimeOfFirstSnapshot(
         instance: Instance, _: Type[Instance], __: ClusterICs
-    ) -> float | str:
+    ) -> float | int:
         if isinstance(instance.OUTPUT_STYLE, unyt_array):
             # We aren't using this, but AREPO still wants the flag to be present.
-            return ""
+            return 0
         else:
             # we have a tuple, we want to use it.
             return instance.OUTPUT_STYLE[0].to_value(
@@ -558,44 +558,3 @@ class Arepo(SimulationCode):
         ctps = read_ctps(installation_directory)
 
         return cls(**ctps, **parameters)
-
-
-if __name__ == "__main__":
-    from cluster_generator.ics import ClusterICs, compute_centers_for_binary
-    from cluster_generator.tests.utils import generate_model
-
-    base_model_path = "cluster1.h5"
-
-    if not os.path.exists(base_model_path):
-        model = generate_model()
-        model.write_model_to_h5(base_model_path)
-
-    # Configure and generate the ICs
-    num_particles = {k: 2000000 for k in ["dm", "star", "gas"]}
-    center1, center2 = compute_centers_for_binary([0.0, 0.0, 0.0], 3000.0, 500.0)
-    velocity1 = [500.0, 0.0, 0.0]
-    velocity2 = [-500.0, 0.0, 0.0]
-    ics = ClusterICs(
-        "double",
-        2,
-        [base_model_path, base_model_path],
-        [center1, center2],
-        [velocity1, velocity2],
-        num_particles=num_particles,
-    )
-    ap = Arepo.from_install_directory(
-        "./",
-        IC_PATH="arepo_test_ics.h5",
-        OUTPUT_STYLE=(unyt.unyt_quantity(0, "Gyr"), unyt.unyt_quantity(0.1, "Gyr")),
-        BOXSIZE=unyt.unyt_quantity(14, "Mpc"),
-        END_TIME=unyt.unyt_quantity(10, "Gyr"),
-        OUTPUT_DIR="/scratch/general/vast/u1281896/arepo_test",
-        TIME_MAX=unyt.unyt_quantity(10, "Gyr"),
-        SOFTENING_COMOVING={
-            0: unyt.unyt_quantity(2.0, "kpc"),
-            1: unyt.unyt_quantity(2.0, "kpc"),
-        },
-    )
-
-    ap.determine_runtime_params(ics)
-    ap.generate_rtp_template("test.txt", overwrite=True)

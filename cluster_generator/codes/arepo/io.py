@@ -43,6 +43,12 @@ def write_particles_to_arepo_hdf5(
     """Write a particle dataset to an AREPO compliant HDF5 initial conditions file."""
     path = Path(path)
 
+    if path.suffix != "hdf5":
+        instance.logger.warning(
+            f"Converting {path.suffix} to HDF5 so AREPO recognizes."
+        )
+        path = path.with_suffix(".hdf5")
+
     # Setup HDF5 path, create the host directory, etc.
     if not path.parents[0].exists():
         # we need to generate the directory as well.
@@ -154,13 +160,18 @@ def write_particles_to_arepo_hdf5(
         # CTP flag INPUT_IN_DOUBLEPRECISION
         _buffer_dtype = np.float64 if instance.INPUT_IN_DOUBLEPRECISION else np.float32
         # CTP flag SHIFT_BY_HALF_BOX will auto-center the ICs, otherwise, we need to do so manually.
+
+        # TODO: In principle, INIT_GAS_TEMP might be specified, but why would anyone want that behavior in this context?
         if not instance.SHIFT_BY_HALF_BOX:
+            # shift if we aren't doing it in AREPO.
             particles.add_offsets(
                 unyt_array([instance.BOXSIZE.d / 2] * 3, instance.BOXSIZE.units),
                 unyt_array([0, 0, 0], "km/s"),
             )
-
-        # TODO: In principle, INIT_GAS_TEMP might be specified, but why would anyone want that behavior in this context?
+            # Cutoff the particles to ensure that our boxsize is a valid size
+            particles.make_boxsize_cut(instance.BOXSIZE, centered=False)
+        else:
+            particles.make_boxsize_cut(instance.BOXSIZE, centered=False)
 
         # Writing groups.
         _total_particles_count = 0  # -> use this for ID offsets.

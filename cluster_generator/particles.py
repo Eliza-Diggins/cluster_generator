@@ -282,6 +282,71 @@ class ClusterParticles:
             for field in self.field_names[part]:
                 self.fields[part, field] = self.fields[part, field][cidx]
 
+    def make_box_cut(
+        self,
+        bbox: MaybeUnitVector,
+        ptypes: list[str] | str = None,
+    ):
+        """Make a radial cut on particles. All particles outside a certain radius will
+        be removed.
+
+        Parameters
+        ----------
+        bbox: array-like
+            A ``(3,2)`` array (either with or without units) for the bounding box to constrain the particles to. If a
+            unit is not given, it is assumed to be kpc.
+        ptypes : list of strings, optional
+            The particle types to perform the radial cut on. If
+            not set, all will be exported.
+        """
+        # Enforce units and then reduce to scalar (this ensures that non-kpc units are converted correctly).
+        bbox = ensure_ytarray(bbox, "kpc")
+
+        if ptypes is None:
+            ptypes = self.particle_types
+
+        ptypes = ensure_list(ptypes)
+
+        # Make the radial cuts. Identify the relevant ids and then cut from all the fields.
+        for part in ptypes:
+            # Identify the kept ids.
+            cidx = (
+                np.sum(
+                    (self[part, "particle_position"].to_value("kpc") - bbox[:, 0])
+                    > bbox[:, 1] - bbox[:, 0],
+                    axis=1,
+                )
+                < 1
+            )
+
+            for field in self.field_names[part]:
+                self.fields[part, field] = self.fields[part, field][cidx]
+
+    def make_boxsize_cut(
+        self, boxsize: MaybeUnitVector, ptypes: list = None, centered: bool = False
+    ):
+        """Make a box cut using a specified boxsize.
+
+        Parameters
+        ----------
+        boxsize: unyt_quantity
+            The boxsize to use to make the cut.
+        ptypes: list of str, optional
+            The particle types to include. If not set, all will be used.
+        centered: bool, optional
+            If ``True``, then the box is placed centered on the axis. If ``False`` (default), then the box is constrained
+            to the positive octant.
+        """
+        boxsize = ensure_ytquantity(boxsize, "kpc")
+        bbox = np.array([[0, 0, 0], 3 * [boxsize.d]]).T
+
+        # correct for the bounding box.
+        if centered:
+            bbox -= boxsize.d / 2
+
+        # Process this as a standard boxcut.
+        self.make_box_cut(bbox, ptypes=ptypes)
+
     def add_black_hole(
         self,
         bh_mass: MaybeUnitScalar,

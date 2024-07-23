@@ -284,7 +284,7 @@ PeriodicBoundariesOn:
     set. Note: refers to gravity only. Hydrodynamic boundary conditions are
     handled by REFLECTIVE_X, REFLECTIVE_Y, and REFLECTIVE_Z in Config.sh.
   compile_flags: [[],[]]
-  default_value: 0
+  default_value: 1
   group: "Solver"
   required: false
 TimeBegin:
