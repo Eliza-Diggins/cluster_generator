@@ -106,13 +106,13 @@ Features
             ``cluster_generator`` provides ready-to-use initial condition generation tools for **all** of the following
             codes:
 
-            - RAMSES
-            - ATHENA++
-            - AREPO
-            - GAMER
-            - FLASH
-            - GIZMO
-            - ENZO
+            - |ramses_cov| :ref:`RAMSES <ramses>`
+            - |athena_cov| :ref:`ATHENA++ <athena>`
+            - |arepo_cov| :ref:`AREPO <arepo>`
+            - |gamer_cov| :ref:`GAMER <gamer>`
+            - |flash_cov| :ref:`FLASH <flash>`
+            - |gizmo_cov| :ref:`GIZMO <gizmo>`
+            - |enzo_cov| :ref:`ENZO  <enzo>`
 
     .. grid-item::
 
@@ -293,3 +293,11 @@ Indices and tables
     :target: https://numpydoc.readthedocs.io/en/latest/format.html
 .. |docformatter| image:: https://img.shields.io/badge/%20formatter-docformatter-fedcba.svg
     :target: https://github.com/PyCQA/docformatter
+
+.. |arepo_cov| image:: https://img.shields.io/badge/Support-80%25-green?logo=gnometerminal
+.. |athena_cov| image:: https://img.shields.io/badge/Support-0%25-red?logo=gnometerminal
+.. |ramses_cov| image:: https://img.shields.io/badge/Support-0%25-red?logo=gnometerminal
+.. |gizmo_cov| image:: https://img.shields.io/badge/Support-0%25-red?logo=gnometerminal
+.. |gamer_cov| image:: https://img.shields.io/badge/Support-0%25-red?logo=gnometerminal
+.. |enzo_cov| image:: https://img.shields.io/badge/Support-0%25-red?logo=gnometerminal
+.. |flash_cov| image:: https://img.shields.io/badge/Support-0%25-red?logo=gnometerminal

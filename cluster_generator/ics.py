@@ -109,6 +109,7 @@ class ClusterICs:
         particle_files=None,
         r_max: NDArray[float] | float = 20000.0,
         r_max_tracer: NDArray[float] | float = None,
+        storage_directory: str | Path = None,
     ):
         """Initialize a :py:class:`ClusterICs` instance.
 
@@ -132,7 +133,11 @@ class ClusterICs:
             The files containing the particle data for each of the IC components.
         r_max: array-like or float, optional
             The maximal radius for each of the constituent clusters.
-        r_max_tracer
+        r_max_tracer: array-like or float, optional
+            The maximal radius for the tracer particles.
+        storage_directory: str or Path, optional
+            If specified, then all of the generated particle files will be kept together in this directory.
+            If the directory doesn't exist, we will attempt to create it.
         """
         # Setting basic attributes
         self.basename: str = basename
@@ -141,6 +146,11 @@ class ClusterICs:
         """ int: The number of halos present in the IC system."""
         self.models: list[Path] = [Path(i) for i in ensure_list(models)]
         """ list of Path: The paths of the constituent profiles."""
+
+        # Managing the IC directory
+        self._directory: Path | None = (
+            Path(storage_directory) if storage_directory is not None else None
+        )
 
         # Adding some redundancy for odd user input of centers and velocities.
         if (
@@ -228,6 +238,25 @@ class ClusterICs:
 
     def __str__(self):
         return self.__repr__()
+
+    @property
+    def directory(self) -> Path | None:
+        """The storage directory for this IC, where new particle files are stored."""
+        if self._directory is None:
+            return None
+
+        # check it exists
+        if not self._directory.exists():
+            self._directory.mkdir(parents=True)
+
+        return self._directory
+
+    @directory.setter
+    def directory(self, value: str | Path):
+        self._directory = Path(value)
+
+        if not self._directory.exists():
+            self._directory.mkdir(parents=True)
 
     def _determine_num_particles(
         self, n_parts: dict[str, int]
@@ -338,6 +367,10 @@ class ClusterICs:
 
             parts.append(model_particles)
             outfile = f"{self.basename}_{str(i)}_particles.h5"
+
+            if self.directory is not None:
+                outfile = os.path.join(self.directory, outfile)
+
             model_particles.write_particles(outfile, overwrite=True)
             self.particle_files[i] = Path(outfile)
 

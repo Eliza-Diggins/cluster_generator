@@ -1,6 +1,6 @@
 """Special types and type hinting utilities."""
 from numbers import Number
-from typing import Any, Callable, Collection, Iterable, Mapping
+from typing import Any, Callable, Collection, Iterable, Mapping, TypeVar
 
 import numpy as np
 from more_itertools import always_iterable
@@ -13,6 +13,9 @@ try:
 except ImportError:
     from typing_extensions import Self as Self  # noqa
 
+Instance = TypeVar("Instance")
+Value = TypeVar("Value")
+Attribute = TypeVar("Attribute")
 
 NumericInput = Number | NDArray[Number]
 MaybeUnitScalar = unyt_quantity | Number

@@ -6,6 +6,7 @@ is documented under its relevant heading. If you are just looking for a basic in
 :ref:`getting_started` page first.
 
 
+
 Galaxy Cluster Modeling
 -----------------------
 
@@ -21,6 +22,8 @@ Galaxy Cluster Modeling
 
 External Codes
 ----------------
+
+Modules for working with codes for hydrodynamics simulations, mock observations, etc.
 
 .. autosummary::
     :toctree: _as_gen

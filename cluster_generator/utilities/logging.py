@@ -2,7 +2,7 @@
 import logging
 import sys
 
-from .config import cgparams
+from cluster_generator.utilities.config import cgparams
 
 # Setting up the logging system
 streams = dict(
@@ -32,3 +32,22 @@ mylog: logging.Logger = _loggers["mylog"]
 """:py:class:`logging.Logger`: The main logger for ``pyXMIP``."""
 devlog: logging.Logger = _loggers["devlog"]
 """:py:class:`logging.Logger`: The development logger for ``pyXMIP``."""
+
+
+# Defining special exceptions and other error raising entities
+class ErrorGroup(Exception):
+    """Special error class containing a group of exceptions."""
+
+    def __init__(self, message: str, error_list: list[Exception]):
+        self.errors: list[Exception] = error_list
+
+        # Determining the message
+        self.message = f"{len(self.errors)} ERRORS: {message}\n\n"
+
+        for err_id, err in enumerate(self.errors):
+            self.message += "%(err_id)-5s[%(err_type)10s]: %(msg)s\n" % dict(
+                err_id=err_id + 1, err_type=err.__class__.__name__, msg=str(err)
+            )
+
+    def __str__(self):
+        return self.message
