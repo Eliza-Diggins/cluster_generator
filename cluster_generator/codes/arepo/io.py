@@ -89,18 +89,18 @@ def write_particles_to_arepo_hdf5(
         # Writing the mass table to the header.
         # Because our particle class carries a native (potentially non-constant) mass field, we write a trivial
         # mass table and differ to mass fields in the ICs.
-        fio["Header"].attrs["MassTable"] = np.zeros((6,), dtype=np.cdouble)
+        fio["Header"].attrs["MassTable"] = np.zeros((6,), dtype=np.float64)
         # Set MassTable to zeros to indicate use of MASS field. DTYPE is H5 NATIVE DOUBLE
-        fio["Header"].attrs["Time"] = np.cdouble(
+        fio["Header"].attrs["Time"] = np.float64(
             instance.START_TIME.in_base(instance.unit_system).d
         )
         # Set Time to start time in NATIVE DOUBLE; this is actually ignored by Arepo.
-        fio["Header"].attrs["Redshift"] = np.cdouble(0.0)
+        fio["Header"].attrs["Redshift"] = np.float64(0.0)
         # NOTE: we don't allow comoving integration (doing so will break or start / end time and cause a load of problems).
         # as such, we don't let the user set these RTPs (as enforced by the RTP class), and we can hardcode these values.
-        fio["Header"].attrs["Omega0"] = np.cdouble(0.0)
-        fio["Header"].attrs["OmegaLambda"] = np.cdouble(0.0)
-        fio["Header"].attrs["HubbleParam"] = np.cdouble(1.0)
+        fio["Header"].attrs["Omega0"] = np.float64(0.0)
+        fio["Header"].attrs["OmegaLambda"] = np.float64(0.0)
+        fio["Header"].attrs["HubbleParam"] = np.float64(1.0)
 
         # Setting header flags. These are all pulled from RTPs.
         fio["Header"].attrs["Flag_Sfr"] = np.intc(instance.rtp["StarformationOn"])
@@ -137,7 +137,7 @@ def write_particles_to_arepo_hdf5(
         _bs = instance.BOXSIZE.in_base(
             instance.unit_system
         ).d  # BS in code-length units.
-        fio["Header"].attrs["BoxSize"] = np.cdouble(_bs)
+        fio["Header"].attrs["BoxSize"] = np.float64(_bs)
 
         """
         # Writing the group buffers.
@@ -151,7 +151,7 @@ def write_particles_to_arepo_hdf5(
         """
 
         # CTP flag INPUT_IN_DOUBLEPRECISION
-        _buffer_dtype = np.cdouble if instance.INPUT_IN_DOUBLEPRECISION else np.cfloat
+        _buffer_dtype = np.float64 if instance.INPUT_IN_DOUBLEPRECISION else np.float32
         # CTP flag SHIFT_BY_HALF_BOX will auto-center the ICs, otherwise, we need to do so manually.
         if not instance.SHIFT_BY_HALF_BOX:
             particles.add_offsets(
