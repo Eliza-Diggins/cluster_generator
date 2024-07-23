@@ -124,15 +124,15 @@ OutputListOn:
     equally spaced from the values assigned from TimeOfFirstSnapshot onwards
     with spacing TimeBetSnapshot.
   compile_flags: [[],[]]
-  default_value: null
+  default_value: 0
   group: "IO/Code"
-  required: false
+  required: true
 OutputListFilename:
   desc: >-
     File with a list of the desired output times. Can be specified with a
     relative or absolute path.
   compile_flags: [[],[]]
-  default_value: ""
+  default_value: "none"
   group: "IO/Code"
   required: true
 SnapFormat:
@@ -248,7 +248,7 @@ ResubmitCommand:
     needs to be executable. Note that a resubmission can also be triggered by a
     job-script itself, which is often the more convenient alternative.
   compile_flags: [[],[]]
-  default_value: ""
+  default_value: "resubmit_command"
   group: "IO/Code"
   required: true
 MaxMemSize:

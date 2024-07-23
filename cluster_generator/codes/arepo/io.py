@@ -27,6 +27,7 @@ cg_fields_to_arepo_fields = {
     "thermal_energy": "InternalEnergy",
     "particle_velocity": "Velocities",
     "particle_position": "Coordinates",
+    "density": "Density",
 }
 
 arepo_ptype_to_species = {v: k for k, v in species_to_arepo_ptype.items()}
@@ -162,6 +163,7 @@ def write_particles_to_arepo_hdf5(
         # TODO: In principle, INIT_GAS_TEMP might be specified, but why would anyone want that behavior in this context?
 
         # Writing groups.
+        _total_particles_count = 0  # -> use this for ID offsets.
         for species, group_id in zip(particles.particle_types, particle_groups):
             # Iterate through the species / group numbers and write the correct fields.
             _np = particles.num_particles[species]
@@ -173,16 +175,23 @@ def write_particles_to_arepo_hdf5(
                 "particle_mass",
             ]
             if group_id == 0:  # -> gas, we need to also move the thermal energy.
-                _fields_to_write += ["thermal_energy"]
+                _fields_to_write += ["thermal_energy", "density"]
 
             # Create the group
             _group_name = f"PartType{group_id}"
             group = fio.create_group(_group_name)
 
-            # Write ParticleIDs -> these can just be arange arrays.
+            # ParticleIDs
+            # -------------
+            # This is not a simple set of arange calls. Each one needs to be unique across all particle types.
+            # We just utilize an offset.
             group.create_dataset(
-                "ParticleIDs", shape=(_np,), data=np.arange(_np), dtype=np.uintc
+                "ParticleIDs",
+                shape=(_np,),
+                data=np.arange(_total_particles_count, _np + _total_particles_count),
+                dtype=np.uintc,
             )
+            _total_particles_count += _np
             # TODO: how to manage if > 2^32? Does anyone use > 2^32...
 
             # Write data fields
