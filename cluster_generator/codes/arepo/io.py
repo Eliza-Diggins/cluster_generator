@@ -40,16 +40,29 @@ def write_particles_to_arepo_hdf5(
     path: str | Path,
     overwrite: bool = False,
 ):
-    """Write a particle dataset to an AREPO compliant HDF5 initial conditions file."""
+    """Write a particle dataset to an HDF5 format compliant with AREPO.
+
+    Parameters
+    ----------
+    instance: :py:class:`~codes.arepo.arepo.Arepo`
+        The code class with the relevant compile-time and runtime parameters for your code setup.
+    particles: :py:class:`~particles.ClusterParticles`
+        The particle dataset to convert.
+    path: str
+        The path to which the final HDF5 file should be written.
+    overwrite: bool
+        If ``True``, then the created HDF5 file will be allowed to overwrite existing data at ``path``.
+    """
+    # Managing the path
     path = Path(path)
 
     if path.suffix != "hdf5":
+        # AREPO requires a .hdf5 file to be provided.
         instance.logger.warning(
             f"Converting {path.suffix} to HDF5 so AREPO recognizes."
         )
         path = path.with_suffix(".hdf5")
 
-    # Setup HDF5 path, create the host directory, etc.
     if not path.parents[0].exists():
         # we need to generate the directory as well.
         path.parents[0].mkdir(parents=True, exist_ok=True)
