@@ -20,10 +20,12 @@ from cluster_generator.utilities.types import (
     ensure_ytarray,
     ensure_ytquantity,
 )
+from cluster_generator.utilities.utils import enforce_style
 
 if TYPE_CHECKING:
-    from cluster_generator import ClusterModel
+    from matplotlib.pyplot import Axes, Figure
 
+    from cluster_generator import ClusterModel
 
 recognized_particle_types: list[str] = ["dm", "gas", "star", "tracer", "black_hole"]
 """ list of str: The 5 standard particle types in ``cluster_generator``."""
@@ -300,7 +302,9 @@ class ClusterParticles:
             not set, all will be exported.
         """
         # Enforce units and then reduce to scalar (this ensures that non-kpc units are converted correctly).
-        bbox = ensure_ytarray(bbox, "kpc")
+        bbox = ensure_ytarray(bbox, "kpc").d
+
+        print(self["gas", "particle_position"].shape)
 
         if ptypes is None:
             ptypes = self.particle_types
@@ -310,10 +314,15 @@ class ClusterParticles:
         # Make the radial cuts. Identify the relevant ids and then cut from all the fields.
         for part in ptypes:
             # Identify the kept ids.
+            # logic here is that 0 < x-x_0 < x_1-x_0 along each axis. We check if either condition fails, sum up
+            # failures and require zero failures on the axis.
             cidx = (
                 np.sum(
-                    (self[part, "particle_position"].to_value("kpc") - bbox[:, 0])
-                    > bbox[:, 1] - bbox[:, 0],
+                    ((self[part, "particle_position"].to_value("kpc") - bbox[:, 0]) < 0)
+                    | (
+                        (self[part, "particle_position"].to_value("kpc") - bbox[:, 0])
+                        > bbox[:, 1] - bbox[:, 0]
+                    ),
                     axis=1,
                 )
                 < 1
@@ -686,6 +695,125 @@ class ClusterParticles:
         for ptype in ptypes:
             self.fields[ptype, "particle_position"] += r_ctr
             self.fields[ptype, "particle_velocity"] += v_ctr
+
+    @enforce_style
+    def plot_field(
+        self,
+        field: tuple[str, str],
+        axis: int | str,
+        width: MaybeUnitScalar,
+        resolution: int = 100,
+        ax: "Axes" = None,
+        fig: "Figure" = None,
+        scale: str = "log",
+        cmap: str = "viridis",
+        **kwargs,
+    ) -> tuple["Figure", "Axes"]:
+        """Plot a simple image of the particle system.
+
+        Parameters
+        ----------
+        field: tuple of str
+            The field to plot.
+        axis: int or str
+            The axis to project the line of sight along.
+        width: unyt_quantity
+            The width of the plotting area in kpc.
+        resolution: int
+            The number of cells along each axis.
+
+            .. warning::
+
+                If set too low, the number of particles per cell will trend to zero and give inaccurate results.
+        ax: Axes, optional
+            The axis to plot on.
+        fig: Figure, optional
+            The figure to plot on.
+        scale: str
+            Either ``'log'`` or ``'lin'``.
+        cmap: str
+            The colormap object (or name) to use.
+        kwargs:
+            Additional kwargs to pass to :py:func:`matplotlib.pyplot.imshow`.
+
+        Returns
+        -------
+        Figure
+            The figure on which the plot was made.
+        Axes
+            The axes on which the plot was made.
+        """
+        import matplotlib.pyplot as plt
+        from matplotlib.colors import LogNorm, Normalize
+
+        _axid = {"x": 0, "y": 1, "z": 2}
+        _raxid = {v: k for k, v in _axid.items()}
+
+        # Setup the axes, ensure that fig contains ax.
+        if fig is None:
+            fig = plt.figure(figsize=(10, 10))
+        if ax is None:
+            ax = fig.add_subplot(111)
+
+        # Construct the histogram grid, get the projection axis, etc.
+        if isinstance(axis, str):
+            axis = _axid[axis]
+
+        base_axes = np.arange(3, dtype="uint")
+        base_axes = base_axes[
+            base_axes != axis
+        ]  # make sure that the projection axis is removed.
+
+        img_width = ensure_ytquantity(width, "kpc").value
+        bins = [
+            np.linspace(-img_width / 2, img_width / 2, resolution),
+            np.linspace(-img_width / 2, img_width / 2, resolution),
+        ]
+        _x, _y = (
+            self[field[0], "particle_position"][:, base_axes[0]].d,
+            self[field[0], "particle_position"][:, base_axes[1]].d,
+        )
+        weights = self[field].d
+
+        # constructing the image
+        image, _, _ = np.histogram2d(_x, _y, bins, weights=weights)
+        # managing args and kwargs.
+        vmin, vmax, norm = (
+            kwargs.pop("vmin", np.nanmin(image)),
+            kwargs.pop("vmax", np.nanmax(image)),
+            kwargs.pop("norm", None),
+        )
+
+        if norm is None and scale == "log":
+            # mask invalid values, reset vmin.
+            image[np.less_equal(image, 0)] = np.nan
+            vmin = np.amax([vmin, np.nanmin(image)])
+            kwargs["norm"] = LogNorm(vmin=vmin, vmax=vmax)
+        elif norm is None and scale == "lin":
+            kwargs["norm"] = Normalize(vmin=vmin, vmax=vmax)
+        else:
+            pass
+
+        if isinstance(cmap, str):
+            cmap = plt.cm.get_cmap(cmap)
+        cmap.set_bad(color=cmap(0))
+        kwargs["cmap"] = cmap
+
+        ax.imshow(
+            image,
+            extent=(-img_width / 2, img_width / 2, -img_width / 2, img_width / 2),
+            origin="lower",
+            **kwargs,
+        )
+        ax.set_xlabel(rf"{_raxid[base_axes[0]]}, [kpc]")
+        ax.set_ylabel(rf"{_raxid[base_axes[1]]}, [kpc]")
+        plt.colorbar(
+            plt.cm.ScalarMappable(norm=kwargs["norm"], cmap=cmap),
+            ax=ax,
+            label=rf"{field[1]}, $\left[{self[field].units.latex_representation()}\right]$",
+        )
+
+        return fig, ax
 
     def _write_gadget_fields(self, ptype, h5_group, idxs, dtype):
         for field in gadget_fields[ptype]:
