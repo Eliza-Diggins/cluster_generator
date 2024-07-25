@@ -84,54 +84,6 @@ def write_particles_to_arepo_hdf5(
         # Create the header group
         fio.create_group("Header")
 
-        num_particles = np.array(
-            [
-                particles.num_particles.get(arepo_ptype_to_species[i], 0)
-                for i in range(6)
-            ],
-            dtype=np.intc,
-        )
-        fio["Header"].attrs["NumPart_ThisFile"] = num_particles
-        # number of particles of each expected type, dtype = H5 NATIVE INT
-        fio["Header"].attrs["NumPart_Total"] = np.array(
-            [k % (2**32) for k in num_particles], dtype=np.uintc
-        )
-        # number of particles total -> same as per file because we use only 1 file. dtype = H5 NATIVE UINT
-        # NOTE: we take % 2^32 because NumPart_Total_HighWord carries the integer multipliers. This allows for UINT instead of LONG
-        # See https://www.tng-project.org/data/docs/specifications/ for an example of this in snapshot files.
-        fio["Header"].attrs["NumPart_Total_HighWord"] = np.array(
-            [k // (2**32) for k in num_particles], dtype=np.uintc
-        )
-        # Set the NumPart_Total_HighWord to N/2^32 rounded downward. DTYPE = H5 NATIVE UINT
-        fio["Header"].attrs["NumFilesPerSnapshot"] = np.intc(1)
-        # Set the NumFilesPerSnapshot header attribute to 1 -> indicate that this is a stand-alone IC. For sim, paramfile provides.
-
-        # Writing the mass table to the header.
-        # Because our particle class carries a native (potentially non-constant) mass field, we write a trivial
-        # mass table and differ to mass fields in the ICs.
-        fio["Header"].attrs["MassTable"] = np.zeros((6,), dtype=np.float64)
-        # Set MassTable to zeros to indicate use of MASS field. DTYPE is H5 NATIVE DOUBLE
-        fio["Header"].attrs["Time"] = np.float64(
-            instance.START_TIME.in_base(instance.unit_system).d
-        )
-        # Set Time to start time in NATIVE DOUBLE; this is actually ignored by Arepo.
-        fio["Header"].attrs["Redshift"] = np.float64(0.0)
-        # NOTE: we don't allow comoving integration (doing so will break or start / end time and cause a load of problems).
-        # as such, we don't let the user set these RTPs (as enforced by the RTP class), and we can hardcode these values.
-        fio["Header"].attrs["Omega0"] = np.float64(0.0)
-        fio["Header"].attrs["OmegaLambda"] = np.float64(0.0)
-        fio["Header"].attrs["HubbleParam"] = np.float64(1.0)
-
-        # Setting header flags. These are all pulled from RTPs.
-        fio["Header"].attrs["Flag_Sfr"] = np.intc(instance.rtp["StarformationOn"])
-        fio["Header"].attrs["Flag_Cooling"] = np.intc(instance.rtp["CoolingOn"])
-        fio["Header"].attrs["Flag_Feedback"] = np.intc(instance.rtp["StarformationOn"])
-        fio["Header"].attrs["Flag_Metals"] = np.intc(0.0)
-        fio["Header"].attrs["Flag_StellarAge"] = np.intc(0.0)
-        fio["Header"].attrs["Flag_DoublePrecision"] = np.intc(
-            instance.INPUT_IN_DOUBLEPRECISION
-        )
-
         # Setting the BoxSize attribute.
         if instance.BOXSIZE is None:
             mylog.warning(
@@ -185,6 +137,54 @@ def write_particles_to_arepo_hdf5(
             particles.make_boxsize_cut(instance.BOXSIZE, centered=False)
         else:
             particles.make_boxsize_cut(instance.BOXSIZE, centered=False)
+
+        num_particles = np.array(
+            [
+                particles.num_particles.get(arepo_ptype_to_species[i], 0)
+                for i in range(6)
+            ],
+            dtype=np.intc,
+        )
+        fio["Header"].attrs["NumPart_ThisFile"] = num_particles
+        # number of particles of each expected type, dtype = H5 NATIVE INT
+        fio["Header"].attrs["NumPart_Total"] = np.array(
+            [k % (2**32) for k in num_particles], dtype=np.uintc
+        )
+        # number of particles total -> same as per file because we use only 1 file. dtype = H5 NATIVE UINT
+        # NOTE: we take % 2^32 because NumPart_Total_HighWord carries the integer multipliers. This allows for UINT instead of LONG
+        # See https://www.tng-project.org/data/docs/specifications/ for an example of this in snapshot files.
+        fio["Header"].attrs["NumPart_Total_HighWord"] = np.array(
+            [k // (2**32) for k in num_particles], dtype=np.uintc
+        )
+        # Set the NumPart_Total_HighWord to N/2^32 rounded downward. DTYPE = H5 NATIVE UINT
+        fio["Header"].attrs["NumFilesPerSnapshot"] = np.intc(1)
+        # Set the NumFilesPerSnapshot header attribute to 1 -> indicate that this is a stand-alone IC. For sim, paramfile provides.
+
+        # Writing the mass table to the header.
+        # Because our particle class carries a native (potentially non-constant) mass field, we write a trivial
+        # mass table and differ to mass fields in the ICs.
+        fio["Header"].attrs["MassTable"] = np.zeros((6,), dtype=np.float64)
+        # Set MassTable to zeros to indicate use of MASS field. DTYPE is H5 NATIVE DOUBLE
+        fio["Header"].attrs["Time"] = np.float64(
+            instance.START_TIME.in_base(instance.unit_system).d
+        )
+        # Set Time to start time in NATIVE DOUBLE; this is actually ignored by Arepo.
+        fio["Header"].attrs["Redshift"] = np.float64(0.0)
+        # NOTE: we don't allow comoving integration (doing so will break or start / end time and cause a load of problems).
+        # as such, we don't let the user set these RTPs (as enforced by the RTP class), and we can hardcode these values.
+        fio["Header"].attrs["Omega0"] = np.float64(0.0)
+        fio["Header"].attrs["OmegaLambda"] = np.float64(0.0)
+        fio["Header"].attrs["HubbleParam"] = np.float64(1.0)
+
+        # Setting header flags. These are all pulled from RTPs.
+        fio["Header"].attrs["Flag_Sfr"] = np.intc(instance.rtp["StarformationOn"])
+        fio["Header"].attrs["Flag_Cooling"] = np.intc(instance.rtp["CoolingOn"])
+        fio["Header"].attrs["Flag_Feedback"] = np.intc(instance.rtp["StarformationOn"])
+        fio["Header"].attrs["Flag_Metals"] = np.intc(0.0)
+        fio["Header"].attrs["Flag_StellarAge"] = np.intc(0.0)
+        fio["Header"].attrs["Flag_DoublePrecision"] = np.intc(
+            instance.INPUT_IN_DOUBLEPRECISION
+        )
 
         # Writing groups.
         _total_particles_count = 0  # -> use this for ID offsets.
