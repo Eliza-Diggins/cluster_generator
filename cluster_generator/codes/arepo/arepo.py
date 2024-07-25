@@ -553,8 +553,14 @@ class Arepo(SimulationCode):
     def from_install_directory(
         cls, installation_directory: str | Path, **parameters
     ) -> Self:
+        from dataclasses import fields
+
         from cluster_generator.codes.arepo.io import read_ctps
 
         ctps = read_ctps(installation_directory)
 
-        return cls(**ctps, **parameters)
+        required_ctps = {
+            k: v for k, v in ctps.items() if k in [f.name for f in fields(cls)]
+        }
+
+        return cls(**required_ctps, **parameters)
