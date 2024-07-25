@@ -22,7 +22,7 @@ class ArepoRuntimeParameters(RuntimeParameters):
     @staticmethod
     def set_InitCondFile(instance: Instance, _: Type[Instance], __: ClusterICs) -> str:
         """Sets the InitCondFile flag for Arepo's RTPs."""
-        return str(Path(instance.IC_PATH).absolute())
+        return str(Path(instance.IC_PATH).absolute().with_suffix(""))
 
     @staticmethod
     def set_OutputListOn(instance: Instance, _: Type[Instance], __: ClusterICs) -> int:

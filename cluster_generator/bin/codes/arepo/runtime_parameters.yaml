@@ -61,21 +61,21 @@ MHDSeedDir:
   compile_flags: [[MHD_SEEDFIELD],[]]
   default_value:
   group: "MHD"
-  required: false
+  required: true
 MHDSeedValue:
   desc: Value of the uniform initial magnetic field in comoving Gauss.
   compile_flags: [[MHD_SEEDFIELD],[]]
   default_value:
   group: "MHD"
-  required: false
+  required: true
 TileICsFactor:
   desc: >-
     Factor by which the ICs are replicated in each dimension. Should be an
     integer. This can be useful for weak scaling tests.
   compile_flags: [[TILE_ICS],[]]
-  default_value:
+  default_value: 2
   group: "IO/Code"
-  required: false
+  required: true
 GridSize:
   desc: >-
     Initial guess of grid size for ADDBACKGROUNDGRID. The input will be rounded
@@ -83,7 +83,7 @@ GridSize:
   compile_flags: [[ADDBACKGROUNDGRID],[]]
   default_value: 16
   group: "IO/Code"
-  required: false
+  required: true
 OutputDir:
   desc: >-
     Pathname of the output directory of the code. Can be a relative or absolute
@@ -100,7 +100,7 @@ SnapshotFileBase:
   compile_flags: [[],[]]
   default_value: "snap"
   group: "IO/Code"
-  required: false
+  required: true
 NumFilesPerSnapshot:
   desc: >-
     The number of separate files requested for each snapshot dump. Each file of
@@ -116,7 +116,7 @@ NumFilesPerSnapshot:
   compile_flags: [[],[]]
   default_value: 1
   group: "IO/Code"
-  required: false
+  required: true
 OutputListOn:
   desc: >-
     If set to “1”, the code tries to read a list of desired output times from
@@ -144,7 +144,7 @@ SnapFormat:
   compile_flags: [[],[]]
   default_value: 3
   group: "IO/Code"
-  required: false
+  required: true
 NumFilesWrittenInParallel:
   desc: >-
     The number of files the code may read or write simultaneously when writing
@@ -157,7 +157,7 @@ NumFilesWrittenInParallel:
   compile_flags: [[],[]]
   default_value: 1
   group: "IO/Code"
-  required: false
+  required: true
 AlternativeOutputDir:
   desc: >-
     Path name of an alternative output directory which is used in case output to
@@ -165,7 +165,7 @@ AlternativeOutputDir:
   compile_flags: [[TOLERATE_WRITE_ERROR],[]]
   default_value:
   group: "IO/Code"
-  required: false
+  required: true
 CpuTimeBetRestartFile:
   desc: >-
     The value specified here gives the time in seconds the code will run before
@@ -177,7 +177,7 @@ CpuTimeBetRestartFile:
   compile_flags: [[],[]]
   default_value: 12000
   group: "IO/Code"
-  required: false
+  required: true
 TimeBetSnapshot:
   desc: >-
     The time interval in code units between two subsequent snapshot files in
@@ -230,7 +230,7 @@ TimeLimitCPU:
   compile_flags: [[],[]]
   default_value: 93000
   group: "IO/Code"
-  required: false
+  required: true
 ResubmitOn:
   desc: >-
     If set to “1”, the code will try to resubmit itself to the queuing system
@@ -240,7 +240,7 @@ ResubmitOn:
   compile_flags: [[],[]]
   default_value: 0
   group: "IO/Code"
-  required: false
+  required: true
 ResubmitCommand:
   desc: >-
     The name of a script file or program that is executed for automatic
@@ -263,9 +263,9 @@ MaxMemSize:
     out of memory, it terminates and reports in detail how much has been
     alloacted for each array, and where this happened in the code.
   compile_flags: [[],[]]
-  default_value: 2500
+  default_value: 25000
   group: "IO/Code"
-  required: false
+  required: true
 BoxSize:
   desc: >-
     The box size for the simulation, in internal code units. All particles and
@@ -275,7 +275,7 @@ BoxSize:
   compile_flags: [[],[]]
   default_value:
   group: "Setup"
-  required: false
+  required: true
 PeriodicBoundariesOn:
   desc: >-
     If set to “1”, periodic boundary conditions are assumed, with a cubical
@@ -286,7 +286,7 @@ PeriodicBoundariesOn:
   compile_flags: [[],[]]
   default_value: 1
   group: "Solver"
-  required: false
+  required: true
 TimeBegin:
   desc: >-
     This sets the starting time of a simulation when the code is started from
@@ -295,7 +295,7 @@ TimeBegin:
   compile_flags: [[],[]]
   default_value: 0.0
   group: "Setup"
-  required: false
+  required: true
 TimeMax:
   desc: >-
     This sets the final time of the simulation. The code normally tries to run
@@ -316,7 +316,7 @@ ComovingIntegrationOn:
   compile_flags: [[],[]]
   default_value: 0
   group: "Cosmology"
-  required: false
+  required: true
 Omega0:
   desc: >-
     Gives the total matter density in units of the critical density at z=0 for
@@ -325,7 +325,7 @@ Omega0:
   compile_flags: [[],[]]
   default_value: 0.0
   group: "Cosmology"
-  required: false
+  required: true
 OmegaBaryon:
   desc: >-
     Gives the baryon density in units of the critical density at z=0 for
@@ -334,7 +334,7 @@ OmegaBaryon:
   compile_flags: [[],[]]
   default_value: 0.0
   group: "Cosmology"
-  required: false
+  required: true
 OmegaLambda:
   desc: >-
     Gives the vacuum energy density (cosmological constant) at z=0 for
@@ -343,7 +343,7 @@ OmegaLambda:
   compile_flags: [[],[]]
   default_value: 0.0
   group: "Cosmology"
-  required: false
+  required: true
 HubbleParam:
   desc: >-
     This gives the Hubble constant (“little h”) at z=0 in units of 100
@@ -356,7 +356,7 @@ HubbleParam:
   compile_flags: [[],[]]
   default_value: 1.0
   group: "Cosmology"
-  required: false
+  required: true
 UnitVelocity_in_cm_per_s:
   desc: >-
     This sets the internal velocity unit in cm/s. For example, the choice of 1e5
@@ -366,7 +366,7 @@ UnitVelocity_in_cm_per_s:
   compile_flags: [[],[]]
   default_value: 1e5
   group: "units"
-  required: false
+  required: true
 UnitLength_in_cm:
   desc: >-
     This sets the internal length unit in cm/h, where H_0 = 100 h km/sec/Mpc.
@@ -374,7 +374,7 @@ UnitLength_in_cm:
   compile_flags: [[],[]]
   default_value: 3.085678e21
   group: "units"
-  required: false
+  required: true
 UnitMass_in_g:
   desc: >-
     This sets the internal mass unit in g/h, where H_0 = 100 h km/s/Mpc. For
@@ -382,7 +382,7 @@ UnitMass_in_g:
   compile_flags: [[],[]]
   default_value: 1.989e33
   group: "units"
-  required: false
+  required: true
 GravityConstantInternal:
   desc: >-
     The numerical value of the gravitational constant G in internal units
@@ -398,7 +398,7 @@ GravityConstantInternal:
   compile_flags: [[],[]]
   default_value: 0
   group: "units"
-  required: false
+  required: true
 TypeOfOpeningCriterion:
   desc: >-
     This selects the type of cell-opening criterion used in the tree walks. A
@@ -407,7 +407,7 @@ TypeOfOpeningCriterion:
   compile_flags: [[],[]]
   default_value: 1
   group: "Solver"
-  required: false
+  required: true
 ErrTolTheta:
   desc: >-
     If the relative opening criterion is used, the first force estimate is
@@ -418,7 +418,7 @@ ErrTolTheta:
   compile_flags: [[],[]]
   default_value: 0.7
   group: "Solver"
-  required: false
+  required: true
 ErrTolForceAcc:
   desc: >-
     The accuracy parameter for the relative opening criterion for the tree walk.
@@ -426,7 +426,7 @@ ErrTolForceAcc:
   compile_flags: [[],[]]
   default_value: 0.0025
   group: "Solver"
-  required: false
+  required: true
 TypeOfTimestepCriterion:
   desc: >-
     This parameter can in principle be used to select different kinds of
@@ -435,7 +435,7 @@ TypeOfTimestepCriterion:
   compile_flags: [[],[]]
   default_value: 0
   group: "Solver"
-  required: false
+  required: true
 ErrTolIntAccuracy:
   desc: >-
     This dimensionless parameter controls the accuracy of the timestep criterion
@@ -444,7 +444,7 @@ ErrTolIntAccuracy:
   compile_flags: [[],[]]
   default_value: 0.012
   group: "Solver"
-  required: false
+  required: true
 MaxSizeTimestep:
   desc: >-
     This gives the maximum timestep a particle may take. This should be set to a
@@ -455,7 +455,7 @@ MaxSizeTimestep:
   compile_flags: [[],[]]
   default_value: 0.0234375
   group: "Solver"
-  required: false
+  required: true
 MinSizeTimestep:
   desc: >-
     If a particle requests a timestep smaller than the value specified here, the
@@ -465,7 +465,7 @@ MinSizeTimestep:
   compile_flags: [[],[]]
   default_value: 2.0e-8
   group: "Solver"
-  required: false
+  required: true
 CourantFac:
   desc: >-
     This sets the value of the Courant parameter used in the determination of
@@ -475,7 +475,7 @@ CourantFac:
   compile_flags: [[],[]]
   default_value: 0.3
   group: "Solver"
-  required: false
+  required: true
 ActivePartFracForNewDomainDecomp:
   desc: >-
     Fraction of particles that need to be at least active in order to trigger a
@@ -484,7 +484,7 @@ ActivePartFracForNewDomainDecomp:
   compile_flags: [[],[]]
   default_value: 0.01
   group: "Solver"
-  required: false
+  required: true
 MultipleDomains:
   desc: >-
     Number of domains per MPI task. Consequently, the domain decomposition will
@@ -495,7 +495,7 @@ MultipleDomains:
   compile_flags: [[],[]]
   default_value: 8
   group: "Solver"
-  required: false
+  required: true
 TopNodeFactor:
   desc: >-
     Determines how fine the top-level tree is constructed (1.0: only as far as
@@ -507,7 +507,7 @@ TopNodeFactor:
   compile_flags: [[],[]]
   default_value: 2.5
   group: "Solver"
-  required: false
+  required: true
 DesNumNgb:
   desc: >-
     This sets the desired number of nearest neighbors for an initial
@@ -515,7 +515,7 @@ DesNumNgb:
   compile_flags: [[],[]]
   default_value: 64
   group: "Solver"
-  required: false
+  required: true
 MaxNumNgbDeviation:
   desc: >-
     This sets the allowed variation of the number of neighbors around the target
@@ -524,7 +524,7 @@ MaxNumNgbDeviation:
   compile_flags: [[],[]]
   default_value: 4
   group: "Solver"
-  required: false
+  required: true
 MaxVolumeDiff:
   desc: >-
     Maximum tolerated difference in the volume of two neighboring cells. This
@@ -535,7 +535,7 @@ MaxVolumeDiff:
   compile_flags: [[REFINEMENT_VOLUME_LIMIT],[]]
   default_value: 10
   group: "Solver"
-  required: false
+  required: true
 MinVolume:
   desc: >-
     Global minimum volume a cell is allowed to have, irrespective of other
@@ -543,7 +543,7 @@ MinVolume:
   compile_flags: [[REFINEMENT_VOLUME_LIMIT],[]]
   default_value: 1
   group: "Solver"
-  required: false
+  required: true
 MaxVolume:
   desc: >-
     Global maximum volume a cell is allowed to have, irrespective of other
@@ -551,7 +551,7 @@ MaxVolume:
   compile_flags: [[REFINEMENT_VOLUME_LIMIT],[]]
   default_value: 1.0e9
   group: "Solver"
-  required: false
+  required: true
 MeanVolume:
   desc: >-
     Mean volume of cells. In case NODEREFINE_BACKGROUND_GRID is activated, cells
@@ -560,7 +560,7 @@ MeanVolume:
   compile_flags: [[NODEREFINE_BACKGROUND_GRID],[]]
   default_value: 66800.2
   group: "Solver"
-  required: false
+  required: true
 CellMaxAngleFactor:
   desc: >-
     Cell “roundness” criterion. The face angle of an interface of a cell is
@@ -598,7 +598,7 @@ CellShapingSpeed:
   compile_flags: [[],[VORONOI_STATIC_MESH]]
   default_value: 0.5
   group: "Solver"
-  required: false
+  required: true
 ReferenceGasPartMass:
   desc: >-
     For comoving runs, this can either be given a non-zero value, in which case
@@ -620,7 +620,7 @@ ReferenceGasPartMass:
   compile_flags: [[REFINEMENT_SPLIT_CELLS],[]]
   default_value: 9.76211e-05
   group: "Refinement"
-  required: false
+  required: true
 TargetGasMassFactor:
   desc: >-
     The target gas cell mass, where (de-)refinement is triggered if a given cell
@@ -629,7 +629,7 @@ TargetGasMassFactor:
   compile_flags: [[REFINEMENT_SPLIT_CELLS],[]]
   default_value: 1
   group: "Refinement"
-  required: false
+  required: true
 RefinementCriterion:
   desc: >-
     Selects the criterion for refinement; “0” no refinement, “1” target mass
@@ -638,7 +638,7 @@ RefinementCriterion:
   compile_flags: [[REFINEMENT_SPLIT_CELLS],[]]
   default_value: 1
   group: "Refinement"
-  required: false
+  required: true
 DerefinementCriterion:
   desc: >-
     Selects the criterion for derefinement; “0” no derefinement, “1” target mass
@@ -646,7 +646,7 @@ DerefinementCriterion:
   compile_flags: [[REFINEMENT_SPLIT_CELLS],[]]
   default_value: 1
   group: "Refinement"
-  required: false
+  required: true
 LimitUBelowThisDensity:
   desc: >-
     Density threshold for a specific thermal energy lower limit for low density
@@ -654,13 +654,13 @@ LimitUBelowThisDensity:
   compile_flags: [[],[]]
   default_value: 0.0
   group: "Solver"
-  required: false
+  required: true
 LimitUBelowCertainDensityToThisValue:
   desc: Minimum specific thermal energy for low density gas.
   compile_flags: [[],[]]
   default_value: 0.0
   group: "Solver"
-  required: false
+  required: true
 MinGasTemp:
   desc: >-
     A minimum temperature floor imposed by the code. This may be set to zero,
@@ -671,7 +671,7 @@ MinGasTemp:
   compile_flags: [[],[]]
   default_value: 5.0
   group: "Solver"
-  required: false
+  required: true
 MinEgySpec:
   desc: >-
     Minimum specific energy allowed in a gas cell. If specific energy is smaller
@@ -687,13 +687,13 @@ MinEgySpec:
   compile_flags: [[],[]]
   default_value: 0.0
   group: "Solver"
-  required: false
+  required: true
 IsoSoundSpeed:
   desc: Sound speed of gas in runs with isothermal hydrodynamics.
   compile_flags: [[ISOTHERM_EQS],[]]
   default_value:
   group: "Cooling"
-  required: false
+  required: true
 GasSoftFactor:
   desc: >-
     The gravitational softening length of a gas cell is this value times the
@@ -713,7 +713,7 @@ MinimumComovingHydroSoftening:
   compile_flags: [[ADAPTIVE_HYDRO_SOFTENING],[]]
   default_value: 1.0
   group: "Softening"
-  required: false
+  required: true
 AdaptiveHydroSofteningSpacing:
   desc: >-
     The logarithmic spacing for the adaptive gas softenings table, as described
@@ -723,7 +723,7 @@ AdaptiveHydroSofteningSpacing:
   compile_flags: [[ADAPTIVE_HYDRO_SOFTENING],[]]
   default_value: 1.2
   group: "Softening"
-  required: false
+  required: true
 DesLinkNgb:
   desc: >-
     The (integer) minimum number of particles/cells, of all types, for Subfind
@@ -736,7 +736,7 @@ DesLinkNgb:
   compile_flags: [[SUBFIND],[]]
   default_value:
   group: "Subfind"
-  required: false
+  required: true
 ErrTolThetaSubfind:
   desc: >-
     This has the same meaning as the ErrTolTheta parameter, i.e. the tree
@@ -746,7 +746,7 @@ ErrTolThetaSubfind:
   compile_flags: [[SUBFIND],[]]
   default_value:
   group: "Subfind"
-  required: false
+  required: true
 CoolingOn:
   desc: >-
     If set to “1”, gas looses energy through a (optically-thin) radiative
@@ -755,7 +755,7 @@ CoolingOn:
   compile_flags: [[],[]]
   default_value: 0
   group: "Physics"
-  required: false
+  required: true
 StarformationOn:
   desc: >-
     If set to “1”, gas can be (stochastically) converted into collisionless star
@@ -764,13 +764,13 @@ StarformationOn:
   compile_flags: [[],[]]
   default_value: 0
   group: "Physics"
-  required: false
+  required: true
 TreecoolFile:
   desc: File path to cooling file. Possible files are available under ./data/.
   compile_flags: [[COOLING],[]]
   default_value:
   group: "Cooling"
-  required: false
+  required: true
 CritOverDensity:
   desc: >-
     The critical (over-)density above which star formation may take place, where
@@ -780,7 +780,7 @@ CritOverDensity:
   compile_flags: [[USE_SFR],[]]
   default_value: 57.7
   group: "SFR"
-  required: false
+  required: true
 TemperatureThresh:
   desc: >-
     Star formation is prevented for cells which are hotter than the eEOS, and
@@ -791,7 +791,7 @@ TemperatureThresh:
   compile_flags: [[USE_SFR],[]]
   default_value: 1e+06
   group: "SFR"
-  required: false
+  required: true
 CritPhysDensity:
   desc: >-
     The critical physical density above which star formation may take place (in
@@ -799,7 +799,7 @@ CritPhysDensity:
   compile_flags: [[USE_SFR],[]]
   default_value: 0
   group: "SFR"
-  required: false
+  required: true
 FactorSN:
   desc: >-
     The variable giving the mass fraction of massive stars (> 8 Msun) formed for
@@ -808,7 +808,7 @@ FactorSN:
   compile_flags: [[USE_SFR],[]]
   default_value: 0.1
   group: "SFR"
-  required: false
+  required: true
 FactorEVP:
   desc: >-
     The variable A from the Springel & Hernquist (2003) model, giving the
@@ -816,7 +816,7 @@ FactorEVP:
   compile_flags: [[USE_SFR],[]]
   default_value: 573.0
   group: "SFR"
-  required: false
+  required: true
 TempSupernova:
   desc: >-
     The “supernova temperature” T_SN of the hot inter-cloud medium in Kelvin, as
@@ -824,7 +824,7 @@ TempSupernova:
   compile_flags: [[USE_SFR],[]]
   default_value: 5.73e7
   group: "SFR"
-  required: false
+  required: true
 TempClouds:
   desc: >-
     The “cold cloud temperature” T_c, in Kelvin, in the Springel & Hernquist
@@ -832,7 +832,7 @@ TempClouds:
   compile_flags: [[USE_SFR],[]]
   default_value: 1000.0
   group: "SFR"
-  required: false
+  required: true
 MaxSfrTimescale:
   desc: >-
     This is the star-formation timescale t_0 at the threshold density, such that
@@ -841,17 +841,18 @@ MaxSfrTimescale:
   compile_flags: [[USE_SFR],[]]
   default_value: 2.27
   group: "SFR"
-  required: false
+  required: true
 CoreRadius:
   desc: Inner radius (position of boundary conditions) of 1d spherical simulation.
   compile_flags: [[ONEDIMS_SPHERICAL],[]]
   default_value:
   group: "Special"
-  required: false
+  required: true
 CoreMass:
   desc: >-
     Mass enclosed within the inner boundary radius in 1d spherical simulations.
     Required for gravity calculation.
   compile_flags: [[ONEDIMS_SPHERICAL],[]]
   default_value:
+  required: true
   group: "Special"
