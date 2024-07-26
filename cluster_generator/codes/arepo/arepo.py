@@ -228,6 +228,9 @@ class ArepoRuntimeParameters(RuntimeParameters):
         # Any non-writable types need to be converted down.
         instance_rtps = self._convert_rtp_to_output_types(instance)
 
+        # Fetch the fields to be able to check compile flags.
+        _field_hash = owner._field_hash()
+
         for _group in _available_groups:
             # determine the right group keys
             _rtp_write_dict[_group] = {}
@@ -245,9 +248,15 @@ class ArepoRuntimeParameters(RuntimeParameters):
                 _yflags, _nflags = owner.rtp[_gk].get("compile_flags", ([], []))
                 _req = owner.rtp[_gk].get("required", False)
 
-                if not all(
-                    (getattr(owner, _yf) not in [False, None]) for _yf in _yflags
-                ) or any(getattr(owner, _nf) for _nf in _nflags):
+                # check the yes and no flags against defaults.
+                _ycond = all(
+                    [getattr(instance, k) != _field_hash[k].default for k in _yflags]
+                )  # all yes flags on?
+                _ncond = not any(
+                    [getattr(instance, k) != _field_hash[k].default for k in _nflags]
+                )  # not any no flags on?
+
+                if not (_ycond and _ncond):
                     # Flag is missing
                     continue
 
@@ -594,7 +603,9 @@ if __name__ == "__main__":
         OUTPUT_STYLE=(unyt.unyt_quantity(0.0, "Gyr"), unyt.unyt_quantity(0.01, "Gyr")),
         TIME_MAX=unyt_quantity(10, "Gyr"),
         BOXSIZE=unyt_quantity(14, "kpc"),
+        REGULARIZE_MESH_FACE_ANGLE=True,
+        ADDBACKGROUNDGRID=True,
     )
 
     q.determine_runtime_params(None)
-    q.generate_rtp_template("test.txt")
+    q.generate_rtp_template("test.txt", overwrite=True)

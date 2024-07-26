@@ -541,6 +541,10 @@ class SimulationCode(ABC):
         return res, errors
 
     @classmethod
+    def _field_hash(cls):
+        return {f.name: f for f in fields(cls)}
+
+    @classmethod
     def get_rtp_class(cls) -> RuntimeParameters:
         """Fetch the :py:class:`RuntimeParameters` class associated with this simulation
         code.
