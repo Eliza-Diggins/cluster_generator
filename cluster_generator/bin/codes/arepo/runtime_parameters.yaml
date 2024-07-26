@@ -5,6 +5,8 @@
 # compile_flags: compile flags determining presence.         #
 #    [[req],[nreq]]                                          #
 # default_value: The default value to use.                   #
+# required: In AREPO, all parameters are required. If the    #
+#          flag is present then it is expected.              #
 # ========================================================== #
 InitCondFile:
   desc: >-
@@ -39,17 +41,17 @@ InitGasTemp:
     the initial conditions file is zero, otherwise the initial gas temperature
     is left at the value stored in the IC file.
   compile_flags: [[],[]]
-  default_value: 244.8095
+  default_value: !unyt_qty "244.8095 K"
   group: "Solver"
-  required: false
+  required: true
 MinimumDensityOnStartUp:
   desc: >-
     This sets a lower limit to the density of gas cells after reading in the
     ICs. All cells that have a lower density are set to this value.
   compile_flags: [[],[]]
-  default_value: 1.0e-10
+  default_value: !unyt_qty "133 Msun/kpc**3"
   group: "Solver"
-  required: false
+  required: true
 MHDSeedDir:
   desc: >-
     Direction of the uniform B field that is set before starting the simulation.
@@ -216,9 +218,9 @@ FlushCpuTimeDiff:
     Time interval (in seconds) for flush calls on all log-files. In case
     REDUCE_FLUSH is not set, this is done during every sync-point.
   compile_flags: [[],[]]
-  default_value:
+  default_value: 10
   group: "IO/Code"
-  required: false
+  required: true
 TimeLimitCPU:
   desc: >-
     CPU-time limit for the present submission of the code. If 85 percent of this
@@ -453,7 +455,7 @@ MaxSizeTimestep:
     given here is the maximum allowed step in terms of the logarithm of the
     expansion factor. For comoving runs, this is in units of dln(a).
   compile_flags: [[],[]]
-  default_value: 0.0234375
+  default_value: !unyt_qty "10 Myr"
   group: "Solver"
   required: true
 MinSizeTimestep:
@@ -463,7 +465,7 @@ MinSizeTimestep:
     NOSTOP_WHEN_BELOW_MINTIMESTEP option, the code will instead force the
     timesteps to be at least as large as MinSizeTimestep.
   compile_flags: [[],[]]
-  default_value: 2.0e-8
+  default_value: !unyt_qty "2e-5 Myr"
   group: "Solver"
   required: true
 CourantFac:
@@ -541,7 +543,7 @@ MinVolume:
     Global minimum volume a cell is allowed to have, irrespective of other
     refinement and derefinement criteria.
   compile_flags: [[REFINEMENT_VOLUME_LIMIT],[]]
-  default_value: 1
+  default_value: !unyt_qty "1 pc**3"
   group: "Solver"
   required: true
 MaxVolume:
@@ -549,7 +551,7 @@ MaxVolume:
     Global maximum volume a cell is allowed to have, irrespective of other
     refinement and derefinement criteria.
   compile_flags: [[REFINEMENT_VOLUME_LIMIT],[]]
-  default_value: 1.0e9
+  default_value: !unyt_qty "1e6 kpc**3"
   group: "Solver"
   required: true
 MeanVolume:
@@ -558,7 +560,7 @@ MeanVolume:
     with more than 10% or this volume will not be derefined. Used for
     cosmological zoom simulations.
   compile_flags: [[NODEREFINE_BACKGROUND_GRID],[]]
-  default_value: 66800.2
+  default_value: !unyt_qty "66800.2 kpc**3"
   group: "Solver"
   required: true
 CellMaxAngleFactor:
@@ -585,9 +587,9 @@ CellShapingFactor:
     times CellShapingFactor the movement of the mesh-generating point will
     deviate from pure Lagrangian motion to make the cell rounder.
   compile_flags: [[],[VORONOI_STATIC_MESH,REGULARIZE_MESH_FACE_ANGLE]]
-  default_value:
+  default_value: 2.5
   group: "Solver"
-  required: false
+  required: true
 CellShapingSpeed:
   desc: >-
     Determines the speed of the regularization of the mesh. CellShapingSpeed
@@ -618,7 +620,7 @@ ReferenceGasPartMass:
     ReferenceGasPartMass calculation (only in case ReferenceGasPartMass=0 in
     parameter file).
   compile_flags: [[REFINEMENT_SPLIT_CELLS],[]]
-  default_value: 9.76211e-05
+  default_value: "976211 Msun"
   group: "Refinement"
   required: true
 TargetGasMassFactor:
@@ -669,7 +671,7 @@ MinGasTemp:
     function. (This value is converted by the code to a minimum thermal energy
     per unit mass assuming the mean molecular weight of neutral gas).
   compile_flags: [[],[]]
-  default_value: 5.0
+  default_value: !unyt_qty "5.0 K"
   group: "Solver"
   required: true
 MinEgySpec:
@@ -685,7 +687,7 @@ MinEgySpec:
     MinGasTemp. In case both MinEgySpec and MinGasTemp are nonzero, MinGasTemp
     will only set a lower limit to the cooling.
   compile_flags: [[],[]]
-  default_value: 0.0
+  default_value: 0
   group: "Solver"
   required: true
 IsoSoundSpeed:
@@ -711,7 +713,7 @@ MinimumComovingHydroSoftening:
     following ‘spacing’ parameter (as a multiplicative factor). Given in code
     length units.
   compile_flags: [[ADAPTIVE_HYDRO_SOFTENING],[]]
-  default_value: 1.0
+  default_value: !unyt_qty "1.0 kpc"
   group: "Softening"
   required: true
 AdaptiveHydroSofteningSpacing:

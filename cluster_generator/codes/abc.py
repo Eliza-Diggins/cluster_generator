@@ -3,14 +3,42 @@ import logging
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, fields
 from pathlib import Path
-from typing import Any, Callable, ClassVar, Type
+from typing import TYPE_CHECKING, Any, Callable, ClassVar, Type
 
 import unyt
+from ruamel.yaml import YAML
 
 from cluster_generator.ics import ClusterICs
-from cluster_generator.utilities.config import yaml
+from cluster_generator.utilities.io import (
+    unyt_array_constructor,
+    unyt_quantity_constructor,
+)
 from cluster_generator.utilities.logging import LogDescriptor
 from cluster_generator.utilities.types import Instance, Self, Value
+
+if TYPE_CHECKING:
+    from ruamel.yaml import Loader, Node
+
+
+class _YAMLDescriptor:
+    # Allow for single try loading of custom yaml for an RTP class.
+    def __init__(self, base: "YAML" = None):
+        # load the base parser.
+        if base is None:
+            self.base = YAML(typ="safe")
+        else:
+            self.base = base
+
+        self.yaml = None  # -> changes dynamically when called and loaded.
+
+    def __get__(self, instance: Instance, owner: Type[Instance]) -> "YAML":
+        if self.yaml is None:
+            # for each constructor, we add the constructor.
+            self.yaml = self.base
+            for loader_tag, loader in owner._yaml_loaders.items():
+                self.yaml.constructor.add_constructor(loader_tag, loader)
+
+        return self.yaml
 
 
 class RuntimeParameters(ABC):
@@ -34,15 +62,21 @@ class RuntimeParameters(ABC):
     attribute (``code.rtp``) will provide access to the **actual RTPs** for the simulation run represented by that instance. These can be
     changed by the user as needed.
 
+    .. hint::
+
+        RTPs (when accessed by the class or the instance) are permitted to be **any** legitimate class. For example, a softening length
+        parameter may have a default which is an :py:class:`unyt.unyt_quantity`. It will be "converted" to the correct code-format
+        only when the user creates an RTP template to feed into the code (:py:meth:`SimulationCode.generate_rtp_template`).
+
     Once the user is ready, the :py:meth:`SimulationCode.determine_runtime_params` uses the CTP and USP of the :py:class:`SimulationCode` instance
     to deduce the correct RTP values (fill-in-the-blank) for the user's simulation. Finally, the :py:meth:`SimulationCode.generate_rtp_template` method
     will export those RTPs in a format recognized by the simulation software.
 
     .. rubric:: Setting RTPs
 
-    For each RTP recognized by the code, the developer can write a method in the RTP class named ``set_<RTP_name>`` which takes
-    an instance of the :py:class:`SimulationCode` class, reads its CTPs and user specified parameters (USPs) and then returns
-    the correct value for the simulation code.
+    For each RTP recognized by the code, the developer can write a method in the RTP class named ``set_<RTP_name>`` with 3 arguments:
+    ``instance:SimulationCode``, ``owner: Type[SimulationCode]``, and ``ic: ClusterICs``. This should return the correct value of
+    the given RTP as deduced from the ICs and the code object.
 
     The :py:meth:`RuntimeParameter.deduce_instance_values` then identifies all of these "setters" and uses them to set all
     of the needed RTPs at runtime. Additionally, if a field in the :py:class:`SimulationCode` class corresponds **directly** to
@@ -57,6 +91,30 @@ class RuntimeParameters(ABC):
                         flag="RTP_name",         # RTP name
                         setter= setter_function  # The setter function.
                         )
+
+    .. rubric:: Converting RTPs
+
+    Once the RTPs for an instance are set, they are still (generically) in any number of different classes. If the particular
+    simulation code expects a class ``C`` to be written in a particular format that is not the default (``__repr__``) of the
+    class, then a custom "converter" must be provided. To do so, we simply implement a method with the signature
+    ``generic_converter(value) -> str`` which converts a particular type to its correct string representation. To indicate
+    the type that should be converted, below the class definition, add the following:
+
+    .. code-block:: python
+
+        RuntimeParameters.<converter_method> = RuntimeParameters._converter(type)(RuntimeParameters.<converter_method>)
+    """
+
+    _type_converters: ClassVar[dict[Type, Callable]] = {}
+    _yaml_loaders: ClassVar[dict[str, Callable[["Loader", "Node"], Any]]] = {
+        "!unyt_arr": unyt_array_constructor,
+        "!unyt_qty": unyt_quantity_constructor,
+    }
+
+    yaml: ClassVar["YAML"] = _YAMLDescriptor()
+    """ YAML: The class yaml loader.
+
+    This may be customized to recognize special tags necessary to represent the front end.
     """
 
     def __init__(self, path: str | Path):
@@ -97,7 +155,7 @@ class RuntimeParameters(ABC):
                 pass
             else:
                 with open(self.path, "r") as f:
-                    self._defaults = yaml.load(f)
+                    self._defaults = self.__class__.yaml.load(f)
 
             return (
                 self._defaults
@@ -111,6 +169,7 @@ class RuntimeParameters(ABC):
             else:
                 # We need to set instance._rtp
                 _defaults_raw = self.__get__(None, owner)  # create the defaults.
+
                 instance._rtp = {
                     k: v["default_value"] for k, v in _defaults_raw.items()
                 }
@@ -118,9 +177,21 @@ class RuntimeParameters(ABC):
             return instance._rtp
 
     @classmethod
+    def _converter(cls, typ: Type):
+        # Converter decorator.
+        def decorator(
+            func: Callable[[typ, Instance], Any]
+        ) -> Callable[[typ, Instance], Any]:
+            # Take the function, add it to the registry, return the same function.
+            cls._type_converters[typ] = func
+            return func
+
+        return decorator
+
+    @classmethod
     def get_setters(
         cls, _: Instance, owner: Type[Instance]
-    ) -> dict[str | Callable[[Instance, Type[Instance]], Any]]:
+    ) -> dict[str | Callable[[Instance, Type[Instance], ClusterICs], Any]]:
         """Get a dictionary of the RTP setters defined for this Runtime Parameter
         class."""
         setters = {}
@@ -133,6 +204,7 @@ class RuntimeParameters(ABC):
                 set_var: str = str(k).replace("set_", "")  # The RTP this setter is for.
                 setters[set_var] = v
 
+        # Load simple setters.
         for user_field in [
             _field for _field in fields(owner) if _field.metadata.get("type") == "U"
         ]:
@@ -191,6 +263,22 @@ class RuntimeParameters(ABC):
             )
         else:
             return True, None
+
+    @classmethod
+    def _convert_rtp_to_output_types(cls, instance: Instance) -> dict[str, Any]:
+        converters = cls._type_converters
+
+        _rtp_output = {}
+
+        for k, v in instance.rtp.items():
+            converter = converters.get(v.__class__, None)
+
+            if converter is not None:
+                _rtp_output[k] = converter(v, instance)
+            else:
+                _rtp_output[k] = v
+
+        return _rtp_output
 
     @abstractmethod
     def write_rtp_template(
@@ -281,6 +369,22 @@ class RuntimeParameters(ABC):
             raise ErrorGroup(f"{owner} RTP check failed!", errors)
 
         return result, errors
+
+    @staticmethod
+    def _convert_unyt_quantity(value: unyt.unyt_quantity, instance: Instance) -> Any:
+        return value.in_base(instance.unit_system).value
+
+    @staticmethod
+    def _convert_unyt_array(value: unyt.unyt_array, instance: Instance) -> Any:
+        return value.in_base(instance.unit_system).d
+
+
+RuntimeParameters._convert_unyt_array = RuntimeParameters._converter(unyt.unyt_array)(
+    RuntimeParameters._convert_unyt_array
+)
+RuntimeParameters._convert_unyt_quantity = RuntimeParameters._converter(
+    unyt.unyt_quantity
+)(RuntimeParameters._convert_unyt_quantity)
 
 
 @dataclass

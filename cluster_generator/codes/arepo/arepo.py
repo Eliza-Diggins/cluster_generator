@@ -21,7 +21,8 @@ from cluster_generator.utilities.types import Instance
 class ArepoRuntimeParameters(RuntimeParameters):
     @staticmethod
     def set_InitCondFile(instance: Instance, _: Type[Instance], __: ClusterICs) -> str:
-        """Sets the InitCondFile flag for Arepo's RTPs."""
+        # The initial condition file needs to be set to the absolute path.
+        # The suffix needs to be removed as Arepo adds this back on by default.
         return str(Path(instance.IC_PATH).absolute().with_suffix(""))
 
     @staticmethod
@@ -50,22 +51,17 @@ class ArepoRuntimeParameters(RuntimeParameters):
             return 0
         else:
             # we have a tuple, we want to use it.
-            return instance.OUTPUT_STYLE[1].to_value(
-                instance.LENGTH_UNIT / instance.VELOCITY_UNIT
-            )
+            return instance.OUTPUT_STYLE[1].in_base(instance.unit_system).value
 
     @staticmethod
     def set_TimeOfFirstSnapshot(
         instance: Instance, _: Type[Instance], __: ClusterICs
     ) -> float | int:
         if isinstance(instance.OUTPUT_STYLE, unyt_array):
-            # We aren't using this, but AREPO still wants the flag to be present.
-            return 0
+            return 0  # This flag is ignored because the output list is on.
         else:
             # we have a tuple, we want to use it.
-            return instance.OUTPUT_STYLE[0].to_value(
-                instance.LENGTH_UNIT / instance.VELOCITY_UNIT
-            )
+            return instance.OUTPUT_STYLE[0].in_base(instance.unit_system).value
 
     @staticmethod
     def set_BoxSize(instance: Instance, _: Type[Instance], ic: ClusterICs) -> float:
@@ -73,11 +69,9 @@ class ArepoRuntimeParameters(RuntimeParameters):
             return instance.BOXSIZE.to_value(instance.LENGTH_UNIT)
         else:
             # Deduce correct boxsize from the provided ICs.
-            return unyt_quantity(2 * ic.r_max, "kpc").to_value(instance.LENGTH_UNIT)
-
-    @staticmethod
-    def set_TimeMax(instance: Instance, _: Type[Instance], __: ClusterICs) -> float:
-        return instance.TIME_MAX.in_base(instance.unit_system).d
+            return (
+                unyt_quantity(2 * ic.r_max, "kpc").in_base(instance.unit_system).value
+            )
 
     @staticmethod
     def set_TimeBetStatistics(
@@ -209,15 +203,15 @@ class ArepoRuntimeParameters(RuntimeParameters):
         # when iterating through defaults!
         for particle_type_id in range(instance.NTYPES):
             owner.rtp[f"SofteningTypeOfPartType{particle_type_id}"] = dict(
-                required=True, group="Softening"
+                required=True, group="Softening", default_value=1
             )
 
         for softening_type in range(instance.NSOFTTYPES):
             owner.rtp[f"SofteningComovingType{softening_type}"] = dict(
-                required=True, group="Softening"
+                required=True, group="Softening", default_value=2.0
             )
             owner.rtp[f"SofteningMaxPhysType{softening_type}"] = dict(
-                required=True, group="Softening"
+                required=True, group="Softening", default_value=2.0
             )
 
         # Sorting RTPs
@@ -228,6 +222,11 @@ class ArepoRuntimeParameters(RuntimeParameters):
         _available_groups = list(
             set([_rtp.get("group", "misc") for _, _rtp in owner.rtp.items()])
         )
+
+        # Convert RTP types
+        # -----------------
+        # Any non-writable types need to be converted down.
+        instance_rtps = self._convert_rtp_to_output_types(instance)
 
         for _group in _available_groups:
             # determine the right group keys
@@ -240,13 +239,15 @@ class ArepoRuntimeParameters(RuntimeParameters):
             # ------------------------------------
             # For Arepo, we check compile-time flags, then check for nulls, then proceed.
             for _gk in _group_keys:
-                _instance_value = instance.rtp.get(_gk, None)
+                _instance_value = instance_rtps.get(
+                    _gk, None
+                )  # Get the value from the instance.
                 _yflags, _nflags = owner.rtp[_gk].get("compile_flags", ([], []))
                 _req = owner.rtp[_gk].get("required", False)
 
-                if not all(getattr(owner, _yf) for _yf in _yflags) or any(
-                    getattr(owner, _nf) for _nf in _nflags
-                ):
+                if not all(
+                    (getattr(owner, _yf) not in [False, None]) for _yf in _yflags
+                ) or any(getattr(owner, _nf) for _nf in _nflags):
                     # Flag is missing
                     continue
 
@@ -308,7 +309,7 @@ class Arepo(SimulationCode):
     If a tuple is provided, the first value is the time of first output and the second is the time between remaining snapshots.
     If an array of times is provided, then they will be used for the output times.
     """
-    TIME_MAX: unyt_quantity = ufield()
+    TIME_MAX: unyt_quantity = ufield(flag="TimeMax")
     """ unyt_quantity: The maximum (simulation) time at which to end the simulation."""
     OUTPUT_DIR: str = ufield(default="./output", flag="OutputDir")
     """str: The directory in which to generate the simulation output.
@@ -553,14 +554,47 @@ class Arepo(SimulationCode):
     def from_install_directory(
         cls, installation_directory: str | Path, **parameters
     ) -> Self:
+        """Determine the relevant class parameters for AREPO from its installation
+        directory.
+
+        Parameters
+        ----------
+        installation_directory: str
+            The directory in which AREPO is installed.
+        parameters:
+            Other parameters to pass to the initializer for :py:class:`Arepo`.
+
+        Returns
+        -------
+        Arepo
+            An instance of the AREPO code class.
+
+        Notes
+        -----
+
+        This method seeks out the ``Config.sh`` file in the installation directory and reads it to determine the
+        enabled and disabled flags.
+        """
         from dataclasses import fields
 
         from cluster_generator.codes.arepo.io import read_ctps
 
         ctps = read_ctps(installation_directory)
-
         required_ctps = {
             k: v for k, v in ctps.items() if k in [f.name for f in fields(cls)]
         }
 
         return cls(**required_ctps, **parameters)
+
+
+if __name__ == "__main__":
+    q = Arepo(
+        IC_PATH="/test.hdf5",
+        SOFTENING_COMOVING={k: unyt.unyt_quantity(2.0, "kpc") for k in range(6)},
+        OUTPUT_STYLE=(unyt.unyt_quantity(0.0, "Gyr"), unyt.unyt_quantity(0.01, "Gyr")),
+        TIME_MAX=unyt_quantity(10, "Gyr"),
+        BOXSIZE=unyt_quantity(14, "kpc"),
+    )
+
+    q.determine_runtime_params(None)
+    q.generate_rtp_template("test.txt")
