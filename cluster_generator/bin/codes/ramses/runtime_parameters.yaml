@@ -1,0 +1,636 @@
+# ====================================================================== #
+#                                                                        #
+# --                   RUNTIME PARAMETERS: RAMSES                     -- #
+#                                                                        #
+# See https://bitbucket.org/rteyssie/ramses/src/master/                  #
+# for additional information on the rtps.                                #
+# ====================================================================== #
+
+# == RUN_PARAMS == #
+# Global runtime parameters
+cosmo:
+  default_value: false
+  group: "&RUN_PARAMS"
+  required: true
+  desc: >-
+    Activate cosmological “super-comoving coordinates” system and expansion factor computing.
+pic:
+  default_value: false
+  group: "&RUN_PARAMS"
+  required: true
+  desc: >-
+    Activate Particle-In-Cell solver. Generally, this should be false unless you know
+    what you're doing.
+poisson:
+  default_value: true
+  group: "&RUN_PARAMS"
+  required: true
+  desc: >-
+    Activate Poisson solver. This is necessary for self-gravity of particles to function.
+hydro:
+  default_value: true
+  group: "&RUN_PARAMS"
+  required: true
+  desc: Activate hydrodynamics or MHD solver. This should almost never be false.
+verbose:
+  default_value: false
+  group: "&RUN_PARAMS"
+  required: true
+  desc: Activate verbose mode.
+nrestart:
+  default_value: 0
+  group: "&RUN_PARAMS"
+  required: true
+  desc: >-
+    Output file number from which the code loads
+    backup data and resumes the simulation. The
+    default value, zero, is for a fresh start from the
+    beginning. You should use the same number of
+    processors than the one used during the previous run.
+nstepmax:
+  default_value: 10000000
+  group: "&RUN_PARAMS"
+  required: true
+  desc: Integer Maximum number of coarse time steps.
+ncontrol:
+  default_value: 1
+  group: "&RUN_PARAMS"
+  required: true
+  desc: >-
+    Integer Frequency of screen output for Control Lines
+    (to standard output) into the Log File).
+nremap:
+  default_value: 50
+  group: "&RUN_PARAMS"
+  required: true
+  desc: >-
+    Frequency of calls, in units of coarse time steps,
+    for the load balancing routine, for MPI runs
+    only, the default value, zero, meaning “never”.
+ordering:
+  default_value: 'hilbert'
+  group: "&RUN_PARAMS"
+  required: true
+  desc: >-
+    Cell ordering method used in the domain decomposition of the grid among the processors,
+    for MPI runs only. Possible values are hilbert, planar and angular.
+nsubcycle:
+  default_value: null
+  group: "&RUN_PARAMS"
+  required: true
+  desc: >-
+    Number of fine level sub-cycling steps within
+    one coarse level time step. Each value corresponds to a given level of refinement, starting
+    from the coarse grid defined by levelmin, up
+    to the finest level defined by levelmax. For example, nsubcycle(1)=1 means that levelmin
+    and levelmin+1 are synchronized. To enforce
+    single time stepping for the whole AMR hierarchy, you need to set nsubcycle=1,1,1,1,1,
+
+
+# == AMR_PARAMS == #
+# The AMR grid parameters to use.
+levelmin:
+  default_value: null
+  group: '&AMR_PARAMS'
+  required: true
+  desc: >-
+    Minimum level of refinement. Defines the base grid.
+levelmax:
+  default_value: null
+  group: '&AMR_PARAMS'
+  required: true
+  desc: >-
+    Maximum level of refinement. This parameter sets the size of the course grid via n_x = 2**levelmin.
+ngridmax:
+  default_value: null
+  group: '&AMR_PARAMS'
+  required: false
+  desc: >-
+    Maximum number of grids (or octs) that can
+    be allocated during the run within each MPI
+    process.
+ngridtot:
+  default_value: null
+  group: '&AMR_PARAMS'
+  required: true
+  desc: >-
+    Maximum number of grids (or octs) that can be
+    allocated during the run for all MPI processes.
+    One has in this case ngridmax=ngridtot/ncpu.
+npartmax:
+  default_value: null
+  group: '&AMR_PARAMS'
+  required: false
+  desc: >-
+    Maximum number of particles that can be allocated during the run within each MPI process.
+nparttot:
+  default_value: null
+  group: '&AMR_PARAMS'
+  required: true
+  desc: >-
+    Maximum number of particles that can be
+    allocated during the run for all MPI processes. Obviously, one has in this case
+    npartmax=nparttot/ncpu.
+nexpand:
+  default_value: 1
+  group: '&AMR_PARAMS'
+  required: true
+  desc: >-
+    Number of mesh expansions (mesh smoothing).
+boxlen:
+  default_value: null
+  group: '&AMR_PARAMS'
+  required: true
+  desc: >-
+    Box size in user units
+# == INIT_PARAMS == #
+# Used to setup the initial conditions.
+nregion:
+  default_value: 1
+  group: '&INIT_PARAMS'
+  required: true
+  desc: >-
+    Integer Number of independent regions in the
+    computational box used to set up initial flow variables.
+region_type:
+  default_value: "square"
+  group: '&INIT_PARAMS'
+  required: true
+  desc: >-
+    Geometry defining each region. `square` defines generalized
+    ellipsoidal shape, while `point` defines a delta function in the flow.
+x_center:
+  default_value: !unyt_arr
+    array: [ 0.0 ]
+    unit: 'kpc'
+  group: '&INIT_PARAMS'
+  required: true
+  desc: x coordinates for the center of each region.
+y_center:
+  default_value: !unyt_arr
+    array: [ 0.0 ]
+    unit: 'kpc'
+  group: '&INIT_PARAMS'
+  required: true
+  desc: y coordinates for the center of each region.
+z_center:
+  default_value: !unyt_arr
+    array: [ 0.0 ]
+    unit: 'kpc'
+  group: '&INIT_PARAMS'
+  required: true
+  desc: z coordinates for the center of each region.
+length_x:
+  default_value: !unyt_arr
+    array: [ 0.0 ]
+    unit: 'kpc'
+  group: '&INIT_PARAMS'
+  required: true
+  desc: x length of each region.
+length_y:
+  default_value: !unyt_arr
+    array: [ 0.0 ]
+    unit: 'kpc'
+  group: '&INIT_PARAMS'
+  required: true
+  desc: y length of each region.
+length_z:
+  default_value: !unyt_arr
+    array: [ 0.0 ]
+    unit: 'kpc'
+  group: '&INIT_PARAMS'
+  required: true
+  desc: z length of each region.
+exp_region:
+  default_value: [ 2.0 ]
+  group: '&INIT_PARAMS'
+  required: true
+  desc: >-
+    Exponent defining the norm used to compute distances for the generalized ellipsoid.
+    exp_region=2 corresponds to a spheroid, exp_region=1 to a diamond shape, exp_region > 10 to a square.
+d_region:
+  default_value: !unyt_arr
+    array: [ 0.0 ]
+    unit: 'Msun/kpc**3'
+  group: '&INIT_PARAMS'
+  required: true
+  desc: Density for each region.
+u_region:
+  default_value: !unyt_arr
+    array: [ 0.0 ]
+    unit: 'km/s'
+  group: '&INIT_PARAMS'
+  required: true
+  desc: Velocity x for each region.
+v_region:
+  default_value: !unyt_arr
+    array: [ 0.0 ]
+    unit: 'km/s'
+  group: '&INIT_PARAMS'
+  required: true
+  desc: Velocity y for each region.
+w_region:
+  default_value: !unyt_arr
+    array: [ 0.0 ]
+    unit: 'km/s'
+  group: '&INIT_PARAMS'
+  required: true
+  desc: Velocity z for each region
+p_region:
+  default_value: !unyt_arr
+    array: [ 0.0 ]
+    unit: 'atm'
+  group: '&INIT_PARAMS'
+  required: true
+  desc: Pressure for each region.
+filetype:
+  default_value: 'ascii'
+  group: '&INIT_PARAMS'
+  required: true
+  desc: >-
+    Type of initial conditions file for particles. Possible choices are "ascii" or "grafic".
+aexp_ini:
+  default_value: 10.0
+  group: '&INIT_PARAMS'
+  required: true
+  desc: >-
+    This parameter sets the starting expansion factor for cosmology runs only. Default value is
+    read in the IC file ("grafic" or "ascii").
+multiple:
+  default_value: false
+  group: '&INIT_PARAMS'
+  required: true
+  desc: >-
+    If true, each processor reads its own IC file ("grafic" or "ascii"). For parallel runs only
+    .
+initfile:
+  default_value: none
+  group: '&INIT_PARAMS'
+  required: true
+  desc: >-
+    Directory where IC files are stored. See section 4.1 for details.
+# == OUTPUT_PARAMS == #
+# The output parameters for the simulation
+noutput:
+  default_value: null
+  group: '&OUTPUT_PARAMS'
+  required: true
+  desc: >-
+    Number of specified output time. At least one
+    output time should be given, corresponding to
+    the end of the simulation.
+tout:
+  default_value: null
+  group: '&OUTPUT_PARAMS'
+  required: true
+  desc: Real array Value of specified output time.
+aout:
+  default_value: null
+  group: '&OUTPUT_PARAMS'
+  required: false
+  desc: >-
+    Value of specified output expansion factor
+    (for cosmology runs only). aout=1.0 means
+    “present epoch” or “zero redshift”.
+foutput:
+  default_value: 10000000
+  group: '&OUTPUT_PARAMS'
+  required: true
+  desc: >-
+    Frequency of additional outputs. By default, only one of these
+    outputs occurs, at the last (maximum) timestep if that timestep is
+    actually reached.
+# == BOUNDARY_PARAMS == #
+# Parameters for the boundary conditions
+nboundary:
+  default_value: 6
+  group: '&BOUNDARY_PARAMS'
+  required: true
+  desc: >-
+    Number of ghost regions used to specify the
+    boundary conditions.
+bound_type:
+  default_value: [ 2,2,2,2,2,2 ]
+  group: '&BOUNDARY_PARAMS'
+  required: true
+  desc:
+    Type of boundary conditions to apply in the
+    corresponding ghost region. Possible values
+    are bound_type=0 -> periodic, bound_type=1 -> reflexive,
+    bound_type=2 -> outflow (zero gradients), bound_type=3 -> inflow (user specified).
+d_bound:
+  default_value: null
+  group: '&BOUNDARY_PARAMS'
+  required: false
+  desc: >-
+    Flow variables in each ghost region (density, velocities and pressure). They are used only for
+    inflow boundary conditions.
+u_bound:
+  default_value: null
+  group: '&BOUNDARY_PARAMS'
+  required: false
+  desc: >-
+    Flow variables in each ghost region (density, velocities and pressure). They are used only for
+    inflow boundary conditions.
+v_bound:
+  default_value: null
+  group: '&BOUNDARY_PARAMS'
+  required: false
+  desc: >-
+    Flow variables in each ghost region (density, velocities and pressure). They are used only for
+    inflow boundary conditions.
+w_bound:
+  default_value: null
+  group: '&BOUNDARY_PARAMS'
+  required: false
+  desc: >-
+    Flow variables in each ghost region (density, velocities and pressure). They are used only for
+    inflow boundary conditions.
+p_bound:
+  default_value: null
+  group: '&BOUNDARY_PARAMS'
+  required: false
+  desc: >-
+    Flow variables in each ghost region (density, velocities and pressure). They are used only for
+    inflow boundary conditions.
+ibound_min:
+  default_value: [ -1, 1, -1, -1, -1, -1 ]
+  group: '&BOUNDARY_PARAMS'
+  required: true
+  desc: >-
+    Coordinates of the lower, left, bottom corner of
+    each boundary region. Each coordinate lies between −1 and +1 in each direction (see figure 3
+    on page 31).
+jbound_min:
+  default_value: [ 0, 0, -1, 1, -1, -1 ]
+  group: '&BOUNDARY_PARAMS'
+  required: true
+  desc: >-
+    Coordinates of the lower, left, bottom corner of
+    each boundary region. Each coordinate lies between −1 and +1 in each direction (see figure 3
+    on page 31).
+kbound_min:
+  default_value: [ 0, 0, 0, 0, -1, 1 ]
+  group: '&BOUNDARY_PARAMS'
+  required: true
+  desc: >-
+    Coordinates of the lower, left, bottom corner of
+    each boundary region. Each coordinate lies between −1 and +1 in each direction (see figure 3
+    on page 31).
+ibound_max:
+  default_value: [ -1, 1, 1, 1, 1, 1 ]
+  group: '&BOUNDARY_PARAMS'
+  required: true
+  desc: >-
+    arrays Likewise, for the upper, right and upper corner
+    of each boundary region.
+jbound_max:
+  default_value: [ 0, 0, -1, 1, 1, 1 ]
+  group: '&BOUNDARY_PARAMS'
+  required: true
+  desc: >-
+    arrays Likewise, for the upper, right and upper corner
+    of each boundary region.
+kbound_max:
+  default_value: [ 0, 0, 0, 0, -1, 1 ]
+  group: '&BOUNDARY_PARAMS'
+  required: true
+  desc: >-
+    arrays Likewise, for the upper, right and upper corner
+    of each boundary region.
+
+# == HYDRO_PARAMS == #
+# The parameters controlling the hydrodynamics solver.
+gamma:
+  default_value: 1.4
+  group: '&HYDRO_PARAMS'
+  required: true
+  desc: Adiabatic exponent for the perfect gas EOS.
+courant_factor:
+  default_value: 0.5
+  group: '&HYDRO_PARAMS'
+  required: true
+  desc: CFL number for time step control (less than 1).
+smallr:
+  default_value: 1e-10
+  group: '&HYDRO_PARAMS'
+  required: true
+  desc: >-
+    Minimum density to prevent floating exceptions. These are
+    left unit invariant. DONT USE UNITS where these would be a problem!
+smallc:
+  default_value: 1e-10
+  group: '&HYDRO_PARAMS'
+  required: true
+  desc: >-
+    Minimum sound speed to prevent floating exceptions
+    These are left unit invariant. DONT USE UNITS where these would be a problem!
+riemann:
+  default_value: "llf"
+  group: '&HYDRO_PARAMS'
+  required: true
+  desc: >-
+    Name of the desired Riemann solver. Possible choices are "exact",
+    "acoustic", "llf", "hll" or "hllc" for the hydro solver and
+    "llf", "hll", "roe", "hlld", "upwind" and "hydro" for the MHD solver.
+riemann2d:
+  default_value: 'llf'
+  group: '&HYDRO_PARAMS'
+  required: false
+  desc: >-
+    Name of the desired 2D Riemann solver for the induction
+    equation (MHD only). Possible choices are "upwind", "llf", "roe", "hll", and "hlld".
+niter_riemann:
+  default_value: 10
+  group: '&HYDRO_PARAMS'
+  required: false
+  desc: >-
+    Maximum number of iterations used in the exact Riemann solver.
+slope_type:
+  default_value: 1
+  group: '&HYDRO_PARAMS'
+  required: true
+  desc: >-
+    Type of slope limiter used in the Godunov scheme for the
+    piecewise linear reconstruction: slope_type=0: First order scheme,
+    slope_type=1: MinMod limiter, slope_type=2: MonCen limiter.
+    slope_type=3: Multi-dimensional MonCenlimiter. In 1e runs only,
+    it is also possible to choose: slope_type=4: Superbee
+    limiter slope_type=5: Ultrabee limiter
+pressure_fix:
+  default_value: true
+  group: '&HYDRO_PARAMS'
+  required: true
+  desc: >-
+    Activate hybrid scheme (conservative or primitive)
+    for high-Mach flows. Useful to prevent negative temperatures.
+# == POISSON_PARAMS == #
+gravity_type:
+  default_value: 0
+  group: "&POISSON_PARAMS"
+  required: true
+  desc: >-
+    "Type of gravity force. Possible choices are:
+      gravity_type=0: self-gravity (Poisson solver)
+      gravity_type>0: analytical gravity vector
+      gravity_type<0: self-gravity plus additional analytical density profile
+epsilon:
+  default_value: 1e-4
+  group: "&POISSON_PARAMS"
+  required: true
+  desc: >-
+    Stopping criterion for the iterative Poisson solver:
+    residual 2-norm should be lower than epsilon times the right hand side 2-norm.
+gravity_params:
+  default_value: [ 0.0,0.0,0.0,0.0 ]
+  group: "&POISSON_PARAMS"
+  required: false
+  desc: >-
+    Parameters used to define the analytical gravity
+    field (routine gravana.f90) or the analytical mass density field (routine rho_ana.f90).
+cg_levelmin:
+  default_value: 999
+  group: "&POISSON_PARAMS"
+  required: false
+  desc: >-
+    Minimum level from which the Conjugate Gradient solver
+    is used in place of the Multigrid solver.
+# == REFINEMENT PARAMETERS == #
+mass_sph:
+  default_value: null
+  required: false
+  group: "&REFINE_PARAMS"
+  desc: >-
+    Quasi-Lagrangian strategy: mass_sph is used
+    to set a typical mass scale. For cosmo runs, its value is set automatically.
+
+m_refine:
+  default_value: null
+  required: false
+  group: "&REFINE_PARAMS"
+  desc: >-
+    Real array Quasi-Lagrangian strategy: each level
+    is refined if the baryons mass in a cell exceeds m_refine(ilevel)*mass_sph,
+    or if the number of dark matter particles exceeds m_refine(ilevel), whatever the mass is.
+
+jeans_refine:
+  default_value: null
+  required: false
+  group: "&REFINE_PARAMS"
+  desc: >-
+    Real array Jeans refinement strategy: each level
+    is refined if the cell size exceeds the local Jeans length divided by jeans_refine(ilevel).
+
+floor_d:
+  default_value: null
+  required: false
+  group: "&REFINE_PARAMS"
+  desc: >-
+    Discontinuity-based strategy: density
+    floor below which gradients are ignored.
+floor_u:
+  default_value: null
+  required: false
+  group: "&REFINE_PARAMS"
+  desc: >-
+    Discontinuity-based strategy: energy
+    floor below which gradients are ignored.
+floor_p:
+  default_value: null
+  required: false
+  group: "&REFINE_PARAMS"
+  desc: >-
+    Discontinuity-based strategy: pressure
+    floor below which gradients are ignored.
+err_grad_d:
+  default_value: null
+  required: false
+  group: "&REFINE_PARAMS"
+  desc: ""
+err_grad_u:
+  default_value: null
+  required: false
+  group: "&REFINE_PARAMS"
+  desc: ""
+err_grad_p:
+  default_value: null
+  required: false
+  group: "&REFINE_PARAMS"
+  desc: >-
+    Real Discontinuity-based strategy: density, velocity
+    and pressure relative variations above which a cell is refined.
+x_refine:
+  default_value: null
+  required: false
+  group: "&REFINE_PARAMS"
+  desc: ""
+y_refine:
+  default_value: null
+  required: false
+  group: "&REFINE_PARAMS"
+  desc: ""
+z_refine:
+  default_value: null
+  required: false
+  group: "&REFINE_PARAMS"
+  desc: >-
+    Real arrays Geometry-based strategy: center of the
+    refined region at each level of the AMR grid.
+r_refine:
+  default_value: null
+  required: false
+  group: "&REFINE_PARAMS"
+  desc: ""
+a_refine:
+  default_value: null
+  required: false
+  group: "&REFINE_PARAMS"
+  desc: ""
+b_refine:
+  default_value: null
+  required: false
+  group: "&REFINE_PARAMS"
+  desc: ""
+exp_refine:
+  default_value: null
+  required: false
+  group: "&REFINE_PARAMS"
+  desc: >-
+    Real arrays Geometry-based strategy: size and sha
+    pe of the refined region at each level.
+interpol_var:
+  default_value: 0
+  group: '&REFINE_PARAMS'
+  required: true
+  desc: >-
+    Variables used to perform interpolation (prolongation)
+    and averaging (restriction).
+    interpol_type=0: conservatives (ρ, ρu, ρE)
+    interpol_type=1: primitives (ρ, ρu, ρ)
+interpol_type:
+  default_value: 1
+  group: '&REFINE_PARAMS'
+  required: true
+  desc: >-
+    Type of slope limiter used in the interpolation scheme for newly
+    refined cells. interpol_type=0: Straight injection (1st order)
+    interpol_type=1: MinMod limiter, interpol_type=2: MonCen limiter.
+# == UNITS PARAMETERS == #
+units_density:
+  default_value: null
+  required: true
+  group: '&UNITS_PARAMS'
+  desc: >-
+    The standard density unit (in CGS, requires G = 1)
+units_time:
+  default_value: null
+  required: true
+  group: '&UNITS_PARAMS'
+  desc: >-
+    The standard time unit (in CGS, requires G = 1)
+units_length:
+  default_value: null
+  required: true
+  group: '&UNITS_PARAMS'
+  desc: >-
+    The standard length unit (in CGS, requires G = 1)

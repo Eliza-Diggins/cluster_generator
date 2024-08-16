@@ -1,0 +1,259 @@
+# ====================================================================== #
+#                                                                        #
+# --                   RUNTIME PARAMETERS: ATHENA++                   -- #
+#                                                                        #
+# See https://github.com/PrincetonUniversity/athena/wiki/The-Input-File  #
+# for additional information on the rtps.                                #
+# ====================================================================== #
+
+# == COMMENT GROUP == #
+# These runtime parameters are optional and should be used for adding documentation to RTP files if
+# they are used as examples.
+problem:
+  desc: >-
+    problem description
+  required: false
+  default_value: null
+  group: "comment"
+reference:
+  desc: >-
+    references (if any)
+  required: false
+  default_value: null
+  group: "comment"
+configure:
+  desc: >-
+    Configuration description.
+  required: false
+  default_value: null
+  group: "comment"
+# == JOB GROUP == #
+# Contains the problem_id, which is used in output filenames.
+problem_id:
+  desc: >-
+     used in the output file names
+  required: true
+  default_value: null
+  group: "job"
+# == TIME GROUP == #
+# Standard parameters for the time integration management of the simulation.
+cfl_number:
+  desc: >-
+    the Courant, Friedrichs, & Lewy (CFL) Number
+  required: true
+  default_value: 0.3
+  group: 'time'
+nlim:
+  desc: >-
+    Number of timesteps to permit. -1 (default) will place no limit on # of iterations.
+  required: true
+  default_value: -1
+  group: 'time'
+tlim:
+  desc: >-
+    time limit in computing time
+  required: true
+  default_value: none
+  group: 'time'
+start_time:
+  desc: >-
+    The time at which to start the simulation. By default, 0.0.
+  required: false
+  default_value: !unyt_qty "0.0 Gyr"
+  group: 'time'
+integrator:
+  desc: >-
+    The time-integration scheme.
+  required: false
+  default_value: 'vl2'
+  group: 'time'
+sts_integrator:
+  desc: >-
+    The STS integrator scheme.
+  required: false
+  default_value: 'rkl2'
+  group: 'time'
+xorder:
+  desc: >-
+    Method for spatial reconstruction.
+  required: false
+  default_value: 2
+  group: 'time'
+ncycle_out:
+  desc: >-
+    The frequency with which to write STDOUT.
+  required: false
+  default_value: 1
+  group: 'time'
+dt_diagnostic:
+  desc: >-
+    Output extra timestep diagnostic information.
+  required: false
+  default_value: -1
+  group: 'time'
+sts_max_dt_ratio:
+  desc: >-
+    if the ratio of overall dt to dt_parabolic exceeds this value (-1 = infinity = default) when Super-Time-Stepping.
+  required: false
+  default_value: -1
+  group: 'time'
+# == MESH GROUP == #
+# Grid configuration settings.
+nx:
+  desc: >-
+    The number of cells along each axis.
+  default_value: none
+  required: true
+  group: 'mesh'
+xrat:
+  desc: >-
+    The ratio between adjacent cells. This should almost always be 1.0 on all axes.
+  default_value: [1.0,1.0,1.0]
+  required: true
+  group: 'mesh'
+xmin:
+  desc: >-
+    The position of the minimum coordinate point.
+  default_value: none
+  required: true
+  group: 'mesh'
+xmax:
+  desc: >-
+    The position of the maximum coordinate point.
+  default_value: none
+  required: true
+  group: 'mesh'
+num_threads:
+  desc: >-
+    Max number of OMP threads.
+  required: false
+  group: 'mesh'
+  default_value: 1
+refinement:
+  desc: >-
+    Enable adaptive mesh refinement.
+  default_value: "none"
+  required: false
+  group: 'mesh'
+numlevel:
+  desc: >-
+    The number of AMR levels.
+  default_value: 1
+  required: false
+  group: 'mesh'
+derefine_count:
+  desc: >-
+    The number of time steps before allowing derefinment of new cells.
+  required: false
+  default_value: 1
+  group: 'mesh'
+# == MESHBLOCK GROUP == #
+# Domain decomposition settings.
+mnx:
+  desc: >-
+    The number of cells to attribute to a single meshblock.
+  required: false
+  default_value: [1,1,1]
+  group: 'meshblock'
+# == LOAD BALANCING == #
+# Load balancing routines
+balancer:
+  desc: >-
+    The load balancing method.
+  required: false
+  default_value: "default"
+  group: 'loadbalancing'
+interval:
+  desc: >-
+    Interval between load balancing operations.
+  required: false
+  default_value: 10
+  group: 'loadbalancing'
+tolerance:
+  desc: >-
+    Maximum allowed load imbalance.
+  required: false
+  default_value: 0.5
+  group: 'loadbalancing'
+# == HYDRO == #
+# RTPs for the hydrodynamics
+iso_sound_speed:
+  desc: >-
+    sounds speed in the isothermal EOS
+  required: false
+  default_value: 0.5
+  group: 'hydro'
+gamma:
+  desc: >-
+    adiabatic index
+  required: false
+  default_value: 0.5
+  group: 'hydro'
+active:
+  desc: >-
+    true= dynamically evolve the fluid, background= the fluid is defined but the hydrodynamic variables are
+    constant in time, false (under construction) = no hydrodynamic variables are defined across the domain
+    (default = true)
+  required: false
+  default_value: 0.5
+  group: 'hydro'
+dfloor:
+  desc: >-
+    density concentration floors
+  required: false
+  default_value: 0.5
+  group: 'hydro'
+pfloor:
+  desc: >-
+    pressure concentration floors
+  required: false
+  default_value: 0.5
+  group: 'hydro'
+sfloor:
+  desc: >-
+    passive scalar concentration floors
+  required: false
+  default_value: 0.5
+  group: 'hydro'
+gamma_max:
+  desc: >-
+    maximum Lorentz factor in SR and GR (default = 1000)
+  required: false
+  default_value: 0.5
+  group: 'hydro'
+rho_min:
+  desc: >-
+    rho minimum in SR simulations.
+  required: false
+  default_value: 0.0
+  group: 'hydro'
+rho_pow:
+  desc: >-
+    rho 'pow' in SR simulations.
+  required: false
+  default_value: 0.0
+  group: 'hydro'
+u_min:
+  desc: >-
+    internal energy minimum in SR simulations.
+  required: false
+  default_value: 0.0
+  group: 'hydro'
+u_pow:
+  desc: >-
+    internal energy 'pow' in SR simulations.
+  required: false
+  default_value: 0.0
+  group: "hydro"
+rho_pmag_min:
+  desc: >-
+    Plasma sigma floor.
+  required: false
+  default_value: 0.0
+  group: 'hydro'
+u_pmag_min:
+  desc: >-
+    Plasma beta floor
+  required: false
+  default_value: 0.0
+  group: 'hydro'

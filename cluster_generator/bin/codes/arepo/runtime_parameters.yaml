@@ -218,9 +218,9 @@ FlushCpuTimeDiff:
     Time interval (in seconds) for flush calls on all log-files. In case
     REDUCE_FLUSH is not set, this is done during every sync-point.
   compile_flags: [[],[]]
-  default_value: 10
+  default_value:
   group: "IO/Code"
-  required: true
+  required: false # This is the only unrequired. Docs don't indicate it, but AREPO will error out.
 TimeLimitCPU:
   desc: >-
     CPU-time limit for the present submission of the code. If 85 percent of this
@@ -620,7 +620,7 @@ ReferenceGasPartMass:
     ReferenceGasPartMass calculation (only in case ReferenceGasPartMass=0 in
     parameter file).
   compile_flags: [[REFINEMENT_SPLIT_CELLS],[]]
-  default_value: "976211 Msun"
+  default_value: !unyt_qty "976211 Msun"
   group: "Refinement"
   required: true
 TargetGasMassFactor:

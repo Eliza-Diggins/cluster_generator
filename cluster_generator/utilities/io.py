@@ -2,7 +2,7 @@
 from typing import TYPE_CHECKING
 
 import unyt
-from ruamel.yaml import YAML, MappingNode, ScalarNode, SequenceNode
+from ruamel.yaml import MappingNode, ScalarNode, SequenceNode
 
 if TYPE_CHECKING:
     from ruamel.yaml import Loader, Node
@@ -103,15 +103,3 @@ def unyt_quantity_constructor(loader: "Loader", node: "Node") -> unyt.unyt_array
 
     else:
         raise TypeError(f"Type {type(node)} not supported.")
-
-
-if __name__ == "__main__":
-    yaml_string = """
-    test_quantity: !unyt_quantity "10 kpc"
-    """
-
-    yaml = YAML(typ="safe")
-    yaml.constructor.add_constructor("!unyt_quantity", unyt_quantity_constructor)
-
-    data = yaml.load(yaml_string)
-    print(data["test_quantity"].units)
