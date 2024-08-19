@@ -569,7 +569,7 @@ class ClusterParticles:
                 if add:
                     self.fields[ptype, name] += value
                 else:
-                    mylog.warning(f"Overwriting field ({ptype}, {name}).")
+                    mylog.warning("Overwriting field (%s, %s).", ptype, name)
                     self.fields[ptype, name] = value
             else:
                 if add:
@@ -837,7 +837,7 @@ def sample_from_clusters(
 
     for i, model in enumerate(models):
         if "density" not in model:
-            mylog.warning(f"No density field found in {model}. Skipping.")
+            mylog.warning("No density field found in %s. Skipping.", model)
             continue
 
         # Filling in the particle fields from the interpolated model fields.
