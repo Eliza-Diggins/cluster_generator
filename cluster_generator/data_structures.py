@@ -1,7 +1,6 @@
 """IO Backend for integrating :py:class:`model.ClusterModel` and
 :py:class:`ics.ClusterICs` instances with external packages like :py:mod:`yt`."""
 
-import os
 import pathlib as pt
 from contextlib import contextmanager
 from numbers import Number
@@ -129,49 +128,6 @@ class YTHDF5:
         return self.__str__()
 
     @classmethod
-    @contextmanager
-    def temporary(
-        cls,
-        domain_dimensions: Collection[int] = (512, 512, 512),
-        bbox: Collection[float] | None = None,
-        chunksize: int = 64,
-    ):
-        """Create a temporary :py:class:`data_structures.YTHDF5` instance.
-
-        .. note::
-
-            This method can be used as a context manager.
-
-        Parameters
-        ----------
-        domain_dimensions: tuple
-            The dimensions of the grid for each of the fields.
-        bbox: array-like
-            The bounding box of the simulation region. Size should be ``3,2``.
-        chunksize: int
-            The maximum size of a given chunk in the HDF5 file.
-
-        Returns
-        -------
-        :py:class:`data_structures.YTHDF5`
-        """
-        import tempfile
-
-        if bbox is None:
-            bbox = np.array([[0, 1], [0, 1], [0, 1]], dtype="f64")
-
-        path = tempfile.NamedTemporaryFile(delete=False)
-        built_cls = cls.build(
-            path.name,
-            domain_dimensions=domain_dimensions,
-            bbox=bbox,
-            overwrite=True,
-            chunksize=chunksize,
-        )
-        yield built_cls
-        os.remove(path.name)
-
-    @classmethod
     def load(cls, filename: str | pt.Path) -> Self:
         """Load an existing :py:class:`data_structures.YTHDF5` instance from file.
 
@@ -229,12 +185,12 @@ class YTHDF5:
         ), "The chunksize does not evenly divide the domain. Please alter you chunksize so that it fits."
 
         # Managing file existence logic.
-        if (filename.exists()) and (not overwrite):
+        if filename.exists() and not overwrite:
             raise IOError(
                 f"Could not create YTHDF5 object at {filename} because it already exists."
             )
         elif filename.exists():
-            mylog.info(f"{filename} exists. Overwriting it...")
+            mylog.info("%s exists. Overwriting it...", filename)
             filename.unlink()
         else:
             pass
@@ -297,10 +253,10 @@ class YTHDF5:
     @property
     def _estimated_size(self) -> float:
         return (
-            (np.prod(np.array(self.domain_dimensions)))
+            np.prod(np.array(self.domain_dimensions))
             * 8
             * len(self.__class__._yt_fields)
-            / (1e9)
+            / 1e9
         )
 
     @property
@@ -359,7 +315,7 @@ class YTHDF5:
         )
         _relative_bbox = self.bbox - center.d.reshape((3, 1))
 
-        mylog.info(f"Adding {model} to {self.__str__()}")
+        mylog.info("Adding %s to %s", model, self)
         mylog.info(
             f"\tPos: {[np.round(j,decimals=2) for j in center.d]} kpc, Vel: {[np.round(j,decimals=2) for j in velocity.to_value('km/s')]} km/s"
         )
