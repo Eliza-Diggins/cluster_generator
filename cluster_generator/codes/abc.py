@@ -9,10 +9,7 @@ import unyt
 from ruamel.yaml import YAML
 
 from cluster_generator.ics import ClusterICs
-from cluster_generator.utilities.io import (
-    unyt_array_constructor,
-    unyt_quantity_constructor,
-)
+from cluster_generator.io.yaml import unyt_array_constructor, unyt_quantity_constructor
 from cluster_generator.utilities.logging import LogDescriptor
 from cluster_generator.utilities.types import Instance, Self, Value
 

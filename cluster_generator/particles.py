@@ -1,4 +1,18 @@
-"""Initial conditions and cluster model particle management module."""
+"""Initial conditions and cluster model particle management module.
+
+Notes
+-----
+
+Particle datasets are useful for a variety of purposes, including as initial conditions for many
+SPH or moving-mesh codes. In cluster generator, there are 5 particle types:
+
+1. **gas**: (Gadget type 0) gas particles are the only particles subject to hydrodynamic evolution.
+2. **dm**: (Gadget type 1) dark matter particles which evolve via gravitation only.
+3. **tracer**: (Gadget type 2) These are tracer particles which evolve with the fluid flow but do not
+   have any influence over the behavior of the fluid or the other particles.
+4. **star** (Gadget type 4) Stellar particles.
+5. **black_hole** (Gadget type 5) supermassive black hole particles.
+"""
 
 from collections import OrderedDict, defaultdict
 from numbers import Number

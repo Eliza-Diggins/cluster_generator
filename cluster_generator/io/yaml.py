@@ -2,10 +2,10 @@
 from typing import TYPE_CHECKING
 
 import unyt
-from ruamel.yaml import MappingNode, ScalarNode, SequenceNode
+from ruamel.yaml import Loader, MappingNode, Node, ScalarNode, SequenceNode
 
 if TYPE_CHECKING:
-    from ruamel.yaml import Loader, Node
+    pass
 
 
 def unyt_array_constructor(loader: "Loader", node: "Node") -> unyt.unyt_array:

@@ -6,6 +6,7 @@ Notes
 These are primarily used in conjunction with the RAMSES code frontend (written in F90) to ensure that
 RTP files are written correctly.
 """
+
 import re
 from pathlib import Path
 from typing import Any, Collection, Literal

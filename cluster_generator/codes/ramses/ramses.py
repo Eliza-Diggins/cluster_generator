@@ -115,7 +115,7 @@ class RamsesRuntimeParameters(RuntimeParameters):
         overwrite: bool, optional
             Allow method to overwrite an existing file at this path. Default is ``False``.
         """
-        from cluster_generator.codes.ramses.io_nml import F90Namelist, F90NamelistGroup
+        from cluster_generator.io.nml import F90Namelist, F90NamelistGroup
 
         instance.logger.info(f"Generating RAMSES RTP template for {instance}.")
 
@@ -368,6 +368,7 @@ class Ramses(SimulationCode):
     ) -> Path:
         pass
 
+    @property
     def unit_system(self) -> unyt.UnitSystem:
         if self._unit_system is None:
             # The units need to be constructed using G=1.
