@@ -1,18 +1,4 @@
-"""Initial conditions and cluster model particle management module.
-
-Notes
------
-
-Particle datasets are useful for a variety of purposes, including as initial conditions for many
-SPH or moving-mesh codes. In cluster generator, there are 5 particle types:
-
-1. **gas**: (Gadget type 0) gas particles are the only particles subject to hydrodynamic evolution.
-2. **dm**: (Gadget type 1) dark matter particles which evolve via gravitation only.
-3. **tracer**: (Gadget type 2) These are tracer particles which evolve with the fluid flow but do not
-   have any influence over the behavior of the fluid or the other particles.
-4. **star** (Gadget type 4) Stellar particles.
-5. **black_hole** (Gadget type 5) supermassive black hole particles.
-"""
+"""Initial conditions and cluster model particle management module."""
 
 from collections import OrderedDict, defaultdict
 from numbers import Number
@@ -41,6 +27,7 @@ if TYPE_CHECKING:
 
     from cluster_generator import ClusterModel
 
+
 recognized_particle_types: list[str] = ["dm", "gas", "star", "tracer", "black_hole"]
 """ list of str: The 5 standard particle types in ``cluster_generator``."""
 
@@ -62,6 +49,15 @@ gadget_fields = {
     "tracer": ["Coordinates"],
 }
 
+code_fields = {
+    "arepo": {
+        "gas": [
+            "PassiveScalars",
+            "GFM_Metallicity",
+        ]
+    }
+}
+
 gadget_field_map = {
     "Coordinates": "particle_position",
     "Velocities": "particle_velocity",
@@ -70,6 +66,8 @@ gadget_field_map = {
     "Potential": "potential_energy",
     "InternalEnergy": "thermal_energy",
     "MagneticField": "magnetic_field",
+    "Metallicity": "metallicity",
+    "GFM_Metallicity": "metallicity",
 }
 
 gadget_field_units = {
@@ -81,7 +79,10 @@ gadget_field_units = {
     "Potential": "km**2/s**2",
     "PassiveScalars": "",
     "MagneticField": "1e5*sqrt(Msun)*km/s/(kpc**1.5)",
+    "Metallicity": "",
+    "GFM_Metallicity": "",
 }
+
 
 ptype_map = OrderedDict(
     [
@@ -657,7 +658,7 @@ class ClusterParticles:
                 if add:
                     self.fields[ptype, name] += value
                 else:
-                    mylog.warning(f"Overwriting field ({ptype}, {name}).")
+                    mylog.warning("Overwriting field (%s, %s).", ptype, name)
                     self.fields[ptype, name] = value
             else:
                 if add:
@@ -829,11 +830,15 @@ class ClusterParticles:
 
         return fig, ax
 
-    def _write_gadget_fields(self, ptype, h5_group, idxs, dtype):
-        for field in gadget_fields[ptype]:
+    def _write_gadget_fields(self, ptype, h5_group, idxs, dtype, code):
+        fields = gadget_fields[ptype]
+        if code in code_fields:
+            fields += code_fields[code].get(ptype, [])
+        for field in fields:
             if field == "ParticleIDs":
+                # these are handled later
                 continue
-            if field == "PassiveScalars" and ptype == "gas":
+            if field == "PassiveScalars":
                 if self.num_passive_scalars > 0:
                     data = np.stack(
                         [self[ptype, s].d for s in self.passive_scalars], axis=-1
@@ -889,7 +894,7 @@ class ClusterParticles:
             idxs = self._clip_to_box(ptype, box_size)
             num_particles[ptype] = idxs.sum()
             g = f.create_group(gptype)
-            self._write_gadget_fields(ptype, g, idxs, dtype)
+            self._write_gadget_fields(ptype, g, idxs, dtype, code)
             ids = np.arange(num_particles[ptype]) + 1 + npart
             g.create_dataset("ParticleIDs", data=ids.astype("uint32"))
             npart += num_particles[ptype]
@@ -1044,7 +1049,7 @@ def sample_from_clusters(
 
     for i, model in enumerate(models):
         if "density" not in model:
-            mylog.warning(f"No density field found in {model}. Skipping.")
+            mylog.warning("No density field found in %s. Skipping.", model)
             continue
 
         # Filling in the particle fields from the interpolated model fields.
