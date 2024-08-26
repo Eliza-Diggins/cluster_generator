@@ -439,6 +439,22 @@ class ClusterParticles:
                 self.fields["black_hole", "particle_mass"], mass
             )
 
+    def add_index(self):
+        """Add a field, ``particle_index`` to each particle type.
+
+        Notes
+        -----
+        Useful for a variety of simulation codes which require a unique identifier for each of the particles
+        in the simulation.
+        """
+        offset = 0
+        for ptype in self.particle_types:
+            num_particles = self.num_particles[ptype]
+
+            self.fields[(ptype, "particle_index")] = np.arange(num_particles) + offset
+
+            offset += num_particles
+
     @classmethod
     def from_fields(cls, fields: dict[tuple[str, str], unyt_array]) -> Self:
         """Initialize a :py:class:`ClusterParticles` instance from existing fields.

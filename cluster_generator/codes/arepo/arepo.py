@@ -1,9 +1,75 @@
-"""Frontend tools for interacting with the Arepo hydrodynamics code."""
+"""Frontend tools for interacting with the Arepo hydrodynamics code.
+
+This module provides the :py:class:`Arepo` class and associated runtime parameters needed to
+run simulations with the Arepo code.
+It includes functionalities for setting up initial conditions, managing runtime parameters,
+and interacting with the Arepo simulation software.
+
+Key Features
+------------
+
+- **Runtime Parameters Management**: This module provides a structured way to define and manage
+  runtime parameters for Arepo simulations. The :py:class:`ArepoRuntimeParameters` class allows for the
+  specification of various simulation parameters, including output settings, box size,
+  softening lengths, and more.
+
+- **Initial Conditions Setup**: The :py:class:`Arepo` class includes methods for generating initial
+  conditions compatible with Arepo, including support for different initial conditions formats.
+
+- **File Formats**: Arepo supports several file formats for input and output, including:
+
+  - **Gadget-Style Formats (Format 2)**: Legacy formats compatible with the Gadget simulation
+    code, which use binary files to store data. Format 1 uses a basic Gadget block format,
+    while Format 2 uses a four-character block identifier.
+
+  - **HDF5 Format (Format 3)**: A more modern and versatile format that uses the HDF5
+    file format standard for storing large amounts of data. This format allows for efficient
+    storage and retrieval of large simulation datasets and supports metadata inclusion.
+    It is the preferred format for most modern simulations due to its flexibility and performance.
+
+File Types
+----------
+
+- **Initial Conditions (IC) Files**: The initial state of the simulation, which includes
+  positions, velocities, masses, internal energies, and other relevant physical quantities
+  of the simulation particles.
+
+- **Snapshot Files**: Periodic outputs that capture the state of the simulation at different
+  time steps, allowing for analysis of the time evolution of the system.
+
+- **Parameter Files**: Text files that specify the runtime parameters needed by Arepo to
+  execute the simulation, such as the number of particles, time steps, and physical constants.
+
+For more details on Arepo file formats and runtime configurations, refer to the official
+Arepo documentation:
+
+- Arepo Documentation: https://arepo-code.org/documentation
+- Arepo GitHub Repository: https://github.com/volkerh/arepo
+
+Notes
+-----
+
+- **Compatibility**: This module is specifically tailored for use with the Arepo simulation
+  code. Users should ensure that their Arepo installation is correctly configured and
+  that all dependencies are met.
+
+- **Usage Considerations**: The methods provided in this module assume familiarity with
+  hydrodynamics simulations and the Arepo code. Users are expected to have a working
+  knowledge of simulation setup, parameter management, and the interpretation of simulation
+  results.
+
+See Also
+--------
+
+:py:class:`cluster_generator.codes.abc.RuntimeParameters` : Abstract base class for runtime parameters management.
+
+:py:class:`cluster_generator.codes.abc.SimulationCode` : Abstract base class for simulation code interfaces.
+"""
 import os
 from dataclasses import dataclass
 from logging import Logger
 from pathlib import Path
-from typing import Any, ClassVar, Literal, Type
+from typing import TYPE_CHECKING, Any, ClassVar, Literal, Type
 
 import numpy as np
 import unyt
@@ -17,8 +83,26 @@ from cluster_generator.utilities.config import config_directory
 from cluster_generator.utilities.logging import LogDescriptor
 from cluster_generator.utilities.types import Instance
 
+if TYPE_CHECKING:
+    from cluster_generator.codes.arepo.io import Arepo_HDF5
+
 
 class ArepoRuntimeParameters(RuntimeParameters):
+    """Manages runtime parameters for Arepo simulations.
+
+    Provides methods to deduce instance values for various parameters and write
+    templates for runtime parameter files.
+
+    Examples
+    --------
+
+    .. code-block:: python
+
+        instance = Arepo()
+        runtime_params = ArepoRuntimeParameters()
+        runtime_params.write_rtp_template(instance, Arepo, "/path/to/rtp_file", overwrite=True)
+    """
+
     @staticmethod
     def set_InitCondFile(instance: Instance, _: Type[Instance], __: ClusterICs) -> str:
         # The initial condition file needs to be set to the absolute path.
@@ -93,17 +177,33 @@ class ArepoRuntimeParameters(RuntimeParameters):
     def deduce_instance_values(
         self, instance: Instance, owner: Type[Instance], ics: ClusterICs
     ) -> tuple[bool, Any]:
+        """Deduce runtime parameter values for a given instance.
+
+        Parameters
+        ----------
+        instance : Instance
+            The instance of Arepo simulation.
+        owner : Type[Instance]
+            The owner class.
+        ics : ClusterICs
+            Cluster initial conditions.
+
+        Returns
+        -------
+        tuple
+            A tuple with a boolean indicating success and any errors.
+        """
         # Run the standard method -> get everything that's specified normally.
         _, errors = super().deduce_instance_values(instance, owner, ics)
 
         if errors is None:
             errors = []
+        else:
+            errors = errors.errors
 
-        # MANAGING SOFTENING
-        # ------------------
-        # Because softening parameters are adaptive to NTYPES and NTYPESSOFT, we have to add them dynamically.
-        #
-        # This section of code determines the fill-in values for the softening lengths and applies them.
+        # Managing the softening lengths for each of the particle types.
+        # Because these are generic, and they may not all need to be specified, we have to do them dynamically
+        # as is shown here.
         for particle_type in range(instance.NTYPES):
             # iterate through each type of particle and assign the softening type to the particle.
             instance.rtp[
@@ -169,14 +269,24 @@ class ArepoRuntimeParameters(RuntimeParameters):
 
         Parameters
         ----------
-        instance: Arepo
+        instance : Instance
             The Arepo instance to write the parameter file for.
-        owner: Type[Arepo]
+        owner : Type[Instance]
             The owner class.
-        path: str
+        path : str or Path
             The output location.
-        overwrite: bool, optional
-            Allow method to overwrite an existing file at this path. Default is ``False``.
+        overwrite : bool, optional
+            Allow method to overwrite an existing file at this path. Default is False.
+
+        Returns
+        -------
+        Path
+            The path to the written runtime parameters file.
+
+        Raises
+        ------
+        ValueError
+            If the file exists and overwrite is set to False.
         """
         instance.logger.info(f"Generating Arepo RTP template for {instance}.")
 
@@ -285,8 +395,20 @@ class ArepoRuntimeParameters(RuntimeParameters):
 
 @dataclass
 class Arepo(SimulationCode):
-    """:py:class:`SimulationCode` class for interacting with the Arepo simulation
-    software."""
+    """SimulationCode class for interacting with the Arepo simulation software.
+
+    Examples
+    --------
+    .. code-block:: python
+
+        arepo = Arepo(IC_PATH="path/to/ic", OUTPUT_DIR="path/to/output")
+        arepo.generate_ics(initial_conditions=my_ics, overwrite=True)
+
+    See Also
+    --------
+    ArepoRuntimeParameters
+        For setting runtime parameters specific to Arepo.
+    """
 
     rtp: ClassVar[ArepoRuntimeParameters] = ArepoRuntimeParameters(
         os.path.join(
@@ -521,7 +643,43 @@ class Arepo(SimulationCode):
 
     def generate_ics(
         self, initial_conditions: ClusterICs, overwrite: bool = False, **kwargs
-    ) -> Path:
+    ) -> "Arepo_HDF5":
+        """Generates initial conditions for the simulation.
+
+        Parameters
+        ----------
+        initial_conditions : ClusterICs
+            The initial conditions to use for generating the simulation.
+        overwrite : bool, optional
+            If True, overwrite existing files. Default is False.
+        **kwargs : dict
+            Additional keyword arguments to pass during IC generation.
+
+        Returns
+        -------
+        Path
+            The path to the generated initial conditions file.
+
+        Raises
+        ------
+        ValueError
+            If an unsupported IC_FORMAT is specified.
+
+        Examples
+        --------
+        .. code-block:: python
+
+            arepo = Arepo(IC_PATH="path/to/ic", OUTPUT_DIR="path/to/output")
+            my_ics = ClusterICs()
+            arepo.generate_ics(initial_conditions=my_ics, overwrite=True)
+        """
+        from cluster_generator.codes.arepo.io import (
+            Arepo_FieldRegistry,
+            Arepo_HDF5,
+            Arepo_Header,
+            Arepo_ParticleRegistry,
+        )
+
         # Create a shared particle dataset from the initial conditions
         # we do this in ./arepo_tmp to contain any particle files generated.
         self.logger.info(f"Constructing AREPO ICs from {initial_conditions}.")
@@ -533,20 +691,126 @@ class Arepo(SimulationCode):
         combined_particles = initial_conditions.setup_particle_ics(**kwargs)
         self.logger.info("Combining constituent models and generating particles [DONE]")
 
+        # The particles need to have a particle_index generated.
+        combined_particles.add_index()
+
         # Produce compliant HDF5 file
         if self.IC_FORMAT == 3:
-            from cluster_generator.codes.arepo.io import write_particles_to_arepo_hdf5
+            # Create the field registry. For initial conditions, we only need blocks up to the temperature.
+            # The dtypes will depend on the INPUT_IN_DOUBLEPRECISION flag.
+            # The units will also depend on the unit system of the Arepo instance.
+
+            if self.INPUT_IN_DOUBLEPRECISION:
+                _ftype = "f8"
+            else:
+                _ftype = "f4"
+
+            fields = {
+                "Coordinates": (
+                    "particle_position",
+                    "POS",
+                    self.unit_system["length"],
+                    _ftype,
+                    None,
+                    3,
+                ),
+                "Velocities": (
+                    "particle_velocity",
+                    "VEL",
+                    self.unit_system["length"] / self.unit_system["time"],
+                    _ftype,
+                    None,
+                    3,
+                ),
+                "ParticleIDs": ("particle_index", "ID", None, "i4", None, 1),
+                "Masses": (
+                    "particle_mass",
+                    "MASS",
+                    self.unit_system["mass"],
+                    _ftype,
+                    None,
+                    1,
+                ),
+                "InternalEnergy": (
+                    "thermal_energy",
+                    "U",
+                    (self.unit_system["length"] / self.unit_system["time"]) ** 2,
+                    _ftype,
+                    [0],
+                    1,
+                ),
+            }
+            fields = {
+                key: {
+                    "cluster_name": value[0],
+                    "binary_name": value[1],
+                    "units": value[2],
+                    "dtype": value[3],
+                    "pid": value[4],
+                    "size": value[5],
+                }
+                for key, value in fields.items()
+            }
+
+            field_registry = Arepo_FieldRegistry(fields)
+
+            # remove fields we don't want to write.
+            field_registry.remove_field("Density")
+            field_registry.remove_field("Potential")
+
+            # Now we deal with the particle registry. These should all be by convention, so we just generate
+            # the default.
+            particle_registry = Arepo_ParticleRegistry({})
+
+            # The header now needs to be produced. We generate it from the particle dataset with all of the header
+            # attributes as kwargs.
+            _header_dict = {}
+
+            _header_dict["Time"] = self.START_TIME.in_base(self.unit_system).d
+
+            # We don't allow cosmological evolution, so these parameters can simply be set to their defaults.
+            # Setting header flags. These are all pulled from RTPs.
+            _header_dict["Flag_Sfr"] = self.rtp["StarformationOn"]
+            _header_dict["Flag_Cooling"] = self.rtp["CoolingOn"]
+            _header_dict["Flag_Feedback"] = self.rtp["StarformationOn"]
+            _header_dict["Flag_Metals"] = 0.0
+            _header_dict["Flag_StellarAge"] = 0.0
+            _header_dict["Flag_DoublePrecision"] = self.INPUT_IN_DOUBLEPRECISION
+
+            header = Arepo_Header.from_particles(
+                combined_particles, particle_registry, **_header_dict
+            )
 
             self.logger.info("Writing particles to AREPO HDF5...")
-            write_particles_to_arepo_hdf5(
-                self, combined_particles, path=self.IC_PATH, overwrite=overwrite
+            ICS = Arepo_HDF5.from_particles(
+                combined_particles,
+                self.IC_PATH,
+                field_registry=field_registry,
+                particle_registry=particle_registry,
+                header=header,
+                overwrite=overwrite,
             )
             self.logger.info("Writing particles to AREPO HDF5. [DONE]")
+            return ICS
         else:
             raise ValueError(f"IC_FORMAT={self.IC_FORMAT} is not currently supported.")
 
     @property
     def unit_system(self) -> unyt.UnitSystem:
+        """Returns the unit system for the simulation.
+
+        Returns
+        -------
+        unyt.UnitSystem
+            The unit system used for the simulation.
+
+        Examples
+        --------
+        .. code-block:: python
+
+            arepo = Arepo(IC_PATH="path/to/ic")
+            unit_system = arepo.unit_system
+        """
         if self._unit_system is None:
             # construct the unit system from scratch
             self._unit_system = unyt.UnitSystem(
@@ -563,15 +827,14 @@ class Arepo(SimulationCode):
     def from_install_directory(
         cls, installation_directory: str | Path, **parameters
     ) -> Self:
-        """Determine the relevant class parameters for AREPO from its installation
-        directory.
+        """Initializes the Arepo instance from the installation directory.
 
         Parameters
         ----------
-        installation_directory: str
-            The directory in which AREPO is installed.
-        parameters:
-            Other parameters to pass to the initializer for :py:class:`Arepo`.
+        installation_directory : str or Path
+            The directory where AREPO is installed.
+        **parameters : dict
+            Other parameters to pass to the initializer for Arepo.
 
         Returns
         -------
@@ -580,9 +843,14 @@ class Arepo(SimulationCode):
 
         Notes
         -----
+        This method seeks out the `Config.sh` file in the installation directory and reads it
+        to determine the enabled and disabled flags.
 
-        This method seeks out the ``Config.sh`` file in the installation directory and reads it to determine the
-        enabled and disabled flags.
+        Examples
+        --------
+        .. code-block:: python
+
+            arepo = Arepo.from_install_directory("/path/to/arepo/installation")
         """
         from dataclasses import fields
 
@@ -594,18 +862,3 @@ class Arepo(SimulationCode):
         }
 
         return cls(**required_ctps, **parameters)
-
-
-if __name__ == "__main__":
-    q = Arepo(
-        IC_PATH="/test.hdf5",
-        SOFTENING_COMOVING={k: unyt.unyt_quantity(2.0, "kpc") for k in range(6)},
-        OUTPUT_STYLE=(unyt.unyt_quantity(0.0, "Gyr"), unyt.unyt_quantity(0.01, "Gyr")),
-        TIME_MAX=unyt_quantity(10, "Gyr"),
-        BOXSIZE=unyt_quantity(14, "kpc"),
-        REGULARIZE_MESH_FACE_ANGLE=True,
-        ADDBACKGROUNDGRID=True,
-    )
-
-    q.determine_runtime_params(None)
-    q.generate_rtp_template("test.txt", overwrite=True)

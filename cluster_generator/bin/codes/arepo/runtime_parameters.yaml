@@ -275,7 +275,7 @@ BoxSize:
     each dimension. The only exception from this is for collisionless particles
     in a tree-only gravity mode (no PMGRID) when GRAVITY_NONPERIODIC is set.
   compile_flags: [[],[]]
-  default_value:
+  default_value: null
   group: "Setup"
   required: true
 PeriodicBoundariesOn:
@@ -304,7 +304,7 @@ TimeMax:
     until this time is reached. For cosmological integrations, the value given
     here is the final scale factor.
   compile_flags: [[],[]]
-  default_value:
+  default_value: null
   group: "Setup"
   required: true
 ComovingIntegrationOn:
@@ -736,7 +736,7 @@ DesLinkNgb:
     will have GroupFirstSub==-1 indicating that that FoF has no central subhalo
     in addition to no satellite subhalos.
   compile_flags: [[SUBFIND],[]]
-  default_value:
+  default_value: null
   group: "Subfind"
   required: true
 ErrTolThetaSubfind:

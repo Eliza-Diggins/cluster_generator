@@ -18,7 +18,42 @@ if TYPE_CHECKING:
 
 
 class _YAMLDescriptor:
-    # Allow for single try loading of custom yaml for an RTP class.
+    """Descriptor class for loading and managing YAML configurations.
+
+    This descriptor allows for single-time loading of a custom YAML parser
+    for a given class. It is intended to be used within the `RuntimeParameters`
+    class to manage configuration files dynamically.
+
+    Parameters
+    ----------
+    base : YAML, optional
+        A base YAML parser object. If not provided, a safe YAML parser is instantiated.
+
+    Attributes
+    ----------
+    base : YAML
+        The base YAML parser object.
+    yaml : YAML or None
+        The dynamically loaded YAML parser with custom constructors.
+
+    Examples
+    --------
+    Define a custom YAML descriptor in a class:
+
+    .. code-block:: python
+
+        class MyClass:
+            yaml = _YAMLDescriptor()
+
+        instance = MyClass()
+        yaml_parser = instance.yaml
+
+    Notes
+    -----
+    Developers can use this descriptor to add custom YAML constructors for specific types. This is useful for
+    adding unit recognition to the RTP files or other tasks of that sort.
+    """
+
     def __init__(self, base: "YAML" = None):
         # load the base parser.
         if base is None:
@@ -39,67 +74,102 @@ class _YAMLDescriptor:
 
 
 class RuntimeParameters(ABC):
-    """Super-class runtime-parameters container.
+    """Abstract base class for managing runtime parameters (RTPs) of simulation codes.
+
+    This class provides the core functionality for handling runtime parameters required by various
+    simulation codes. It is designed to be subclassed by specific code implementations (e.g., AREPO,
+    Gadget-2), allowing them to define and manage their own RTPs.
+
 
     Notes
     -----
 
-    The :py:class:`RuntimeParameters` class for a given simulation code serves 4 functions:
+    The :py:class:`RuntimeParameters` class serves four primary functions:
 
-    1. Read the default RTPs from disk (``/bin/code_name/runtime_parameters.yaml``) and allow the user to access them.
-    2. Store a set of RTPs for each instance of the :py:class:`SimulationCode` which the user may manipulate to suite their use-case.
-    3. Provide a way for :py:class:`SimulationCode` instances to "fill-in" missing RTPs given the user's USPs.
-    4. Provide a method for writing the RTPs for a simulation to disk in a ready-to-run format.
+    1. **Reading Defaults**: Loads the default RTPs from a YAML file located at
+       ``bin/code_name/runtime_parameters.yaml``.
+    2. **Instance Management**: Maintains a set of RTPs for each instance of a
+       :py:class:`SimulationCode`, allowing for instance-specific adjustments.
+    3. **Dynamic Filling**: Provides mechanisms for dynamically filling in missing RTPs
+       based on user-specified parameters (USPs) and compile-time parameters (CTPs).
+    4. **Exporting**: Supports exporting RTPs to a format that can be directly used by
+       the simulation software.
 
-    To achieve this, the :py:class:`RuntimeParameters` class is a `descriptor class <https://realpython.com/python-descriptors/>`_.
-    Every :py:class:`SimulationCode` has a :py:attr:`~SimulationCode.rtp` attribute which can be accessed to see a set of
-    the default RTPs for the simulation code.
+    .. rubric:: Setters and Instance Management
 
-    Once the :py:class:`SimulationCode` has been instantiated, (i.e. ``code = SimulationCode()``), accessing the :py:attr:`~SimulationCode.rtp`
-    attribute (``code.rtp``) will provide access to the **actual RTPs** for the simulation run represented by that instance. These can be
-    changed by the user as needed.
+    Setters are methods that dynamically determine the value of a specific runtime parameter
+    based on the current state of the simulation instance, including its initial conditions (ICs)
+    and compile-time/user-specified parameters.
 
-    .. hint::
+    Each setter method should be named in the format ``set_<RTP_name>`` and accept three arguments:
 
-        RTPs (when accessed by the class or the instance) are permitted to be **any** legitimate class. For example, a softening length
-        parameter may have a default which is an :py:class:`unyt.unyt_quantity`. It will be "converted" to the correct code-format
-        only when the user creates an RTP template to feed into the code (:py:meth:`SimulationCode.generate_rtp_template`).
+    - ``instance``: The instance of the :py:class:`SimulationCode` for which the RTP is being set.
+    - ``owner``: The :py:class:`SimulationCode` class itself.
+    - ``ic``: The initial conditions (:py:class:`ClusterICs`) relevant to the simulation.
 
-    Once the user is ready, the :py:meth:`SimulationCode.determine_runtime_params` uses the CTP and USP of the :py:class:`SimulationCode` instance
-    to deduce the correct RTP values (fill-in-the-blank) for the user's simulation. Finally, the :py:meth:`SimulationCode.generate_rtp_template` method
-    will export those RTPs in a format recognized by the simulation software.
+    .. rubric:: Example of a Setter Method
 
-    .. rubric:: Setting RTPs
-
-    For each RTP recognized by the code, the developer can write a method in the RTP class named ``set_<RTP_name>`` with 3 arguments:
-    ``instance:SimulationCode``, ``owner: Type[SimulationCode]``, and ``ic: ClusterICs``. This should return the correct value of
-    the given RTP as deduced from the ICs and the code object.
-
-    The :py:meth:`RuntimeParameter.deduce_instance_values` then identifies all of these "setters" and uses them to set all
-    of the needed RTPs at runtime. Additionally, if a field in the :py:class:`SimulationCode` class corresponds **directly** to
-    an RTP, then it can be specified with a "setter" parameter in its metadata using the syntax like
+    A setter method for an RTP named ``softening_length`` might look like this:
 
     .. code-block:: python
 
-        class SimulationCode:
+        def set_softening_length(instance, owner, ic):
+            # Example logic to set the softening length based on instance properties
+            return instance.compute_softening_length(ic)
 
-            FIELD: Any = ufield(
-                        default=None,            # Default field value
-                        flag="RTP_name",         # RTP name
-                        setter= setter_function  # The setter function.
-                        )
+    These setters are identified dynamically by the :py:meth:`deduce_instance_values` method, which populates
+    the RTPs for a specific simulation instance using both the class-defined setters and simple
+    direct mappings from the instance attributes.
 
-    .. rubric:: Converting RTPs
+    .. rubric:: Role of RuntimeParameters as a Class Variable
 
-    Once the RTPs for an instance are set, they are still (generically) in any number of different classes. If the particular
-    simulation code expects a class ``C`` to be written in a particular format that is not the default (``__repr__``) of the
-    class, then a custom "converter" must be provided. To do so, we simply implement a method with the signature
-    ``generic_converter(value) -> str`` which converts a particular type to its correct string representation. To indicate
-    the type that should be converted, below the class definition, add the following:
+    The :py:class:`RuntimeParameters` class should be declared as a class variable within each subclass of
+    :py:class:`SimulationCode`. This design allows each :py:class:`SimulationCode` subclass to have a unique set of
+    RTPs that are specific to the requirements and configurations of that simulation code.
+
+    For example:
 
     .. code-block:: python
 
-        RuntimeParameters.<converter_method> = RuntimeParameters._converter(type)(RuntimeParameters.<converter_method>)
+        @dataclass
+        class MySimulationCode(SimulationCode):
+            rtp: ClassVar[RuntimeParameters] = MyRuntimeParameters
+
+    When accessed as a class attribute (e.g., ``MySimulationCode.rtp``), the :py:class:`RuntimeParameters` provides
+    access to the default parameters defined in the configuration file. When accessed as an instance
+    attribute (e.g., ``my_instance.rtp``), it allows for manipulation of the specific parameters for
+    that simulation instance.
+
+    This dual access pattern ensures that each simulation code can manage its unique parameter set while
+    allowing for flexible modifications at the instance level, promoting reusability and customization.
+
+    See Also
+    --------
+    :py:class:`cluster_generator.codes.abc.SimulationCode`
+
+    Examples
+    --------
+    Load runtime parameters from a YAML file:
+
+    .. code-block:: python
+
+        rtp = RuntimeParameters('/path/to/runtime_parameters.yaml')
+        defaults = rtp.get_defaults()
+
+    Setting RTPs dynamically:
+
+    .. code-block:: python
+
+        def set_example_rtp(instance, owner, ic):
+            return 1.0
+
+        rtp.set_example_rtp = set_example_rtp
+
+    .. note::
+
+        Subclasses should implement specific methods to handle RTPs unique to their simulation code.
+        Developers should ensure that all required RTPs are accounted for and correctly set up using
+        either the default values, direct instance attributes, or dynamic setters.
     """
 
     _type_converters: ClassVar[dict[Type, Callable]] = {}
@@ -386,33 +456,52 @@ RuntimeParameters._convert_unyt_quantity = RuntimeParameters._converter(
 
 @dataclass
 class SimulationCode(ABC):
-    """Generic abstract class representing a specific (magneto)hydrodynamics code
-    frontend.
+    """Abstract base class representing a specific (magneto)hydrodynamics code frontend.
+
+    This class serves as a template for defining the interface and essential methods required
+    for any simulation code that integrates with the cluster generator framework. It manages
+    both compile-time parameters (CTPs) and user-specified parameters (USPs), and provides
+    methods for handling runtime parameters (RTPs) necessary for simulation setup and execution.
+
+    Examples
+    --------
+    To use a specific simulation code frontend, subclass `SimulationCode` and implement the abstract methods:
+
+    .. code-block:: python
+
+        from cluster_generator.codes.abc import SimulationCode, RuntimeParameters
+
+        class MyHydroCode(SimulationCode):
+            rtp = MyHydroRuntimeParameters()
+
+            @property
+            def unit_system(self) -> unyt.UnitSystem:
+                # Return the unit system defined by this code
+                pass
+
+            def generate_ics(self, initial_conditions: ClusterICs, overwrite: bool = False, **kwargs) -> Path:
+                # Implementation to generate ICs
+                pass
+
+            def from_install_directory(cls, installation_directory: str | Path, **parameters) -> Self:
+                # Implementation to instantiate the class from an installation directory
+                pass
 
     Notes
     -----
+    The `SimulationCode` class is designed for developers to add support for new hydrodynamics codes
+    by subclassing and implementing required methods and attributes. It leverages Python's abstract base
+    classes to ensure all necessary functionality is provided for integration with the cluster generator
+    framework.
 
-    :py:class:`SimulationCode` classes are ``dataclasses`` and have two types of parameters.
+    The runtime parameters (RTPs) are particularly critical, as they determine the configuration
+    and behavior of the simulation. Developers should ensure that their `RuntimeParameters` class
+    properly handles all necessary conversions and checks for the specific code being implemented.
 
-    - **Compile-Time Parameters** (CTPs) are (generally optional) parameters that the user specifies when installing the
-      software.
-
-    - **User Specified Parameters** (USPs) are the parameters that ``cluster_generator`` needs to figure out how to format your
-      initial conditions, where to put them, and all the other necessary information.
-
-    All of these parameters can be specified simply as ``keyword arguments`` when initializing the class.
-
-
-    In order to run, the simulation code needs a bunch of **runtime parameters**. These are set to their default values when
-    you initialize the class (:py:attr:`SimulationCode.rtp`), but can be changed at any time. When you're ready to create ICs for the
-    code, you should call the :py:meth:`SimulationCode.determine_runtime_params` method, which will use the USPs and CTPs to fill in any
-    missing or incorrect RTPs.
-
-    Once you've filled in the RTPs, you can export them in a format ready for use in the simulation code using the :py:meth:`SimulationCode.generate_rtp_template`
-    method.
-
-    With RTPs out of the way, we can now convert any :py:class:`ics.ClusterICs` object into a format that the simulation software recognizes by calling the
-    :py:meth:`SimulationCode.generate_ics` method. This will do all the work necessary to get the simulation ready to run.
+    See Also
+    --------
+    :py:class:`RuntimeParameters` : Class responsible for managing runtime parameters.
+    :py:class:`ClusterICs` : Class representing initial conditions for simulations.
     """
 
     rtp: ClassVar[RuntimeParameters] = None

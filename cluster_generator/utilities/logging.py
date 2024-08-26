@@ -74,5 +74,8 @@ class ErrorGroup(Exception):
                 err_id=err_id + 1, err_type=err.__class__.__name__, msg=str(err)
             )
 
+    def __len__(self):
+        return len(self.errors)
+
     def __str__(self):
         return self.message

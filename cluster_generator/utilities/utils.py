@@ -3,7 +3,7 @@ package."""
 
 from functools import wraps
 from numbers import Number
-from typing import Callable
+from typing import Callable, Iterable
 
 import numpy as np
 from numpy.random import RandomState
@@ -12,7 +12,37 @@ from scipy.integrate import quad
 
 from cluster_generator.utilities.config import cgparams
 
+
 # -- General purpose utility functions -- #
+def reverse_dict(dictionary: dict) -> dict:
+    """Reverse a dictionary."""
+    return {v: k for k, v in dictionary.items()}
+
+
+def iterate_pairs(iterable: Iterable) -> dict:
+    """Given a generic iterable, convert it to key-value pairs.
+
+    Parameters
+    ----------
+    iterable: Iterable
+        The iterable.
+
+    Returns
+    -------
+    dict
+        The resulting key-value paired map.
+    """
+    for item in iterable:
+        if isinstance(item, dict):
+            yield from item.items()  # Unpack the dictionary
+        elif isinstance(item, tuple) and len(item) == 2:
+            yield item  # Yield the tuple as is
+        elif isinstance(item, (list, tuple)):
+            yield from iterate_pairs(
+                item
+            )  # Recursively yield pairs if it's a list or tuple
+        else:
+            raise ValueError(f"Unsupported argument type: {type(item)}")
 
 
 def enforce_style(func):
