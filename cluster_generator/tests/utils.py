@@ -1,6 +1,7 @@
 from pathlib import Path
 
-from numpy.testing import assert_equal
+import h5py
+from numpy.testing import assert_allclose, assert_equal
 
 from cluster_generator.model import ClusterModel
 from cluster_generator.particles import ClusterParticles
@@ -57,3 +58,71 @@ def particle_answer_testing(parts, filename, answer_store, answer_dir):
         old_parts = ClusterParticles.from_file(p)
         for field in old_parts.fields:
             assert_equal(old_parts[field], parts[field])
+
+
+def _h5_recursive_check(
+    primary_object: h5py.File | h5py.Group | h5py.Dataset,
+    secondary_object: h5py.File | h5py.Group | h5py.Dataset,
+):
+    # Check that they are the same type
+    assert type(primary_object) is type(
+        secondary_object
+    ), f"{type(primary_object)} != {type(secondary_object)}"
+
+    # -- Attribute checking -- #
+    assert all(
+        k in primary_object.attrs.keys() for k in secondary_object.attrs.keys()
+    ), f"Attribute keys of {primary_object} and {secondary_object} don't match."
+
+    for k in primary_object.attrs.keys():
+        assert (
+            primary_object.attrs[k] == secondary_object.attrs[k]
+        ), f"Attribute {k} of {primary_object} and {secondary_object} don't match."
+
+    # -- Dataset -- #
+    # If the object is a dataset, then we need to check the array equality and exit without passing through the
+    # rest of this function.
+    if isinstance(primary_object, h5py.Dataset):
+        assert_allclose(primary_object[...], secondary_object[...], rtol=1e-7)
+        return
+
+    # -- Groups or Files -- #
+    # In each case, we can simply check keys are equal again and then recursively check their sub-objects.
+    assert all(
+        k in primary_object.keys() for k in secondary_object.keys()
+    ), f"Keys of {primary_object} and {secondary_object} don't match."
+
+    for key in primary_object.keys():
+        _h5_recursive_check(primary_object[key], secondary_object[key])
+
+
+def h5_answer_testing(
+    new_path: str, filename: str, answer_store: bool, answer_dir: str
+):
+    """Recursively test an HDF5 file against another.
+
+    Parameters
+    ----------
+    new_path: str
+        The newly generated model to test against.
+    filename: str
+        The name of the old model (as was saved in the answer directory).
+    answer_store: bool
+        If ``True``, the new model will replace the old and no checks are run.
+    answer_dir: str
+        The directory where the answers are stored.
+    """
+    import os
+
+    p = Path(answer_dir) / filename
+    if answer_store or not os.path.exists(p):
+        from shutil import copy
+
+        try:
+            copy(new_path, p)  # --> Overwrite the existing file with the new path.
+        except Exception:
+            pass
+    else:
+        with h5py.File(new_path, "r") as nfio, h5py.File(p, "r") as ofio:
+            # recursively check these against one another.
+            _h5_recursive_check(nfio, ofio)

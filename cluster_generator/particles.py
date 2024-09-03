@@ -1,15 +1,29 @@
-"""
-Particles IC module
-"""
+"""Initial conditions and cluster model particle management module."""
+
 from collections import OrderedDict, defaultdict
+from numbers import Number
 from pathlib import Path
+from typing import TYPE_CHECKING, Collection, Union
 
 import h5py
 import numpy as np
 from scipy.interpolate import InterpolatedUnivariateSpline
-from unyt import uconcatenate, unyt_array
+from unyt import Unit, unyt_array, unyt_quantity
 
-from cluster_generator.utils import ensure_list, ensure_ytarray, mylog
+from cluster_generator.utils import (
+    ensure_list,
+    ensure_ytarray,
+    ensure_ytquantity,
+    mylog,
+)
+
+if TYPE_CHECKING:
+    from matplotlib.pyplot import Axes, Figure
+
+    from cluster_generator import ClusterModel
+
+recognized_particle_types: list[str] = ["dm", "gas", "star", "tracer", "black_hole"]
+""" list of str: The 5 standard particle types in ``cluster_generator``."""
 
 gadget_fields = {
     "dm": ["Coordinates", "Velocities", "Masses", "ParticleIDs", "Potential"],
@@ -22,6 +36,7 @@ gadget_fields = {
         "MagneticField",
         "Density",
         "Potential",
+        "PassiveScalars",
     ],
     "star": ["Coordinates", "Velocities", "Masses", "ParticleIDs", "Potential"],
     "black_hole": ["Coordinates", "Velocities", "Masses", "ParticleIDs"],
@@ -62,7 +77,6 @@ gadget_field_units = {
     "GFM_Metallicity": "",
 }
 
-
 ptype_map = OrderedDict(
     [
         ("PartType0", "gas"),
@@ -77,68 +91,174 @@ rptype_map = OrderedDict([(v, k) for k, v in ptype_map.items()])
 
 
 class ClusterParticles:
-    def __init__(self, particle_types, fields):
-        self.particle_types = ensure_list(particle_types)
-        self.fields = fields
-        self._update_num_particles()
-        self._update_field_names()
+    """Class representation for particles in galaxy cluster models.
+
+    Notes
+    -----
+    The :py:class:`ClusterParticles` class is effectively a collection of fields similar to the :py:class:`model.ClusterModel` class.
+    For each particle type, particular fields can be specified. Each field entry is a ``(N,)`` array of values where ``N`` is the number
+    of such particles being represented.
+    """
+
+    def __init__(
+        self,
+        particle_types: Union[list[str], str],
+        fields: dict[tuple[str, str], unyt_array],
+    ):
+        """Initialize a :py:class:`ClusterParticles` object.
+
+        Parameters
+        ----------
+        particle_types: list
+            List of included particle types. May include ``dm``, ``gas``, ``tracer``, ``star``, or ``black_hole``.
+        fields: dict
+            The fields for each of the particle types.
+        """
+        # Setting the particle class's attributes
+        self.particle_types: list[str] = ensure_list(particle_types)
+        """ list of str: The types of particles included in this object.
+
+        The valid particle types are ``['dm','gas','tracer','star','black_hole']``.
+        """
+        self.fields: dict[tuple[str, str], unyt_array] = fields
+        """ dict: The fields for particles.
+
+        Fields are formatted as ``particle_type, field_name`` with each value being an :py:class:`unyt_array` instance.
+        """
+
+        # enforce the validity of the particle types.
+        assert all(
+            pt in recognized_particle_types for pt in self.particle_types
+        ), f"{[pt for pt in self.particle_types if pt not in recognized_particle_types]} are not recognized particle types."
+
         self.passive_scalars = []
 
-    def __getitem__(self, key):
+    def __getitem__(self, key: tuple[str, str]) -> unyt_array:
         return self.fields[key]
 
-    def __setitem__(self, key, value):
+    def __setitem__(self, key: tuple[str, str], value: unyt_array):
+        # Ensure that the particle type is allowed
+        assert (
+            key[0] in recognized_particle_types
+        ), f"{key[0]} is not a valid particle type."
+
+        # Add the particle type to our included particle types.
+        if key[0] not in self.particle_types:
+            self.particle_types.append(key[0])
+
+        # set the field
         self.fields[key] = value
 
-    def keys(self):
-        return self.fields.keys()
+    def __delitem__(self, key: tuple[str, str]):
+        del self.fields[key]
 
-    def _update_num_particles(self):
-        self.num_particles = {}
-        for ptype in self.particle_types:
-            self.num_particles[ptype] = self.fields[ptype, "particle_mass"].size
+    def __repr__(self):
+        return "<ClusterParticles Object>"
 
-    def _update_field_names(self):
-        self.field_names = defaultdict(list)
-        for field in self.fields:
-            self.field_names[field[0]].append(field[1])
+    def __str__(self):
+        return f"<ClusterParticles PTypes={len(self.particle_types)}>"
 
-    def _clip_to_box(self, ptype, box_size):
-        pos = self.fields[ptype, "particle_position"]
-        return ~np.logical_or((pos < 0.0).any(axis=1), (pos > box_size).any(axis=1))
+    def __add__(self, other: Union["ClusterParticles", int]) -> "ClusterParticles":
+        # __add__ compliance with np.sum / sum built-in function - begins with 0.
+        if other == 0:
+            return self
 
-    def __add__(self, other):
-        fields = self.fields.copy()
+        base_fields = self.fields.copy()
+
+        # Concatenate fields, creating them if necessary
         for field in other.fields:
-            if field in fields:
-                fields[field] = uconcatenate([self[field], other[field]])
+            if field in base_fields:
+                base_fields[field] = ensure_ytarray(
+                    np.concatenate(
+                        (
+                            base_fields[field].d,
+                            other.fields[field].to_value(base_fields[field].units),
+                        )
+                    ),
+                    base_fields[field].units,
+                )
+                # In unyt>3.0, unit wrangling here isn't needed as np.concatenate handles units properly, but
+                # for backwards compatibility, we use the verbose approach.
+
             else:
-                fields[field] = other[field]
+                base_fields[field] = other[field]
         particle_types = list(set(self.particle_types + other.particle_types))
-        return ClusterParticles(particle_types, fields)
+        return ClusterParticles(particle_types, base_fields)
+
+    def __radd__(self, other):
+        return self.__add__(other)
+
+    def __contains__(self, item: tuple[str, str]) -> bool:
+        return item in self.fields
+
+    def __len__(self) -> dict[str, int]:
+        return self.num_particles
+
+    @property
+    def field_names(self) -> dict[str, list[str]]:
+        """Dictionary of fields for each of the included particle types.
+
+        For each of the particle types, any of a number of included fields may exist. The :py:attr:`ClusterParticles.field_names` attribute
+        collects all of these included field names for each of the particle types.
+        """
+        fns = defaultdict(list)
+
+        for field in self.fields:
+            fns[field[0]].append(field[1])
+
+        return fns
+
+    @property
+    def num_particles(self) -> dict[str, int]:
+        """The number of particles (for each particle type) contained in this
+        :py:class:`ClusterParticles` object."""
+        np = {k: 0 for k in recognized_particle_types}  # --> empty buffer
+
+        for ptype in self.particle_types:
+            np[ptype] = self.fields[ptype, "particle_mass"].size
+
+        return np
 
     @property
     def num_passive_scalars(self):
         return len(self.passive_scalars)
 
-    def drop_ptypes(self, ptypes):
-        """
-        Drop all particles with a type in *ptypes*.
+    def keys(self) -> Collection[tuple[str, str]]:
+        """Get the field keys for the particle object."""
+        return self.fields.keys()
+
+    def _clip_to_box(self, ptype: str, box_size: Number):
+        """Create a mask to cut out particles not within a specific box size."""
+        pos = self.fields[ptype, "particle_position"].to_value(
+            "kpc"
+        )  # -> convert to kpc to enforce our unit convention.
+        return ~np.logical_or((pos < 0.0).any(axis=1), (pos > box_size).any(axis=1))
+
+    def drop_ptypes(self, ptypes: Union[list[str], str]):
+        """Drop one or several particle types from this object.
+
+        Parameters
+        ----------
+        ptypes: list of str or str
+            The particle types to drop.
         """
         ptypes = ensure_list(ptypes)
+
         for ptype in ptypes:
             self.particle_types.remove(ptype)
-            names = list(self.fields.keys())
-            for name in names:
-                if name[0] in ptypes:
-                    self.fields.pop(name)
-        self._update_num_particles()
-        self._update_field_names()
 
-    def make_radial_cut(self, r_max, center=None, ptypes=None):
-        """
-        Make a radial cut on particles. All particles outside
-        a certain radius will be removed.
+            _removed_fields = [(ptype, f) for f in self.field_names[ptype]]
+            for field in _removed_fields:
+                del self.fields[field]
+
+    def make_radial_cut(
+        self,
+        r_max: unyt_quantity,
+        center: unyt_array = None,
+        ptypes: Union[list[str], str] = None,
+    ):
+        """Make a radial cut on particles. All particles outside a certain radius will
+        be removed.
 
         Parameters
         ----------
@@ -151,30 +271,115 @@ class ClusterParticles:
             The particle types to perform the radial cut on. If
             not set, all will be exported.
         """
-        rm2 = r_max * r_max
+        # Enforce units and then reduce to scalar (this ensures that non-kpc units are converted correctly).
+        r_max, center = (
+            ensure_ytquantity(r_max, "kpc").d,
+            ensure_ytarray(center, "kpc").d,
+        )
+
         if center is None:
             center = np.array([0.0] * 3)
         if ptypes is None:
             ptypes = self.particle_types
+
         ptypes = ensure_list(ptypes)
 
+        # Make the radial cuts. Identify the relevant ids and then cut from all the fields.
         for part in ptypes:
-            cidx = ((self[part, "particle_position"].d - center) ** 2).sum(
-                axis=1
-            ) <= rm2
+            # Identify the kept ids.
+            cidx = (
+                (self[part, "particle_position"].to_value("kpc") - center) ** 2
+            ).sum(axis=1) <= r_max**2
+
             for field in self.field_names[part]:
                 self.fields[part, field] = self.fields[part, field][cidx]
-        self._update_num_particles()
 
-    def add_black_hole(self, bh_mass, pos=None, vel=None, use_pot_min=False):
-        r"""
-        Add a black hole particle to the set of cluster
-        particles.
+    def make_box_cut(
+        self,
+        bbox: unyt_array,
+        ptypes: Union[list[str], str] = None,
+    ):
+        """Make a radial cut on particles. All particles outside a certain radius will
+        be removed.
 
         Parameters
         ----------
-        bh_mass : float
-            The mass of the black hole particle in solar masses.
+        bbox: array-like
+            A ``(3,2)`` array (either with or without units) for the bounding box to constrain the particles to. If a
+            unit is not given, it is assumed to be kpc.
+        ptypes : list of strings, optional
+            The particle types to perform the radial cut on. If
+            not set, all will be exported.
+        """
+        # Enforce units and then reduce to scalar (this ensures that non-kpc units are converted correctly).
+        bbox = ensure_ytarray(bbox, "kpc").d
+
+        print(self["gas", "particle_position"].shape)
+
+        if ptypes is None:
+            ptypes = self.particle_types
+
+        ptypes = ensure_list(ptypes)
+
+        # Make the radial cuts. Identify the relevant ids and then cut from all the fields.
+        for part in ptypes:
+            # Identify the kept ids.
+            # logic here is that 0 < x-x_0 < x_1-x_0 along each axis. We check if either condition fails, sum up
+            # failures and require zero failures on the axis.
+            cidx = (
+                np.sum(
+                    ((self[part, "particle_position"].to_value("kpc") - bbox[:, 0]) < 0)
+                    | (
+                        (self[part, "particle_position"].to_value("kpc") - bbox[:, 0])
+                        > bbox[:, 1] - bbox[:, 0]
+                    ),
+                    axis=1,
+                )
+                < 1
+            )
+
+            for field in self.field_names[part]:
+                self.fields[part, field] = self.fields[part, field][cidx]
+
+    def make_boxsize_cut(
+        self, boxsize: unyt_array, ptypes: list = None, centered: bool = False
+    ):
+        """Make a box cut using a specified boxsize.
+
+        Parameters
+        ----------
+        boxsize: unyt_quantity
+            The boxsize to use to make the cut.
+        ptypes: list of str, optional
+            The particle types to include. If not set, all will be used.
+        centered: bool, optional
+            If ``True``, then the box is placed centered on the axis. If ``False`` (default), then the box is constrained
+            to the positive octant.
+        """
+        boxsize = ensure_ytquantity(boxsize, "kpc")
+        bbox = np.array([[0, 0, 0], 3 * [boxsize.d]]).T
+
+        # correct for the bounding box.
+        if centered:
+            bbox -= boxsize.d / 2
+
+        # Process this as a standard boxcut.
+        self.make_box_cut(bbox, ptypes=ptypes)
+
+    def add_black_hole(
+        self,
+        bh_mass: unyt_quantity,
+        pos: unyt_array = None,
+        vel: unyt_array = None,
+        use_pot_min: bool = False,
+    ):
+        r"""Add a black hole particle to the set of cluster particles.
+
+        Parameters
+        ----------
+        bh_mass : unyt_quantity
+            The mass of the black hole particle. If specified without units, they are
+            assumed to be solar masses.
         pos : array-like, optional
             The position of the particle, assumed to be in units of
             kpc if units are not given. If use_pot_min=True this
@@ -191,10 +396,13 @@ class ClusterParticles:
             position and velocity of the black hole particle. Default:
             False
         """
-        mass = unyt_array([bh_mass], "Msun")
+        mass = ensure_ytquantity(bh_mass, "msun")
+
+        # Determining the particle's positioning
         if use_pot_min:
             if ("dm", "potential_energy") not in self.fields:
                 raise KeyError("('dm', 'potential_energy') is not available!")
+
             idx = np.argmin(self.fields["dm", "potential_energy"])
             pos = unyt_array(self.fields["dm", "particle_position"][idx]).reshape(1, 3)
             vel = unyt_array(self.fields["dm", "particle_velocity"][idx]).reshape(1, 3)
@@ -203,8 +411,11 @@ class ClusterParticles:
                 pos = unyt_array(np.zeros((1, 3)), "kpc")
             if vel is None:
                 vel = unyt_array(np.zeros((1, 3)), "kpc/Myr")
+
             pos = ensure_ytarray(pos, "kpc").reshape(1, 3)
             vel = ensure_ytarray(vel, "kpc/Myr").reshape(1, 3)
+
+        # Determining / setting the fields.
         if "black_hole" not in self.particle_types:
             self.particle_types.append("black_hole")
             self.fields["black_hole", "particle_position"] = pos
@@ -212,6 +423,7 @@ class ClusterParticles:
             self.fields["black_hole", "particle_mass"] = mass
         else:
             uappend = lambda x, y: unyt_array(np.append(x, y, axis=0).v, x.units)
+
             self.fields["black_hole", "particle_position"] = uappend(
                 self.fields["black_hole", "particle_position"], pos
             )
@@ -221,31 +433,70 @@ class ClusterParticles:
             self.fields["black_hole", "particle_mass"] = uappend(
                 self.fields["black_hole", "particle_mass"], mass
             )
-        self._update_num_particles()
+
+    def add_index(self):
+        """Add a field, ``particle_index`` to each particle type.
+
+        Notes
+        -----
+        Useful for a variety of simulation codes which require a unique identifier for each of the particles
+        in the simulation.
+        """
+        offset = 0
+        for ptype in self.particle_types:
+            num_particles = self.num_particles[ptype]
+
+            self.fields[(ptype, "particle_index")] = np.arange(num_particles) + offset
+
+            offset += num_particles
 
     @classmethod
-    def from_fields(cls, fields):
+    def from_fields(
+        cls, fields: dict[tuple[str, str], unyt_array]
+    ) -> "ClusterParticles":
+        """Initialize a :py:class:`ClusterParticles` instance from existing fields.
+
+        Parameters
+        ----------
+        fields: dict
+            The fields from which to load this instance from.
+
+        Returns
+        -------
+        ClusterParticles
+            The resulting particle instance.
+        """
         particle_types = []
         for key in fields:
             if key[0] not in particle_types:
                 particle_types.append(key[0])
+
         return cls(particle_types, fields)
 
     @classmethod
-    def from_file(cls, filename, ptypes=None):
-        r"""
-        Generate cluster particles from an HDF5 file.
+    def from_file(
+        cls, filename: Union[str, Path], ptypes: Union[list[str], str] = None
+    ) -> "ClusterParticles":
+        r"""Generate cluster particles from an HDF5 file.
 
         Parameters
         ----------
         filename : string
             The name of the file to read the model from.
+        ptypes: list of str or str
+            The particle types to load from file.
 
         Examples
         --------
-        >>> from cluster_generator import ClusterParticles
-        >>> dm_particles = ClusterParticles.from_file("dm_particles.h5")
+
+        .. code-block:: python
+
+            from cluster_generator import ClusterParticles
+            dm_particles = ClusterParticles.from_file("dm_particles.h5")
         """
+        filename = Path(filename)
+        assert filename.exists(), f"{filename} does not exist!"
+
         names = {}
         with h5py.File(filename, "r") as f:
             if ptypes is None:
@@ -261,7 +512,7 @@ class ClusterParticles:
                         fields[ptype, field] = f[ptype][field][:]
                 else:
                     a = unyt_array.from_hdf5(
-                        filename, dataset_name=field, group_name=ptype
+                        str(filename), dataset_name=field, group_name=ptype
                     )
                     fields[ptype, field] = unyt_array(
                         a.d.astype("float64"), str(a.units)
@@ -269,14 +520,29 @@ class ClusterParticles:
         return cls(ptypes, fields)
 
     @classmethod
-    def from_h5_file(cls, filename, ptypes=None):
+    def from_h5_file(
+        cls, filename: Union[str, Path], ptypes: Union[list[str], str] = None
+    ) -> "ClusterParticles":
+        """Load the particles from an HDF5 file.
+
+        Parameters
+        ----------
+        filename: str
+            The filename to load from.
+        ptypes: list of str, optional
+            The particle types to load.
+
+        Returns
+        -------
+        ClusterParticles
+        """
         return cls.from_file(filename, ptypes=ptypes)
 
     @classmethod
-    def from_gadget_file(cls, filename, ptypes=None):
-        """
-        Read in particle data from a Gadget (or Arepo, GIZMO, etc.)
-        snapshot
+    def from_gadget_file(
+        cls, filename: Union[str, Path], ptypes: Union[list[str], str] = None
+    ) -> "ClusterParticles":
+        """Read in particle data from a Gadget (or Arepo, GIZMO, etc.) snapshot.
 
         Parameters
         ----------
@@ -289,9 +555,12 @@ class ClusterParticles:
 
         Examples
         --------
-        >>> from cluster_generator import ClusterParticles
-        >>> ptypes = ["gas", "dm"]
-        >>> particles = ClusterParticles.from_gadget_file("snapshot_060.h5", ptypes=ptypes)
+
+        .. code-block:: python
+
+            from cluster_generator import ClusterParticles
+            ptypes = ["gas", "dm"]
+            particles = ClusterParticles.from_gadget_file("snapshot_060.h5", ptypes=ptypes)
         """
         fields = OrderedDict()
         f = h5py.File(filename, "r")
@@ -325,9 +594,10 @@ class ClusterParticles:
         f.close()
         return cls(particle_types, fields)
 
-    def write_particles(self, output_filename, overwrite=False):
-        """
-        Write the particles to an HDF5 file.
+    def write_particles(
+        self, output_filename: Union[str, Path], overwrite: bool = False
+    ):
+        """Write the particles to an HDF5 file.
 
         Parameters
         ----------
@@ -340,6 +610,7 @@ class ClusterParticles:
             raise IOError(
                 f"Cannot create {output_filename}. It exists and overwrite=False."
             )
+
         with h5py.File(output_filename, "w") as f:
             for ptype in self.particle_types:
                 f.create_group(ptype)
@@ -354,15 +625,28 @@ class ClusterParticles:
                 )
 
     def write_particles_to_h5(self, output_filename, overwrite=False):
+        """Create an HDF5 file representing this :py:class:`ClusterParticles` instance.
+
+        Parameters
+        ----------
+        output_filename: str
+            The output filename.
+        overwrite: boolean, optional
+            If ``True``, allow overwritting of existing file.
+        """
         self.write_particles(output_filename, overwrite=overwrite)
 
     def set_field(
-        self, ptype, name, value, units=None, add=False, passive_scalar=False
+        self,
+        ptype: str,
+        name: str,
+        value: unyt_array,
+        units: Union[str, Unit] = None,
+        add: bool = False,
+        passive_scalar: bool = False,
     ):
-        """
-        Add or update a particle field using a unyt_array.
-        The array will be checked to make sure that it
-        has the appropriate size.
+        """Add or update a particle field using a unyt_array. The array will be checked
+        to make sure that it has the appropriate size.
 
         Parameters
         ----------
@@ -393,7 +677,7 @@ class ClusterParticles:
                 if add:
                     self.fields[ptype, name] += value
                 else:
-                    mylog.warning(f"Overwriting field ({ptype}, {name}).")
+                    mylog.warning("Overwriting field (%s, %s).", ptype, name)
                     self.fields[ptype, name] = value
             else:
                 if add:
@@ -411,10 +695,14 @@ class ClusterParticles:
                 f"The length of the array needs to be {num_particles} particles!"
             )
 
-    def add_offsets(self, r_ctr, v_ctr, ptypes=None):
-        """
-        Add offsets in position and velocity to the cluster particles,
-        which can be added to one or more particle types.
+    def add_offsets(
+        self,
+        r_ctr: unyt_array,
+        v_ctr: unyt_array,
+        ptypes: Union[list[str], str] = None,
+    ):
+        """Add offsets in position and velocity to the cluster particles, which can be
+        added to one or more particle types.
 
         Parameters
         ----------
@@ -434,12 +722,131 @@ class ClusterParticles:
         """
         if ptypes is None:
             ptypes = self.particle_types
+
         ptypes = ensure_list(ptypes)
         r_ctr = ensure_ytarray(r_ctr, "kpc")
         v_ctr = ensure_ytarray(v_ctr, "kpc/Myr")
         for ptype in ptypes:
             self.fields[ptype, "particle_position"] += r_ctr
             self.fields[ptype, "particle_velocity"] += v_ctr
+
+    def plot_field(
+        self,
+        field: tuple[str, str],
+        axis: Union[int, str],
+        width: unyt_quantity,
+        resolution: int = 100,
+        ax: "Axes" = None,
+        fig: "Figure" = None,
+        scale: str = "log",
+        cmap: str = "viridis",
+        **kwargs,
+    ) -> tuple["Figure", "Axes"]:
+        """Plot a simple image of the particle system.
+
+        Parameters
+        ----------
+        field: tuple of str
+            The field to plot.
+        axis: int or str
+            The axis to project the line of sight along.
+        width: unyt_quantity
+            The width of the plotting area in kpc.
+        resolution: int
+            The number of cells along each axis.
+
+            .. warning::
+
+                If set too low, the number of particles per cell will trend to zero and give inaccurate results.
+        ax: Axes, optional
+            The axis to plot on.
+        fig: Figure, optional
+            The figure to plot on.
+        scale: str
+            Either ``'log'`` or ``'lin'``.
+        cmap: str
+            The colormap object (or name) to use.
+        kwargs:
+            Additional kwargs to pass to :py:func:`matplotlib.pyplot.imshow`.
+
+        Returns
+        -------
+        Figure
+            The figure on which the plot was made.
+        Axes
+            The axes on which the plot was made.
+        """
+        import matplotlib.pyplot as plt
+        from matplotlib.colors import LogNorm, Normalize
+
+        _axid = {"x": 0, "y": 1, "z": 2}
+        _raxid = {v: k for k, v in _axid.items()}
+
+        # Setup the axes, ensure that fig contains ax.
+        if fig is None:
+            fig = plt.figure(figsize=(10, 10))
+        if ax is None:
+            ax = fig.add_subplot(111)
+
+        # Construct the histogram grid, get the projection axis, etc.
+        if isinstance(axis, str):
+            axis = _axid[axis]
+
+        base_axes = np.arange(3, dtype="uint")
+        base_axes = base_axes[
+            base_axes != axis
+        ]  # make sure that the projection axis is removed.
+
+        img_width = ensure_ytquantity(width, "kpc").value
+        bins = [
+            np.linspace(-img_width / 2, img_width / 2, resolution),
+            np.linspace(-img_width / 2, img_width / 2, resolution),
+        ]
+        _x, _y = (
+            self[field[0], "particle_position"][:, base_axes[0]].d,
+            self[field[0], "particle_position"][:, base_axes[1]].d,
+        )
+        weights = self[field].d
+
+        # constructing the image
+        image, _, _ = np.histogram2d(_x, _y, bins, weights=weights)
+        # managing args and kwargs.
+        vmin, vmax, norm = (
+            kwargs.pop("vmin", np.nanmin(image)),
+            kwargs.pop("vmax", np.nanmax(image)),
+            kwargs.pop("norm", None),
+        )
+
+        if norm is None and scale == "log":
+            # mask invalid values, reset vmin.
+            image[np.less_equal(image, 0)] = np.nan
+            vmin = np.amax([vmin, np.nanmin(image)])
+            kwargs["norm"] = LogNorm(vmin=vmin, vmax=vmax)
+        elif norm is None and scale == "lin":
+            kwargs["norm"] = Normalize(vmin=vmin, vmax=vmax)
+        else:
+            pass
+
+        if isinstance(cmap, str):
+            cmap = plt.cm.get_cmap(cmap)
+        cmap.set_bad(color=cmap(0))
+        kwargs["cmap"] = cmap
+
+        ax.imshow(
+            image,
+            extent=(-img_width / 2, img_width / 2, -img_width / 2, img_width / 2),
+            origin="lower",
+            **kwargs,
+        )
+        ax.set_xlabel(rf"{_raxid[base_axes[0]]}, [kpc]")
+        ax.set_ylabel(rf"{_raxid[base_axes[1]]}, [kpc]")
+        plt.colorbar(
+            plt.cm.ScalarMappable(norm=kwargs["norm"], cmap=cmap),
+            ax=ax,
+            label=rf"{field[1]}, $\left[{self[field].units.latex_representation()}\right]$",
+        )
+
+        return fig, ax
 
     def _write_gadget_fields(self, ptype, h5_group, idxs, dtype, code):
         fields = gadget_fields[ptype]
@@ -464,11 +871,15 @@ class ClusterParticles:
                     h5_group.create_dataset(field, data=data)
 
     def write_to_gadget_file(
-        self, ic_filename, box_size, dtype="float32", overwrite=False, code=None
+        self,
+        ic_filename: Union[str, Path],
+        box_size: unyt_quantity,
+        dtype: str = "float32",
+        overwrite: bool = False,
+        code: str = None,
     ):
-        """
-        Write the particles to a file in the HDF5 Gadget format
-        which can be used as initial conditions for a simulation.
+        """Write the particles to a file in the HDF5 Gadget format which can be used as
+        initial conditions for a simulation.
 
         Parameters
         ----------
@@ -487,6 +898,7 @@ class ClusterParticles:
             the file so that it can be identified by yt as belonging
             to a specific frontend. Default: None
         """
+        box_size = ensure_ytquantity(box_size, "kpc").d
         if Path(ic_filename).exists() and not overwrite:
             raise IOError(
                 f"Cannot create {ic_filename}. It exists and " f"overwrite=False."
@@ -542,9 +954,8 @@ class ClusterParticles:
         f.flush()
         f.close()
 
-    def to_yt_dataset(self, box_size, ptypes=None):
-        """
-        Create an in-memory yt dataset for the particles.
+    def to_yt_dataset(self, box_size: float, ptypes: Union[list[str], str] = None):
+        """Create an in-memory yt dataset for the particles.
 
         Parameters
         ----------
@@ -575,47 +986,112 @@ class ClusterParticles:
         )
 
 
-def _sample_clusters(
-    particles, hses, center, velocity, radii=None, resample=False, passive_scalars=None
-):
-    num_halos = len(hses)
+def sample_from_clusters(
+    particles: ClusterParticles,
+    models: list["ClusterModel"],
+    center: unyt_array,
+    velocity: unyt_array,
+    radii: Union[Collection[float], float] = None,
+    resample: bool = False,
+    passive_scalars: Collection[str] = None,
+) -> ClusterParticles:
+    """Given an input ``particles``, use the provided :py:class:`model.ClusterModel`
+    instances (``models``) to redetermine the values of the ``particles`` gas fields
+    from the provided models.
+
+    Parameters
+    ----------
+    particles: ClusterParticles
+        The particle dataset to sample from the selected models.
+    models: list of ClusterModel
+    center: array-like
+        The centers of the models.
+    velocity: array-like
+        The velocities of the models.
+    radii: list of float or float, optional
+        The cutoff radii for each of the models. Optional. Must be in kpc.
+    resample: bool
+        If ``True``, then the particle masses (subject to the ``radii`` constraints) are adjusted to accurately reflect the total
+        density of particles and the interpolated density obtained from ``models``.
+
+    passive_scalars: list of str, optional
+        List of additional passive scalar fields to sample from. These fields must be valid fields of all of the
+        :py:class:`model.ClusterModel` instances in ``models``. By default, this argument is ``None`` and no scalar fields
+        are propagated.
+
+    Returns
+    -------
+    ClusterParticles
+
+    Notes
+    -----
+    Effectively, this function can be used to map the relevant properties of an assortment of ``models`` onto an existing
+    set of :py:class:`ClusterParticles`. For each of the relevant gas fields, the constituent ``models`` are interpolated and their
+    contributions summed. The values in the analogous particle fields are then set based on those values.
+
+    It should be noted that, by default, this function does not alter ``particle_mass``. As such, it may be the case (for gas particles)
+    that the density reflected by the particle fields do not reflect the actual density of particles in physical space. Ideally,
+    this would be resolved by re-sampling the actual particles; however, this is not generally possible. As such, the ``resample`` flag
+    may be used to make sure that the ``particle_mass`` field of the particles accurately reflects the density and volume per cell of the
+    particles.
+    """
+    # Setting up the mathematics backbone. Get centers, velocities, and particle radii from each model.
+    num_halos = len(models)
     center = [ensure_ytarray(c, "kpc") for c in center]
     velocity = [ensure_ytarray(v, "kpc/Myr") for v in velocity]
+
+    # compute the radial displacement from each of the centers for each of the particles.
     r = np.zeros((num_halos, particles.num_particles["gas"]))
     for i, c in enumerate(center):
         r[i, :] = ((particles["gas", "particle_position"] - c) ** 2).sum(axis=1).d
     np.sqrt(r, r)
+
+    # Allow for specific radial cuts to the considered domains if specified.
     if radii is None:
         idxs = slice(None, None, None)
     else:
         radii = np.array(radii)
         idxs = np.any(r <= radii[:, np.newaxis], axis=0)
-    d = np.zeros((num_halos, particles.num_particles["gas"]))
-    e = np.zeros((num_halos, particles.num_particles["gas"]))
-    m = np.zeros((num_halos, 3, particles.num_particles["gas"]))
+
+    # Determine the field arrays
+    density_buffer = np.zeros((num_halos, particles.num_particles["gas"]))
+    energy_buffer = np.zeros((num_halos, particles.num_particles["gas"]))
+    momentum_buffer = np.zeros((num_halos, 3, particles.num_particles["gas"]))
+
     num_scalars = 0
     if passive_scalars is not None:
         num_scalars = len(passive_scalars)
-        s = np.zeros((num_halos, num_scalars, particles.num_particles["gas"]))
-    for i in range(num_halos):
-        hse = hses[i]
-        if "density" not in hse:
+        scalar_buffer = np.zeros(
+            (num_halos, num_scalars, particles.num_particles["gas"])
+        )
+
+    for i, model in enumerate(models):
+        if "density" not in model:
+            mylog.warning("No density field found in %s. Skipping.", model)
             continue
-        get_density = InterpolatedUnivariateSpline(hse["radius"], hse["density"])
-        d[i, :] = get_density(r[i, :])
-        e_arr = 1.5 * hse["pressure"] / hse["density"]
-        get_energy = InterpolatedUnivariateSpline(hse["radius"], e_arr)
-        e[i, :] = get_energy(r[i, :]) * d[i, :]
-        m[i, :, :] = velocity[i].d[:, np.newaxis] * d[i, :]
+
+        # Filling in the particle fields from the interpolated model fields.
+        get_density = InterpolatedUnivariateSpline(model["radius"], model["density"])
+        density_buffer[i, :] = get_density(r[i, :])
+        e_arr = 1.5 * model["pressure"] / model["density"]  # Ideal gas.
+        get_energy = InterpolatedUnivariateSpline(model["radius"], e_arr)
+        energy_buffer[i, :] = get_energy(r[i, :]) * density_buffer[i, :]
+        momentum_buffer[i, :, :] = velocity[i].d[:, np.newaxis] * density_buffer[i, :]
+
         if num_scalars > 0:
             for j, name in enumerate(passive_scalars):
-                get_scalar = InterpolatedUnivariateSpline(hse["radius"], hse[name])
-                s[i, j, :] = get_scalar(r[i, :]) * d[i, :]
-    dens = d.sum(axis=0)
-    eint = e.sum(axis=0) / dens
-    mom = m.sum(axis=0) / dens
+                get_scalar = InterpolatedUnivariateSpline(model["radius"], model[name])
+                scalar_buffer[i, j, :] = get_scalar(r[i, :]) * density_buffer[i, :]
+
+    dens = density_buffer.sum(axis=0)
+    eint = (
+        energy_buffer.sum(axis=0) / dens
+    )  # --> eint and momentum should be density weighted.
+    mom = momentum_buffer.sum(axis=0) / dens
+
     if num_scalars > 0:
-        ps = s.sum(axis=0) / dens
+        ps = scalar_buffer.sum(axis=0) / dens
+
     if resample:
         vol = particles["gas", "particle_mass"] / particles["gas", "density"]
         particles["gas", "particle_mass"][idxs] = dens[idxs] * vol.d[idxs]
@@ -628,31 +1104,79 @@ def _sample_clusters(
     return particles
 
 
+def combine_clusters(
+    particles: list[ClusterParticles],
+    models: list["ClusterModel"],
+    centers: list[unyt_array],
+    velocities: list[unyt_array],
+) -> ClusterParticles:
+    """Combine particle representations of any number of galaxy clusters into a single
+    representation.
+
+    Parameters
+    ----------
+    particles: list of :py:class:`ClusterParticles`
+        The :py:class:`ClusterParticles` instances to combine.
+    models: list of :py:class:`model.ClusterModel`
+        The underlying models to combine.
+    centers: unyt_array
+        The centers of each of the constituent clusters.
+    velocities: unyt_array
+        The velocities of each of the constituent clusters.
+
+    Returns
+    -------
+    ClusterParticles
+        The resulting combination of the particles
+
+    Notes
+    -----
+
+    As opposed to a naive merger of the fields of the different :py:class:`ClusterParticle` instances, this function combines
+    particle datasets and then resamples from their underlying datasets to ensure that the physics is self-consistent.
+    """
+    centers = [ensure_ytarray(c, "kpc") for c in centers]
+    velocities = [ensure_ytarray(v, "km/s") for v in velocities]
+
+    if not (len(centers) == len(velocities) == len(particles) == len(models)):
+        raise ValueError(
+            f"Particles ({len(particles)}), models ({len(models)}), centers ({len(centers)}), and velocities ({len(velocities)}) are not "
+            f"the same."
+        )
+
+    # Applying necessary offsets to the particle datasets
+    for pid, particle_obj in enumerate(particles):
+        _ptypes_copy = (
+            particle_obj.particle_types.copy()
+        )  # --> necessary so we can remove gas from it.
+
+        if "gas" in _ptypes_copy:
+            # apply the gas specific offset (no velocity included).
+            particle_obj.add_offsets(centers[pid], [0.0] * 3, ptypes=["gas"])
+            _ptypes_copy.remove("gas")
+
+        particle_obj.add_offsets(centers[pid], velocities[pid], ptypes=_ptypes_copy)
+
+    output_particles = np.sum(particles)
+
+    # Resampling if gas was involved.
+    if "gas" in output_particles.particle_types:
+        output_particles = sample_from_clusters(
+            output_particles, models, centers, velocities
+        )
+
+    return output_particles
+
+
 def combine_two_clusters(
     particles1, particles2, hse1, hse2, center1, center2, velocity1, velocity2
 ):
-    center1 = ensure_ytarray(center1, "kpc")
-    center2 = ensure_ytarray(center2, "kpc")
-    velocity1 = ensure_ytarray(velocity1, "kpc/Myr")
-    velocity2 = ensure_ytarray(velocity2, "kpc/Myr")
-    if "gas" in particles1.particle_types:
-        particles1.add_offsets(center1, [0.0] * 3, ptypes=["gas"])
-    if "gas" in particles2.particle_types:
-        particles2.add_offsets(center2, [0.0] * 3, ptypes=["gas"])
-    ptypes1 = particles1.particle_types.copy()
-    ptypes2 = particles2.particle_types.copy()
-    if "gas" in ptypes1:
-        ptypes1.remove("gas")
-    if "gas" in ptypes2:
-        ptypes2.remove("gas")
-    particles1.add_offsets(center1, velocity1, ptypes=ptypes1)
-    particles2.add_offsets(center2, velocity2, ptypes=ptypes2)
-    particles = particles1 + particles2
-    if "gas" in particles.particle_types:
-        particles = _sample_clusters(
-            particles, [hse1, hse2], [center1, center2], [velocity1, velocity2]
-        )
-    return particles
+    return combine_clusters(
+        [particles1, particles2],
+        [hse1, hse2],
+        [center1, center2],
+        [velocity1, velocity2],
+    )
 
 
 def combine_three_clusters(
@@ -669,70 +1193,26 @@ def combine_three_clusters(
     velocity2,
     velocity3,
 ):
-    center1 = ensure_ytarray(center1, "kpc")
-    center2 = ensure_ytarray(center2, "kpc")
-    center3 = ensure_ytarray(center3, "kpc")
-    velocity1 = ensure_ytarray(velocity1, "kpc/Myr")
-    velocity2 = ensure_ytarray(velocity2, "kpc/Myr")
-    velocity3 = ensure_ytarray(velocity3, "kpc/Myr")
-    if "gas" in particles1.particle_types:
-        particles1.add_offsets(center1, [0.0] * 3, ptypes=["gas"])
-    if "gas" in particles2.particle_types:
-        particles2.add_offsets(center2, [0.0] * 3, ptypes=["gas"])
-    if "gas" in particles3.particle_types:
-        particles3.add_offsets(center3, [0.0] * 3, ptypes=["gas"])
-    ptypes1 = particles1.particle_types.copy()
-    ptypes2 = particles2.particle_types.copy()
-    ptypes3 = particles3.particle_types.copy()
-    if "gas" in ptypes1:
-        ptypes1.remove("gas")
-    if "gas" in ptypes2:
-        ptypes2.remove("gas")
-    if "gas" in ptypes3:
-        ptypes3.remove("gas")
-    particles1.add_offsets(center1, velocity1, ptypes=ptypes1)
-    particles2.add_offsets(center2, velocity2, ptypes=ptypes2)
-    particles3.add_offsets(center3, velocity3, ptypes=ptypes3)
-    particles = particles1 + particles2 + particles3
-    if "gas" in particles.particle_types:
-        particles = _sample_clusters(
-            particles,
-            [hse1, hse2, hse3],
-            [center1, center2, center3],
-            [velocity1, velocity2, velocity3],
-        )
-    return particles
+    return combine_clusters(
+        [particles1, particles2, particles3],
+        [hse1, hse2, hse3],
+        [center1, center2, center3],
+        [velocity1, velocity2, velocity3],
+    )
 
 
-def resample_one_cluster(particles, hse, center, velocity):
-    """
-    Resample radial profiles onto a single cluster's particle
-    distribution.
-
-    Parameters
-    ----------
-
-    particles : :class:`~cluster_generator.particles.ClusterParticles`
-    hse :
-    center : array_like
-    velocity : array_like
-    """
-    if "gas" not in particles.particle_types:
-        return particles
-    center = ensure_ytarray(center, "kpc")
-    velocity = ensure_ytarray(velocity, "kpc/Myr")
-    r = ((particles["gas", "particle_position"] - center) ** 2).sum(axis=1).d
-    np.sqrt(r, r)
-    get_density = InterpolatedUnivariateSpline(hse["radius"], hse["density"])
-    dens = get_density(r)
-    e_arr = 1.5 * hse["pressure"] / hse["density"]
-    get_energy = InterpolatedUnivariateSpline(hse["radius"], e_arr)
-    particles["gas", "thermal_energy"] = unyt_array(get_energy(r), "kpc**2/Myr**2")
-    vol = particles["gas", "particle_mass"] / particles["gas", "density"]
-    particles["gas", "particle_mass"] = unyt_array(dens * vol.d, "Msun")
-    particles["gas", "particle_velocity"][:, :] = velocity
-    particles["gas", "density"] = unyt_array(dens, "Msun/kpc**3")
-    return particles
+def resample_one_cluster(
+    particles, hse, center, velocity, radius=None, passive_scalars=None
+):
+    return sample_from_clusters(
+        particles,
+        [hse],
+        [center],
+        [velocity],
+        resample=True,
+        radii=[radius],
+        passive_scalars=[passive_scalars],
+    )
 
 
 def resample_two_clusters(
@@ -746,7 +1226,7 @@ def resample_two_clusters(
     radii,
     passive_scalars=None,
 ):
-    particles = _sample_clusters(
+    particles = sample_from_clusters(
         particles,
         [hse1, hse2],
         [center1, center2],
@@ -772,7 +1252,7 @@ def resample_three_clusters(
     radii,
     passive_scalars=None,
 ):
-    particles = _sample_clusters(
+    particles = sample_from_clusters(
         particles,
         [hse1, hse2, hse3],
         [center1, center2, center3],

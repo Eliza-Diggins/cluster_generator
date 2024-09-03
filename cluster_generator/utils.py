@@ -4,54 +4,56 @@ Utility functions for basic functionality of the py:module:`cluster_generator` p
 import logging
 import multiprocessing
 import os
-import pathlib as pt
 import sys
+from pathlib import Path
+from typing import Union
 
 import numpy as np
-import yaml
 from more_itertools import always_iterable
 from numpy.random import RandomState
+from ruamel.yaml import YAML, SafeLoader
+from ruamel.yaml.nodes import MappingNode, ScalarNode
 from scipy.integrate import quad
 from unyt import kpc
 from unyt import physical_constants as pc
 from unyt import unyt_array, unyt_quantity
 
 # -- configuration directory -- #
-_config_directory = os.path.join(pt.Path(__file__).parents[0], "bin", "config.yaml")
+_config_directory = os.path.join(Path(__file__).parents[0], "bin", "config.yaml")
 
 
 # defining the custom yaml loader for unit-ed objects
-def _yaml_unit_constructor(loader: yaml.FullLoader, node: yaml.nodes.MappingNode):
+# Custom YAML loader for unit-ed objects
+def _yaml_unit_constructor(loader: SafeLoader, node: MappingNode):
     kw = loader.construct_mapping(node)
-    i_s = kw["input_scalar"]
-    del kw["input_scalar"]
+    i_s = kw.pop("input_scalar")
     return unyt_array(i_s, **kw)
 
 
-def _yaml_lambda_loader(loader: yaml.FullLoader, node: yaml.nodes.ScalarNode):
+def _yaml_lambda_loader(loader: SafeLoader, node: ScalarNode):
     return eval(loader.construct_scalar(node))
 
 
 def _get_loader():
-    loader = yaml.FullLoader
-    loader.add_constructor("!unyt", _yaml_unit_constructor)
-    loader.add_constructor("!lambda", _yaml_lambda_loader)
-    return loader
+    yaml = YAML(typ="safe")
+    yaml.constructor.add_constructor("!unyt", _yaml_unit_constructor)
+    yaml.constructor.add_constructor("!lambda", _yaml_lambda_loader)
+    return yaml
 
 
 try:
-    with open(_config_directory, "r+") as config_file:
-        cgparams = yaml.load(config_file, _get_loader())
+    yaml_loader = _get_loader()
+    with open(_config_directory, "r") as config_file:
+        cgparams = yaml_loader.load(config_file)
 
 except FileNotFoundError as er:
     raise FileNotFoundError(
-        f"Couldn't find the configuration file! Is it at {_config_directory}? Error = {er.__repr__()}"
+        f"Couldn't find the configuration file! Is it at {_config_directory}? Error = {er}"
     )
-except yaml.YAMLError as er:
-    raise yaml.YAMLError(
-        f"The configuration file is corrupted! Error = {er.__repr__()}"
+except Exception as er:
+    raise ValueError(
+        f"An error occurred while loading the configuration file! Error = {er}"
     )
-
 
 stream = (
     sys.stdout
@@ -106,7 +108,6 @@ if cgparams["system"]["logging"]["developer"][
 else:
     devLogger.propagate = False
     devLogger.disabled = True
-
 
 mp = (pc.mp).to("Msun")
 G = (pc.G).to("kpc**3/Msun/Myr**2")
@@ -231,8 +232,8 @@ def truncate_spline(f, r_t, a):
         The new function.
     """
     _gamma = r_t * f(r_t, 1) / f(r_t)  # This is the slope.
-    return lambda x, g=_gamma, a=a, r=r_t: f(x) * _truncator_function(a, r, x) + (
-        1 - _truncator_function(a, r, x)
+    return lambda x, g=_gamma, _a=a, r=r_t: f(x) * _truncator_function(_a, r, x) + (
+        1 - _truncator_function(_a, r, x)
     ) * (f(r) * _truncator_function(-g, r, x))
 
 
@@ -319,3 +320,236 @@ field_label_map = {
     "gravitational_potential": "$\\Phi$ (kpc$^2$ Myr$^{-2}$)",
     "gravitational_field": "g (kpc Myr$^{-2}$)",
 }
+
+
+class ErrorGroup(Exception):
+    """Special error class containing a group of exceptions.
+
+    Attributes
+    ----------
+    errors : list of Exception
+        A list of exceptions that are part of this error group.
+    message : str
+        A formatted message summarizing all errors in the group.
+    """
+
+    def __init__(self, message: str, error_list: list[Exception]):
+        """Initialize the ErrorGroup with a message and a list of exceptions.
+
+        Parameters
+        ----------
+        message : str
+            A summary message for the error group.
+        error_list : list of Exception
+            A list of exceptions to include in the error group.
+        """
+        super().__init__(message)
+        self.errors: list[Exception] = error_list or []
+        self.update_message(message)
+
+    def update_message(self, message: str):
+        """Update the summary message for the error group.
+
+        Parameters
+        ----------
+        message : str
+            The new summary message for the error group.
+        """
+        self.message = f"{len(self.errors)} ERRORS: {message}\n\n"
+        for err_id, err in enumerate(self.errors):
+            self.message += "%(err_id)-5s[%(err_type)10s]: %(msg)s\n" % dict(
+                err_id=err_id + 1, err_type=err.__class__.__name__, msg=str(err)
+            )
+
+    def append(self, error: Exception):
+        """Append a new exception to the error group.
+
+        Parameters
+        ----------
+        error : Exception
+            The exception to add to the group.
+        """
+        self.errors.append(error)
+        self.update_message("Added new error.")
+
+    def extend(self, errors: list[Exception]):
+        """Extend the error group with multiple exceptions.
+
+        Parameters
+        ----------
+        errors : list of Exception
+            A list of exceptions to add to the group.
+        """
+        self.errors.extend(errors)
+        self.update_message("Extended with new errors.")
+
+    def clear(self):
+        """Clear all errors from the group."""
+        self.errors.clear()
+        self.update_message("Cleared all errors.")
+
+    def __len__(self):
+        """Return the number of errors in the group."""
+        return len(self.errors)
+
+    def __str__(self):
+        """Return a formatted string representation of the error group."""
+        return self.message
+
+    def __repr__(self):
+        """Return a detailed string representation of the error group."""
+        return f"<ErrorGroup(errors={len(self.errors)}, message={repr(self.message)})>"
+
+    def __iter__(self):
+        """Return an iterator over the contained exceptions."""
+        return iter(self.errors)
+
+    def __getitem__(self, index: int) -> Exception:
+        """Return the exception at the given index.
+
+        Parameters
+        ----------
+        index : int
+            The index of the exception to retrieve.
+
+        Returns
+        -------
+        Exception
+            The exception at the specified index.
+        """
+        return self.errors[index]
+
+    def __contains__(self, error: Exception) -> bool:
+        """Check if a specific exception is in the group.
+
+        Parameters
+        ----------
+        error : Exception
+            The exception to check.
+
+        Returns
+        -------
+        bool
+            True if the exception is in the group, False otherwise.
+        """
+        return error in self.errors
+
+    def __add__(self, other: Union[Exception, "ErrorGroup"]) -> "ErrorGroup":
+        """Add an error or another ErrorGroup to this ErrorGroup.
+
+        Parameters
+        ----------
+        other : Exception or ErrorGroup
+            The exception or ErrorGroup to add.
+
+        Returns
+        -------
+        ErrorGroup
+            A new ErrorGroup containing the combined errors.
+
+        Raises
+        ------
+        TypeError
+            If `other` is not an Exception or ErrorGroup.
+        """
+        if isinstance(other, Exception):
+            new_errors = self.errors + [other]
+        elif isinstance(other, ErrorGroup):
+            new_errors = self.errors + other.errors
+        else:
+            raise TypeError(f"Cannot add type {type(other)} to ErrorGroup.")
+
+        return ErrorGroup("Combined errors", new_errors)
+
+    def __iadd__(self, other: Union[Exception, "ErrorGroup"]) -> "ErrorGroup":
+        """Add an error or another ErrorGroup to this ErrorGroup in place.
+
+        Parameters
+        ----------
+        other : Exception or ErrorGroup
+            The exception or ErrorGroup to add.
+
+        Returns
+        -------
+        ErrorGroup
+            The modified ErrorGroup with the added errors.
+
+        Raises
+        ------
+        TypeError
+            If `other` is not an Exception or ErrorGroup.
+        """
+        if isinstance(other, Exception):
+            self.append(other)
+        elif isinstance(other, ErrorGroup):
+            self.extend(other.errors)
+        else:
+            raise TypeError(f"Cannot add type {type(other)} to ErrorGroup.")
+
+        return self
+
+
+class LogDescriptor:
+    def __get__(self, instance, owner) -> logging.Logger:
+        # check owner for an existing logger:
+        logger = logging.getLogger(owner.__name__)
+
+        if len(logger.handlers) > 0:
+            pass
+        else:
+            # the logger needs to be created.
+            _handler = logging.StreamHandler(
+                getattr(sys, cgparams["system"]["logging"]["main"]["stream"].lower())
+            )
+            _handler.setFormatter(
+                logging.Formatter(cgparams["system"]["logging"]["main"]["format"])
+            )
+            logger.addHandler(_handler)
+            logger.setLevel(cgparams["system"]["logging"]["main"]["level"])
+            logger.propagate = False
+            logger.disabled = not cgparams["system"]["display"]["progress_bars"]
+
+        return logger
+
+
+def reverse_dict(dictionary: dict) -> dict:
+    """Reverse a dictionary."""
+    return {v: k for k, v in dictionary.items()}
+
+
+def prepare_path(path, overwrite=False):
+    path = Path(path)
+
+    if path.exists() and (not overwrite):
+        raise ValueError(f"Path {path} already exists and overwrite=False.")
+    elif path.exists() and overwrite:
+        path.unlink()
+    else:
+        pass
+
+    path.mkdir(exist_ok=True, parents=True)
+
+    return path
+
+
+class _MissingParameter:
+    """A descriptor that raises an error if accessed, set, or deleted."""
+
+    def __set_name__(self, owner, name):
+        self.name = name
+
+    def __get__(self, instance, owner):
+        raise AttributeError(f"{owner.__name__} does not implement {self.name}.")
+
+    def __set__(self, instance, value):
+        raise AttributeError(
+            f"{type(instance).__name__} does not implement {self.name}."
+        )
+
+    def __delete__(self, instance):
+        raise AttributeError(
+            f"{type(instance).__name__} does not implement {self.name}."
+        )
+
+    def __repr__(self):
+        return "<MissingParameter>"

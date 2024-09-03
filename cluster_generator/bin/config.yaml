@@ -13,7 +13,7 @@ system:
     main:
       enabled: true # Use this to disable any logging. This will stop output to terminal!
       format: "%(name)-3s : [%(levelname)-9s] %(asctime)s %(message)s" # Logger's string format for output
-      level: "INFO" # Only logging passed to this level or higher are displayed.
+      level: "DEBUG" # Only logging passed to this level or higher are displayed.
       stream: "STDERR" # Can be STDERR or STDOUT.
     developer:
       # ! The developer logger passes detailed logging messages to file
@@ -26,7 +26,7 @@ system:
     progress_bars: true
 
   modules:
-    #
+  #
 #======================================================================================================================#
 physics:
   # -- The physics settings are basic user-configurable physical parameters -- #
