@@ -6,12 +6,14 @@ import multiprocessing
 import os
 import pathlib as pt
 import sys
+import warnings
 
 import numpy as np
 import yaml
 from more_itertools import always_iterable
 from numpy.random import RandomState
 from scipy.integrate import quad
+from tqdm.auto import tqdm
 from unyt import kpc
 from unyt import physical_constants as pc
 from unyt import unyt_array, unyt_quantity
@@ -231,8 +233,8 @@ def truncate_spline(f, r_t, a):
         The new function.
     """
     _gamma = r_t * f(r_t, 1) / f(r_t)  # This is the slope.
-    return lambda x, g=_gamma, a=a, r=r_t: f(x) * _truncator_function(a, r, x) + (
-        1 - _truncator_function(a, r, x)
+    return lambda x, g=_gamma, _a=a, r=r_t: f(x) * _truncator_function(_a, r, x) + (
+        1 - _truncator_function(_a, r, x)
     ) * (f(r) * _truncator_function(-g, r, x))
 
 
@@ -300,6 +302,34 @@ def parse_prng(prng):
 
 def ensure_list(x):
     return list(always_iterable(x))
+
+
+class tqdmWarningRedirector:
+    """
+    A context manager to redirect all warnings and log them through tqdm.write()
+    so that they don't interfere with the progress bar.
+    """
+
+    def __enter__(self):
+        # Backup the original warnings.showwarning
+        self._original_showwarning = warnings.showwarning
+
+        # Override the warning display to use tqdm.write
+        warnings.showwarning = self._tqdm_warning_handler
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        # Restore the original warning display function
+        warnings.showwarning = self._original_showwarning
+
+    @staticmethod
+    def _tqdm_warning_handler(
+        message, category, filename, lineno, file=None, line=None
+    ):
+        """
+        Custom handler to redirect warnings through tqdm.write().
+        """
+        tqdm.write(f"WARNING: {message}, in {filename}, line {lineno}")
 
 
 field_label_map = {

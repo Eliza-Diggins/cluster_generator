@@ -7,6 +7,7 @@ from scipy.integrate import cumtrapz, quad
 from scipy.interpolate import InterpolatedUnivariateSpline
 from unyt import unyt_array, unyt_quantity
 
+import cluster_generator.grids._types
 from cluster_generator.particles import ClusterParticles
 from cluster_generator.utils import (
     G,
@@ -322,7 +323,7 @@ class ClusterModel:
                 else:
                     fd = v[mask]
                 prof_rec.append(fd)
-            f.write_record(np.array(prof_rec).T)
+            f.write_record(cluster_generator.grids._types.T)
 
     def set_field(self, name, value):
         r"""

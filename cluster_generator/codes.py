@@ -7,6 +7,7 @@ import h5py
 import numpy as np
 from unyt import uconcatenate, unyt_array
 
+import cluster_generator.grids._types
 from cluster_generator.model import ClusterModel
 from cluster_generator.particles import ClusterParticles
 from cluster_generator.utils import mylog
@@ -58,7 +59,7 @@ def write_amr_particles(
             else:
                 if field == "particle_mass":
                     num_particles = fd.size
-                pdata.append(np.asarray(fd).astype("float64").T)
+                pdata.append(cluster_generator.grids._types.T)
         if format == "hdf5":
             fd = np.concatenate(
                 [
@@ -69,7 +70,7 @@ def write_amr_particles(
             f.create_dataset("particle_type", data=fd)
         else:
             f.write_record(num_particles)
-            f.write_record(np.vstack(pdata).T)
+            f.write_record(cluster_generator.grids._types.T)
 
 
 def setup_gamer_ics(ics, regenerate_particles=False, use_tracers=False):
@@ -252,15 +253,8 @@ def setup_arepo_ics(
     cparts = ics.setup_particle_ics(
         regenerate_particles=regenerate_particles, prng=prng
     )
-    ngrid = nx**3
     dx = boxsize / nx
-    le = 0.5 * dx
-    re = boxsize - 0.5 * dx
-    posg = (
-        np.mgrid[le : re : nx * 1j, le : re : nx * 1j, le : re : nx * 1j]
-        .reshape(3, ngrid)
-        .T
-    )
+    posg = cluster_generator.grids._types.T
     rmax2 = ics.r_max**2
     idxs = np.sum((posg - ics.center[0].v) ** 2, axis=1) > rmax2[0]
     if ics.num_halos > 1:

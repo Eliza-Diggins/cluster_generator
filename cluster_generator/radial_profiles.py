@@ -787,32 +787,3 @@ def find_overdensity_radius(m, delta, z=0.0, cosmo=None):
         cosmo = Cosmology()
     rho_crit = cosmo.critical_density(z).to_value("Msun/kpc**3")
     return (3.0 * m / (4.0 * np.pi * delta * rho_crit)) ** (1.0 / 3.0)
-
-
-def find_radius_mass(m_r, delta, z=0.0, cosmo=None):
-    """
-    Given a mass profile and an overdensity, find the radius
-    and mass (e.g. M200, r200)
-
-    Parameters
-    ----------
-    m_r : RadialProfile
-        The mass profile.
-    delta : float
-        The overdensity to compute the mass and radius for.
-    z : float, optional
-        The redshift of the halo formation. Default: 0.0
-    cosmo : yt ``Cosmology`` object
-        The cosmology to be used when computing the critical
-        density. If not supplied, a default one from yt will
-        be used.
-    """
-    from scipy.optimize import bisect
-    from yt.utilities.cosmology import Cosmology
-
-    if cosmo is None:
-        cosmo = Cosmology()
-    rho_crit = cosmo.critical_density(z).to_value("Msun/kpc**3")
-    f = lambda r: 3.0 * m_r(r) / (4.0 * np.pi * r**3) - delta * rho_crit
-    r_delta = bisect(f, 0.01, 10000.0)
-    return r_delta, m_r(r_delta)

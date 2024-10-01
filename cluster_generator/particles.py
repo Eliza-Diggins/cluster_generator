@@ -9,6 +9,7 @@ import numpy as np
 from scipy.interpolate import InterpolatedUnivariateSpline
 from unyt import uconcatenate, unyt_array
 
+import cluster_generator.grids._types
 from cluster_generator.utils import ensure_list, ensure_ytarray, mylog
 
 gadget_fields = {
@@ -613,7 +614,6 @@ def _sample_clusters(
                 s[i, j, :] = get_scalar(r[i, :]) * d[i, :]
     dens = d.sum(axis=0)
     eint = e.sum(axis=0) / dens
-    mom = m.sum(axis=0) / dens
     if num_scalars > 0:
         ps = s.sum(axis=0) / dens
     if resample:
@@ -621,7 +621,7 @@ def _sample_clusters(
         particles["gas", "particle_mass"][idxs] = dens[idxs] * vol.d[idxs]
     particles["gas", "density"][idxs] = dens[idxs]
     particles["gas", "thermal_energy"][idxs] = eint[idxs]
-    particles["gas", "particle_velocity"][idxs] = mom.T[idxs]
+    particles["gas", "particle_velocity"][idxs] = cluster_generator.grids._types.T[idxs]
     if num_scalars > 0:
         for j, name in enumerate(passive_scalars):
             particles["gas", name][idxs] = ps[j, idxs]

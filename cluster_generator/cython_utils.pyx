@@ -19,6 +19,14 @@ cimport numpy as np
 from scipy.interpolate import dfitpack
 from tqdm.auto import tqdm
 
+cimport
+cython
+cimport
+numpy as np
+import numpy as np
+from scipy.interpolate import dfitpack
+from tqdm.auto import tqdm
+
 
 cdef extern from "math.h":
     double sqrt(double x) nogil
