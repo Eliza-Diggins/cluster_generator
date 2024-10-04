@@ -51,7 +51,6 @@ Alias for data type representation, accommodating numpy data types, string names
 or Python type objects. Used to specify the data type of arrays and datasets.
 """
 
-
 # Type aliases
 DomainShape = Union[Collection[int], NDArray[int]]
 """
@@ -64,6 +63,7 @@ BoundingBox = Union[NDArray[float], Collection[float]]
 Alias for bounding boxes, allowing them to be represented as lists, tuples,
 or numpy arrays of floats/ints. Used to define the spatial bounds of a grid structure.
 """
+
 
 # Utility functions for coercion
 

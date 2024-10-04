@@ -54,7 +54,6 @@ except yaml.YAMLError as er:
         f"The configuration file is corrupted! Error = {er.__repr__()}"
     )
 
-
 stream = (
     sys.stdout
     if cgparams["system"]["logging"]["main"]["stream"] in ["STDOUT", "stdout"]
@@ -108,7 +107,6 @@ if cgparams["system"]["logging"]["developer"][
 else:
     devLogger.propagate = False
     devLogger.disabled = True
-
 
 mp = (pc.mp).to("Msun")
 G = (pc.G).to("kpc**3/Msun/Myr**2")

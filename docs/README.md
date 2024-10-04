@@ -8,32 +8,40 @@
 ![Github Pages](https://github.com/Eliza-Diggins/cluster_generator/actions/workflows/docs.yml/badge.svg)
 [![Coverage](https://coveralls.io/repos/github/Eliza-Diggins/cluster_generator/badge.svg?branch=master)](https://coveralls.io/github/Eliza-Diggins/cluster_generator)
 
-[Cluster Generator](https://jzuhone.github.io/cluster_generator) (CG) is a cross-platform Python library for generating initial conditions of galaxy clusters for N-body / hydrodynamics codes.
-CG provides a variety of construction approaches, different physical assumption, profiles, and gravitational theories. Furthermore, CG is intented to interface with
-the vast majority of N-body / hydrodynamics codes, reducing the headache of converting initial conditions between formats for different simulation softwares. GCP's goal is to provide
-comprehensive tools for modeling and implementation of galaxy clusters in astrophysical simulations to promote the study of galaxy cluster dynamics.
+[Cluster Generator](https://jzuhone.github.io/cluster_generator) (CG) is a cross-platform Python library for generating
+initial conditions of galaxy clusters for N-body / hydrodynamics codes.
+CG provides a variety of construction approaches, different physical assumption, profiles, and gravitational theories.
+Furthermore, CG is intented to interface with
+the vast majority of N-body / hydrodynamics codes, reducing the headache of converting initial conditions between
+formats for different simulation softwares. GCP's goal is to provide
+comprehensive tools for modeling and implementation of galaxy clusters in astrophysical simulations to promote the study
+of galaxy cluster dynamics.
 
-This repository contains the core package, which is constructed modularly to facilitate easy development by users to meet particular scientific use cases. All of the
+This repository contains the core package, which is constructed modularly to facilitate easy development by users to
+meet particular scientific use cases. All of the
 necessary tools to get started building initial conditions are provided.
 
-You can access the documentation [here](http:jzuhone.github.io/cluster_generator), or build it from scratch using the ``./docs`` directory in this source distribution.
+You can access the documentation [here](http:jzuhone.github.io/cluster_generator), or build it from scratch using
+the ``./docs`` directory in this source distribution.
 
-Developement occurs here on Github, if you encounter any bugs, issues, documentation failures, or want to suggest features, we recommend that you submit an issue on
+Developement occurs here on Github, if you encounter any bugs, issues, documentation failures, or want to suggest
+features, we recommend that you submit an issue on
 the issues page of the repository.
 
-For installation directions, continue reading this README, or visit the [getting started page](https://jzuhone.github.io/cluster_generator/build/html/Getting_Started.html).
-
+For installation directions, continue reading this README, or visit
+the [getting started page](https://jzuhone.github.io/cluster_generator/build/html/Getting_Started.html).
 
 ## Contents
 
 - [Getting The Package](#Getting-the-Package)
-  - [From PyPI](#From-PyPI)
-  - [With Conda](#With-Conda)
-  - [With PIP](#With-PIP)
-  - [From Source](#From-Source)
-  - [Dependencies](#dependencies)
+    - [From PyPI](#From-PyPI)
+    - [With Conda](#With-Conda)
+    - [With PIP](#With-PIP)
+    - [From Source](#From-Source)
+    - [Dependencies](#dependencies)
 - [Contributing Code, Documentation, or Feedback](#Contributing-Code-Documentation-or-Feedback)
 - [License](#licence)
+
 ---
 
 ## Getting the Package
@@ -45,7 +53,6 @@ below for installation from source code, from ``pip`` and from ``conda``.
 
 > [!IMPORTANT]
 > This feature is not yet available.
-
 
 ### With Conda
 
@@ -69,29 +76,32 @@ install directly from the github URL as follows:
   ```
   This will install directly from this repository without generating a local clone.
 - If you're interested in having a local clone, you can instead do the following
-  - First, clone the repository using
-    ```bash
-    git clone https://www.github.com/eliza-diggins/cluster_generator
-    ```
+    - First, clone the repository using
+      ```bash
+      git clone https://www.github.com/eliza-diggins/cluster_generator
+      ```
 
-    > [!WARNING]
-    > Make sure to navigate to a directory where you want the clone to appear.
+      > [!WARNING]
+      > Make sure to navigate to a directory where you want the clone to appear.
 
-    Once the clone has been generated, change your directory so that you are inside the clone and in the same directory as the ``setup.py`` script. Then run the following command:
+      Once the clone has been generated, change your directory so that you are inside the clone and in the same
+      directory as the ``setup.py`` script. Then run the following command:
 
-    ```bash
-    pip install .
-    ```
-    This will install the local clone to your python installations ``site-packages`` directory. If you want to install the package in place, you can use
-    ```bash
-    pip install -e .
-    ```
-    which will install the package in development mode.
+      ```bash
+      pip install .
+      ```
+      This will install the local clone to your python installations ``site-packages`` directory. If you want to install
+      the package in place, you can use
+      ```bash
+      pip install -e .
+      ```
+      which will install the package in development mode.
 
-    > [!WARNING]
-    > If the package is installed in development mode, it will not be generically available from any directory.
+      > [!WARNING]
+      > If the package is installed in development mode, it will not be generically available from any directory.
 
 To test that you've installed the project, simply run
+
 ```bash
 pip show cluster_generator
 ```
@@ -113,7 +123,6 @@ Python packages:
 
 These will be installed automatically if you use ``pip`` or ``conda`` as detailed below.
 
-
 Though not required, it may be useful to install [yt](https://yt-project.org)
 for creation of in-memory datasets from ``cluster_generator`` and/or analysis of
 simulations which are created using initial conditions from
@@ -121,9 +130,11 @@ simulations which are created using initial conditions from
 
 ## Contributing Code Documentation or Feedback
 
-All contributions, bug fixes, documentation improvements, and ideas are welcome. If you're interested in pursuing further development of
-Cluster Generator, we suggest you start by browsing the [API Documentation](https://jzuhone.github.io/cluster_generator/build/html/api.html). When you're ready
+All contributions, bug fixes, documentation improvements, and ideas are welcome. If you're interested in pursuing
+further development of
+Cluster Generator, we suggest you start by browsing
+the [API Documentation](https://jzuhone.github.io/cluster_generator/build/html/api.html). When you're ready
 create a fork of this branch and begin your development. When you finish,
-feel free to  add a pull request to this repositiory and we will review your code contribution.
+feel free to add a pull request to this repositiory and we will review your code contribution.
 
 ## Licence

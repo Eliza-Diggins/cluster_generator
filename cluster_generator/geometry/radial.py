@@ -55,7 +55,6 @@ Notes
 - For more complex, non-symmetric geometries, use the `TriaxialGeometry` class, which supports asymmetric ellipsoids.
 """
 
-
 from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING, Any, Callable, Dict, Tuple
 

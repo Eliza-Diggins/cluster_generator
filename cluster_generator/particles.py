@@ -63,7 +63,6 @@ gadget_field_units = {
     "GFM_Metallicity": "",
 }
 
-
 ptype_map = OrderedDict(
     [
         ("PartType0", "gas"),

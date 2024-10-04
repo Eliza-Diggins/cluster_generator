@@ -16,12 +16,18 @@ import numpy as np
 cimport cython
 cimport numpy as np
 
-from scipy.interpolate import dfitpack
-from tqdm.auto import tqdm
+cimport
 
 cimport
 cython
 cimport
+numpy as np
+cimport
+import numpy as np
+
+cython
+cimport
+
 numpy as np
 import numpy as np
 from scipy.interpolate import dfitpack
@@ -72,28 +78,26 @@ def generate_velocities(np.ndarray[DTYPE_t, ndim=1] psi,
     for i in range(num_particles):
         not_done = 1
         while not_done:
-            v2 = drand48()*vesc[i]
+            v2 = drand48() * vesc[i]
             v2 *= v2
-            e[0] = psi[i]-0.5*v2
+            e[0] = psi[i] - 0.5 * v2
             f = dfitpack.splev(t, c, k, e, ext)[0]
-            not_done = f*v2 < drand48()*fv2esc[i]
+            not_done = f * v2 < drand48() * fv2esc[i]
         velocity[i] = sqrt(v2)
         pbar.update()
     pbar.close()
     return velocity
 
-
 @cython.wraparound(False)
 @cython.boundscheck(False)
 @cython.cdivision(True)
 def div_clean(np.ndarray[CTYPE_t, ndim=3] gx,
-                     np.ndarray[CTYPE_t, ndim=3] gy,
-                     np.ndarray[CTYPE_t, ndim=3] gz,
-                     np.ndarray[DTYPE_t, ndim=3] kx,
-                     np.ndarray[DTYPE_t, ndim=3] ky,
-                     np.ndarray[DTYPE_t, ndim=3] kz,
-                     np.ndarray[DTYPE_t, ndim=1] deltas):
-
+              np.ndarray[CTYPE_t, ndim=3] gy,
+              np.ndarray[CTYPE_t, ndim=3] gz,
+              np.ndarray[DTYPE_t, ndim=3] kx,
+              np.ndarray[DTYPE_t, ndim=3] ky,
+              np.ndarray[DTYPE_t, ndim=3] kz,
+              np.ndarray[DTYPE_t, ndim=1] deltas):
     cdef int i, j, k
     cdef int nx, ny, nz
     cdef DTYPE_t kxd, kyd, kzd, kkd
@@ -109,18 +113,18 @@ def div_clean(np.ndarray[CTYPE_t, ndim=3] gx,
     for i in range(nx):
         for j in range(ny):
             for k in range(nz):
-                ggx = gx[i,j,k]
-                ggy = gy[i,j,k]
-                ggz = gz[i,j,k]
-                kxd = sin(kx[i,j,k] * deltas[0]) / deltas[0]
-                kyd = sin(ky[i,j,k] * deltas[1]) / deltas[1]
-                kzd = sin(kz[i,j,k] * deltas[2]) / deltas[2]
-                kkd = sqrt(kxd*kxd + kyd*kyd + kzd*kzd)
+                ggx = gx[i, j, k]
+                ggy = gy[i, j, k]
+                ggz = gz[i, j, k]
+                kxd = sin(kx[i, j, k] * deltas[0]) / deltas[0]
+                kyd = sin(ky[i, j, k] * deltas[1]) / deltas[1]
+                kzd = sin(kz[i, j, k] * deltas[2]) / deltas[2]
+                kkd = sqrt(kxd * kxd + kyd * kyd + kzd * kzd)
                 if kkd > 0:
                     kxd /= kkd
                     kyd /= kkd
                     kzd /= kkd
                 kg = kxd * ggx + kyd * ggy + kzd * ggz
-                gx[i,j,k] = ggx - kxd * kg
-                gy[i,j,k] = ggy - kyd * kg
-                gz[i,j,k] = ggz - kzd * kg
+                gx[i, j, k] = ggx - kxd * kg
+                gy[i, j, k] = ggy - kyd * kg
+                gz[i, j, k] = ggz - kzd * kg

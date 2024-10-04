@@ -46,12 +46,10 @@ Examples
         print(new_field[:])
 
 """
-from typing import TYPE_CHECKING, Any, ClassVar, Union
+from typing import TYPE_CHECKING, Any, Callable, ClassVar, Union
 
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
-from tqdm.auto import tqdm
-from tqdm.contrib.logging import logging_redirect_tqdm
 from unyt import Unit, unyt_array
 
 from cluster_generator.grids._types import (
@@ -65,12 +63,13 @@ from cluster_generator.grids._types import (
     GridNotFoundError,
     LevelNotFoundError,
 )
-from cluster_generator.utils import tqdmWarningRedirector
 
 if TYPE_CHECKING:
     import logging
 
+    from cluster_generator.geometry._abc import GeometryHandler
     from cluster_generator.grids.managers import GridManager
+    from cluster_generator.profiles._abc import Profile
 
 
 class LevelContainer(ElementContainer[int, "GridLevel"]):
@@ -1566,7 +1565,7 @@ class GridContainer(ElementContainer[tuple[int, ...], "Grid"]):
         except KeyError:
             raise GridError(
                 f"Cannot add grid {grid_id} to level {self.level.index} because its parent"
-                f" {tuple(parent_index)} is not in level {self.level.index-1}."
+                f" {tuple(parent_index)} is not in level {self.level.index - 1}."
             )
 
         if parent_grid.CHILDREN.size == 0:
@@ -1776,7 +1775,7 @@ class Grid:
             f"[INIT] Loading Grid {grid_id} of level {self.level.index}..."
         )
         self._handle = self.level._handle[
-            f"GRID_{'_'.join([str(i) for i  in self.index])}"
+            f"GRID_{'_'.join([str(i) for i in self.index])}"
         ]
 
         # Load metadata from the provided kwargs or from the HDF5 file.
@@ -2020,55 +2019,167 @@ class Grid:
         """
         return self.Fields.add_field(name, dtype, units, register=register, **kwargs)
 
-    def refine(
+    def add_field_from_function(
         self,
-        refinement_factor: int = None,
-        propagate_fields: tuple[str, str] = ("all", "interpolate"),
-    ):
-        # Validate the refinement factor. If a level already exists then
-        # we can use that; otherwise, we need to ensure we got one.
-        self.grid_manager.logger.info(f"[REF ] Refining {self} ...")
-        if self.level.index + 1 in self.grid_manager.Levels:
-            refinement_factor = self.grid_manager.Levels[self.level.index + 1]
-        else:
-            if refinement_factor is None:
-                raise ValueError(
-                    f"Cannot refine {self} because it resides in the fine level and a refinement_factor was not"
-                    f" specified. To refine this grid, ensure that a refinement_factor kwarg is present in the"
-                    f" call to grid.refine()."
-                )
+        function: Callable[[np.ndarray], np.ndarray],
+        field_name: str,
+        dtype: np.dtype = "f8",
+        units: str = "",
+        geometry: "GeometryHandler" = None,
+        overwrite: bool = False,
+        **kwargs: Any,
+    ) -> None:
+        """
+        Add a new field to the grid by applying a function to the grid coordinates.
 
-            # We now need to create the level as well.
-            self.grid_manager.add_level(refinement_factor)
+        This method adds a new field to the grid, where the field values are generated
+        by applying the provided function to the grid's coordinates. The function can
+        optionally be wrapped with a geometry handler to transform the grid coordinates
+        before computing the field values.
 
-        next_level = self.grid_manager.Levels[self.level.index + 1]
+        Parameters
+        ----------
+        function : Callable[[np.ndarray], np.ndarray]
+            A function that takes the grid coordinates as input and returns the field values.
+            The input to this function is a numpy array of coordinates with shape `(NDIM, *BLOCK_SIZE)`.
+        field_name : str
+            The name of the field to be added.
+        dtype : np.dtype, optional
+            The data type of the field (default is 'f8', double precision floating point).
+        units : str, optional
+            The physical units of the field, expressed as a string (default is an empty string).
+        geometry : GeometryHandler, optional
+            A geometry handler object that can transform the grid coordinates before applying the function.
+        overwrite : bool, optional
+            Whether to overwrite the field if it already exists (default is False).
+        kwargs : dict, optional
+            Additional keyword arguments for field creation.
 
-        # Regardless of methodology, we need to create each of the grids in the
-        # heritable segment of the next level down.
-        # Refinement will go from (self.index * refinement) to (self.index + 1)*refinement.
-        children_slice = [
-            slice(
-                self.index[k] * refinement_factor,
-                (self.index[k] + 1) * refinement_factor,
+        Returns
+        -------
+        None
+
+        Raises
+        ------
+        ValueError
+            If the field already exists and `overwrite` is set to False.
+
+        Notes
+        -----
+        The function provided should generate field values based on the grid's spatial coordinates.
+        If a geometry handler is provided, the grid coordinates will be transformed before
+        being passed to the function. This is useful for fields that depend on specific geometric
+        transformations (e.g., spherical or cylindrical coordinates).
+
+        Examples
+        --------
+        .. code-block:: python
+
+            # Define a function for the field
+            def density_function(coords):
+                x, y, z = coords
+                return np.exp(-x**2 - y**2 - z**2)
+
+            # Add a new "density" field to the grid
+            grid.add_field_from_function(density_function, "density", dtype=np.float64, units="g/cm^3")
+        """
+        # Apply geometry transformation if provided
+        final_function = (
+            function
+            if geometry is None
+            else lambda grid_coords: function(
+                *geometry.build_converter(self.AXES)(grid_coords)
             )
-            for k in range(self.grid_manager.NDIM)
-        ]
-        child_indices = np.mgrid[*children_slice].reshape(self.grid_manager.NDIM, -1).T
+        )
 
-        with logging_redirect_tqdm(
-            loggers=[self.grid_manager.logger]
-        ), tqdmWarningRedirector():
-            for child_index in tqdm(
-                child_indices,
-                desc=f"[REF ] Creating children of {self}: ",
-                leave=False,
-                position=0,
-            ):
-                next_level.add_grid(tuple(child_index))
+        # Check if the field already exists
+        if field_name in self.Fields and not overwrite:
+            raise ValueError(
+                f"Field '{field_name}' already exists in the grid. Set `overwrite=True` to replace it."
+            )
 
-        # Each of the child grids now needs to be populated from refinement.
-        # We implement this as a separate method because it
-        raise NotImplementedError()
+        # Add the field to the grid
+        self.add_field(
+            field_name, dtype=dtype, units=units, register=kwargs.pop("register", False)
+        )
+
+        # Compute coordinates and evaluate the function to generate field values
+        coords = self.opt_get_coordinates(
+            self.BBOX, self.grid_manager.BLOCK_SIZE, self.level.CELL_SIZE
+        )
+        field_data = final_function(coords)
+
+        # Set the field values
+        self.Fields[field_name][:] = field_data
+
+        # Commit changes after processing each level
+        self.grid_manager.commit_changes()
+
+    def add_field_from_profile(
+        self,
+        profile: "Profile",
+        field_name: str,
+        dtype: np.dtype = "f8",
+        units: str = "",
+        overwrite: bool = False,
+        **kwargs: Any,
+    ) -> None:
+        """
+        Add a new field to the grid using a Profile object.
+
+        This method adds a field to the grid, where the field values are generated using
+        a Profile object. The Profile object provides a callable function to compute the field
+        values based on the grid coordinates. The Profile may also include a geometry handler
+        to transform the coordinates before applying the function.
+
+        Parameters
+        ----------
+        profile : Profile
+            A Profile object that defines a callable function to generate field values. The Profile
+            may also contain a geometry handler to transform the grid coordinates.
+        field_name : str
+            The name of the field to be added.
+        dtype : np.dtype, optional
+            The data type for the field (default is 'f8', double precision floating point).
+        units : str, optional
+            The physical units of the field (default is an empty string).
+        overwrite : bool, optional
+            Whether to overwrite the field if it already exists (default is False).
+        kwargs : dict, optional
+            Additional keyword arguments for field creation.
+
+        Returns
+        -------
+        None
+
+        Raises
+        ------
+        ValueError
+            If the field already exists and `overwrite` is set to False.
+
+        Notes
+        -----
+        This method leverages the Profile's callable function to compute field values.
+        The Profile may optionally include a geometry handler to apply transformations
+        to the grid coordinates before generating the field values.
+
+        Examples
+        --------
+        .. code-block:: python
+
+            # Assuming we have a Profile object named 'density_profile'
+            grid.add_field_from_profile(density_profile, "density", dtype=np.float64, units="g/cm^3")
+        """
+        # Call the add_field_from_function method using the Profile's function and geometry handler
+        self.add_field_from_function(
+            function=profile,
+            field_name=field_name,
+            dtype=dtype,
+            units=units,
+            geometry=profile.geometry_handler,
+            overwrite=overwrite,
+            **kwargs,
+        )
 
     @classmethod
     def _get_metadata_descriptors(cls) -> dict[str, "GridMetadataDescriptor"]:
