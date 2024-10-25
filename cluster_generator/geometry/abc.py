@@ -350,12 +350,10 @@ class GeometryHandler(ABC):
         # Standard Cartesian axes and determine the dimensionality of the geometry
         standard_cart_axes = ["x", "y", "z"]
         ndim = len(self.AXES)
-
         # Precompute grid-to-standard axis mapping for efficient reordering
         _grid_to_std = np.array(
             [standard_cart_axes.index(ax) for ax in grid_axis_order], dtype=int
         )
-
         # Identify missing coordinates that need to be filled with zeros
         # missing_indices = [
         #    standard_cart_axes.index(axis)

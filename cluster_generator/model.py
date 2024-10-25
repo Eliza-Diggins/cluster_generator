@@ -9,7 +9,8 @@ from unyt import unyt_array, unyt_quantity
 
 import cluster_generator.grids._types
 from cluster_generator.particles import ClusterParticles
-from cluster_generator.utils import (
+from cluster_generator.utilities.logging import mylog
+from cluster_generator.utilities import (
     G,
     ensure_ytquantity,
     field_label_map,
@@ -582,7 +583,7 @@ class ClusterModel:
             set of random numbers, such as for a test. Default is None,
             which sets the seed based on the system time.
         """
-        from cluster_generator.utils import parse_prng
+        from cluster_generator.utilities import parse_prng
 
         prng = parse_prng(prng)
         mylog.info("We will be assigning %d tracer particles.", num_particles)
@@ -658,7 +659,7 @@ class ClusterModel:
             set of random numbers, such as for a test. Default is None,
             which sets the seed based on the system time.
         """
-        from cluster_generator.utils import parse_prng
+        from cluster_generator.utilities import parse_prng
 
         prng = parse_prng(prng)
         mylog.info("We will be assigning %d gas particles.", num_particles)

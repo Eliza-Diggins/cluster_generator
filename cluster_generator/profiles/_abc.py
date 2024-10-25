@@ -86,7 +86,7 @@ from cluster_generator.profiles._types import (
 if TYPE_CHECKING:
     from matplotlib.pyplot import Axes, Figure
 
-    from cluster_generator.geometry._abc import GeometryHandler
+    from cluster_generator.geometry.abc import GeometryHandler
 
 yaml = YAML()
 

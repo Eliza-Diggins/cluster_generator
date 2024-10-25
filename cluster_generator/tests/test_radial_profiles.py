@@ -10,7 +10,7 @@ import pytest
 from numpy.testing import assert_array_equal
 
 import cluster_generator.radial_profiles as rp
-from cluster_generator.utils import integrate_mass
+from cluster_generator.utilities import integrate_mass
 
 _params = (
     {  # Stores all of the parameters for the generation of each of the test cases.

@@ -88,13 +88,14 @@ from cluster_generator.grids._types import (
 )
 from cluster_generator.grids.grids import LevelContainer
 from cluster_generator.grids.indexers import FieldIndexContainer
-from cluster_generator.grids.utils import GridManagerLogDescriptor, HDF5FileHandler
-from cluster_generator.utils import tqdmWarningRedirector
+from cluster_generator.grids.utils import GridManagerLogDescriptor
+from cluster_generator.utilities.exceptions import tqdmWarningRedirector
+from cluster_generator.utilities.io import HDF5FileHandler
 
 if TYPE_CHECKING:
     import logging
 
-    from cluster_generator.geometry._abc import GeometryHandler
+    from cluster_generator.geometry.abc import GeometryHandler
     from cluster_generator.geometry._types import AxisOrder
     from cluster_generator.grids.grids import Field, Grid, GridLevel
     from cluster_generator.profiles._abc import Profile
@@ -302,7 +303,7 @@ class GridManager(ABC):
         """
         # Convert the path to a Path object and open the HDF5 file.
         self.path = Path(path)
-        self._handle = HDF5FileHandler(filename=str(self.path), mode="r+")
+        self._handle = HDF5FileHandler(str(self.path), mode="r+")
         self.logger.info("[INIT] Initializing GridManager at %s.", path)
 
         # Create sentinel Levels so that errors can print
@@ -759,7 +760,7 @@ class GridManager(ABC):
             )
 
         # Create the HDF5 file and initialize the GridManager.
-        with HDF5FileHandler(filename=str(path), mode="w") as handler:
+        with HDF5FileHandler(str(path), mode="w") as handler:
             cls.logger.info("[NEW ] Created %s.", path)
             if "HEADER" not in handler:
                 handler.create_group("HEADER")

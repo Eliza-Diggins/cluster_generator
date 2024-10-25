@@ -67,7 +67,8 @@ from cluster_generator.grids._types import (
 if TYPE_CHECKING:
     import logging
 
-    from cluster_generator.geometry._abc import GeometryHandler
+    from cluster_generator.geometry.abc import GeometryHandler
+    from cluster_generator.geometry.radial import RadialGeometryHandler
     from cluster_generator.grids.managers import GridManager
     from cluster_generator.profiles._abc import Profile
 
@@ -2088,7 +2089,7 @@ class Grid:
             function
             if geometry is None
             else lambda grid_coords: function(
-                *geometry.build_converter(self.AXES)(grid_coords)
+                *geometry.build_converter(self.grid_manager.AXES)(grid_coords)
             )
         )
 
@@ -2226,7 +2227,7 @@ class Grid:
     ) -> NDArray[float]:
         # Generate slices in the form start:stop:n, where n is the number of points
         slices = tuple(
-            slice(bbox[0, i] + (cell_size / 2), bbox[1, i], complex(0, block_size[i]))
+            slice(bbox[0, i] + (cell_size[i] / 2), bbox[1, i], complex(0, block_size[i]))
             for i in range(len(block_size))
         )
 
@@ -2261,6 +2262,7 @@ class Grid:
         return self.opt_get_coordinates(
             self.BBOX, self.grid_manager.BLOCK_SIZE, self.level.CELL_SIZE
         )
+
 
     @property
     def logger(self):
@@ -2509,7 +2511,10 @@ class FieldContainer(ElementContainer[str, "Field"]):
             )
 
         # Create a new HDF5 dataset in the grid's HDF5 group
-        dataset = self._handle.create_dataset(name, shape=self.grid.SHAPE, dtype=dtype)
+        if 'data' in kwargs:
+            dataset = self._handle.create_dataset(name,data=kwargs.pop('data'))
+        else:
+            dataset = self._handle.create_dataset(name, shape=self.grid.SHAPE, dtype=dtype)
         dataset.attrs["units"] = units
 
         # Initialize the Field object and add it to the container

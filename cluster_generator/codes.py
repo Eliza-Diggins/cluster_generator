@@ -10,7 +10,7 @@ from unyt import uconcatenate, unyt_array
 import cluster_generator.grids._types
 from cluster_generator.model import ClusterModel
 from cluster_generator.particles import ClusterParticles
-from cluster_generator.utils import mylog
+from cluster_generator.utilities.logging import mylog
 
 
 def write_amr_particles(

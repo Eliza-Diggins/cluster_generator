@@ -1,0 +1,2 @@
+class ScratchHandlerException(Exception):
+    pass

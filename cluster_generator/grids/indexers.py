@@ -465,7 +465,7 @@ class FieldIndexContainer(ElementContainer[str, FieldIndex]):
 
         self.grid_manager.logger.info(f"[ADD ] Registering field {field_name}...")
         hdf5_label = self._index_to_hdf5(field_name)
-        field_group = self._handle.create_group(hdf5_label)
+        field_group = self._handle.require_group(hdf5_label)
         field_group.attrs["units"] = units
         field_group.attrs["dtype"] = dtype
 

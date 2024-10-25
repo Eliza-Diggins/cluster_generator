@@ -7,7 +7,8 @@ from unyt import unyt_array
 
 from cluster_generator.cython_utils import generate_velocities
 from cluster_generator.particles import ClusterParticles
-from cluster_generator.utils import generate_particle_radii, mylog, quad
+from cluster_generator.utilities.logging import mylog
+from cluster_generator.utilities import generate_particle_radii, quad
 
 
 class VirialEquilibrium:
@@ -135,7 +136,7 @@ class VirialEquilibrium:
         particles : :class:`~cluster_generator.particles.ClusterParticles`
             A set of dark matter or star particles.
         """
-        from cluster_generator.utils import parse_prng
+        from cluster_generator.utilities import parse_prng
 
         num_particles_sub = num_particles // sub_sample
         key = {"dark_matter": "dm", "stellar": "star"}[self.ptype]

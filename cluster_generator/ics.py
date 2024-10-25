@@ -13,7 +13,7 @@ from cluster_generator.particles import (
     resample_three_clusters,
     resample_two_clusters,
 )
-from cluster_generator.utils import ensure_list, ensure_ytarray, parse_prng
+from cluster_generator.utilities import ensure_list, ensure_ytarray, parse_prng
 
 
 def compute_centers_for_binary(center, d, b, a=0.0):

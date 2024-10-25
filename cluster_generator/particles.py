@@ -10,7 +10,8 @@ from scipy.interpolate import InterpolatedUnivariateSpline
 from unyt import uconcatenate, unyt_array
 
 import cluster_generator.grids._types
-from cluster_generator.utils import ensure_list, ensure_ytarray, mylog
+from cluster_generator.utilities.logging import mylog
+from cluster_generator.utilities import ensure_list, ensure_ytarray
 
 gadget_fields = {
     "dm": ["Coordinates", "Velocities", "Masses", "ParticleIDs", "Potential"],

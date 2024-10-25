@@ -60,7 +60,7 @@ from typing import TYPE_CHECKING, Any, Callable, Dict, Tuple
 
 import numpy as np
 
-from cluster_generator.geometry._abc import GeometryHandler
+from cluster_generator.geometry.abc import GeometryHandler
 from cluster_generator.geometry._types import (
     AxisName,
     AxisOrder,
@@ -73,7 +73,7 @@ from cluster_generator.geometry._types import (
 )
 
 if TYPE_CHECKING:
-    pass
+    from cluster_generator.grids.grids import Grid, GridLevel
 
 
 class RadialGeometryHandler(GeometryHandler, ABC):
@@ -236,6 +236,140 @@ class RadialGeometryHandler(GeometryHandler, ABC):
 
         return res
 
+    def get_radii_from_grid(self, grid: "Grid") -> np.ndarray:
+        """
+        Retrieve the radial distances for each cell in the given grid.
+
+        This method takes the grid's Cartesian coordinates, converts them to the
+        radial coordinates specified by this geometry handler, and extracts the "r" axis.
+
+        Parameters
+        ----------
+        grid : Grid
+            The grid instance containing Cartesian coordinates.
+
+        Returns
+        -------
+        np.ndarray
+            The radial distances for each cell in the grid.
+
+        Raises
+        ------
+        TypeError
+            If the grid does not provide valid Cartesian coordinates.
+        ValueError
+            If this geometry does not have an "r" axis in its FREE_AXES.
+        """
+        # Step 1: Ensure this geometry has an "r" axis as a free axis
+        if "r" not in self.FREE_AXES:
+            raise ValueError("The geometry must have an 'r' axis as a free axis to compute radii.")
+
+        # Step 2: Retrieve Cartesian coordinates from the grid
+        cartesian_coords = grid.get_coordinates()
+        # Step 3: Convert the Cartesian coordinates to this geometry's radial coordinates
+        radial_coords = self.build_converter(grid.grid_manager.AXES)(cartesian_coords)
+
+        # Step 4: Extract the radius component from the radial coordinates
+        radius_index = self.FREE_AXES.index("r")
+        radii = radial_coords[radius_index]
+
+        return radii
+
+    def get_min_radii_spacing(self, grid_level: "GridLevel") -> float:
+        """
+        Compute the minimum radial spacing (Delta r) based on the cell size of the provided grid level.
+
+        This method calculates Delta r by taking the Cartesian cell size of the grid level and transforming it
+        into the radial coordinate in this geometry. The result is the radial spacing, Delta r, for a single cell.
+
+        Parameters
+        ----------
+        grid_level : GridLevel
+            The grid level instance providing the CELL_SIZE attribute, which represents the Cartesian
+            cell size in each spatial dimension.
+
+        Returns
+        -------
+        float
+            The computed Delta r, representing the minimum radial spacing for a cell in this geometry.
+
+        Raises
+        ------
+        ValueError
+            If the geometry does not support a radial coordinate transformation or lacks an "r" axis.
+
+        Notes
+        -----
+        This method is geometry-dependent and assumes that the geometry can interpret
+        the Cartesian cell size to provide a radial distance.
+        """
+        # Step 1: Ensure this geometry has an "r" axis to compute radial spacing
+        if "r" not in self.FREE_AXES:
+            raise ValueError("The geometry must have an 'r' axis to compute radial spacing.")
+
+        # Step 2: Extract CELL_SIZE from the grid level, which is the Cartesian spacing in each direction
+        cell_size_vector = grid_level.CELL_SIZE
+        cell_size_vector = cell_size_vector.reshape((cell_size_vector.size,1))
+
+        # Step 3: Transform the Cartesian cell size point into radial coordinates
+        # by treating it as a Cartesian distance from the origin
+        # Step 3: Convert the Cartesian coordinates to this geometry's radial coordinates
+        radial_coords = self.build_converter(grid_level.grid_manager.AXES)(*cell_size_vector)
+
+        # Step 4: Extract the radius component from the radial coordinates
+        radius_index = self.FREE_AXES.index("r")
+        d_radii = radial_coords[radius_index]
+
+        return d_radii
+
+    def get_min_max_radii_from_grid(self, grid: "Grid") -> Tuple[float, float]:
+        """
+        Efficiently compute the minimum and maximum radial distances for the grid based on its bounding box (BBOX).
+
+        Parameters
+        ----------
+        grid : Grid
+            The grid instance containing the bounding box (BBOX) and cell size.
+
+        Returns
+        -------
+        Tuple[float, float]
+            The minimum and maximum radii for the grid.
+        """
+        if "r" not in self.FREE_AXES:
+            raise ValueError("The geometry must have an 'r' axis to compute radial bounds.")
+
+        # Retrieve bounding box coordinates and cell size
+        bbox_min, bbox_max = grid.BBOX[0], grid.BBOX[1]
+        dimensions = len(bbox_min)
+        cell_size = grid.level.CELL_SIZE
+
+        # Step 1: Generate all corner points and adjust them to approximate cell centers
+        corners = np.array(np.meshgrid(*zip(bbox_min, bbox_max))).T.reshape(-1, dimensions)
+        half_cell_offset = cell_size / 2
+        centered_corners = corners + np.where(corners == bbox_min, half_cell_offset, -half_cell_offset)
+
+        # Step 2: Check and add zero-crossing points where applicable, adjusted to cell centers
+        zero_crossings = []
+        for i in range(dimensions):
+            if bbox_min[i] < 0 < bbox_max[i]:
+                zero_cross = centered_corners.copy()
+                zero_cross[:, i] = 0  # Set to zero for crossing axis
+                zero_crossings.append(zero_cross)
+
+        if zero_crossings:
+            zero_crossings = np.vstack(zero_crossings)
+            all_points = np.vstack([centered_corners, zero_crossings])
+        else:
+            all_points = centered_corners
+
+        # Step 3: Convert all points to radial distances in one vectorized operation
+        radial_coords = self.build_converter(grid.grid_manager.AXES)(all_points.T)
+        radii = np.abs(radial_coords[self.FREE_AXES.index("r")])
+
+        # Step 4: Determine the min and max radii
+        return radii.min(), radii.max()
+
 
 class SphericalGeometryHandler(RadialGeometryHandler):
     """
@@ -264,6 +398,9 @@ class SphericalGeometryHandler(RadialGeometryHandler):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
+    def __str__(self):
+        return "<SphericalGeometryHandler>"
 
     def _get_shell_volume_function(self) -> Callable[[ProfileInput], ProfileResult]:
         return lambda r: 4 * np.pi * r**2
